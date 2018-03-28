@@ -23,9 +23,9 @@ Rcpp::NumericMatrix get_multi_point(const Value& multi_point_array) {
   Rcpp::NumericMatrix multi_point(n, 2);
 
   for (int i = 0; i < n; i++) {
-  	multi_point(i, 0) = get_lon(multi_point_array[i]);
-  	multi_point(i, 1) = get_lat(multi_point_array[i]);
-   }
+    multi_point(i, 0) = get_lon(multi_point_array[i]);
+    multi_point(i, 1) = get_lat(multi_point_array[i]);
+  }
   return multi_point;
 }
 
