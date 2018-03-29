@@ -82,43 +82,36 @@ Rcpp::List get_multi_polygon(const Value& multi_polygon_array) {
 
 void parse_geometry_object(Rcpp::List& sfc, int i, const Value &val) {
 
-	std::string geom_type = val["type"].GetString();
-	const Value& coord_array = val["coordinates"];
+  std::string geom_type = val["type"].GetString();
+  const Value& coord_array = val["coordinates"];
 
-	if (geom_type == "Point") {
-		sfc[i] = get_point(coord_array);
-
-	} else if (geom_type == "MultiPoint") {
-		sfc[i] = get_multi_point(coord_array);
-
-	} else if (geom_type == "LineString") {
-		sfc[i] = get_line_string(coord_array);
-
-	} else if (geom_type == "MultiLinestring") {
-		sfc[i] = get_multi_line_string(coord_array);
-
-	} else if (geom_type == "Polygon") {
-		sfc[i] = get_polygon(coord_array);
-
-	} else if (geom_type == "MultiPolygon") {
-		sfc[i] = get_multi_polygon(coord_array);
-
-	} else {
-		Rcpp::stop("unknown sfg type");
-	}
-
+  if (geom_type == "Point") {
+    sfc[i] = get_point(coord_array);
+  } else if (geom_type == "MultiPoint") {
+    sfc[i] = get_multi_point(coord_array);
+  } else if (geom_type == "LineString") {
+    sfc[i] = get_line_string(coord_array);
+  } else if (geom_type == "MultiLinestring") {
+    sfc[i] = get_multi_line_string(coord_array);
+  } else if (geom_type == "Polygon") {
+    sfc[i] = get_polygon(coord_array);
+  } else if (geom_type == "MultiPolygon") {
+    sfc[i] = get_multi_polygon(coord_array);
+  } else {
+  	Rcpp::stop("unknown sfg type");
+  }
 }
 
 Rcpp::List parse_geometry_collection_object(const Value& val) {
-	Rcpp::List geom_collection(val.Size());
-	std::string geom_type;
+  Rcpp::List geom_collection(val.Size());
+  std::string geom_type;
 
-	for (int i = 0; i < val.Size(); i++) {
-		const Value& gcval = val[i];
-		geom_type = gcval["type"].GetString();
-		parse_geometry_object(geom_collection, i, gcval);
-	}
-	geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
+  for (int i = 0; i < val.Size(); i++) {
+    const Value& gcval = val[i];
+    geom_type = gcval["type"].GetString();
+    parse_geometry_object(geom_collection, i, gcval);
+  }
+  geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
 }
 
 
