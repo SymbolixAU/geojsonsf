@@ -7,12 +7,12 @@
 using namespace Rcpp;
 
 // rcpp_geojson_to_sf
-Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson);
+Rcpp::List rcpp_geojson_to_sf(const char* geojson);
 RcppExport SEXP _geojsonsf_rcpp_geojson_to_sf(SEXP geojsonSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geojson(geojsonSEXP);
+    Rcpp::traits::input_parameter< const char* >::type geojson(geojsonSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_geojson_to_sf(geojson));
     return rcpp_result_gen;
 END_RCPP
