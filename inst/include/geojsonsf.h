@@ -1,8 +1,8 @@
-#include <Rcpp.h>
-using namespace Rcpp;
-
 #ifndef GEOJSONSF_H
 #define GEOJSONSF_H
+
+#include <Rcpp.h>
+using namespace Rcpp;
 
 namespace geojsonsf {
   const int EPSG = 4326;

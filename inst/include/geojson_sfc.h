@@ -1,23 +1,29 @@
-#include <Rcpp.h>
-using namespace Rcpp;
-
 #ifndef GEOJSONSFC_H
 #define GEOJSONSFC_H
+
+
+#include <Rcpp.h>
+using namespace Rcpp;
 
 template <int RTYPE>
 Rcpp::CharacterVector sfcClass(Vector<RTYPE> v);
 
 Rcpp::CharacterVector getSfcClass(SEXP sfc);
 
-void attach_sfc_attributes(Rcpp::List& sfc, Rcpp::StringVector sfc_classes, Rcpp::NumericVector bbox);
+void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point);
 
-void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& pt);
+std::string attach_class(Rcpp::List& sfc, std::string geom_type,
+                         std::set< std::string >& geometry_types);
+
+void attach_sfc_attributes(Rcpp::List& sfc, std::string& type,
+                           Rcpp::NumericVector& bbox,
+                           std::set< std::string >& geometry_types);
 
 Rcpp::NumericVector start_bbox();
 
-Rcpp::StringVector start_sfc_classes(size_t collectionCount);
+std::set< std::string > start_geometry_types();
 
-void attach_sfc_attributes(Rcpp::List& sfc, Rcpp::StringVector sfc_classes, Rcpp::NumericVector bbox);
+//Rcpp::StringVector start_sfc_classes(size_t collectionCount);
 
 //void sfc_get_sfg(bsoncxx::array::view& coord_array, int& geom_type,
 //                Rcpp::List& sfc, int& counter, Rcpp::NumericVector& bbox);
