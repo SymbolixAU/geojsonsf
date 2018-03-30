@@ -68,8 +68,14 @@
 # myurl <- "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json"
 # geo <- readLines(url(myurl))
 # geo <- paste0(geo, collapse = "")
-# geojsonsf:::rcpp_geojson_to_sf(geo)
+# lst <- geojsonsf:::rcpp_geojson_to_sf(geo)
 #
+
+# sf <- sf::st_read(geo, quiet = T)
+
+# str(st_geometry(sf))
+# str(lst[[1]][[1]])
+
 # library(microbenchmark)
 #
 # microbenchmark(
@@ -151,4 +157,106 @@
 # geojsonio 979.740715 979.740715 1527.85369 1527.85369 2075.966660 2075.966660     2
 # geojsonsf   7.909611   7.909611    8.41771    8.41771    8.925809    8.925809     2
 #        sf  56.938019  56.938019   67.65058   67.65058   78.363145   78.363145     2
+
+
+# js <- '[
+# {
+#   "type": "Feature",
+#   "geometry": {
+#     "type": "Polygon",
+#     "coordinates": [
+#       [
+#         [-10.0, -10.0],
+#         [10.0, -10.0],
+#         [10.0, 10.0],
+#         [-10.0, -10.0]
+#       ]
+#     ]
+#   }
+# },
+# {
+#   "type": "Feature",
+#   "geometry": {
+#     "type": "MultiPolygon",
+#     "coordinates": [
+#       [
+#         [
+#           [180.0, 40.0], [180.0, 50.0], [170.0, 50.0],
+#           [170.0, 40.0], [180.0, 40.0]
+#         ]
+#       ],
+#       [
+#         [
+#           [-170.0, 40.0], [-170.0, 50.0], [-180.0, 50.0],
+#           [-180.0, 40.0], [-170.0, 40.0]
+#         ]
+#       ]
+#     ]
+#   }
+# },
+# {
+# "type": "Polygon",
+#     "coordinates": [
+#       [
+#         [-10.0, -10.0],
+#         [10.0, -10.0],
+#         [10.0, 10.0],
+#         [-10.0, -10.0]
+#       ]
+#     ]
+# },
+# {
+#   "type": "FeatureCollection",
+#   "features": [
+#     {
+#       "type": "Feature",
+#       "properties": null,
+#       "geometry": {
+#         "type": "Point",
+#         "coordinates": [100.0, 0.0]
+#       }
+#     },
+#     {
+#       "type": "Feature",
+#       "properties": null,
+#       "geometry": {
+#         "type": "LineString",
+#         "coordinates": [
+#           [101.0, 0.0],
+#           [102.0, 1.0]
+#         ]
+#       }
+#     }
+#   ]
+# },
+# {
+#   "type": "GeometryCollection",
+#   "geometries": [
+#     {
+#       "type": "Point",
+#       "coordinates": [100.0, 0.0]
+#     },
+#     {
+#       "type": "LineString",
+#       "coordinates": [
+#         [101.0, 0.0],
+#         [102.0, 1.0]
+#       ]
+#     },
+#     {
+#       "type" : "MultiPoint",
+#       "coordinates" : [
+#         [0,0],
+#         [1,1],
+#         [2,2]
+#       ]
+#     }
+#   ]
+# }
+# ]'
+
+#lst <- geojsonsf:::rcpp_geojson_to_sf(js)
+
+
+
 

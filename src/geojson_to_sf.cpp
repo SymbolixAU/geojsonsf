@@ -101,7 +101,7 @@ Rcpp::List parse_feature_collection_object(const Value& fc, Rcpp::NumericVector&
 		const Value& feature = features[i];
 		feature_collection[i] = parse_feature_object(feature, bbox, geometry_types);
 	}
-	attach_sfc_attributes(feature_collection, geom_type, bbox, geometry_types);
+	//attach_sfc_attributes(feature_collection, geom_type, bbox, geometry_types);
 
 	return feature_collection;
 }
@@ -130,6 +130,8 @@ void parse_geojson(const Value& v, Rcpp::List& sfc, int i,
 	} else if (geom_type == "FeatureCollection") {
 
 		res = parse_feature_collection_object(v, bbox, geometry_types);
+		Rcpp::Rcout << "debug: featurecollection size: " << res.size() << std::endl;
+		attach_sfc_attributes(res, geom_type, bbox, geometry_types);
 		sfc[i] = res;
 
 	} else if (geom_type == "GeometryCollection") {
@@ -144,6 +146,7 @@ void parse_geojson(const Value& v, Rcpp::List& sfc, int i,
 		attach_sfc_attributes(sfc, geom_type, bbox, geometry_types);
 	}
 
+	//attach_sfc_attributes(sfc, geom_type, bbox, geometry_types);
 }
 
 void parse_geojson_object(Document& d, Rcpp::List& sfg, Rcpp::NumericVector& bbox,
@@ -152,7 +155,8 @@ void parse_geojson_object(Document& d, Rcpp::List& sfg, Rcpp::NumericVector& bbo
 	parse_geojson(v, sfg, 0, bbox, geometry_types);
 }
 
-void parse_geojson_array(Document& d, Rcpp::List& sfc, int i, Rcpp::NumericVector& bbox,
+void parse_geojson_array(Document& d, Rcpp::List& sfc, int i,
+                         Rcpp::NumericVector& bbox,
                          std::set< std::string >& geometry_types) {
 	const Value& v = d[i];
 	parse_geojson(v, sfc, i, bbox, geometry_types);
@@ -164,14 +168,17 @@ Rcpp::List geojson_to_sf(const char* geojson, Rcpp::NumericVector& bbox,
 
 	Document d;
 	d.Parse(geojson);
-	Rcpp::List sfg(1);
+	Rcpp::List sf(1);
 
 	if (d.IsObject() ) {
+		Rcpp::Rcout << "debug: is OBJECT" << std::endl;
 
-		parse_geojson_object(d, sfg, bbox, geometry_types);
-		return sfg;
+	  //Rcpp::List sfg(1);
+		parse_geojson_object(d, sf, bbox, geometry_types);
+		//sf[0] = sfg;
 
 	} else if (d.IsArray()) {
+		Rcpp::Rcout << "debug: is ARRAY" << std::endl;
 
 		Rcpp::List sfc(d.Size());
 
@@ -179,9 +186,9 @@ Rcpp::List geojson_to_sf(const char* geojson, Rcpp::NumericVector& bbox,
 			parse_geojson_array(d, sfc, i, bbox, geometry_types);
 		}
 
-		return sfc;
+		sf[0] = sfc;
 	}
-	return sfg;
+	return sf;
 }
 
 // TODO:

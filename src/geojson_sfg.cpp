@@ -6,7 +6,6 @@
 #include "geojson_sfg.h"
 #include "geojson_sfc.h"
 
-
 using namespace Rcpp;
 using namespace rapidjson;
 
