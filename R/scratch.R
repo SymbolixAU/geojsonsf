@@ -47,8 +47,8 @@
 #   }]
 # }'
 
-# geojsonsf:::rcpp_geojson_to_sf(g)
 # geojsonsf:::rcpp_geojson_to_sf(f)
+# geojsonsf:::rcpp_geojson_to_sf(g)
 # geojsonsf:::rcpp_geojson_to_sf(gc)
 # geojsonsf:::rcpp_geojson_to_sf(fc1)
 # geojsonsf:::rcpp_geojson_to_sf(fc)
