@@ -30,6 +30,8 @@ Rcpp::NumericVector get_point(const Value& point_array, Rcpp::NumericVector& bbo
 	point[1] = get_lat(point_array);
 	point.attr("class") = sfg_attributes("POINT");
 
+	//Rcpp::Rcout << "getting points" << std::endl;
+
 	calculate_bbox(bbox, point);
 
 	return point;

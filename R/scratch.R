@@ -85,8 +85,70 @@
 #   }
 # ]'
 #
-# geojsonsf:::rcpp_geojson_to_sf(garr)
+# gcarr <- '[{
+#     "type": "GeometryCollection",
+#     "geometries": [
+#         {"type": "Point", "coordinates": [100.0, 0.0]},
+#         {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+#         {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+#     ]
+# },
+# {
+#     "type": "GeometryCollection",
+#     "geometries": [
+#         {"type": "Point", "coordinates": [100.0, 0.0]},
+#         {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+#         {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+#     ]
+# }
+# ]'
 
+# fcarr <- '[
+# {
+#   "type": "FeatureCollection",
+#   "features": [
+#   {
+#     "type": "Feature",
+#     "properties": null,
+#     "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+#   },
+#   {
+#     "type": "Feature",
+#     "properties": null,
+#     "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+#   },
+#   {
+#     "type": "Feature",
+# 	    "properties": null,
+# 	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+# 	}
+#  ]
+# },
+# {
+#   "type": "FeatureCollection",
+# 	"features": [
+# 	{
+# 	  "type": "Feature",
+# 	  "properties": null,
+# 	  "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+# 	},
+# 	{
+# 	  "type": "Feature",
+# 	  "properties": null,
+# 	  "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+# 	},
+# 	{
+# 	  "type": "Feature",
+# 	  "properties": null,
+# 	  "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+# 	}
+#   ]
+# }
+# ]'
+
+# geojsonsf:::rcpp_geojson_to_sf(garr)
+# geojsonsf:::rcpp_geojson_to_sf(gcarr)
+# geojsonsf:::rcpp_geojson_to_sf(fcarr)
 
 
 

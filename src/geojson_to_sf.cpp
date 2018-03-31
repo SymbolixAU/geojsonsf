@@ -242,9 +242,11 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 	}
 
   // If it's an object...
-  // If it's an array...
+	//Rcpp::List res = construct_sfc(sfg_objects, sf, bbox, geometry_types);
 
-	Rcpp::List res = construct_sfc(sfg_objects, sf, bbox, geometry_types);
+  // If it's an array...
+  Rcpp::List res = construct_sfc_array(sfg_objects, sf, bbox, geometry_types);
+
 	//Rcpp::List res = sf;
 	return res;
 }

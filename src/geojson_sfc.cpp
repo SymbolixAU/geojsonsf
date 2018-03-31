@@ -17,7 +17,7 @@ std::string attach_class(Rcpp::List& sfc, std::string geom_type,
                           std::set< std::string >& geometry_types) {
 
 	std::string geometry_class;
-	if (geom_type == "GeometryCollection") {
+	if (geom_type == "GEOMETRYCOLLECTION") {
 		geometry_class = "GEOMETRYCOLLECTION";
 	} else {
 
@@ -101,24 +101,77 @@ Rcpp::List construct_sfc(int& sfg_objects,
 	Rcpp::List sfc_output(sfg_objects);
 	std::string geom_attr;
 
-	//Rcpp::List lvl1 = sf[0];
-	//Rcpp::List lvl2 = lvl1[0];
-	//Rcpp::Rcout << "debug: sfc length: " << sf.length() << std::endl;
-	//Rcpp::Rcout << "debug: lvl1 length: " << lvl1.length() << std::endl;
-	//Rcpp::Rcout << "debug: lvl2 length: " << lvl2.length() << std::endl;
-	Rcpp::Rcout << "sf length: " << sf.length() << std::endl;  // 1 for object, > 1 for array
+	Rcpp::Rcout << "sf length: " << sf.length() << std::endl;
 
 	int counter = 0;
-	//for (int j = 0; j < sf.length(); j++ ) {
 
-		Rcpp::List lvl1 = sf[0];
-		//Rcpp::Rcout << "lvl1 length: " << lvl1.length() << std::endl;
+	Rcpp::List lvl1 = sf[0];
 
-		for (int i = 0; i < sf.length(); i++) {
+	for (int i = 0; i < sf.length(); i++) {   // iteration required when there's a vector of geojson in R
 
-			//Rcpp::List ele = sf[i];  // going one level deeper becase we are working on a StringVector
-			Rcpp::List ele = lvl1[i];
-			Rcpp::List ele2 = ele[0];
+		//Rcpp::List ele = sf[i];  // going one level deeper becase we are working on a StringVector
+		Rcpp::List ele = lvl1[i];
+
+		Rcpp::Rcout << "ele size: " << ele.length() << std::endl;
+
+		Rcpp::List ele2 = ele[0];
+
+		if (Rf_isNull(ele2.attr("geo_type"))){
+
+			geom_attr = "GEOMETRY";
+
+			sfc_output[counter] = ele[0];
+			counter++;
+
+		} else {
+
+			std::string tmp_attr = ele2.attr("geo_type");
+			geom_attr = tmp_attr;
+
+			Rcpp::Rcout << "tmp_attr: " << geom_attr << std::endl;
+
+			if (geom_attr == "FEATURECOLLECTION") {
+				// 2 level sdeep
+
+				for (int k = 0; k < ele2.size(); k++) {
+				  Rcpp::List lvl2 = ele2[k];
+					sfc_output[counter] = lvl2[0];
+					counter++;
+				}
+
+			} else if (geom_attr == "FEATURE" ) {
+
+				sfc_output[counter] = ele2[0];
+				counter++;
+			}
+		}
+	}
+
+	attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types);
+
+	return sfc_output;
+}
+
+
+Rcpp::List construct_sfc_array(int& sfg_objects,
+                         Rcpp::List& sf,
+                         Rcpp::NumericVector& bbox,
+                         std::set< std::string >& geometry_types) {
+
+	Rcpp::List sfc_output(sfg_objects);
+	std::string geom_attr;
+
+	int counter = 0;
+
+	Rcpp::List lvl1 = sf[0];
+
+	for (int i = 0; i < sf.length(); i++) {
+		//Rcpp::List ele = sf[i];  // going one level deeper becase we are working on a StringVector
+		Rcpp::List ele = lvl1[i];
+
+		for (int j = 0; j < ele.size(); j++) {
+
+			Rcpp::List ele2 = ele[j];
 
 			if (Rf_isNull(ele2.attr("geo_type"))){
 
@@ -129,7 +182,6 @@ Rcpp::List construct_sfc(int& sfg_objects,
 
 			} else {
 
-				//Rcpp::List fele = ele[0];
 				std::string tmp_attr = ele2.attr("geo_type");
 				geom_attr = tmp_attr;
 
@@ -139,26 +191,24 @@ Rcpp::List construct_sfc(int& sfg_objects,
 					// 2 level sdeep
 
 					for (int k = 0; k < ele2.size(); k++) {
-					  Rcpp::List lvl2 = ele2[k];
-						//Rcpp::List lvl3 = lvl2[0];
-						//sfc_output[counter] = lvl1[0];
+						Rcpp::List lvl2 = ele2[k];
 						sfc_output[counter] = lvl2[0];
 						counter++;
 					}
 
 				} else if (geom_attr == "FEATURE" ) {
 
-					//Rcpp::List lvl2 = ele2[0];
-					//Rcpp::List lvl3 = lvl2[0];
 					sfc_output[counter] = ele2[0];
 					counter++;
 				}
+
 			}
 		}
-	//}
+	}
 
-	std::string gt = "GEOMETRY";
-	attach_sfc_attributes(sfc_output, gt, bbox, geometry_types);
+	attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types);
 
 	return sfc_output;
 }
+
+
