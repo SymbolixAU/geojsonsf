@@ -134,7 +134,6 @@ void parse_geojson(const Value& v,
 	if (geom_type == "Feature") {
 
 		res = parse_feature_object(v, bbox, geometry_types, sfg_objects);
-		//attach_sfc_attributes(res, geom_type, bbox, geometry_types);
 		sfg_objects++;
 		res.attr("geo_type") = "FEATURE";
 		sfc[i] = res;
@@ -142,31 +141,22 @@ void parse_geojson(const Value& v,
 	} else if (geom_type == "FeatureCollection") {
 
 		res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects);
-		//Rcpp::Rcout << "debug: featurecollection size: " << res.size() << std::endl;
-		//attach_sfc_attributes(res, geom_type, bbox, geometry_types);
 		sfg_objects += res.length();
 		res.attr("geo_type") = "FEATURECOLLECTION";
-
-		//std::string tmp = res.attr("geo_type");
-		//Rcpp::Rcout << "debug: tmp " <<  tmp << std::endl;
 
 		sfc[i] = res;
 
 	} else if (geom_type == "GeometryCollection") {
 
 		res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects);
-		//attach_sfc_attributes(res, geom_type, bbox, geometry_types);
 		sfg_objects++;
-		//res.attr("geo_type") = "GEOMETRYCOLLECTION";
 		sfc[i] = res;
 
 	} else {
 
 		parse_geometry_object(sfc, i, v, bbox, geometry_types, sfg_objects);
 		sfg_objects++;
-		//attach_sfc_attributes(sfc, geom_type, bbox, geometry_types);
 	}
-	//attach_sfc_attributes(sfc, geom_type, bbox, geometry_types);
 }
 
 void parse_geojson_object(Document& d,
@@ -190,63 +180,11 @@ void parse_geojson_array(Document& d,
 	parse_geojson(v, sfc, properties, i, bbox, geometry_types, sfg_objects);
 }
 
-Rcpp::List construct_sfc(int& sfg_objects,
-                         Rcpp::List& sfc,
-                         Rcpp::NumericVector& bbox,
-                         std::set< std::string >& geometry_types) {
-
-	Rcpp::List sfc_output(sfg_objects);
-	std::string geom_attr;
-	//Rcpp::Rcout << "list size: " << sfc.length() << std::endl;
-
-	int counter = 0;
-
-	for (int i = 0; i < sfc.length(); i++) {
-		Rcpp::List ele = sfc[i];
-
-		if (Rf_isNull(ele.attr("geo_type"))){
-			//Rcpp::Rcout << "debug: geometry" << std::endl;
-			geom_attr = "GEOMETRY";
-			sfc_output[counter] = sfc[0];
-			counter++;
-
-		} else {
-			std::string tmp_attr = ele.attr("geo_type");
-  		geom_attr = tmp_attr;
-			// it's a geometry
-			if (geom_attr == "FEATURECOLLECTION") {
-			  //Rcpp::Rcout << "debug: geometry - FEATURECOLLECTION" << std::endl;
-  			// 2 level sdeep
-  			Rcpp::List fc(ele.size());
-  			//Rcpp::Rcout << "fc size: " << ele.size() << std::endl;
-  			for (int j = 0; j < ele.size(); j++) {
-  				Rcpp::List tmp = ele[j];
-  				sfc_output[counter] = tmp[0];
-  				counter++;
-  			}
-
-
-	  	} else if (geom_attr == "FEATURE" ) {
-  			//Rcpp::Rcout << "debug: geometry - FEATURE" << std::endl;
-	  		sfc_output[counter] = ele[0];
-	  		counter++;
-	  	}
-		}
-	}
-
-	std::string gt = "GEOMETRY";
-	attach_sfc_attributes(sfc_output, gt, bbox, geometry_types);
-
-	return sfc_output;
-}
 
 Rcpp::List geojson_to_sf(const char* geojson,
                          Rcpp::NumericVector& bbox,
-                         std::set< std::string >& geometry_types) {
-
-	// TODO:
-	// only start building the result sf when we are inside the final array
-
+                         std::set< std::string >& geometry_types,
+                         int& sfg_objects) {
 
 	Document d;
 	d.Parse(geojson);
@@ -254,31 +192,26 @@ Rcpp::List geojson_to_sf(const char* geojson,
 	Rcpp::List sfc(1);
 	Rcpp::List properties(1);
 
-	int sfg_objects = 0;  // keep track of number of objects
-
 	if (d.IsObject() ) {
-		Rcpp::Rcout << "debug: is OBJECT" << std::endl;
+		//Rcpp::Rcout << "debug: is OBJECT" << std::endl;
 
-	  //Rcpp::List sfg(1);
-		parse_geojson_object(d, sfc, properties, bbox, geometry_types, sfg_objects);
-		//sf[0] = sfg;
+	  Rcpp::List sfg(1);
+		parse_geojson_object(d, sfg, properties, bbox, geometry_types, sfg_objects);
+		sfc[0] = sfg;
 
-//	} else if (d.IsArray()) {
-//		Rcpp::Rcout << "debug: is ARRAY" << std::endl;
-//
-//		Rcpp::List sfc(d.Size());
-//
-//		for (int i = 0; i < d.Size(); i++) {
-//			parse_geojson_array(d, sfc, i, bbox, geometry_types);
-//		}
-//
-//		sf[0] = sfc;
+	} else if (d.IsArray()) {
+		Rcpp::Rcout << "debug: is ARRAY" << std::endl;
+
+		Rcpp::List sfgs(d.Size());
+
+		for (int i = 0; i < d.Size(); i++) {
+			parse_geojson_array(d, sfgs, properties, i, bbox, geometry_types, sfg_objects);
+		}
+		sfc[0] = sfgs;
 	}
-	Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
+	//Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
 
-//	Rcpp::Rcout << "sfg_objects: " << sfg_objects << std::endl;
-
-	return res;
+	return sfc;
 }
 
 // TODO:
@@ -289,29 +222,29 @@ Rcpp::List geojson_to_sf(const char* geojson,
 // - feature collection become sf
 
 
-
 // [[Rcpp::export]]
-Rcpp::List rcpp_geojson_to_sf(const char* geojson) {
+Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 
 	// iterate over the geojson
-	//int n = geojson.size();
-
-	// iff a vector, collapse to an array...
-
+	int n = geojson.size();
+	int sfg_objects = 0;  // keep track of number of objects
 
 	// Attributes to keep track of along the way
 	Rcpp::NumericVector bbox = start_bbox();
 	std::set< std::string > geometry_types = start_geometry_types();
 	//Rcpp::StringVector sfc_classes = start_sfc_classes(n);
 
-	Rcpp::List sf = geojson_to_sf(geojson, bbox, geometry_types);
+	//Rcpp::List sf = geojson_to_sf(geojson[0], bbox, geometry_types, sfg_objects);
 
+	Rcpp::List sf(n);
+	for (int i = 0; i < n; i++ ){
+		sf[i] = geojson_to_sf(geojson[i], bbox, geometry_types, sfg_objects);
+	}
 
-	//Rcpp::List sfc(n);
-  //
-	//for (int i = 0; i < n; i++ ){
-	//	sfc[i] = geojson_to_sf(geojson[i], bbox, geometry_types);
-	//}
+  // If it's an object...
+  // If it's an array...
 
-	return sf;
+	Rcpp::List res = construct_sfc(sfg_objects, sf, bbox, geometry_types);
+	//Rcpp::List res = sf;
+	return res;
 }

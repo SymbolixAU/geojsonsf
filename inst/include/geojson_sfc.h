@@ -28,4 +28,9 @@ std::set< std::string > start_geometry_types();
 //void sfc_get_sfg(bsoncxx::array::view& coord_array, int& geom_type,
 //                Rcpp::List& sfc, int& counter, Rcpp::NumericVector& bbox);
 
+Rcpp::List construct_sfc(int& sfg_objects,
+                         Rcpp::List& sfc,
+                         Rcpp::NumericVector& bbox,
+                         std::set< std::string >& geometry_types);
+
 #endif

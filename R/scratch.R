@@ -1,3 +1,6 @@
+
+### OBJECTS
+
 # g <- '{"type": "Point", "coordinates": [100.0, 0.0]}'
 #
 # f <- '{
@@ -63,6 +66,30 @@
 # sf
 # sf <- sf::st_read(fc1)  ## single FeatureCollection is the single geometry TYPE
 # sf
+
+
+### ARRAYS
+
+# garr <- '[
+#   {
+#     "type": "Point",
+#     "coordinates": [
+#       100.0, 0.0
+#     ]
+#   },
+#   {
+#     "type": "Point",
+#       "coordinates": [
+#         100.0, 0.0
+#     ]
+#   }
+# ]'
+#
+# geojsonsf:::rcpp_geojson_to_sf(garr)
+
+
+
+
 
 # library(RCurl)
 # myurl <- "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json"
@@ -258,5 +285,13 @@
 #lst <- geojsonsf:::rcpp_geojson_to_sf(js)
 
 
+# geo <- c("{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.68152563269095,36.43764870908927]}",
+# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.67408758213843,36.43366018922779]}",
+# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.67708346361097,36.44208638659282]}",
+# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.67886661944996,36.44110273135671]}",
+# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.68089232041565,36.44173155205561]}")
+
+# geojsonsf:::rcpp_geojson_to_sf(geo)
+# sf::st_read(geo, quiet = T)
 
 

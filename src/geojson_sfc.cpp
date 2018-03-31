@@ -91,3 +91,74 @@ Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
 	return sfc_classes;
 }
 */
+
+
+Rcpp::List construct_sfc(int& sfg_objects,
+                         Rcpp::List& sf,
+                         Rcpp::NumericVector& bbox,
+                         std::set< std::string >& geometry_types) {
+
+	Rcpp::List sfc_output(sfg_objects);
+	std::string geom_attr;
+
+	//Rcpp::List lvl1 = sf[0];
+	//Rcpp::List lvl2 = lvl1[0];
+	//Rcpp::Rcout << "debug: sfc length: " << sf.length() << std::endl;
+	//Rcpp::Rcout << "debug: lvl1 length: " << lvl1.length() << std::endl;
+	//Rcpp::Rcout << "debug: lvl2 length: " << lvl2.length() << std::endl;
+	Rcpp::Rcout << "sf length: " << sf.length() << std::endl;  // 1 for object, > 1 for array
+
+	int counter = 0;
+	//for (int j = 0; j < sf.length(); j++ ) {
+
+		Rcpp::List lvl1 = sf[0];
+		//Rcpp::Rcout << "lvl1 length: " << lvl1.length() << std::endl;
+
+		for (int i = 0; i < sf.length(); i++) {
+
+			//Rcpp::List ele = sf[i];  // going one level deeper becase we are working on a StringVector
+			Rcpp::List ele = lvl1[i];
+			Rcpp::List ele2 = ele[0];
+
+			if (Rf_isNull(ele2.attr("geo_type"))){
+
+				geom_attr = "GEOMETRY";
+
+				sfc_output[counter] = ele[0];
+				counter++;
+
+			} else {
+
+				//Rcpp::List fele = ele[0];
+				std::string tmp_attr = ele2.attr("geo_type");
+				geom_attr = tmp_attr;
+
+				Rcpp::Rcout << "tmp_attr: " << geom_attr << std::endl;
+
+				if (geom_attr == "FEATURECOLLECTION") {
+					// 2 level sdeep
+
+					for (int k = 0; k < ele2.size(); k++) {
+					  Rcpp::List lvl2 = ele2[k];
+						//Rcpp::List lvl3 = lvl2[0];
+						//sfc_output[counter] = lvl1[0];
+						sfc_output[counter] = lvl2[0];
+						counter++;
+					}
+
+				} else if (geom_attr == "FEATURE" ) {
+
+					//Rcpp::List lvl2 = ele2[0];
+					//Rcpp::List lvl3 = lvl2[0];
+					sfc_output[counter] = ele2[0];
+					counter++;
+				}
+			}
+		}
+	//}
+
+	std::string gt = "GEOMETRY";
+	attach_sfc_attributes(sfc_output, gt, bbox, geometry_types);
+
+	return sfc_output;
+}
