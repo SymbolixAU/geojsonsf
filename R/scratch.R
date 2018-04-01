@@ -102,7 +102,7 @@
 #     ]
 # }
 # ]'
-
+#
 # fcarr <- '[
 # {
 #   "type": "FeatureCollection",
@@ -151,6 +151,11 @@
 # geojsonsf:::rcpp_geojson_to_sf(fcarr)
 
 
+# library(RCurl)
+# myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+# geo <- readLines(url(myurl))
+# geo <- paste0(geo, collapse = "")
+# lst <- geojsonsf:::rcpp_geojson_to_sf(geo)
 
 
 # library(RCurl)

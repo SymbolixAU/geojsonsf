@@ -5,6 +5,7 @@
 #include "geojson_to_sf.h"
 #include "geojson_sfc.h"
 #include "geojson_sfg.h"
+#include "geojson_validate.h"
 
 using namespace Rcpp;
 
@@ -80,6 +81,10 @@ Rcpp::List parse_feature_object(const Value& feature,
 
 	// TODO:
 	// error if there is no member called '"type": "Feature"
+	//validate_feature(feature);
+	validate_geometry(feature, sfg_objects);
+	validate_properties(feature, sfg_objects);
+
 	const Value& geometry = feature["geometry"];
 	Rcpp::List sfc(1);
 	parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
@@ -97,9 +102,8 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
                                            int& sfg_objects) {
 	// a FeatureCollection MUST have members called features,
 	// which is an array
+	validate_features(fc, sfg_objects);
 
-	// TODO:
-	// - error handle if 'features' not present
 	auto features = fc["features"].GetArray();
 
 	int n = features.Size(); // number of features
@@ -114,6 +118,8 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
 	return feature_collection;
 }
 
+
+
 void parse_geojson(const Value& v,
                    Rcpp::List& sfc,
                    Rcpp::List& properties,
@@ -127,7 +133,7 @@ void parse_geojson(const Value& v,
 	Rcpp::List res(1);
 	std::string geom_type;
 
-	if (v.HasMember("type") == FALSE) Rcpp::stop("No 'type' member - invalid GeoJSON");
+	validate_type(v, sfg_objects);
 
 	geom_type = v["type"].GetString();
 
@@ -181,13 +187,20 @@ void parse_geojson_array(Document& d,
 }
 
 
+void safe_parse(Document& d, const char* geojson) {
+	d.Parse(geojson);
+	if( d.Parse(geojson).HasParseError() ) {
+		Rcpp::stop("Invliad JSON");
+	}
+}
+
 Rcpp::List geojson_to_sf(const char* geojson,
                          Rcpp::NumericVector& bbox,
                          std::set< std::string >& geometry_types,
                          int& sfg_objects) {
 
 	Document d;
-	d.Parse(geojson);
+	safe_parse(d, geojson);
 	Rcpp::List sf(1);
 	Rcpp::List sfc(1);
 	Rcpp::List properties(1);

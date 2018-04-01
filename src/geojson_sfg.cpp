@@ -1,5 +1,3 @@
-// [[Rcpp::depends(rapidjsonr)]]
-
 #include "rapidjson/document.h"
 
 #include <Rcpp.h>

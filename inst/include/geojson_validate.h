@@ -1,0 +1,19 @@
+
+#ifndef GEOJSONSF_VALIDATE_H
+#define GEOJSONSF_VALIDATE_H
+
+#include "rapidjson/document.h"
+
+using namespace rapidjson;
+
+void validate_type(const Value& v, int& sfg_objects);
+
+void validate_features(const Value& v, int& sfg_objects);
+
+void validate_feature(const Value& v, int& sfg_objects);
+
+void validate_properties(const Value& v, int& sfg_objects);
+
+void validate_geometry(const Value& v, int& sfg_objects);
+
+#endif

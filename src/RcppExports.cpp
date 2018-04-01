@@ -17,9 +17,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_stream_in
+void rcpp_stream_in(std::string url);
+RcppExport SEXP _geojsonsf_rcpp_stream_in(SEXP urlSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type url(urlSEXP);
+    rcpp_stream_in(url);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_geojsonsf_rcpp_geojson_to_sf", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sf, 1},
+    {"_geojsonsf_rcpp_stream_in", (DL_FUNC) &_geojsonsf_rcpp_stream_in, 1},
     {NULL, NULL, 0}
 };
 

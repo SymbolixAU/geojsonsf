@@ -14,3 +14,5 @@ LinkingTo:
 Imports: 
     Rcpp
 RoxygenNote: 6.0.1
+Suggests: 
+    testthat
