@@ -42,8 +42,6 @@ void attach_sfc_attributes(Rcpp::List& sfc, std::string& type,
                            Rcpp::NumericVector& bbox,
                            std::set< std::string >& geometry_types) {
 
-	// TODO:
-	// - if it's all LINESTRINGS, this can be 'sfc_LINESTRING'...
 	std::string geometry_class = attach_class(sfc, type, geometry_types);
 	sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
 
@@ -101,66 +99,6 @@ Rcpp::List construct_sfc(int& sfg_objects,
 	Rcpp::List sfc_output(sfg_objects);
 	std::string geom_attr;
 
-	Rcpp::Rcout << "sf length: " << sf.length() << std::endl;
-
-	int counter = 0;
-
-	Rcpp::List lvl1 = sf[0];
-
-	for (int i = 0; i < sf.length(); i++) {   // iteration required when there's a vector of geojson in R
-
-		//Rcpp::List ele = sf[i];  // going one level deeper becase we are working on a StringVector
-		Rcpp::List ele = lvl1[i];
-
-		Rcpp::Rcout << "ele size: " << ele.length() << std::endl;
-
-		Rcpp::List ele2 = ele[0];
-
-		if (Rf_isNull(ele2.attr("geo_type"))){
-
-			geom_attr = "GEOMETRY";
-
-			sfc_output[counter] = ele[0];
-			counter++;
-
-		} else {
-
-			std::string tmp_attr = ele2.attr("geo_type");
-			geom_attr = tmp_attr;
-
-			Rcpp::Rcout << "tmp_attr: " << geom_attr << std::endl;
-
-			if (geom_attr == "FEATURECOLLECTION") {
-				// 2 level sdeep
-
-				for (int k = 0; k < ele2.size(); k++) {
-				  Rcpp::List lvl2 = ele2[k];
-					sfc_output[counter] = lvl2[0];
-					counter++;
-				}
-
-			} else if (geom_attr == "FEATURE" ) {
-
-				sfc_output[counter] = ele2[0];
-				counter++;
-			}
-		}
-	}
-
-	attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types);
-
-	return sfc_output;
-}
-
-
-Rcpp::List construct_sfc_array(int& sfg_objects,
-                         Rcpp::List& sf,
-                         Rcpp::NumericVector& bbox,
-                         std::set< std::string >& geometry_types) {
-
-	Rcpp::List sfc_output(sfg_objects);
-	std::string geom_attr;
-
 	int counter = 0;
 
 	Rcpp::List lvl1 = sf[0];
@@ -184,8 +122,6 @@ Rcpp::List construct_sfc_array(int& sfg_objects,
 
 				std::string tmp_attr = ele2.attr("geo_type");
 				geom_attr = tmp_attr;
-
-				Rcpp::Rcout << "tmp_attr: " << geom_attr << std::endl;
 
 				if (geom_attr == "FEATURECOLLECTION") {
 					// 2 level sdeep

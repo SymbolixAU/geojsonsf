@@ -33,9 +33,4 @@ Rcpp::List construct_sfc(int& sfg_objects,
                          Rcpp::NumericVector& bbox,
                          std::set< std::string >& geometry_types);
 
-Rcpp::List construct_sfc_array(int& sfg_objects,
-                         Rcpp::List& sfc,
-                         Rcpp::NumericVector& bbox,
-                         std::set< std::string >& geometry_types);
-
 #endif

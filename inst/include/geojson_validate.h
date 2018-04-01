@@ -6,6 +6,8 @@
 
 using namespace rapidjson;
 
+void safe_parse(Document& d, const char* geojson);
+
 void validate_type(const Value& v, int& sfg_objects);
 
 void validate_features(const Value& v, int& sfg_objects);
@@ -15,5 +17,7 @@ void validate_feature(const Value& v, int& sfg_objects);
 void validate_properties(const Value& v, int& sfg_objects);
 
 void validate_geometry(const Value& v, int& sfg_objects);
+
+void validate_coordinates(const Value& v, int& sfg_objects);
 
 #endif

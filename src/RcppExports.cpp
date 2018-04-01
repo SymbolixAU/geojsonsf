@@ -7,7 +7,7 @@
 using namespace Rcpp;
 
 // rcpp_geojson_to_sf
-Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson);
+Rcpp::DataFrame rcpp_geojson_to_sf(Rcpp::StringVector geojson);
 RcppExport SEXP _geojsonsf_rcpp_geojson_to_sf(SEXP geojsonSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

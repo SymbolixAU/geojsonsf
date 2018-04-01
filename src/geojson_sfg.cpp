@@ -12,7 +12,7 @@ Rcpp::CharacterVector sfg_attributes(std::string geom_type) {
 }
 
 
-// TODO:
+// TODO (coordinate types):
 // get different types (int, float, ...)
 double get_lon(const Value& coord_array) {
 	return coord_array[0].GetDouble();

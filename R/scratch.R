@@ -150,6 +150,19 @@
 # geojsonsf:::rcpp_geojson_to_sf(gcarr)
 # geojsonsf:::rcpp_geojson_to_sf(fcarr)
 
+## PROPERTIES
+
+# f <- '{
+# 	"type": "Feature",
+# 	"properties": { "id" : 1, "name" : "foo" },
+# 	"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+# 	}'
+#
+# geojson_sfc(f)
+
+
+
+
 
 # library(RCurl)
 # myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
