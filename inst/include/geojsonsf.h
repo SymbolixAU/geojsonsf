@@ -3,7 +3,6 @@
 
 // [[Rcpp::depends(rapidjsonr)]]
 
-
 #include <Rcpp.h>
 using namespace Rcpp;
 

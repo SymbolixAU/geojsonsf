@@ -1,3 +1,4 @@
+
 #include "rapidjson/document.h"
 #include <Rcpp.h>
 #include "geojsonsf.h"
