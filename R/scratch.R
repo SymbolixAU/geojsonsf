@@ -374,4 +374,3 @@
 # geojsonsf:::rcpp_geojson_to_sf(geo)
 # sf::st_read(geo, quiet = T)
 
-

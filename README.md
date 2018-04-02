@@ -1,6 +1,28 @@
 # geojsonsf
 Conversion between sf and geojson
 
+
+```
+library(sf) ## for print methods
+file <- system.file("examples", "california.geojson", package = "geojsonio")
+
+geo <- paste0(readLines(file), collapse = "")
+geojsonsf::geojson_sf(geo)
+
+# Simple feature collection with 1 feature and 11 fields
+# geometry type:  MULTIPOLYGON
+# dimension:      XY
+# bbox:           xmin: -124.4096 ymin: 32.53416 xmax: -114.1315 ymax: 42.00952
+# epsg (SRID):    4326
+# proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#  abbreviation   area    capital        city                       geometry     group # 
+# houseseats landarea
+# 1           CA 423968 Sacramento Los Angeles MULTIPOLYGON (((-120.2485 3... US States         53   403466
+#         name population  statehood waterarea
+# 1 California   38332521 1850-09-09     20502
+
+```
+
 ---
 
 Some benchmark

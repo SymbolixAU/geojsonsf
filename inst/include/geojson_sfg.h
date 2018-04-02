@@ -10,6 +10,10 @@ using namespace rapidjson;
 double get_lon(const Value& coord_array);
 double get_lat(const Value& coord_array);
 
+Rcpp::NumericVector parse_point(const Value& coord_array, Rcpp::NumericVector& bbox);
+
+Rcpp::NumericMatrix parse_line(const Value& coord_array, Rcpp::NumericVector& bbox);
+
 Rcpp::NumericVector get_point(const Value& point_array, Rcpp::NumericVector& bbox);
 
 Rcpp::NumericMatrix get_multi_point(const Value& multi_point_array, Rcpp::NumericVector& bbox);

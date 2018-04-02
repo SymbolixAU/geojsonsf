@@ -12,7 +12,8 @@
 using namespace Rcpp;
 
 // TODO:
-// - create data.frame with StringsAsFactors = false
+// - handle incorrectly formed geometry type
+// -- e.g., MultiPoint with only one-nested array
 
 
 void parse_geometry_object(Rcpp::List& sfc,
@@ -41,7 +42,7 @@ void parse_geometry_object(Rcpp::List& sfc,
 		sfc[i] = get_line_string(coord_array, bbox);
 		//sfc_classes[counter] = "LINESTRING";
 
-	} else if (geom_type == "MultiLinestring") {
+	} else if (geom_type == "MultiLineString") {
 		sfc[i] = get_multi_line_string(coord_array, bbox);
 		//sfc_classes[counter] = "MULTILINESTRING";
 
@@ -270,7 +271,7 @@ Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson) {
 
 
 // [[Rcpp::export]]
-Rcpp::DataFrame rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
+Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 
 	// iterate over the geojson
 	int n = geojson.size();
@@ -349,9 +350,15 @@ Rcpp::DataFrame rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
   	}
   }
 
-	Rcpp::DataFrame df(properties);
-	df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-	df.attr("sf_column") = "geometry";
+	Rcpp::IntegerVector nv = seq(1, sfg_objects);
+  properties.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
+  properties.attr("sf_column") = "geometry";
+  properties.attr("row.names") = nv;
+  return properties;
 
-	return df;
+	//Rcpp::DataFrame df(properties);
+	//df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
+	//df.attr("sf_column") = "geometry";
+
+	//return df;
 }

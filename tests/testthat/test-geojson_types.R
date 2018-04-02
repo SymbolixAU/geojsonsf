@@ -2,7 +2,7 @@
 context("types")
 
 
-test_that("geojson types correctly captured in df", {
+test_that("geojson property types correctly captured in df", {
 
 	## int & strings
 	geo <- '
