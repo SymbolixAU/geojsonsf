@@ -6,6 +6,17 @@
 
 using namespace Rcpp;
 
+// rcpp_geojson_to_sfc
+Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson);
+RcppExport SEXP _geojsonsf_rcpp_geojson_to_sfc(SEXP geojsonSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geojson(geojsonSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_geojson_to_sfc(geojson));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_geojson_to_sf
 Rcpp::DataFrame rcpp_geojson_to_sf(Rcpp::StringVector geojson);
 RcppExport SEXP _geojsonsf_rcpp_geojson_to_sf(SEXP geojsonSEXP) {
@@ -29,6 +40,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_geojsonsf_rcpp_geojson_to_sfc", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sfc, 1},
     {"_geojsonsf_rcpp_geojson_to_sf", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sf, 1},
     {"_geojsonsf_rcpp_stream_in", (DL_FUNC) &_geojsonsf_rcpp_stream_in, 1},
     {NULL, NULL, 0}

@@ -23,7 +23,7 @@
 #   "features": [
 #   {
 #     "type": "Feature",
-#     "properties": null,
+#     "properties": {"foo" : "feature 1.1", "bar" : "feature 1.2"},
 #     "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
 #   },
 #   {
@@ -33,7 +33,7 @@
 #   },
 #   {
 #     "type": "Feature",
-# 	    "properties": null,
+# 	    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
 # 	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
 # 	}
 #  ]
@@ -50,11 +50,11 @@
 #   }]
 # }'
 
-# geojsonsf:::rcpp_geojson_to_sf(f)
-# geojsonsf:::rcpp_geojson_to_sf(g)
-# geojsonsf:::rcpp_geojson_to_sf(gc)
-# geojsonsf:::rcpp_geojson_to_sf(fc1)
-# geojsonsf:::rcpp_geojson_to_sf(fc)
+# geojson_sf(f)
+# geojson_sf(g)
+# geojson_sf(gc)
+# geojson_sf(fc1)
+# geojson_sf(fc)
 
 # sf <- sf::st_read(g)
 # sf
@@ -146,9 +146,9 @@
 # }
 # ]'
 
-# geojsonsf:::rcpp_geojson_to_sf(garr)
-# geojsonsf:::rcpp_geojson_to_sf(gcarr)
-# geojsonsf:::rcpp_geojson_to_sf(fcarr)
+# geojson_sf(garr)
+# geojson_sf(gcarr)
+# geojson_sf(fcarr)
 
 ## PROPERTIES
 
@@ -158,7 +158,7 @@
 # 	"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
 # 	}'
 #
-# geojson_sfc(f)
+# geojson_sf(f)
 
 
 
