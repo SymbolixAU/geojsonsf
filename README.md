@@ -2,6 +2,60 @@
 Conversion between sf and geojson
 
 
+### Geometry
+```{r}
+library(sf)
+g <- '{"type": "Point", "coordinates": [100.0, 0.0]}'
+geojson_sf(g)
+```
+
+### Feature
+```{r}
+f <- '{
+	"type": "Feature",
+	"properties": null,
+	"geometry": {
+	  "type": "LineString", 
+	  "coordinates": [[101.0, 0.0], [102.0, 1.0]]
+	  }
+	}'
+geojson_sf(f)
+```
+
+
+
+gc <- '{
+    "type": "GeometryCollection",
+    "geometries": [
+        {"type": "Point", "coordinates": [100.0, 0.0]},
+        {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+        {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+    ]
+}'
+
+fc <- '{
+  "type": "FeatureCollection",
+  "features": [
+  {
+    "type": "Feature",
+    "properties": {"foo" : "feature 1.1", "bar" : "feature 1.2"},
+    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+  },
+  {
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+  },
+  {
+    "type": "Feature",
+	    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
+	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+	}
+ ]
+}'
+```
+
+
 ```
 library(sf) ## for print methods
 file <- system.file("examples", "california.geojson", package = "geojsonio")
