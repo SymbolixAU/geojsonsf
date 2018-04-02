@@ -1,5 +1,6 @@
 
 [![Travis build status](https://travis-ci.org/SymbolixAU/geojsonsf.svg?branch=master)](https://travis-ci.org/SymbolixAU/geojsonsf)
+[![Coverage status](https://codecov.io/gh/SymbolixAU/geojsonsf/branch/master/graph/badge.svg)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
 # geojsonsf
 Conversion between sf and geojson
@@ -11,7 +12,7 @@ This is a development package, which itself is dependant on another development 
 
 ```
 devtools::install_github("SymbolixAU/rapidjsonr")
-devtools::install_github("SymbolixAU/geojsonsf")
+devtools::install_github("SymbolixAU/geo")
 ```
 
 
