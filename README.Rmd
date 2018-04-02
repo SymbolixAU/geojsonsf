@@ -4,7 +4,9 @@ Conversion between sf and geojson
 
 ### Geometry
 ```{r}
-library(sf)
+library(geojsonsf)
+library(sf)        ## for sf print methods
+
 g <- '{"type": "Point", "coordinates": [100.0, 0.0]}'
 geojson_sf(g)
 ```
@@ -23,16 +25,23 @@ geojson_sf(f)
 ```
 
 
+## Geometry Collection
 
+```{r}
 gc <- '{
-    "type": "GeometryCollection",
-    "geometries": [
-        {"type": "Point", "coordinates": [100.0, 0.0]},
-        {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
-        {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
-    ]
+  "type": "GeometryCollection",
+  "geometries": [
+    {"type": "Point", "coordinates": [100.0, 0.0]},
+    {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+    {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+  ]
 }'
+geojson_sf(gc)
+```
 
+### Feature Collection
+
+```{r}
 fc <- '{
   "type": "FeatureCollection",
   "features": [
@@ -53,6 +62,7 @@ fc <- '{
 	}
  ]
 }'
+geojson_sf(fc)
 ```
 
 
