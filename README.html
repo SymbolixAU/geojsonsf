@@ -210,6 +210,7 @@ geojson_sf(fc)</code></pre>
 ## 1 feature 1.2 feature 1.1             POINT (100 0)
 ## 2        &lt;NA&gt;        &lt;NA&gt; LINESTRING (101 0, 102 1)
 ## 3 feature 3.2 feature 3.1 LINESTRING (101 0, 102 1)</code></pre>
+<p>Reading from file (using <code>geojsonio</code> data)</p>
 <pre><code>library(sf) ## for print methods
 file &lt;- system.file(&quot;examples&quot;, &quot;california.geojson&quot;, package = &quot;geojsonio&quot;)
 
@@ -229,7 +230,7 @@ geojsonsf::geojson_sf(geo)
 # 1 California   38332521 1850-09-09     20502
 </code></pre>
 <hr />
-<p>Some benchmark</p>
+<p>Some benchmarking</p>
 <pre><code>library(RCurl)
 myurl &lt;- &quot;http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json&quot;
 geo &lt;- readLines(url(myurl))

@@ -65,6 +65,7 @@ fc <- '{
 geojson_sf(fc)
 ```
 
+Reading from file (using `geojsonio` data)
 
 ```
 library(sf) ## for print methods
@@ -89,7 +90,7 @@ geojsonsf::geojson_sf(geo)
 
 ---
 
-Some benchmark
+Some benchmarking
 
 ```
 library(RCurl)
