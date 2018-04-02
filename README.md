@@ -69,7 +69,7 @@ microbenchmark(
 #         sf 4.445201 4.445201 4.565980 4.565980 4.686758 4.686758     2
 ```
 
-
+## Examples
 
 ### Geometry
 ```{r}
@@ -157,6 +157,5 @@ geojsonsf::geojson_sf(geo)
 
 ```
 
----
 
 
