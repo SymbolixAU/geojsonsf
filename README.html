@@ -119,9 +119,15 @@ $(document).ready(function () {
 </div>
 
 
+<p><a href="https://travis-ci.org/SymbolixAU/geojsonsf"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5OCIgaGVpZ2h0PSIyMCI+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4Mj0iMCIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2JiYiIgc3RvcC1vcGFjaXR5PSIuMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3Qgcng9IjMiIHdpZHRoPSI5OCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPjxyZWN0IHJ4PSIzIiB4PSIzNyIgd2lkdGg9IjYxIiBoZWlnaHQ9IjIwIiBmaWxsPSIjOWY5ZjlmIi8+PHBhdGggZmlsbD0iIzlmOWY5ZiIgZD0iTTM3IDBoNHYyMGgtNHoiLz48cmVjdCByeD0iMyIgd2lkdGg9Ijk4IiBoZWlnaHQ9IjIwIiBmaWxsPSJ1cmwoI2EpIi8+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLFZlcmRhbmEsR2VuZXZhLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiPjx0ZXh0IHg9IjE5LjUiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj5idWlsZDwvdGV4dD48dGV4dCB4PSIxOS41IiB5PSIxNCI+YnVpbGQ8L3RleHQ+PHRleHQgeD0iNjYuNSIgeT0iMTUiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiPnVua25vd248L3RleHQ+PHRleHQgeD0iNjYuNSIgeT0iMTQiPnVua25vd248L3RleHQ+PC9nPjwvc3ZnPg==" alt="Travis build status" /></a></p>
 <div id="geojsonsf" class="section level1">
 <h1>geojsonsf</h1>
 <p>Conversion between sf and geojson</p>
+<div id="install" class="section level2">
+<h2>Install</h2>
+<p>This is a development package, which itself is dependant on another development package <a href="https://github.com/SymbolixAU/rapidjsonr">rapidjsonr</a></p>
+<pre><code>devtools::install_github(&quot;SymbolixAU/rapidjsonr&quot;)
+devtools::install_github(&quot;SymbolixAU/geojsonsf&quot;)</code></pre>
 <div id="geometry" class="section level3">
 <h3>Geometry</h3>
 <pre class="r"><code>library(geojsonsf)
@@ -157,6 +163,7 @@ geojson_sf(f)</code></pre>
 ## proj4string:    +proj=longlat +datum=WGS84 +no_defs
 ##                    geometry
 ## 1 LINESTRING (101 0, 102 1)</code></pre>
+</div>
 </div>
 <div id="geometry-collection" class="section level2">
 <h2>Geometry Collection</h2>

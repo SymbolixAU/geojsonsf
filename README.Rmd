@@ -5,6 +5,16 @@
 Conversion between sf and geojson
 
 
+## Install
+
+This is a development package, which itself is dependant on another development package [rapidjsonr](https://github.com/SymbolixAU/rapidjsonr)
+
+```
+devtools::install_github("SymbolixAU/rapidjsonr")
+devtools::install_github("SymbolixAU/geojsonsf")
+```
+
+
 ### Geometry
 ```{r}
 library(geojsonsf)
