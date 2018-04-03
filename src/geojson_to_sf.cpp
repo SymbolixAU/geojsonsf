@@ -293,6 +293,7 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 
   Rcpp::List res = construct_sfc(sfg_objects, sf, bbox, geometry_types);
 
+
 	Rcpp::List properties(property_keys.size() + 1);  // expand to include geometry
 
 	property_keys.insert("geometry");
@@ -396,4 +397,6 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 	//df.attr("sf_column") = "geometry";
 
 	//return df;
+
+	//return sf;
 }

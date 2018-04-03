@@ -31,12 +31,12 @@ test_that("individual objects converted to sf", {
 	  {
 	    "type": "Feature",
 	    "properties": null,
-	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+	    "geometry": {"type": "LineString", "coordinates": [[103.0, 0.0], [102.0, 1.0]]}
 	  },
 	  {
 	    "type": "Feature",
 		    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
-		    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+		    "geometry": {"type": "LineString", "coordinates": [[109.0, 0.0], [102.0, 1.0]]}
 		}
 	 ]
 	}'
