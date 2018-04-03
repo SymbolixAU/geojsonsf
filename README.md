@@ -24,21 +24,47 @@ To quickly parse GeoJSON to `sf` objects, and to handle cases not supported by `
 ```{r}
 
 js <- '[
+{
+  "type": "FeatureCollection",
+  "features": [
   {
-    "type": "Point",
-    "coordinates": [
-      100.0, 0.0
-    ]
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
   },
   {
-    "type": "Point",
-      "coordinates": [
-        100.0, 0.0
-    ]
-  }
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "LineString", "coordinates": [[201.0, 0.0], [102.0, 1.0]]}
+  },
+  {
+    "type": "Feature",
+	    "properties": null,
+	    "geometry": {"type": "LineString", "coordinates": [[301.0, 0.0], [102.0, 1.0]]}
+	}
+ ]
+},
+{
+  "type": "FeatureCollection",
+	"features": [
+	{
+	  "type": "Feature",
+	  "properties": null,
+	  "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+	},
+	{
+	  "type": "Feature",
+	  "properties": null,
+	  "geometry": {"type": "LineString", "coordinates": [[501.0, 0.0], [102.0, 1.0]]}
+	},
+	{
+	  "type": "Feature",
+	  "properties": null,
+	  "geometry": {"type": "LineString", "coordinates": [[601.0, 0.0], [102.0, 1.0]]}
+	}
+  ]
+}
 ]'
-
-sf::st_read(js, quiet = T)  ## ERROR
 
 geojson_sf(js)
 
