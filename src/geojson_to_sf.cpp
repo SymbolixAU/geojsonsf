@@ -382,35 +382,6 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
   		} else {
   			Rcpp::stop("unknown column data type " + type);
   		}
-
-  		/*
-  		if (type == "String") {
-
-  			std::string value = p.value.GetString();
-  	    update_string_vector(properties, key, value, row_index-1);
-
-  		} else if (type == "Number") {
-
-  			double value = p.value.GetDouble();
-  			update_numeric_vector(properties, key, value, row_index-1);
-
-  		} else if (type == "False" || type == "True") {
-
-  			bool value = p.value.GetBool();
-  			update_logical_vector(properties, key, value, row_index-1);
-
-  		} else if (type == "Null") {
-  			// don't do anything...
-  		} else if (type == "Object") {
-  			// TODO: convert to string?
-
-  		} else if (type == "Array") {
-  			// TODO: convert to string?
-
-  		} else {
-  			Rcpp::stop("unknown column data type " + type);
-  		}
-  		*/
   	}
   }
 
