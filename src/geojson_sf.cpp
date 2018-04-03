@@ -1,9 +1,15 @@
 
 #include "rapidjson/document.h"
 #include <Rcpp.h>
+//#include <iostream>
+//#include <string>
+#include <sstream>
 #include "geojsonsf.h"
+//#include "geojson_sf.h"
 using namespace rapidjson;
 using namespace Rcpp;
+
+
 
 /*
  * Updates a list element to string
@@ -12,6 +18,8 @@ void vector_to_string(Rcpp::List& lst, std::string& key) {
   Rcpp::StringVector sv = as<Rcpp::StringVector>(lst[key]);
   lst[key] = sv;
 }
+
+
 
 void get_property_types(const Value& v, std::map< std::string, std::string>& property_types) {
   for (Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter){
@@ -40,6 +48,9 @@ void get_property_types(const Value& v, std::map< std::string, std::string>& pro
     // if it doesn't exist, add the key / type to the map
   }
 }
+
+
+
 
 void get_property_keys(const Value& v, std::set< std::string >& property_keys) {
   for (Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter){

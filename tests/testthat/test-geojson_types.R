@@ -1,7 +1,6 @@
 
 context("types")
 
-
 test_that("geojson property types correctly captured in df", {
 
 	## int & strings
@@ -80,6 +79,27 @@ test_that("geojson property types correctly captured in df", {
   }'
 
 	sf <- geojson_sf(geo)
+
+	## Different types for teh same property
+	geo <- '
+{
+	"type" : "FeatureCollection",
+	  "features" : [{
+	  "type" : "Feature",
+	  "properties" : { "id" : 1 },
+	  "geometry" : { "type" : "Point", "coordinates" : [0,0] }
+	},
+	{
+	  "type" : "Feature",
+	  "properties" : { "id" : "a" },
+	  "geometry" : { "type" : "Point", "coordinates" : [0,0] }
+	}]
+}'
+
+	sf <- geojson_sf(geo)
+	expect_true(
+		is.character(sf$id)
+	)
 
 	## TODO:
 	## - Object type converted to JSON string

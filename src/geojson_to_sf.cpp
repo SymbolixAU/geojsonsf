@@ -269,7 +269,6 @@ Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson) {
   return lst;
 }
 
-
 // [[Rcpp::export]]
 Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 
@@ -317,10 +316,74 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
   	row_index = std::stoi(m.name.GetString());
 
   	for (auto& p : m.value.GetObject() ) {
-  		std::string key = p.name.GetString();
 
+  		std::string key = p.name.GetString();
   		std::string type = property_types[key];
 
+  		// TODO:
+  		// if the actual type of the property object is different,
+  		// need to extract it using the correct `GetType()` method,
+  		// then convert it to String
+  		std::string value_type = geojsonsf::ARRAY_TYPES[p.value.GetType()];
+
+  		if (value_type == "String") {
+  			std::string this_value = p.value.GetString();
+
+  			if (type != "String") {
+  				std::string value = any_to_string(this_value);
+  				update_string_vector(properties, key, value, row_index-1);
+  			} else {
+  				std::string value = this_value;
+  				update_string_vector(properties, key, value, row_index-1);
+  			}
+
+  		} else if (value_type == "Number") {
+
+  			double this_value = p.value.GetDouble();
+
+  			if (type != "Number") {
+  				std::string value = any_to_string(this_value);
+  				update_string_vector(properties, key, value, row_index-1);
+  			} else {
+  				double value = p.value.GetDouble();
+  				update_numeric_vector(properties, key, value, row_index-1);
+  			}
+
+  		} else if (value_type == "False") {
+
+  			bool this_value = p.value.GetBool();
+  			if (type != "False") {
+  				std::string value = any_to_string(this_value);
+  				update_string_vector(properties, key, value, row_index-1);
+  			} else {
+  				bool value = p.value.GetBool();
+  				update_logical_vector(properties, key, value, row_index-1);
+  			}
+
+  		} else if (value_type == "True") {
+
+  			bool this_value = p.value.GetBool();
+  			if (type != "True") {
+  				std::string value = any_to_string(this_value);
+  				update_string_vector(properties, key, value, row_index-1);
+  			} else {
+  				bool value = p.value.GetBool();
+  				update_logical_vector(properties, key, value, row_index-1);
+  			}
+
+  		} else if (value_type == "Null") {
+  			// don't do anything...
+  		} else if (value_type == "Object") {
+  			// TODO: convert to string?
+
+  		} else if (value_type == "Array") {
+  			// TODO: convert to string?
+
+  		} else {
+  			Rcpp::stop("unknown column data type " + type);
+  		}
+
+  		/*
   		if (type == "String") {
 
   			std::string value = p.value.GetString();
@@ -347,6 +410,7 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
   		} else {
   			Rcpp::stop("unknown column data type " + type);
   		}
+  		*/
   	}
   }
 
