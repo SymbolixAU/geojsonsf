@@ -88,6 +88,13 @@ Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
 }
 */
 
+void find_geometry(Rcpp::List& sf) {
+
+	std::string geom_type;
+
+
+
+}
 
 Rcpp::List construct_sfc(int& sfg_objects,
                          Rcpp::List& sf,
@@ -97,12 +104,23 @@ Rcpp::List construct_sfc(int& sfg_objects,
   Rcpp::List sfc_output(sfg_objects);
   std::string geom_attr;
 
+  // recruse through the list to find the geometry
+
+  /*
   int counter = 0;
   Rcpp::List lvl1 = sf[0];
+  //Rcpp::List lvl1 = sf;
 
   for (int i = 0; i < sf.length(); i++) {
-  	//Rcpp::List ele = sf[i];  // going one level deeper becase we are working on a StringVector
-  	Rcpp::List ele = lvl1[i];
+    // going one level deeper becase we are working on a StringVector
+  	// IFF we're working with an R vector, i will only ever be one?
+  	//Rcpp::List ele = lvl1[i];
+  	//Rcpp::List lvl1 = sf[i];
+  	Rcpp::List ele = lvl1[0];
+
+  	Rcpp::Rcout << "debug: lvl1 size " << lvl1.size() << std::endl;
+  	Rcpp::Rcout << "debug: i : " << i << std::endl;
+
 
   	for (int j = 0; j < ele.size(); j++) {
       Rcpp::List ele2 = ele[j];
@@ -116,6 +134,7 @@ Rcpp::List construct_sfc(int& sfg_objects,
 
         std::string tmp_attr = ele2.attr("geo_type");
         geom_attr = tmp_attr;
+        Rcpp::Rcout << "geo_type: " << geom_attr << std::endl;
 
         if (geom_attr == "FEATURECOLLECTION") {
           // 2 level sdeep
@@ -133,6 +152,7 @@ Rcpp::List construct_sfc(int& sfg_objects,
       }
     }
   }
+  */
 
   attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types);
 

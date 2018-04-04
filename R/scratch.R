@@ -1,5 +1,10 @@
 ### ARRAYS
 
+## TODO:
+## - ARRAY of points not parsed correctly
+## - R Vector of poitns not parsed correctly
+
+
 # garr <- '[
 #   {
 #     "type": "Point",
@@ -10,10 +15,11 @@
 #   {
 #     "type": "Point",
 #       "coordinates": [
-#         100.0, 0.0
+#         200.0, 0.0
 #     ]
 #   }
 # ]'
+# geojson_sf(garr)
 #
 # gcarr <- '[{
 #     "type": "GeometryCollection",
@@ -189,14 +195,14 @@
 # }
 # ]'
 # sf <- geojson_sf(js)
+#
+#
+# geo <- c("{\"type\":\"Point\",\"coordinates\":[-118.68152563269095,36.43764870908927]}",
+# 				 "{\"type\":\"Point\",\"coordinates\":[-118.67408758213843,36.43366018922779]}",
+# 				 "[{\"type\":\"Point\",\"coordinates\":[-118.67708346361097,36.44208638659282]},
+# 				 {\"type\":\"Point\",\"coordinates\":[-118.67886661944996,36.44110273135671]},
+# 				 {\"type\":\"Point\",\"coordinates\":[-118.68089232041565,36.44173155205561]}]")
 
-
-# geo <- c("{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.68152563269095,36.43764870908927]}",
-# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.67408758213843,36.43366018922779]}",
-# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.67708346361097,36.44208638659282]}",
-# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.67886661944996,36.44110273135671]}",
-# 				 "{\"geodesic\":true,\"type\":\"Point\",\"coordinates\":[-118.68089232041565,36.44173155205561]}")
-
-# geojsonsf:::rcpp_geojson_to_sf(geo)
-# sf::st_read(geo, quiet = T)
+#
+# geojson_sf(geo[2])
 
