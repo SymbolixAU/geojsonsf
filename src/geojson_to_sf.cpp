@@ -31,32 +31,45 @@ void parse_geometry_object(Rcpp::List& sfc,
 	geometry_types.insert(geom_type);
 
 	if (geom_type == "Point") {
-		sfc[i] = get_point(coord_array, bbox);
+		Rcpp::NumericVector nv = get_point(coord_array, bbox);
+		nv.attr("geo_type") = "Geometry";
+		sfc[i] = nv;
 		//sfc_classes[counter] = "POINT";
 
 	} else if (geom_type == "MultiPoint") {
-		sfc[i] = get_multi_point(coord_array, bbox);
+		Rcpp::NumericMatrix nm = get_multi_point(coord_array, bbox);
+		nm.attr("geo_type") = "Geometry";
+		sfc[i] = nm;
 		//sfc_classes[counter] = "MULTIPOINT";
 
 	} else if (geom_type == "LineString") {
-		sfc[i] = get_line_string(coord_array, bbox);
+		Rcpp::NumericMatrix nm = get_line_string(coord_array, bbox);
+		nm.attr("geo_type") = "Geometry";
+		sfc[i] = nm;
 		//sfc_classes[counter] = "LINESTRING";
 
 	} else if (geom_type == "MultiLineString") {
-		sfc[i] = get_multi_line_string(coord_array, bbox);
+		Rcpp::List lst = get_multi_line_string(coord_array, bbox);
+		lst.attr("geo_type") = "Geometry";
+		sfc[i] = lst;
 		//sfc_classes[counter] = "MULTILINESTRING";
 
 	} else if (geom_type == "Polygon") {
-		sfc[i] = get_polygon(coord_array, bbox);
+		Rcpp::List lst = get_polygon(coord_array, bbox);
+		lst.attr("geo_type") = "Geometry";
+		sfc[i] = lst;
 		//sfc_classes[counter] = "POLYGON";
 
 	} else if (geom_type == "MultiPolygon") {
-		sfc[i] = get_multi_polygon(coord_array, bbox);
+		Rcpp::List lst = get_multi_polygon(coord_array, bbox);
+		lst.attr("geo_type") = "Geometry";
+		sfc[i] = lst;
 		//sfc_classes[counter] = "MULTIPOLYGON";
 
 	} else {
 		Rcpp::stop("unknown sfg type");
 	}
+
 }
 
 Rcpp::List parse_geometry_collection_object(const Value& val,
@@ -191,9 +204,7 @@ void parse_geojson(const Value& v,
 	} else if (geom_type == "GeometryCollection") {
 
 		res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects);
-		//Rcpp::List res_lvl(1);
-		//res_lvl[0] = res;
-		//res_lvl.attr("geo_type") = "GEOMETRY";
+		res.attr("geo_type") = "GEOMETRYCOLLECTION";
 		sfg_objects++;
 		sfc[i] = res;
 
