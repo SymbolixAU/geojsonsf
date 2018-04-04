@@ -1,4 +1,4 @@
-contxt("geojson_mix")
+context("geojson_mix")
 
 
 test_that("mixture of GeoJSON objects in R", {

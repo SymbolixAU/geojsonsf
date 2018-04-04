@@ -94,8 +94,6 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
   for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
 
-    int x = TYPEOF(*it);
-
     switch( TYPEOF(*it) ) {
     case VECSXP: {
       Rcpp::List tmp = as<Rcpp::List>(*it);
@@ -112,7 +110,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
       if(Rf_isNull(tmp.attr("class"))){
         // TODO:
         // handle missing geo_type in vector
-				Rcpp::stop("Geometry could not be determined");
+        Rcpp::stop("Geometry could not be determined");
       } else {
         res[sfg_counter] = tmp;
         sfg_counter++;

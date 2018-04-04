@@ -73,4 +73,12 @@ Rcpp::List geojson_to_sf(const char* geojson, Rcpp::NumericVector& bbox,
                          Document& doc_properties,
                          std::map< std::string, std::string>& property_types);
 
+void setup_property_vectors(std::map< std::string, std::string>& property_types,
+                            Rcpp::List& properties, int& sfg_objects);
+
+void fill_property_vectors(Document& doc_properties,
+                           std::map< std::string, std::string>& property_types,
+                           Rcpp::List& properties,
+                           int& row_index);
+
 #endif
