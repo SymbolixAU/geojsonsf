@@ -174,7 +174,7 @@ void parse_geojson(const Value& v,
 
 		res = parse_feature_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
 		//sfg_objects++;
-		res.attr("geo_type") = "FEATURE";
+		//res.attr("geo_type") = "FEATURE";
 		sfc[i] = res;
 
 	} else if (geom_type == "FeatureCollection") {
@@ -185,14 +185,14 @@ void parse_geojson(const Value& v,
 		//Rcpp::Rcout << "feature collection length: " << res.length() << std::endl;
 		//Rcpp::Rcout << "sfg_objects : " << sfg_objects << std::endl;
 
-		res.attr("geo_type") = "FEATURECOLLECTION";
+		//res.attr("geo_type") = "FEATURECOLLECTION";
 
 		sfc[i] = res;
 
 	} else if (geom_type == "GeometryCollection") {
 
 		res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects);
-		res.attr("geo_type") = "GEOMETRYCOLLECTION";
+		//res.attr("geo_type") = "GEOMETRYCOLLECTION";
 		sfg_objects++;
 		sfc[i] = res;
 
