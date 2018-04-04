@@ -7,7 +7,7 @@
 #include "geojson_sfc.h"
 #include "geojson_sfg.h"
 #include "geojson_validate.h"
-#include "geojson_sf.h"
+#include "geojson_properties.h"
 
 using namespace Rcpp;
 
@@ -139,7 +139,7 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
 
 	int n = features.Size(); // number of features
 	Rcpp::List feature_collection(n);
-	std::string geom_type = "FeatureCollection";
+	//std::string geom_type = "FeatureCollection";
 
 	for (int i = 0; i < n; i++) {
 		const Value& feature = features[i];
@@ -191,6 +191,9 @@ void parse_geojson(const Value& v,
 	} else if (geom_type == "GeometryCollection") {
 
 		res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects);
+		//Rcpp::List res_lvl(1);
+		//res_lvl[0] = res;
+		//res_lvl.attr("geo_type") = "GEOMETRY";
 		sfg_objects++;
 		sfc[i] = res;
 

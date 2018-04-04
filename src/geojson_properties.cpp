@@ -1,11 +1,8 @@
 
 #include "rapidjson/document.h"
 #include <Rcpp.h>
-//#include <iostream>
-//#include <string>
 #include <sstream>
 #include "geojsonsf.h"
-//#include "geojson_sf.h"
 using namespace rapidjson;
 using namespace Rcpp;
 

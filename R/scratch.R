@@ -19,6 +19,7 @@
 #     ]
 #   }
 # ]'
+# geojson_sf(garr)
 #
 # gcarr <- '[{
 #     "type": "GeometryCollection",
