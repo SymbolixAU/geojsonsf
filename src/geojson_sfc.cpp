@@ -25,7 +25,7 @@ std::string attach_class(Rcpp::List& sfc, std::string geom_type,
       geometry_class = "GEOMETRY";
     } else {
 
-      std::set<std::string>::iterator iter = geometry_types.begin();
+      //std::set<std::string>::iterator iter = geometry_types.begin();
     	// It will move forward the passed iterator by passed value
     	//std::advance(iter, 1);
     	std::string type = *geometry_types.begin();
