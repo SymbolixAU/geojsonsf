@@ -7,8 +7,15 @@
 geojson_sfc(geojson)
 }
 \arguments{
-\item{geojson}{string of GeoJSON}
+\item{geojson}{string or vector of GeoJSON}
 }
 \description{
 Extracts geometries from GeoJSON and returns an `sfc` object
+}
+\examples{
+## load 'sf' for print methods
+# library(sf)
+geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
+geojson_sfc(geojson)
+
 }

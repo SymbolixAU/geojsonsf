@@ -1,6 +1,7 @@
 ## TODO
 ## - nested arrays / objects inside properties
 ## - test erroneous inputs
+## - no need to use / call / create 'properties' in construct_sfc
 
 ## ERRORS
 # geojson_sf(1:5)

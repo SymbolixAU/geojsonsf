@@ -332,8 +332,7 @@ void fill_property_vectors(Document& doc_properties,
 	}
 }
 
-// [[Rcpp::export]]
-Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson) {
+Rcpp::List create_sfc(Rcpp::StringVector geojson) {
 	// iterate over the geojson
 	int n = geojson.size();
 	int sfg_objects = 0;  // keep track of number of objects
@@ -347,14 +346,43 @@ Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson) {
 
 	Document doc_properties;    // Document to store the 'properties'
 	doc_properties.SetObject();
-	Rcpp::List sf(n);
+	Rcpp::List sfc(n);
 
 	for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
-		sf[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+		sfc[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
 	}
 
-	Rcpp::List res = construct_sfc(sfg_objects, sf, bbox, geometry_types);
+	Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
 	return res;
+}
+
+// [[Rcpp::export]]
+Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson) {
+	Rcpp::List sfc = create_sfc(geojson);
+	return sfc;
+}
+
+Rcpp::List construct_sf(Rcpp::List& lst, std::set< std::string >& property_keys,
+                     std::map< std::string, std::string>& property_types,
+                     Document& doc_properties,
+                     int& sfg_objects,
+                     int& row_index) {
+
+	Rcpp::List properties(property_keys.size() + 1);  // expand to include geometry
+
+	property_keys.insert("geometry");
+	properties.names() = property_keys;
+	properties["geometry"] = lst;
+
+	setup_property_vectors(property_types, properties, sfg_objects);
+	fill_property_vectors(doc_properties, property_types, properties, row_index);
+
+	Rcpp::IntegerVector nv = seq(1, sfg_objects);
+	properties.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
+	properties.attr("sf_column") = "geometry";
+	properties.attr("row.names") = nv;
+
+	return properties;
 }
 
 // [[Rcpp::export]]
@@ -373,27 +401,14 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 
   Document doc_properties;    // Document to store the 'properties'
   doc_properties.SetObject();
-  Rcpp::List sf(n);
+  Rcpp::List sfc(n);
 
   for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
-    sf[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+    sfc[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
   }
 
-  Rcpp::List res = construct_sfc(sfg_objects, sf, bbox, geometry_types);
+  Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
+  Rcpp::List sf = construct_sf(res, property_keys, property_types, doc_properties, sfg_objects, row_index);
 
-
-  Rcpp::List properties(property_keys.size() + 1);  // expand to include geometry
-
-  property_keys.insert("geometry");
-  properties.names() = property_keys;
-  properties["geometry"] = res;
-
-  setup_property_vectors(property_types, properties, sfg_objects);
-  fill_property_vectors(doc_properties, property_types, properties, row_index);
-
-  Rcpp::IntegerVector nv = seq(1, sfg_objects);
-  properties.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-  properties.attr("sf_column") = "geometry";
-  properties.attr("row.names") = nv;
-  return properties;
+  return sf;
 }

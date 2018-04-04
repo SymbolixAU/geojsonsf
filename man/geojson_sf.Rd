@@ -7,8 +7,16 @@
 geojson_sf(geojson)
 }
 \arguments{
-\item{geojson}{string of GeoJSON}
+\item{geojson}{string or vector of GeoJSON}
 }
 \description{
 Converts GeoJSON to an `sf` object
+}
+\examples{
+
+## load 'sf' for print methods
+# library(sf)
+geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
+geojson_sf(geojson)
+
 }
