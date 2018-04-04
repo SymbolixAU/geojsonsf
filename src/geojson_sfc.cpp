@@ -88,13 +88,58 @@ Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
 }
 */
 
-void find_geometry(Rcpp::List& sf) {
+void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
-	std::string geom_type;
+  std::string geom_attr;
 
+  for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
 
+    int x = TYPEOF(*it);
 
+    switch( TYPEOF(*it) ) {
+    case VECSXP: {
+      Rcpp::List tmp = as<Rcpp::List>(*it);
+      if(Rf_isNull(tmp.attr("class"))){
+        fetch_geometries(tmp, res, sfg_counter);
+      } else {
+        res[sfg_counter] = tmp;
+        sfg_counter++;
+      }
+      break;
+    }
+    case REALSXP: {
+      Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
+      if(Rf_isNull(tmp.attr("class"))){
+        // TODO:
+        // handle missing geo_type in vector
+				Rcpp::stop("Geometry could not be determined");
+      } else {
+        res[sfg_counter] = tmp;
+        sfg_counter++;
+      }
+      break;
+    }
+    case INTSXP: {
+      Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
+      if(Rf_isNull(tmp.attr("class"))){
+        // TODO:
+        //handle missing geo_type in vector
+        Rcpp::stop("Geometry could not be determined");
+      } else {
+        res[sfg_counter] = tmp;
+        sfg_counter++;
+      }
+      break;
+    }
+    default: {
+      Rcpp::stop("Geometry could not be determined");
+    }
+    }
+  }
 }
+
+
+
 
 Rcpp::List construct_sfc(int& sfg_objects,
                          Rcpp::List& sf,
@@ -104,56 +149,9 @@ Rcpp::List construct_sfc(int& sfg_objects,
   Rcpp::List sfc_output(sfg_objects);
   std::string geom_attr;
 
-  // recruse through the list to find the geometry
+  int sfg_counter = 0;
 
-  /*
-  int counter = 0;
-  Rcpp::List lvl1 = sf[0];
-  //Rcpp::List lvl1 = sf;
-
-  for (int i = 0; i < sf.length(); i++) {
-    // going one level deeper becase we are working on a StringVector
-  	// IFF we're working with an R vector, i will only ever be one?
-  	//Rcpp::List ele = lvl1[i];
-  	//Rcpp::List lvl1 = sf[i];
-  	Rcpp::List ele = lvl1[0];
-
-  	Rcpp::Rcout << "debug: lvl1 size " << lvl1.size() << std::endl;
-  	Rcpp::Rcout << "debug: i : " << i << std::endl;
-
-
-  	for (int j = 0; j < ele.size(); j++) {
-      Rcpp::List ele2 = ele[j];
-
-      if (Rf_isNull(ele2.attr("geo_type"))){
-        geom_attr = "GEOMETRY";
-
-        sfc_output[counter] = ele[0];
-        counter++;
-       } else {
-
-        std::string tmp_attr = ele2.attr("geo_type");
-        geom_attr = tmp_attr;
-        Rcpp::Rcout << "geo_type: " << geom_attr << std::endl;
-
-        if (geom_attr == "FEATURECOLLECTION") {
-          // 2 level sdeep
-          for (int k = 0; k < ele2.size(); k++) {
-            Rcpp::List lvl2 = ele2[k];
-            sfc_output[counter] = lvl2[0];
-            counter++;
-          }
-
-        } else if (geom_attr == "FEATURE" ) {
-
-          sfc_output[counter] = ele2[0];
-          counter++;
-        }
-      }
-    }
-  }
-  */
-
+  fetch_geometries(sf, sfc_output, sfg_counter);
   attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types);
 
   return sfc_output;

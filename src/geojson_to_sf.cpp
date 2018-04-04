@@ -57,6 +57,7 @@ void parse_geometry_object(Rcpp::List& sfc,
 	} else {
 		Rcpp::stop("unknown sfg type");
 	}
+
 }
 
 Rcpp::List parse_geometry_collection_object(const Value& val,
@@ -191,9 +192,7 @@ void parse_geojson(const Value& v,
 	} else if (geom_type == "GeometryCollection") {
 
 		res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects);
-		//Rcpp::List res_lvl(1);
-		//res_lvl[0] = res;
-		//res_lvl.attr("geo_type") = "GEOMETRY";
+		res.attr("geo_type") = "GEOMETRYCOLLECTION";
 		sfg_objects++;
 		sfc[i] = res;
 
