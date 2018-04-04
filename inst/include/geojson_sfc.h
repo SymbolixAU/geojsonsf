@@ -10,6 +10,8 @@ Rcpp::CharacterVector sfcClass(Vector<RTYPE> v);
 
 Rcpp::CharacterVector getSfcClass(SEXP sfc);
 
+void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter);
+
 void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point);
 
 std::string attach_class(Rcpp::List& sfc, std::string geom_type,

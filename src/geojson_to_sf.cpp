@@ -31,39 +31,27 @@ void parse_geometry_object(Rcpp::List& sfc,
 	geometry_types.insert(geom_type);
 
 	if (geom_type == "Point") {
-		Rcpp::NumericVector nv = get_point(coord_array, bbox);
-		nv.attr("geo_type") = "Geometry";
-		sfc[i] = nv;
+		sfc[i] = get_point(coord_array, bbox);
 		//sfc_classes[counter] = "POINT";
 
 	} else if (geom_type == "MultiPoint") {
-		Rcpp::NumericMatrix nm = get_multi_point(coord_array, bbox);
-		nm.attr("geo_type") = "Geometry";
-		sfc[i] = nm;
+		sfc[i] = get_multi_point(coord_array, bbox);
 		//sfc_classes[counter] = "MULTIPOINT";
 
 	} else if (geom_type == "LineString") {
-		Rcpp::NumericMatrix nm = get_line_string(coord_array, bbox);
-		nm.attr("geo_type") = "Geometry";
-		sfc[i] = nm;
+		sfc[i] = get_line_string(coord_array, bbox);
 		//sfc_classes[counter] = "LINESTRING";
 
 	} else if (geom_type == "MultiLineString") {
-		Rcpp::List lst = get_multi_line_string(coord_array, bbox);
-		lst.attr("geo_type") = "Geometry";
-		sfc[i] = lst;
+		sfc[i] = get_multi_line_string(coord_array, bbox);
 		//sfc_classes[counter] = "MULTILINESTRING";
 
 	} else if (geom_type == "Polygon") {
-		Rcpp::List lst = get_polygon(coord_array, bbox);
-		lst.attr("geo_type") = "Geometry";
-		sfc[i] = lst;
+		sfc[i] = get_polygon(coord_array, bbox);
 		//sfc_classes[counter] = "POLYGON";
 
 	} else if (geom_type == "MultiPolygon") {
-		Rcpp::List lst = get_multi_polygon(coord_array, bbox);
-		lst.attr("geo_type") = "Geometry";
-		sfc[i] = lst;
+		sfc[i] = get_multi_polygon(coord_array, bbox);
 		//sfc_classes[counter] = "MULTIPOLYGON";
 
 	} else {

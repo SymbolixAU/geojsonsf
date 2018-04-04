@@ -90,53 +90,52 @@ Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
 
 void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
-	std::string geom_attr;
+  std::string geom_attr;
 
-	for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
+  for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
 
-		int x = TYPEOF(*it);
-		//Rcpp::Rcout << "type: " << x << std::endl;
+    int x = TYPEOF(*it);
 
-		switch( TYPEOF(*it) ) {
-		case VECSXP: {
-			Rcpp::List tmp = as<Rcpp::List>(*it);
-			if(Rf_isNull(tmp.attr("geo_type"))){
-				//Rcpp::Rcout << "found a list with no attribute" << std::endl;
-				fetch_geometries(tmp, res, sfg_counter);
-			} else {
-				//Rcpp::Rcout << "FOUND GEOMETRY" << std::endl;
-				res[sfg_counter] = tmp;
-				sfg_counter++;
-			}
-			break;
-		}
-		case REALSXP: {
-			Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
-			if(Rf_isNull(tmp.attr("geo_type"))){
-			//	Rcpp::Rcout << "found a vector with no attribute" << std::endl;
-			} else {
-				//Rcpp::Rcout << "FOUND GEOMETRY : Numeric Vector " << std::endl;
-				res[sfg_counter] = tmp;
-				sfg_counter++;
-			}
-			break;
-		}
-		case INTSXP: {
-			Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
-			if(Rf_isNull(tmp.attr("geo_type"))){
-				//Rcpp::Rcout << "found a vector with no attribute" << std::endl;
-			} else {
-				//Rcpp::Rcout << "FOUND GEOMETRY : Integer Vector " << std::endl;
-				res[sfg_counter] = tmp;
-				sfg_counter++;
-			}
-			break;
-		}
-		default: {
-			Rcpp::stop("geometry not found");
-		}
-		}
-	}
+    switch( TYPEOF(*it) ) {
+    case VECSXP: {
+      Rcpp::List tmp = as<Rcpp::List>(*it);
+      if(Rf_isNull(tmp.attr("class"))){
+        fetch_geometries(tmp, res, sfg_counter);
+      } else {
+        res[sfg_counter] = tmp;
+        sfg_counter++;
+      }
+      break;
+    }
+    case REALSXP: {
+      Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
+      if(Rf_isNull(tmp.attr("class"))){
+        // TODO:
+        // handle missing geo_type in vector
+				Rcpp::stop("Geometry could not be determined");
+      } else {
+        res[sfg_counter] = tmp;
+        sfg_counter++;
+      }
+      break;
+    }
+    case INTSXP: {
+      Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
+      if(Rf_isNull(tmp.attr("class"))){
+        // TODO:
+        //handle missing geo_type in vector
+        Rcpp::stop("Geometry could not be determined");
+      } else {
+        res[sfg_counter] = tmp;
+        sfg_counter++;
+      }
+      break;
+    }
+    default: {
+      Rcpp::stop("Geometry could not be determined");
+    }
+    }
+  }
 }
 
 

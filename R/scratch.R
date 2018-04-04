@@ -4,6 +4,8 @@
 ## - ARRAY of points not parsed correctly
 ## - R Vector of poitns not parsed correctly
 
+## - remove 'geo_type' attribute(s)
+## - ensure 'sfg' attributes remain
 
 # garr <- '[
 #   {
@@ -19,7 +21,6 @@
 #     ]
 #   }
 # ]'
-# geojson_sf(garr)
 #
 # gcarr <- '[{
 #     "type": "GeometryCollection",
@@ -82,9 +83,9 @@
 # }
 # ]'
 
-# geojson_sf(garr)
-# geojson_sf(gcarr)
-# geojson_sf(fcarr)
+# sf <- geojson_sf(garr)
+# sf <- geojson_sf(gcarr)
+# sf <- geojson_sf(fcarr)
 
 ## PROPERTIES
 
