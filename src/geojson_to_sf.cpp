@@ -23,62 +23,61 @@ void parse_geometry_object(Rcpp::List& sfc,
                            std::set< std::string >& geometry_types,
                            int& sfg_objects) {
 
-	validate_type(geometry, sfg_objects);
-	validate_coordinates(geometry, sfg_objects);
+  validate_type(geometry, sfg_objects);
+  validate_coordinates(geometry, sfg_objects);
 
-	std::string geom_type = geometry["type"].GetString();
-	const Value& coord_array = geometry["coordinates"];
-	geometry_types.insert(geom_type);
+  std::string geom_type = geometry["type"].GetString();
+  const Value& coord_array = geometry["coordinates"];
+  geometry_types.insert(geom_type);
 
-	if (geom_type == "Point") {
-		sfc[i] = get_point(coord_array, bbox);
-		//sfc_classes[counter] = "POINT";
+  if (geom_type == "Point") {
+    sfc[i] = get_point(coord_array, bbox);
+    //sfc_classes[counter] = "POINT";
 
-	} else if (geom_type == "MultiPoint") {
-		sfc[i] = get_multi_point(coord_array, bbox);
-		//sfc_classes[counter] = "MULTIPOINT";
+  } else if (geom_type == "MultiPoint") {
+    sfc[i] = get_multi_point(coord_array, bbox);
+    //sfc_classes[counter] = "MULTIPOINT";
 
-	} else if (geom_type == "LineString") {
-		sfc[i] = get_line_string(coord_array, bbox);
-		//sfc_classes[counter] = "LINESTRING";
+  } else if (geom_type == "LineString") {
+    sfc[i] = get_line_string(coord_array, bbox);
+    //sfc_classes[counter] = "LINESTRING";
 
-	} else if (geom_type == "MultiLineString") {
-		sfc[i] = get_multi_line_string(coord_array, bbox);
-		//sfc_classes[counter] = "MULTILINESTRING";
+  } else if (geom_type == "MultiLineString") {
+    sfc[i] = get_multi_line_string(coord_array, bbox);
+    //sfc_classes[counter] = "MULTILINESTRING";
 
-	} else if (geom_type == "Polygon") {
-		sfc[i] = get_polygon(coord_array, bbox);
-		//sfc_classes[counter] = "POLYGON";
+  } else if (geom_type == "Polygon") {
+    sfc[i] = get_polygon(coord_array, bbox);
+    //sfc_classes[counter] = "POLYGON";
 
-	} else if (geom_type == "MultiPolygon") {
-		sfc[i] = get_multi_polygon(coord_array, bbox);
-		//sfc_classes[counter] = "MULTIPOLYGON";
+  } else if (geom_type == "MultiPolygon") {
+    sfc[i] = get_multi_polygon(coord_array, bbox);
+    //sfc_classes[counter] = "MULTIPOLYGON";
 
-	} else {
-		Rcpp::stop("unknown sfg type");
-	}
-
+  } else {
+    Rcpp::stop("unknown sfg type");
+  }
 }
 
 Rcpp::List parse_geometry_collection_object(const Value& val,
                                             Rcpp::NumericVector& bbox,
                                             std::set< std::string >& geometry_types,
                                             int& sfg_objects) {
-	std::string geom_type;
+  std::string geom_type;
 
-	auto geometries = val["geometries"].GetArray();
-	int n = geometries.Size();
+  auto geometries = val["geometries"].GetArray();
+  int n = geometries.Size();
 
-	Rcpp::List geom_collection(n);
+  Rcpp::List geom_collection(n);
 
-	for (int i = 0; i < n; i++) {
-		const Value& gcval = geometries[i];
-		geom_type = gcval["type"].GetString();
-		parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
-	}
-	geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
+  for (int i = 0; i < n; i++) {
+    const Value& gcval = geometries[i];
+    geom_type = gcval["type"].GetString();
+    parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
+  }
+  geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
 
-	return geom_collection;
+  return geom_collection;
 }
 
 
@@ -91,37 +90,28 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 Document& doc_properties,
                                 std::map< std::string, std::string>& property_types) {
 
-	validate_geometry(feature, sfg_objects);
-	validate_properties(feature, sfg_objects);
+  validate_geometry(feature, sfg_objects);
+  validate_properties(feature, sfg_objects);
 
-	const Value& geometry = feature["geometry"];
-	Rcpp::List sfc(1);
-	parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
-	sfg_objects++;
-	// get property keys
-	const Value& p = feature["properties"];
-	get_property_keys(p, property_keys);
-	get_property_types(p, property_types);
-
-	// TODO:
-	// parse properties
-	// https://github.com/Tencent/rapidjson/blob/master/doc/faq.md
-	// DOM and SAX
+  const Value& geometry = feature["geometry"];
+  Rcpp::List sfc(1);
+  parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
+  sfg_objects++;
+  // get property keys
+  const Value& p = feature["properties"];
+  get_property_keys(p, property_keys);
+  get_property_types(p, property_types);
 
 
   //https://stackoverflow.com/a/33473321/5977215
-  //std::string s = std::to_string(sfg_objects);
-  //Value index(s.c_str(), s.size(), doc_properties.GetAllocator()); // copy string
-
   std::string s = std::to_string(sfg_objects);
   Value n(s.c_str(), doc_properties.GetAllocator());
-
 
   // TODO: is this method deep-cloning?
   Value properties(feature["properties"], doc_properties.GetAllocator());
   doc_properties.AddMember(n, properties, doc_properties.GetAllocator());
 
-	return sfc;
+  return sfc;
 }
 
 
@@ -132,22 +122,21 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
                                            std::set< std::string >& property_keys,
                                            Document& doc_properties,
                                            std::map< std::string, std::string>& property_types) {
-	// a FeatureCollection MUST have members called features,
-	// which is an array
-	validate_features(fc, sfg_objects);
+  // a FeatureCollection MUST have members called features,
+  // which is an array
+  validate_features(fc, sfg_objects);
 
-	auto features = fc["features"].GetArray();
+  auto features = fc["features"].GetArray();
 
-	int n = features.Size(); // number of features
-	Rcpp::List feature_collection(n);
-	//std::string geom_type = "FeatureCollection";
+  int n = features.Size(); // number of features
+  Rcpp::List feature_collection(n);
+  //std::string geom_type = "FeatureCollection";
 
-	for (int i = 0; i < n; i++) {
-		const Value& feature = features[i];
-		feature_collection[i] = parse_feature_object(feature, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
-	}
-
-	return feature_collection;
+  for (int i = 0; i < n; i++) {
+    const Value& feature = features[i];
+    feature_collection[i] = parse_feature_object(feature, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+  }
+  return feature_collection;
 }
 
 
@@ -163,44 +152,34 @@ void parse_geojson(const Value& v,
                    Document& doc_properties,
                    std::map< std::string, std::string>& property_types) {
 
-	Rcpp::List res(1);
-	std::string geom_type;
+  Rcpp::List res(1);
+  std::string geom_type;
 
-	validate_type(v, sfg_objects);
+  validate_type(v, sfg_objects);
 
-	geom_type = v["type"].GetString();
+  geom_type = v["type"].GetString();
 
-	if (geom_type == "Feature") {
+  if (geom_type == "Feature") {
 
-		res = parse_feature_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
-		//sfg_objects++;
-		//res.attr("geo_type") = "FEATURE";
-		sfc[i] = res;
+    res = parse_feature_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+    sfc[i] = res;
 
-	} else if (geom_type == "FeatureCollection") {
+  } else if (geom_type == "FeatureCollection") {
 
-		res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
-		//sfg_objects += res.length();
+    res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+    sfc[i] = res;
 
-		//Rcpp::Rcout << "feature collection length: " << res.length() << std::endl;
-		//Rcpp::Rcout << "sfg_objects : " << sfg_objects << std::endl;
+  } else if (geom_type == "GeometryCollection") {
 
-		//res.attr("geo_type") = "FEATURECOLLECTION";
+    res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects);
+    sfg_objects++;
+    sfc[i] = res;
 
-		sfc[i] = res;
+  } else {
 
-	} else if (geom_type == "GeometryCollection") {
-
-		res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects);
-		//res.attr("geo_type") = "GEOMETRYCOLLECTION";
-		sfg_objects++;
-		sfc[i] = res;
-
-	} else {
-
-		parse_geometry_object(sfc, i, v, bbox, geometry_types, sfg_objects);
-		sfg_objects++;
-	}
+    parse_geometry_object(sfc, i, v, bbox, geometry_types, sfg_objects);
+    sfg_objects++;
+  }
 }
 
 void parse_geojson_object(Document& d,
@@ -212,8 +191,8 @@ void parse_geojson_object(Document& d,
                           std::set< std::string >& property_keys,
                           Document& doc_properties,
                           std::map< std::string, std::string>& property_types) {
-	const Value& v = d;
-	parse_geojson(v, sfc, properties, 0, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+  const Value& v = d;
+  parse_geojson(v, sfc, properties, 0, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
 }
 
 void parse_geojson_array(Document& d,
@@ -226,8 +205,8 @@ void parse_geojson_array(Document& d,
                          std::set< std::string >& property_keys,
                          Document& doc_properties,
                          std::map< std::string, std::string>& property_types) {
-	const Value& v = d[i];
-	parse_geojson(v, sfc, properties, i, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+  const Value& v = d[i];
+  parse_geojson(v, sfc, properties, i, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
 }
 
 Rcpp::List geojson_to_sf(const char* geojson,
@@ -238,30 +217,29 @@ Rcpp::List geojson_to_sf(const char* geojson,
                          Document& doc_properties,
                          std::map< std::string, std::string>& property_types) {
 
-	Document d;
-	safe_parse(d, geojson);
-	Rcpp::List sf(1);
-	Rcpp::List sfc(1);
-	Rcpp::List properties(1);
+  Document d;
+  safe_parse(d, geojson);
+  Rcpp::List sf(1);
+  Rcpp::List sfc(1);
+  Rcpp::List properties(1);
 
-	if (d.IsObject() ) {
+  if (d.IsObject() ) {
 
-	  Rcpp::List sfg(1);
-		parse_geojson_object(d, sfg, properties, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
-		sfc[0] = sfg;
+    Rcpp::List sfg(1);
+    parse_geojson_object(d, sfg, properties, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+    sfc[0] = sfg;
 
-	} else if (d.IsArray()) {
+  } else if (d.IsArray()) {
 
-		Rcpp::List sfgs(d.Size());
-		Rcpp::LogicalVector doc_ele_properties(d.Size());
+    Rcpp::List sfgs(d.Size());
+    Rcpp::LogicalVector doc_ele_properties(d.Size());
 
-		for (int doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
-			parse_geojson_array(d, sfgs, properties, doc_ele, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
-		}
-		sfc[0] = sfgs;
-	}
-
-	return sfc;
+    for (int doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
+  	  parse_geojson_array(d, sfgs, properties, doc_ele, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+    }
+    sfc[0] = sfgs;
+  }
+  return sfc;
 }
 
 // [[Rcpp::export]]
@@ -275,32 +253,31 @@ Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson) {
 Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
 
 	// iterate over the geojson
-	int n = geojson.size();
-	int sfg_objects = 0;  // keep track of number of objects
-	int row_index;
+  int n = geojson.size();
+  int sfg_objects = 0;  // keep track of number of objects
+  int row_index;
 
-	// Attributes to keep track of along the way
-	Rcpp::NumericVector bbox = start_bbox();
-	std::set< std::string > geometry_types = start_geometry_types();
-	std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
-	std::map< std::string, std::string> property_types;
+  // Attributes to keep track of along the way
+  Rcpp::NumericVector bbox = start_bbox();
+  std::set< std::string > geometry_types = start_geometry_types();
+  std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
+  std::map< std::string, std::string> property_types;
 
-	Document doc_properties;    // Document to store the 'properties'
-	doc_properties.SetObject();
-	Rcpp::List sf(n);
+  Document doc_properties;    // Document to store the 'properties'
+  doc_properties.SetObject();
+  Rcpp::List sf(n);
 
-	for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
-		sf[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
-	}
+  for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
+    sf[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+  }
 
   Rcpp::List res = construct_sfc(sfg_objects, sf, bbox, geometry_types);
 
+  Rcpp::List properties(property_keys.size() + 1);  // expand to include geometry
 
-	Rcpp::List properties(property_keys.size() + 1);  // expand to include geometry
-
-	property_keys.insert("geometry");
-	properties.names() = property_keys;
-	properties["geometry"] = res;
+  property_keys.insert("geometry");
+  properties.names() = property_keys;
+  properties["geometry"] = res;
 
   for (auto keys_it = property_types.begin(); keys_it != property_types.end(); keys_it++) {
     std::string this_key = keys_it->first;
@@ -315,90 +292,77 @@ Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
     }
 	}
 
-	for (auto& m : doc_properties.GetObject()) {
-  	row_index = std::stoi(m.name.GetString());
+  for (auto& m : doc_properties.GetObject()) {
+    row_index = std::stoi(m.name.GetString());
 
-  	for (auto& p : m.value.GetObject() ) {
+    for (auto& p : m.value.GetObject() ) {
 
-  		std::string key = p.name.GetString();
-  		std::string type = property_types[key];
+      std::string key = p.name.GetString();
+      std::string type = property_types[key];
 
-  		// TODO:
-  		// if the actual type of the property object is different,
-  		// need to extract it using the correct `GetType()` method,
-  		// then convert it to String
-  		std::string value_type = geojsonsf::ARRAY_TYPES[p.value.GetType()];
+      std::string value_type = geojsonsf::ARRAY_TYPES[p.value.GetType()];
 
-  		if (value_type == "String") {
-  			std::string this_value = p.value.GetString();
+      if (value_type == "String") {
+        std::string this_value = p.value.GetString();
 
-  			if (type != "String") {
-  				std::string value = any_to_string(this_value);
-  				update_string_vector(properties, key, value, row_index-1);
-  			} else {
-  				std::string value = this_value;
-  				update_string_vector(properties, key, value, row_index-1);
-  			}
+        if (type != "String") {
+          std::string value = any_to_string(this_value);
+          update_string_vector(properties, key, value, row_index-1);
+        } else {
+          std::string value = this_value;
+          update_string_vector(properties, key, value, row_index-1);
+        }
 
-  		} else if (value_type == "Number") {
+      } else if (value_type == "Number") {
 
-  			double this_value = p.value.GetDouble();
+        double this_value = p.value.GetDouble();
 
-  			if (type != "Number") {
-  				std::string value = any_to_string(this_value);
-  				update_string_vector(properties, key, value, row_index-1);
-  			} else {
-  				double value = p.value.GetDouble();
-  				update_numeric_vector(properties, key, value, row_index-1);
-  			}
+        if (type != "Number") {
+          std::string value = any_to_string(this_value);
+          update_string_vector(properties, key, value, row_index-1);
+        } else {
+          double value = p.value.GetDouble();
+          update_numeric_vector(properties, key, value, row_index-1);
+        }
 
-  		} else if (value_type == "False") {
+      } else if (value_type == "False") {
 
-  			bool this_value = p.value.GetBool();
-  			if (type != "False") {
-  				std::string value = any_to_string(this_value);
-  				update_string_vector(properties, key, value, row_index-1);
-  			} else {
-  				bool value = p.value.GetBool();
-  				update_logical_vector(properties, key, value, row_index-1);
-  			}
+        bool this_value = p.value.GetBool();
+        if (type != "False") {
+          std::string value = any_to_string(this_value);
+          update_string_vector(properties, key, value, row_index-1);
+        } else {
+          bool value = p.value.GetBool();
+          update_logical_vector(properties, key, value, row_index-1);
+        }
 
-  		} else if (value_type == "True") {
+      } else if (value_type == "True") {
 
-  			bool this_value = p.value.GetBool();
-  			if (type != "True") {
-  				std::string value = any_to_string(this_value);
-  				update_string_vector(properties, key, value, row_index-1);
-  			} else {
-  				bool value = p.value.GetBool();
-  				update_logical_vector(properties, key, value, row_index-1);
-  			}
+        bool this_value = p.value.GetBool();
+        if (type != "True") {
+          std::string value = any_to_string(this_value);
+          update_string_vector(properties, key, value, row_index-1);
+        } else {
+          bool value = p.value.GetBool();
+          update_logical_vector(properties, key, value, row_index-1);
+        }
 
-  		} else if (value_type == "Null") {
+      } else if (value_type == "Null") {
   			// don't do anything...
-  		} else if (value_type == "Object") {
+      } else if (value_type == "Object") {
   			// TODO: convert to string?
 
-  		} else if (value_type == "Array") {
+      } else if (value_type == "Array") {
   			// TODO: convert to string?
-
-  		} else {
-  			Rcpp::stop("unknown column data type " + type);
-  		}
-  	}
+      } else {
+        Rcpp::stop("unknown column data type " + type);
+      }
+    }
   }
 
-	Rcpp::IntegerVector nv = seq(1, sfg_objects);
+  Rcpp::IntegerVector nv = seq(1, sfg_objects);
   properties.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
   properties.attr("sf_column") = "geometry";
   properties.attr("row.names") = nv;
   return properties;
-
-	//Rcpp::DataFrame df(properties);
-	//df.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
-	//df.attr("sf_column") = "geometry";
-
-	//return df;
-
-	//return sf;
 }
