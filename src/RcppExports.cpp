@@ -28,6 +28,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_geojson_to_wkt
+Rcpp::StringVector rcpp_geojson_to_wkt(Rcpp::StringVector geojson);
+RcppExport SEXP _geojsonsf_rcpp_geojson_to_wkt(SEXP geojsonSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::StringVector >::type geojson(geojsonSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_geojson_to_wkt(geojson));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_stream_in
 void rcpp_stream_in(std::string url);
 RcppExport SEXP _geojsonsf_rcpp_stream_in(SEXP urlSEXP) {
@@ -42,6 +53,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_geojsonsf_rcpp_geojson_to_sfc", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sfc, 1},
     {"_geojsonsf_rcpp_geojson_to_sf", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sf, 1},
+    {"_geojsonsf_rcpp_geojson_to_wkt", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_wkt, 1},
     {"_geojsonsf_rcpp_stream_in", (DL_FUNC) &_geojsonsf_rcpp_stream_in, 1},
     {NULL, NULL, 0}
 };
