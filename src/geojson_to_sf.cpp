@@ -153,11 +153,9 @@ void parse_geojson(const Value& v,
                    std::map< std::string, std::string>& property_types) {
 
   Rcpp::List res(1);
-  std::string geom_type;
-
   validate_type(v, sfg_objects);
 
-  geom_type = v["type"].GetString();
+  std::string geom_type = v["type"].GetString();;
 
   if (geom_type == "Feature") {
 
@@ -223,7 +221,7 @@ Rcpp::List geojson_to_sf(const char* geojson,
   Rcpp::List sfc(1);
   Rcpp::List properties(1);
 
-  if (d.IsObject() ) {
+  if (d.IsObject()) {
 
     Rcpp::List sfg(1);
     parse_geojson_object(d, sfg, properties, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);

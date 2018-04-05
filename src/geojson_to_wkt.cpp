@@ -98,28 +98,52 @@ void coordSeparateWKT(std::ostringstream& os) {
   os << ", ";
 }
 
-void geojson_to_wkt(const char* geojson) {
+void parse_geojson_wkt(const Value& v, int i, int& wkt_objects) {
+
+	validate_type(v, wkt_objects);
+
+	std::string geom_type = v["type"].GetString();
+}
+
+void parse_geojson_object_wkt(Document& d, int& wkt_objects, int i) {
+  const Value& v = d;
+	parse_geojson_wkt(v, 0, wkt_objects);
+}
+
+void parse_geojson_array_wkt(Document& d, int i, int& wkt_objects) {
+  const Value& v = d[i];
+	parse_geojson_wkt(v, i, wkt_objects);
+}
+
+Rcpp::List geojson_to_wkt(const char* geojson, int& wkt_objects) {
   // TODO:
   // grab the geometry data and stream to WKT
   Document d;
   safe_parse(d, geojson);
+  Rcpp::List wkt(1);
 
-  /*
-  for (int i = 0; i < n; i++) {
+	std::ostringstream os;
+  // Need to 'recurse' into the GeoJSON like what i did for geo_sf
+  // because it can be arrays, objects, vectors.
+	if (d.IsObject()) {
 
-  	std::ostringstream os;
-  	Rcpp::String wkt;
+	} else if (d.IsArray()) {
 
-  }
-   */
+	}
 
+	return wkt;
 
 }
 
 // [[Rcpp::export]]
 Rcpp::StringVector rcpp_geojson_to_wkt(Rcpp::StringVector geojson) {
-	Rcpp::StringVector wkt(geojson.size());
+	int n = geojson.size();
+	Rcpp::StringVector wkt(n);
+	int wkt_objects = 0;
 
+	for (int i = 0; i < n; i++) {
+		wkt[i] = geojson_to_wkt(geojson[i], wkt_objects);
+	}
 
 
 	return wkt;
