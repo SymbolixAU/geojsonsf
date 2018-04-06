@@ -205,7 +205,7 @@ Rcpp::List parse_feature_object_wkt(const Value& feature,
 
 
 	//https://stackoverflow.com/a/33473321/5977215
-	std::string s = std::to_string(sfg_objects);
+	std::string s = std::to_string(wkt_objects);
 	Value n(s.c_str(), doc_properties.GetAllocator());
 
 	// TODO: is this method deep-cloning?
