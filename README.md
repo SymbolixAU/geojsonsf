@@ -3,7 +3,11 @@
 [![Coverage status](https://codecov.io/gh/SymbolixAU/geojsonsf/branch/master/graph/badge.svg)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
 # geojsonsf
-Conversion between sf and geojson
+
+Converts 
+
+- GeoJSON -> sf
+- GeoJSON -> wkt
 
 
 ## Install
@@ -93,6 +97,27 @@ microbenchmark(
 #       expr      min       lq     mean   median       uq      max neval
 #  geojsonsf 1.049637 1.049637 1.073559 1.073559 1.097481 1.097481     2
 #         sf 4.445201 4.445201 4.565980 4.565980 4.686758 4.686758     2
+
+myurl <- "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.min.geojson"
+
+geo <- readLines(url(myurl))
+
+microbenchmark(
+  geojson_sf = {
+    geojson_sf(geo)
+  },
+  geojson_wkt = {
+    geojson_wkt(geo)
+  },
+  sf = {
+    sf::st_read(geo, quiet = T)
+  },
+  #wellknown = {
+  #  wellknown::geojson2wkt(geo)
+  #},
+  times = 2
+)
+
 ```
 
 ## Examples
@@ -182,6 +207,33 @@ geojsonsf::geojson_sf(geo)
 # 1 California   38332521 1850-09-09     20502
 
 ```
+## Well-known Text
 
+It also converts GeoJSON to Well-Known Text and returns a `data.frame`
+
+
+```
+fc <- '{
+  "type": "FeatureCollection",
+  "features": [
+  {
+    "type": "Feature",
+    "properties": {"foo" : "feature 1.1", "bar" : "feature 1.2"},
+    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+  },
+  {
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+  },
+  {
+    "type": "Feature",
+	    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
+	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+	}
+ ]
+}'
+geojson_wkt(fc)
+```
 
 
