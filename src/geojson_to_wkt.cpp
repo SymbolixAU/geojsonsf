@@ -243,12 +243,19 @@ Rcpp::List geojson_to_wkt(const char* geojson,
   // Need to 'recurse' into the GeoJSON like what i did for geo_sf
   // because it can be arrays, objects, vectors.
 	if (d.IsObject()) {
+
 		Rcpp::List sfg(1);
 		parse_geojson_object_wkt(d, sfg, properties, geometry_types, wkt_objects, property_keys, doc_properties, property_types);
 		sfc[0] = sfg;
 
 	} else if (d.IsArray()) {
+		Rcpp::List sfgs(d.Size());
+		// Rcpp::LogicalVector doc_ele_properties(d.Size());
 
+		for (int doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
+			parse_geojson_array_wkt(d, sfgs, properties, doc_ele, geometry_types, wkt_objects, property_keys, doc_properties, property_types);
+		}
+		sfc[0] = sfgs;
 	}
 	return sfc;
 }

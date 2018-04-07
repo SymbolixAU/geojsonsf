@@ -11,11 +11,6 @@
 
 using namespace Rcpp;
 
-// TODO:
-// - handle incorrectly formed geometry type
-// -- e.g., MultiPoint with only one-nested array
-
-
 void parse_geometry_object(Rcpp::List& sfc,
                            int i,
                            const Value& geometry,
