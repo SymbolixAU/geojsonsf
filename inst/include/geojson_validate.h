@@ -10,6 +10,10 @@ void safe_parse(Document& d, const char* geojson);
 
 void validate_type(const Value& v, int& sfg_objects);
 
+void validate_array(const Value& v);
+
+void validate_array(const Value& v, int& sfg_objects);
+
 void validate_features(const Value& v, int& sfg_objects);
 
 void validate_feature(const Value& v, int& sfg_objects);

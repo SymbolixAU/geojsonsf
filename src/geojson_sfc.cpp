@@ -150,8 +150,6 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 }
 
 
-
-
 Rcpp::List construct_sfc(int& sfg_objects,
                          Rcpp::List& sf,
                          Rcpp::NumericVector& bbox,

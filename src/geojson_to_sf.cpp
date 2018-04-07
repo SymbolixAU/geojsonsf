@@ -25,6 +25,7 @@ void parse_geometry_object(Rcpp::List& sfc,
 
   validate_type(geometry, sfg_objects);
   validate_coordinates(geometry, sfg_objects);
+  validate_array(geometry["coordinates"], sfg_objects);
 
   std::string geom_type = geometry["type"].GetString();
   const Value& coord_array = geometry["coordinates"];

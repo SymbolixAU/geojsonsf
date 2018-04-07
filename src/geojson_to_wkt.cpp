@@ -20,6 +20,7 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
 
 	validate_type(geometry, wkt_objects);
 	validate_coordinates(geometry, wkt_objects);
+	validate_array(geometry["coordinates"], wkt_objects);
 
 	std::string geom_type = geometry["type"].GetString();
 	const Value& coord_array = geometry["coordinates"];
