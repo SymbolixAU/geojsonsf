@@ -92,6 +92,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
   std::string geom_attr;
 
+
   for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
 
     switch( TYPEOF(*it) ) {
@@ -128,6 +129,18 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
         sfg_counter++;
       }
       break;
+    }
+    case STRSXP: {
+    	Rcpp::StringVector tmp = as<Rcpp::StringVector>(*it);
+    	if(Rf_isNull(tmp.attr("class"))){
+    		// TODO:
+    		//handle missing geo_type in vector
+    		Rcpp::stop("Geometry could not be determined");
+    	} else {
+    		res[sfg_counter] = tmp;
+    		sfg_counter++;
+    	}
+    	break;
     }
     default: {
       Rcpp::stop("Geometry could not be determined");

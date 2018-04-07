@@ -61,5 +61,19 @@ test_that("geometries are parsed correctly", {
 		all(c("sfc_MULTIPOLYGON", "sfc") %in% attr(sf$geometry, "class"))
 	)
 
+	js <- '{
+		"type": "GeometryCollection",
+		"geometries": [
+			{"type": "Point", "coordinates": [100.0, 0.0]},
+			{"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+			{"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+			]
+	  }'
+
+	sf <- geojson_sf(js)
+	expect_true(
+		all(c("sfc_GEOMETRY", "sfc") %in% attr(sf$geometry, "class"))
+	)
+
 })
 

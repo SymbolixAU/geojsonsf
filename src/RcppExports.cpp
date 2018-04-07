@@ -29,7 +29,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_geojson_to_wkt
-Rcpp::StringVector rcpp_geojson_to_wkt(Rcpp::StringVector geojson);
+Rcpp::List rcpp_geojson_to_wkt(Rcpp::StringVector geojson);
 RcppExport SEXP _geojsonsf_rcpp_geojson_to_wkt(SEXP geojsonSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

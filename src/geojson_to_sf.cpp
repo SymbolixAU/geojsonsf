@@ -31,28 +31,40 @@ void parse_geometry_object(Rcpp::List& sfc,
   geometry_types.insert(geom_type);
 
   if (geom_type == "Point") {
-    sfc[i] = get_point(coord_array, bbox);
+  	Rcpp::NumericVector point = get_point(coord_array, bbox);
+  	point.attr("class") = sfg_attributes("POINT");
+    sfc[i] = point;
     //sfc_classes[counter] = "POINT";
 
   } else if (geom_type == "MultiPoint") {
-    sfc[i] = get_multi_point(coord_array, bbox);
+    Rcpp::NumericMatrix multi_point = get_multi_point(coord_array, bbox);
+  	multi_point.attr("class") = sfg_attributes("MULTIPOINT");
     //sfc_classes[counter] = "MULTIPOINT";
+    sfc[i] = multi_point;
 
   } else if (geom_type == "LineString") {
-    sfc[i] = get_line_string(coord_array, bbox);
+    Rcpp::NumericMatrix line_string = get_line_string(coord_array, bbox);
+  	line_string.attr("class") = sfg_attributes("LINESTRING");
+  	sfc[i] = line_string;
     //sfc_classes[counter] = "LINESTRING";
 
   } else if (geom_type == "MultiLineString") {
-    sfc[i] = get_multi_line_string(coord_array, bbox);
+    Rcpp::List multi_line = get_multi_line_string(coord_array, bbox);
+  	multi_line.attr("class") = sfg_attributes("MULTILINESTRING");
     //sfc_classes[counter] = "MULTILINESTRING";
+    sfc[i] = multi_line;
 
   } else if (geom_type == "Polygon") {
-    sfc[i] = get_polygon(coord_array, bbox);
+    Rcpp::List polygon = get_polygon(coord_array, bbox);
+  	polygon.attr("class") = sfg_attributes("POLYGON");
     //sfc_classes[counter] = "POLYGON";
+    sfc[i] = polygon;
 
   } else if (geom_type == "MultiPolygon") {
-    sfc[i] = get_multi_polygon(coord_array, bbox);
+    Rcpp::List multi_polygon = get_multi_polygon(coord_array, bbox);
+  	multi_polygon.attr("class") = sfg_attributes("MULTIPOLYGON");
     //sfc_classes[counter] = "MULTIPOLYGON";
+    sfc[i] = multi_polygon;
 
   } else {
     Rcpp::stop("unknown sfg type");
@@ -65,6 +77,8 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
                                             int& sfg_objects) {
   std::string geom_type;
 
+	// TODO:
+	// - validate geometries element
   auto geometries = val["geometries"].GetArray();
   int n = geometries.Size();
 
@@ -72,6 +86,7 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
 
   for (int i = 0; i < n; i++) {
     const Value& gcval = geometries[i];
+  	validate_type(gcval, sfg_objects);
     geom_type = gcval["type"].GetString();
     parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
   }

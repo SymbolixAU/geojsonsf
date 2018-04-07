@@ -4,121 +4,13 @@
 #include "geojsonsf.h"
 #include "geojson_sfc.h"
 #include "geojson_sfg.h"
+#include "geojson_to_sf.h"
 #include "geojson_validate.h"
 #include "geojson_properties.h"
+#include "geojson_wkt.h"
 
 using namespace rapidjson;
 using namespace Rcpp;
-
-
-void addLonLatToWKTStream(std::ostringstream& os, float lon, float lat ) {
-	os << lon << " " << lat;
-}
-
-void encode_wkt_point(std::ostringstream& os, const Value& coord_array) {
-	Rcpp::NumericVector point(2);
-	point[0] = get_lon(coord_array);
-	point[1] = get_lat(coord_array);
-
-	addLonLatToWKTStream(os, point[0]*(float)1e-5, point[1]*(float)1e-5);
-}
-
-void parse_line_to_wkt(std::ostringstream& os, const Value& coord_array) {
-	size_t n = coord_array.Size();
-
-	for (int i = 0; i < n; i++) {
-		encode_wkt_point(os, coord_array[i]);
-	}
-}
-
-
-
-void geom_type(const char *cls, int *tp = NULL) {
-/*
-	int type = 0;
-	if (strcmp(cls, "POINT") == 0)
-		type = POINT;
-	else if (strcmp(cls, "MULTIPOINT") == 0)
-		type = MULTIPOINT;
-	else if (strcmp(cls, "LINESTRING") == 0)
-		type = LINESTRING;
-	else if (strcmp(cls, "POLYGON") == 0)
-		type = POLYGON;
-	else if (strcmp(cls, "MULTILINESTRING") == 0)
-		type = MULTILINESTRING;
-	else if (strcmp(cls, "MULTIPOLYGON") == 0)
-		type = MULTIPOLYGON;
-	else
-		type = UNKNOWN;
-	if (tp != NULL)
-		*tp = type;
-	*/
-}
-
-void beginWKT(std::ostringstream& os, Rcpp::CharacterVector cls) {
-
-	int tp;
-	geom_type(cls[1], &tp);
-
-	switch( tp ) {
-	case POINT:
-		os << "POINT ";
-		break;
-	case MULTIPOINT:
-		os << "MULTIPOINT (";
-		break;
-	case LINESTRING:
-		os << "LINESTRING ";
-		break;
-	case MULTILINESTRING:
-		os << "MULTILINESTRING (";
-		break;
-	case POLYGON:
-		os << "POLYGON (";
-		break;
-	case MULTIPOLYGON:
-		os << "MULTIPOLYGON ((";
-		break;
-	default: {
-			Rcpp::stop("Unknown geometry type");
-		}
-	}
-}
-
-void endWKT(std::ostringstream& os, Rcpp::CharacterVector cls) {
-
-	int tp;
-	geom_type(cls[1], &tp);
-
-	switch( tp ) {
-	case POINT:
-		os << "";
-		break;
-	case MULTIPOINT:
-		os << ")";
-		break;
-	case LINESTRING:
-		os << "";
-		break;
-	case MULTILINESTRING:
-		os << ")";
-		break;
-	case POLYGON:
-		os << ")";
-		break;
-	case MULTIPOLYGON:
-		os << "))";
-		break;
-	default: {
-			Rcpp::stop("Unknown geometry type");
-		}
-	}
-}
-
-void coordSeparateWKT(std::ostringstream& os) {
-  os << ", ";
-}
-
 
 void parse_geometry_object_wkt(Rcpp::List& sfc,
                            int i,
@@ -133,53 +25,78 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
 	const Value& coord_array = geometry["coordinates"];
 	geometry_types.insert(geom_type);
 
+	std::ostringstream os;
+	Rcpp::StringVector wkt;
+	beginWKT(os, geom_type);
+
 	if (geom_type == "Point") {
-		sfc[i] = get_point(coord_array);
-		//sfc_classes[counter] = "POINT";
+		point_to_wkt(os, coord_array);
 
 	} else if (geom_type == "MultiPoint") {
-		sfc[i] = get_multi_point(coord_array);
-		//sfc_classes[counter] = "MULTIPOINT";
+		multi_point_to_wkt(os, coord_array);
 
 	} else if (geom_type == "LineString") {
-		sfc[i] = get_line_string(coord_array);
-		//sfc_classes[counter] = "LINESTRING";
+		line_string_to_wkt(os, coord_array);
 
 	} else if (geom_type == "MultiLineString") {
-		sfc[i] = get_multi_line_string(coord_array);
-		//sfc_classes[counter] = "MULTILINESTRING";
+		multi_line_string_to_wkt(os, coord_array);
 
 	} else if (geom_type == "Polygon") {
-		sfc[i] = get_polygon(coord_array);
-		//sfc_classes[counter] = "POLYGON";
+		polygon_to_wkt(os, coord_array);
 
 	} else if (geom_type == "MultiPolygon") {
-		sfc[i] = get_multi_polygon(coord_array);
-		//sfc_classes[counter] = "MULTIPOLYGON";
+		multi_polygon_to_wkt(os, coord_array);
 
 	} else {
 		Rcpp::stop("unknown sfg type");
 	}
+
+	endWKT(os, geom_type);
+
+	wkt = os.str();
+	transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
+	wkt.attr("class") = sfg_attributes(geom_type);
+	sfc[i] = wkt;
+
 }
+
 
 Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
                                             std::set< std::string >& geometry_types,
                                             int& wkt_objects) {
 	std::string geom_type;
+	// TODO:
+	// - validate geometries
+	//validate_geometry(val, wkt_objects);
 
 	auto geometries = val["geometries"].GetArray();
 	int n = geometries.Size();
 
 	Rcpp::List geom_collection(n);
+	Rcpp::List geom_collection_wkt(1);
 
 	for (int i = 0; i < n; i++) {
 		const Value& gcval = geometries[i];
+		validate_type(gcval, wkt_objects);
 		geom_type = gcval["type"].GetString();
 		parse_geometry_object_wkt(geom_collection, i, gcval, geometry_types, wkt_objects);
 	}
-	geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
 
-	return geom_collection;
+	// collapse into a single WKT string
+	std::ostringstream os;
+	os << "GEOMETRYCOLLECTION (";
+	for (int i = 0; i < n; i++) {
+		std::string g = geom_collection[i];
+		os << g;
+		coordSeparateWKT(os, i, n);
+	}
+	os << ")";
+
+	geom_collection_wkt = os.str();
+
+	geom_collection_wkt.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
+
+	return geom_collection_wkt;
 }
 
 
@@ -335,6 +252,42 @@ Rcpp::List geojson_to_wkt(const char* geojson,
 	return sfc;
 }
 
+Rcpp::List construct_wkt(int& sfg_objects,
+                         Rcpp::List& sf,
+                         std::set< std::string >& geometry_types) {
+
+	Rcpp::List sfc_output(sfg_objects);
+	std::string geom_attr;
+
+	int sfg_counter = 0;
+	fetch_geometries(sf, sfc_output, sfg_counter);
+	return sfc_output;
+}
+
+
+Rcpp::List construct_wkt_df(Rcpp::List& lst, std::set< std::string >& property_keys,
+                        std::map< std::string, std::string>& property_types,
+                        Document& doc_properties,
+                        int& wkt_objects,
+                        int& row_index) {
+
+	Rcpp::List properties(property_keys.size() + 1);  // expand to include geometry
+
+	property_keys.insert("geometry");
+	properties.names() = property_keys;
+	properties["geometry"] = lst;
+
+	setup_property_vectors(property_types, properties, wkt_objects);
+	fill_property_vectors(doc_properties, property_types, properties, row_index);
+
+	Rcpp::IntegerVector nv = seq(1, wkt_objects);
+	properties.attr("class") = Rcpp::CharacterVector::create("data.frame");
+	properties.attr("wkt_column") = "geometry";
+	properties.attr("row.names") = nv;
+
+	return properties;
+}
+
 // [[Rcpp::export]]
 Rcpp::List rcpp_geojson_to_wkt(Rcpp::StringVector geojson) {
 
@@ -356,6 +309,9 @@ Rcpp::List rcpp_geojson_to_wkt(Rcpp::StringVector geojson) {
 		sfc[geo_ele] = geojson_to_wkt(geojson[geo_ele], geometry_types, wkt_objects, property_keys, doc_properties, property_types);
 	}
 
+	Rcpp::List res = construct_wkt(wkt_objects, sfc, geometry_types);
+	Rcpp::List wkt = construct_wkt_df(res, property_keys, property_types, doc_properties, wkt_objects, row_index);
 
-	return sfc;
+	return wkt;
 }
+
