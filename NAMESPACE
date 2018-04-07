@@ -2,5 +2,6 @@
 
 export(geojson_sf)
 export(geojson_sfc)
+export(geojson_wkt)
 importFrom(Rcpp,sourceCpp)
 useDynLib(geojsonsf, .registration = TRUE)

@@ -5,6 +5,11 @@
 using namespace Rcpp;
 using namespace rapidjson;
 
+void geojson_object_error(std::string key) {
+	std::string err = "Invalid " + key + " object";
+	Rcpp::stop(err);
+}
+
 void geojson_object_error(std::string key, int sfg_number) {
 	std::string err = "No '" + key + "' member at object index " + std::to_string(sfg_number) + " - invalid GeoJSON";
 	Rcpp::stop(err);
@@ -16,6 +21,19 @@ void safe_parse(Document& d, const char* geojson) {
 		Rcpp::stop("Invalid JSON");
 	}
 }
+
+void validate_array(const Value& v) {
+	if ( v.IsArray() == FALSE) {
+		geojson_object_error("array");
+	}
+}
+
+void validate_array(const Value& v, int& sfg_objects) {
+	if ( v.IsArray() == FALSE) {
+		geojson_object_error("array", sfg_objects);
+	}
+}
+
 
 void validate_type(const Value& v, int& sfg_objects) {
 	if (v.HasMember("type") == FALSE) {
