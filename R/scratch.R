@@ -30,6 +30,11 @@
 # sf
 # geojsonsf:::rcpp_sf_to_geojson(sf)
 
+# js <- '[{"type" : "Polygon", "coordinates" : [ [ [0, 0], [1, 1] ] ]},
+# {"type" : "MultiLineString", "coordinates" : [ [ [0, 0], [1, 1] ] ]}]'
+# sf <- geojson_sf(js)
+# sf
+# geojsonsf:::rcpp_sf_to_geojson(sf)
 
 
 # library(Rcpp)
