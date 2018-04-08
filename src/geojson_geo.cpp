@@ -24,7 +24,7 @@ Rcpp::CharacterVector getSfClass(SEXP sf) {
 
 // Stream an SF object to GeoJSON
 void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
-	os << "\"type\" : ";
+	os << "{\"type\" : ";
 	if (geom_type == "POINT") {
 		os <<  "\"Point\" , \"coordinates\" : ";
 	} else if (geom_type == "MULTIPOINT") {
@@ -44,19 +44,19 @@ void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 
 void end_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 	if (geom_type == "POINT") {
-		os << "";
+		os << "}";
 	} else if (geom_type == "MULTIPOINT") {
-		os << "]";
+		os << "]}";
 	} else if (geom_type == "LINESTRING") {
-		os << "]";
+		os << "]}";
 	} else if (geom_type == "MULTILINESTRING") {
-		os << "]] ";
+		os << "]]}";
 	} else if (geom_type == "POLYGON") {
-		os << "]]";
+		os << "]]}";
 	} else if (geom_type == "MULTIPOLYGON") {
-		os << "]]]";
+		os << "]]]}";
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-		os << "]";
+		os << "]}";
 	}
 }
 
@@ -65,15 +65,15 @@ void add_lonlat_to_stream(std::ostringstream& os, Rcpp::NumericVector& points) {
   //Rcpp::Rcout << "Debug point size: " << points.size() << std::endl;
 	// a matrix is a vector with a dimension attribute...
 
-	Rcpp::Rcout << "debug: points size: " << points.size() << std::endl;
+	//Rcpp::Rcout << "debug: points size: " << points.size() << std::endl;
 
-	Rcpp::Rcout << points << std::endl;
+	//Rcpp::Rcout << points << std::endl;
 
-	//points.attr("dim") = Dimension(1, 2);
+	points.attr("dim") = Dimension(points.size() / 2, 2);
 	Rcpp::NumericMatrix m = as< Rcpp::NumericMatrix >(points);
 
-	Rcpp::Rcout << "debug: m rows: " << m.nrow() << std::endl;
-	Rcpp::Rcout << "debug: m cols: " << m.ncol() << std::endl;
+	//Rcpp::Rcout << "debug: m rows: " << m.nrow() << std::endl;
+	//Rcpp::Rcout << "debug: m cols: " << m.ncol() << std::endl;
 
 	for (int i = 0; i < m.nrow(); i++) {
 		os << "[" << m(i, 0) << "," << m(i, 1) << "]";
@@ -86,17 +86,20 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
 	//Rcpp::Rcout << "debug: sfc size: " << sfc.size() << std::endl;
 	//os << "[";
 	//bracket_counter++;
+	//Rcpp::Rcout << "type sfc: " << TYPEOF(sfc) << std::endl;
+
 
 	for (Rcpp::List::iterator it = sfc.begin(); it != sfc.end(); it++) {
 		switch( TYPEOF(*it) ) {
 		case VECSXP: {
-			//Rcpp::Rcout << "debug: list" << std::endl;
 			Rcpp::List tmp = as<Rcpp::List>(*it);
+			//Rcpp::Rcout << "debug: list " << tmp.size() << std::endl;
 			fetch_coordinates(os, tmp);
 			break;
 		}
 		case REALSXP: {
 			Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
+			//Rcpp::Rcout << "debug: numeric vector " << tmp << std::endl;
 			add_lonlat_to_stream(os, tmp);
 			break;
 		}
@@ -126,20 +129,20 @@ void sfc_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 	std::string geom_type;
 	Rcpp::List sfci(1);
 
-	Rcpp::Rcout << "sfc.size; " << sfc.size() << std::endl;
+	//Rcpp::Rcout << "sfc.size; " << sfc.size() << std::endl;
 
   for (int i = 0; i < sfc.size(); i++) {
 
   	//Rcpp::List sfci = as< Rcpp::List>(sfc[i]);
   	cls = getSfClass(sfc[i]);
 
-  	Rcpp::Rcout << cls << std::endl;
+  	//Rcpp::Rcout << cls << std::endl;
   	geom_type = cls[1];
 
-  	Rcpp::NumericVector nv = sfc[i];
-  	Rcpp::Rcout << "debug point: " << nv << std::endl;
+  	//Rcpp::NumericVector nv = sfc[i];
+  	//Rcpp::Rcout << "debug point: " << nv << std::endl;
 
-  	sfci = sfc[i];
+  	sfci[0] = sfc[i];
   	//Rcpp::Rcout << "debug sfci vector: " << sfci << std::endl;
 
   	begin_geojson_geometry(os, geom_type);
