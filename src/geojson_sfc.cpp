@@ -92,7 +92,6 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
   std::string geom_attr;
 
-
   for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
 
     switch( TYPEOF(*it) ) {

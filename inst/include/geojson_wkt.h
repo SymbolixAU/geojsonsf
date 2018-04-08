@@ -3,18 +3,19 @@
 #define GEOJSON_WKT_H
 
 #include "rapidjson/document.h"
+using namespace rapidjson;
 
-void coordSeparateWKT(std::ostringstream& os, int i, int n);
+void coord_separator(std::ostringstream& os, int i, int n);
 
-void lineSeparateWKT(std::ostringstream& os, int i, int n);
+void line_separator_wkt(std::ostringstream& os, int i, int n);
 
 void polygonSeparateWKT(std::ostringstream& os, int i, int n);
 
 void addLonLatToWKTStream(std::ostringstream& os, float lon, float lat );
 
-void beginWKT(std::ostringstream& os, std::string& geom_type);
+void begin_wkt(std::ostringstream& os, std::string& geom_type);
 
-void endWKT(std::ostringstream& os, std::string& geom_type);
+void end_wkt(std::ostringstream& os, std::string& geom_type);
 
 void point_to_wkt(std::ostringstream& os, const Value& coord_array);
 
