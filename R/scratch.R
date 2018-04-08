@@ -20,20 +20,27 @@
 # sf
 # geojsonsf:::rcpp_sf_to_geojson(sf)
 #
+# js <- '{"type" : "MultiLineString", "coordinates" : [ [ [0, 0], [1, 1] ] ]}'
+# sf <- geojson_sf(js)
+# sf
+# geojsonsf:::rcpp_sf_to_geojson(sf)
+#
 # js <- '{"type" : "Polygon", "coordinates" : [ [ [0, 0], [1, 1] ] ]}'
 # sf <- geojson_sf(js)
 # sf
 # geojsonsf:::rcpp_sf_to_geojson(sf)
 
+
+
 # library(Rcpp)
 #
 # cppFunction('Rcpp::NumericMatrix mymat(Rcpp::NumericVector vec) {
-#   vec.attr("dim") = Dimension(2, 2);
+#   vec.attr("dim") = Dimension(1, 2);
 #   Rcpp::NumericMatrix m = as< Rcpp::NumericMatrix>(vec);
 #   return m;
 # }')
 #
-# mymat(c(1:4))
+# mymat(c(1:2))
 
 
 

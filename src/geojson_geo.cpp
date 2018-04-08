@@ -24,20 +24,21 @@ Rcpp::CharacterVector getSfClass(SEXP sf) {
 
 // Stream an SF object to GeoJSON
 void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
+	os << "\"type\" : ";
 	if (geom_type == "POINT") {
-		os << "\"Point\" :";
-	} else if (geom_type == "MULTIPOIT") {
-		os << "\"MultiPoint\" : [";
+		os <<  "\"Point\" , \"coordinates\" : ";
+	} else if (geom_type == "MULTIPOINT") {
+		os << "\"MultiPoint\" , \"coordinates\" : [";
 	} else if (geom_type == "LINESTRING") {
-		os << "\"LineString\" : [";
+		os << "\"LineString\" , \"coordinates\" : [";
 	} else if (geom_type == "MULTILINESTRING") {
-		os << "\"MultiLineString\" : [[";
+		os << "\"MultiLineString\" , \"coordinates\" : [[";
 	} else if (geom_type == "POLYGON") {
-		os << "\"Polygon\" : [[";
+		os << "\"Polygon\" , \"coordinates\" : [[";
 	} else if (geom_type == "MULTIPOLYGON") {
-		os << "\"MultiPolygon\" : [[[";
+		os << "\"MultiPolygon\" , \"coordinates\" : [[[";
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-		os << "\"GeometryCollection\" : [";
+		os << "\"GeometryCollection\" , \"coordinates\" : [";
 	}
 }
 
@@ -68,7 +69,7 @@ void add_lonlat_to_stream(std::ostringstream& os, Rcpp::NumericVector& points) {
 
 	Rcpp::Rcout << points << std::endl;
 
-	points.attr("dim") = Dimension(points.size() / 2, 2);
+	//points.attr("dim") = Dimension(1, 2);
 	Rcpp::NumericMatrix m = as< Rcpp::NumericMatrix >(points);
 
 	Rcpp::Rcout << "debug: m rows: " << m.nrow() << std::endl;
@@ -91,7 +92,7 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
 		case VECSXP: {
 			//Rcpp::Rcout << "debug: list" << std::endl;
 			Rcpp::List tmp = as<Rcpp::List>(*it);
-				fetch_coordinates(os, tmp);
+			fetch_coordinates(os, tmp);
 			break;
 		}
 		case REALSXP: {
@@ -100,7 +101,8 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
 			break;
 		}
 		case INTSXP: {
-			Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
+			//Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
+			//add_lonlat_to_stream(os, tmp);
 			break;
 		}
 		default: {
@@ -122,6 +124,9 @@ void add_geometry_to_stream(std::ostringstream& os, Rcpp::List& sfc) {
 void sfc_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 	Rcpp::CharacterVector cls;
 	std::string geom_type;
+	Rcpp::List sfci(1);
+
+	Rcpp::Rcout << "sfc.size; " << sfc.size() << std::endl;
 
   for (int i = 0; i < sfc.size(); i++) {
 
@@ -131,8 +136,14 @@ void sfc_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
   	Rcpp::Rcout << cls << std::endl;
   	geom_type = cls[1];
 
+  	Rcpp::NumericVector nv = sfc[i];
+  	Rcpp::Rcout << "debug point: " << nv << std::endl;
+
+  	sfci = sfc[i];
+  	//Rcpp::Rcout << "debug sfci vector: " << sfci << std::endl;
+
   	begin_geojson_geometry(os, geom_type);
-  	//add_geometry_to_stream(os, sfc[i]);
+  	add_geometry_to_stream(os, sfci);
   	end_geojson_geometry(os, geom_type);
   }
 }
