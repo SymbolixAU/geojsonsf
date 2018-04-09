@@ -33,6 +33,12 @@ geojson_sf <- function(geojson){
 	rcpp_geojson_to_sf(geojson)
 }
 
+
+## TODO:
+## - atomise - logical?
+## -- Return a JSON array of objects
+## -- Return an R Vector of objects?
+
 #' sf to GeoJSON
 #'
 #' @export

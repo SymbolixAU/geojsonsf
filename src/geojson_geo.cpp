@@ -38,7 +38,7 @@ void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 	} else if (geom_type == "MULTIPOLYGON") {
 		os << "\"MultiPolygon\" , \"coordinates\" : [[[";
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-		os << "\"GeometryCollection\" , \"coordinates\" : [";
+		os << "\"GeometryCollection\" , \"geometries\" : [{";
 	}
 }
 
@@ -56,7 +56,7 @@ void end_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 	} else if (geom_type == "MULTIPOLYGON") {
 		os << "]]]}";
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-		os << "]}";
+		os << "}]}";
 	}
 }
 
@@ -66,7 +66,6 @@ void add_lonlat_to_stream(std::ostringstream& os, Rcpp::NumericVector& points) {
 	// a matrix is a vector with a dimension attribute...
 
 	//Rcpp::Rcout << "debug: points size: " << points.size() << std::endl;
-
 	//Rcpp::Rcout << points << std::endl;
 
 	points.attr("dim") = Dimension(points.size() / 2, 2);
@@ -138,16 +137,27 @@ void sfg_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 
 		//Rcpp::Rcout << cls << std::endl;
 		geom_type = cls[1];
+		/*
+		if (geom_type == "GEOMETRYCOLLECTION") {
+			begin_geojson_geometry(os, geom_type);
+			Rcpp::List gc = sfc[i];
+			for (int j = 0; j < gc.size(); j++) {
+				Rcpp::List gcj = gc[j];
+				begin_geojson_geometry(os, geom_type);
+				add_geometry_to_stream(os, gcj);
+				end_geojson_geometry(os, geom_type);
+			}
+		} else {
+		 */
+			sfci[0] = sfc[i];
+			begin_geojson_geometry(os, geom_type);
+			add_geometry_to_stream(os, sfci);
+			end_geojson_geometry(os, geom_type);
+
 
 		//Rcpp::NumericVector nv = sfc[i];
 		//Rcpp::Rcout << "debug point: " << nv << std::endl;
-
-		sfci[0] = sfc[i];
 		//Rcpp::Rcout << "debug sfci vector: " << sfci << std::endl;
-
-		begin_geojson_geometry(os, geom_type);
-		add_geometry_to_stream(os, sfci);
-		end_geojson_geometry(os, geom_type);
 	}
 }
 
