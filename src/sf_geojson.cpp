@@ -87,7 +87,6 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
 	//bracket_counter++;
 	//Rcpp::Rcout << "type sfc: " << TYPEOF(sfc) << std::endl;
 
-
 	for (Rcpp::List::iterator it = sfc.begin(); it != sfc.end(); it++) {
 		switch( TYPEOF(*it) ) {
 		case VECSXP: {
