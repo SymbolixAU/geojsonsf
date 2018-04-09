@@ -32,3 +32,25 @@ geojson_sfc <- function(geojson) {
 geojson_sf <- function(geojson){
 	rcpp_geojson_to_sf(geojson)
 }
+
+#' sf to GeoJSON
+#'
+#' @export
+sf_geojson <- function(sf) UseMethod("sf_geojson")
+
+#' @export
+sf_geojson.sf <- function(sf) {
+  rcpp_sf_to_geojson(sf)
+}
+
+#' @export
+sf_geojson.sfc <- function(sf) {
+	rcpp_sfc_to_geojson(sf)
+}
+
+#' @export
+sf_geojson.sfg <- function(sf) {
+	rcpp_sfg_to_geojson(sf)
+}
+
+sf_geojson.default <- function(sf) stop("Expected an sf object")

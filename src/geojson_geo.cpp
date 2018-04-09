@@ -124,35 +124,41 @@ void add_geometry_to_stream(std::ostringstream& os, Rcpp::List& sfc) {
   fetch_coordinates(os, sfc);
 }
 
-void sfc_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
+void sfg_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 	Rcpp::CharacterVector cls;
 	std::string geom_type;
 	Rcpp::List sfci(1);
 
 	//Rcpp::Rcout << "sfc.size; " << sfc.size() << std::endl;
 
-  for (int i = 0; i < sfc.size(); i++) {
+	for (int i = 0; i < sfc.size(); i++) {
 
-  	//Rcpp::List sfci = as< Rcpp::List>(sfc[i]);
-  	cls = getSfClass(sfc[i]);
+		//Rcpp::List sfci = as< Rcpp::List>(sfc[i]);
+		cls = getSfClass(sfc[i]);
 
-  	//Rcpp::Rcout << cls << std::endl;
-  	geom_type = cls[1];
+		//Rcpp::Rcout << cls << std::endl;
+		geom_type = cls[1];
 
-  	//Rcpp::NumericVector nv = sfc[i];
-  	//Rcpp::Rcout << "debug point: " << nv << std::endl;
+		//Rcpp::NumericVector nv = sfc[i];
+		//Rcpp::Rcout << "debug point: " << nv << std::endl;
 
-  	sfci[0] = sfc[i];
-  	//Rcpp::Rcout << "debug sfci vector: " << sfci << std::endl;
+		sfci[0] = sfc[i];
+		//Rcpp::Rcout << "debug sfci vector: " << sfci << std::endl;
 
-  	begin_geojson_geometry(os, geom_type);
-  	add_geometry_to_stream(os, sfci);
-  	end_geojson_geometry(os, geom_type);
-  }
+		begin_geojson_geometry(os, geom_type);
+		add_geometry_to_stream(os, sfci);
+		end_geojson_geometry(os, geom_type);
+	}
 }
 
-void sfg_to_geojson() {
+void sfc_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
+	sfg_to_geojson(os, sfc);
+}
 
+Rcpp::StringVector rcpp_sfg_to_geojson(Rcpp::List sfg) {
+	std::ostringstream os;
+	sfg_to_geojson(os, sfg);
+	return os.str();
 }
 
 // [[Rcpp::export]]
