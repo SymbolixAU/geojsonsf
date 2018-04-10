@@ -45,6 +45,10 @@ void end_wkt(std::ostringstream& os, std::string& geom_type) {
   }
 }
 
+void object_separator(std::ostringstream& os) {
+	os << ",";
+}
+
 void coord_separator(std::ostringstream& os, int i, int n) {
   if (i < (n - 1) ) {
     os << ", ";

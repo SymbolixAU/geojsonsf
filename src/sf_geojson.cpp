@@ -38,7 +38,7 @@ void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 	} else if (geom_type == "MULTIPOLYGON") {
 		os << "\"MultiPolygon\" , \"coordinates\" : [[[";
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-		os << "\"GeometryCollection\" , \"geometries\" : [{";
+		os << "\"GeometryCollection\" , \"geometries\" : [";
 	}
 }
 
@@ -56,7 +56,7 @@ void end_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 	} else if (geom_type == "MULTIPOLYGON") {
 		os << "]]]}";
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-		os << "}]}";
+		os << "]}";
 	}
 }
 
@@ -86,19 +86,31 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
 	//os << "[";
 	//bracket_counter++;
 	//Rcpp::Rcout << "type sfc: " << TYPEOF(sfc) << std::endl;
+	Rcpp::CharacterVector cls;
+	std::string geom_type;
 
 	for (Rcpp::List::iterator it = sfc.begin(); it != sfc.end(); it++) {
 		switch( TYPEOF(*it) ) {
 		case VECSXP: {
 			Rcpp::List tmp = as<Rcpp::List>(*it);
-			//Rcpp::Rcout << "debug: list " << tmp.size() << std::endl;
-			fetch_coordinates(os, tmp);
+			if(!Rf_isNull(tmp.attr("class"))) {
+				cls = getSfClass(tmp);
+				geom_type = cls[1];
+				begin_geojson_geometry(os, geom_type);
+			  fetch_coordinates(os, tmp);
+			  end_geojson_geometry(os, geom_type);
+			}
 			break;
 		}
 		case REALSXP: {
 			Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
-			//Rcpp::Rcout << "debug: numeric vector " << tmp << std::endl;
-			add_lonlat_to_stream(os, tmp);
+			if(!Rf_isNull(tmp.attr("class"))) {
+				cls = getSfClass(tmp);
+				geom_type = cls[1];
+				begin_geojson_geometry(os, geom_type);
+			  add_lonlat_to_stream(os, tmp);
+			  end_geojson_geometry(os, geom_type);
+			}
 			break;
 		}
 		case INTSXP: {
@@ -131,32 +143,18 @@ void sfg_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 
 	for (int i = 0; i < sfc.size(); i++) {
 
-		//Rcpp::List sfci = as< Rcpp::List>(sfc[i]);
-		cls = getSfClass(sfc[i]);
+		// recurse into each geometry
+		// if it's a list, AND has a class/attribute, 'begin GEOJSON string', recurse again to get the vec/matrix/obj
+		// if if's not a list, get the obj & 'begin GEOJSON string'
+		// - get the obj & convert to GEOJSON
+		//
+		// move the 'getSfClass' into the recursing bit, 'begin' the stream if the sfg class exists
+		// recurse again to get the objects (if it's a list, it will recurse once more)
+		// - just need to make sure to close of geometrycollection objects...?
+		// keep track of inner-objects? like a counter
 
-		//Rcpp::Rcout << cls << std::endl;
-		geom_type = cls[1];
-		/*
-		if (geom_type == "GEOMETRYCOLLECTION") {
-			begin_geojson_geometry(os, geom_type);
-			Rcpp::List gc = sfc[i];
-			for (int j = 0; j < gc.size(); j++) {
-				Rcpp::List gcj = gc[j];
-				begin_geojson_geometry(os, geom_type);
-				add_geometry_to_stream(os, gcj);
-				end_geojson_geometry(os, geom_type);
-			}
-		} else {
-		 */
 			sfci[0] = sfc[i];
-			begin_geojson_geometry(os, geom_type);
 			add_geometry_to_stream(os, sfci);
-			end_geojson_geometry(os, geom_type);
-
-
-		//Rcpp::NumericVector nv = sfc[i];
-		//Rcpp::Rcout << "debug point: " << nv << std::endl;
-		//Rcpp::Rcout << "debug sfci vector: " << sfci << std::endl;
 	}
 }
 
