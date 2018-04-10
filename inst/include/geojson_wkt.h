@@ -9,6 +9,8 @@ void coord_separator(std::ostringstream& os, int i, int n);
 
 void line_separator_wkt(std::ostringstream& os, int i, int n);
 
+void object_separator(std::ostringstream& os);
+
 void polygonSeparateWKT(std::ostringstream& os, int i, int n);
 
 void addLonLatToWKTStream(std::ostringstream& os, float lon, float lat );

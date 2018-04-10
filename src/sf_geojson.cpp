@@ -1,4 +1,5 @@
 #include "geojson_wkt.h"
+#include "sf_geojson.h"
 
 #include <Rcpp.h>
 using namespace Rcpp;
@@ -21,9 +22,26 @@ Rcpp::CharacterVector getSfClass(SEXP sf) {
 	}
 	return "";
 }
+/*
+void add_geometrycollection_to_stream(std::ostringstream& os, Rcpp::List& gc) {
+	os << "\"GeometryCollection\" , \"geometries\" : [";
+	// recurse into gc object
+	Rcpp::List gci(1);
+	for (int i = 0; i < gc.size(); i++) {
+		gci[0] = gc[i];
+		fetch_coordinates(os, gci);
+		object_separator(os);
+	}
+	os << "]}";
+}
+*/
+void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
+    Rcpp::List sfc;
+	  begin_geojson_geometry(os, sfc, geom_type);
+}
 
 // Stream an SF object to GeoJSON
-void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
+void begin_geojson_geometry(std::ostringstream& os, Rcpp::List& sfc, std::string& geom_type) {
 	os << "{\"type\" : ";
 	if (geom_type == "POINT") {
 		os <<  "\"Point\" , \"coordinates\" : ";
@@ -38,6 +56,7 @@ void begin_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 	} else if (geom_type == "MULTIPOLYGON") {
 		os << "\"MultiPolygon\" , \"coordinates\" : [[[";
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
+		//add_geometrycollection_to_stream(os, sfc);
 		os << "\"GeometryCollection\" , \"geometries\" : [";
 	}
 }
@@ -62,17 +81,8 @@ void end_geojson_geometry(std::ostringstream& os, std::string& geom_type) {
 
 void add_lonlat_to_stream(std::ostringstream& os, Rcpp::NumericVector& points) {
 
-  //Rcpp::Rcout << "Debug point size: " << points.size() << std::endl;
-	// a matrix is a vector with a dimension attribute...
-
-	//Rcpp::Rcout << "debug: points size: " << points.size() << std::endl;
-	//Rcpp::Rcout << points << std::endl;
-
 	points.attr("dim") = Dimension(points.size() / 2, 2);
 	Rcpp::NumericMatrix m = as< Rcpp::NumericMatrix >(points);
-
-	//Rcpp::Rcout << "debug: m rows: " << m.nrow() << std::endl;
-	//Rcpp::Rcout << "debug: m cols: " << m.ncol() << std::endl;
 
 	for (int i = 0; i < m.nrow(); i++) {
 		os << "[" << m(i, 0) << "," << m(i, 1) << "]";
@@ -80,7 +90,9 @@ void add_lonlat_to_stream(std::ostringstream& os, Rcpp::NumericVector& points) {
 	}
 }
 
-void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
+void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc, int& object_counter) {
+
+	Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
 
 	//Rcpp::Rcout << "debug: sfc size: " << sfc.size() << std::endl;
 	//os << "[";
@@ -90,27 +102,53 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
 	std::string geom_type;
 
 	for (Rcpp::List::iterator it = sfc.begin(); it != sfc.end(); it++) {
+
+		if (object_counter > 0) {
+			object_separator(os);
+		}
+
 		switch( TYPEOF(*it) ) {
 		case VECSXP: {
 			Rcpp::List tmp = as<Rcpp::List>(*it);
 			if(!Rf_isNull(tmp.attr("class"))) {
+
+				// if there's a 'class' attribute, it's an sfg object
+				// but it's also a list
+				// so need to go through the list elemetns and fetch the geometries
+				//
+				// but, if the list is a 'GEOMETRYCOLLECTION', we need a ',' separator
+				// after each geometry
+
+				//Rcpp::Rcout << "debug list " << std::endl;
 				cls = getSfClass(tmp);
-				geom_type = cls[1];
-				begin_geojson_geometry(os, geom_type);
-			  fetch_coordinates(os, tmp);
+				geom_type = cls[1];    // TODO: error handle (there should aways be 3 elements as we're workgin wtih sfg objects)
+				begin_geojson_geometry(os, tmp, geom_type);
+			  fetch_coordinates(os, tmp, object_counter);
 			  end_geojson_geometry(os, geom_type);
+			} else {
+				// if no class attribute, go further into the list to try and find one
+				fetch_coordinates(os, tmp, object_counter);
 			}
+			Rcpp::Rcout << "debug: updating object_counter" << std::endl;
+			object_counter++;
+			Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
 			break;
 		}
 		case REALSXP: {
 			Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
 			if(!Rf_isNull(tmp.attr("class"))) {
+				//Rcpp::Rcout << "debug vector " << std::endl;
 				cls = getSfClass(tmp);
 				geom_type = cls[1];
 				begin_geojson_geometry(os, geom_type);
 			  add_lonlat_to_stream(os, tmp);
 			  end_geojson_geometry(os, geom_type);
+			} else {
+				add_lonlat_to_stream(os, tmp);
 			}
+			Rcpp::Rcout << "debug: updating object_counter" << std::endl;
+			object_counter++;
+			Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
 			break;
 		}
 		case INTSXP: {
@@ -127,19 +165,15 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc) {
 
 
 void add_geometry_to_stream(std::ostringstream& os, Rcpp::List& sfc) {
-
-	// recurse into list to find 'sfg'
-	// each recursion adds a bracket '('
-	// need to keep track of closing braces
-  fetch_coordinates(os, sfc);
+	Rcpp::Rcout << "debug: resetting object_counter" << std::endl;
+	int object_counter = 0;
+  fetch_coordinates(os, sfc, object_counter);
 }
 
 void sfg_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 	Rcpp::CharacterVector cls;
 	std::string geom_type;
 	Rcpp::List sfci(1);
-
-	//Rcpp::Rcout << "sfc.size; " << sfc.size() << std::endl;
 
 	for (int i = 0; i < sfc.size(); i++) {
 
@@ -155,6 +189,7 @@ void sfg_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 
 			sfci[0] = sfc[i];
 			add_geometry_to_stream(os, sfci);
+			coord_separator(os, i, sfc.size());
 	}
 }
 
