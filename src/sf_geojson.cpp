@@ -22,6 +22,41 @@ Rcpp::CharacterVector getSfClass(SEXP sf) {
 	}
 	return "";
 }
+
+
+void get_column_type(Rcpp::List& sf, Rcpp::StringVector& property_names, Rcpp::StringVector& column_types) {
+
+	//int counter = 0;
+	//for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
+	for (int i = 0; i < property_names.size(); i++) {
+
+		Rcpp::String col = property_names[i];
+		SEXP vec = sf[col];
+
+		switch(TYPEOF(vec)) {
+		case REALSXP:
+			//Rcpp::Rcout << "REAL Number" << std::endl;
+			column_types[i] = "Number";
+			break;
+		//case VECSXP:
+		//	Rcpp::Rcout << "Number" << std::endl;
+		//	break;
+		case INTSXP:
+			//Rcpp::Rcout << "INT Number" << std::endl;
+			column_types[i] = "Number";
+			break;
+		case LGLSXP:
+			//Rcpp::Rcout << "LGL Logical" << std::endl;
+			column_types[i] = "Logical";
+			break;
+		default: {
+				//Rcpp::Rcout << "default: String" << std::endl;
+				column_types[i] = "String";
+				break;
+		}
+		}
+	}
+}
 /*
 void add_geometrycollection_to_stream(std::ostringstream& os, Rcpp::List& gc) {
 	os << "\"GeometryCollection\" , \"geometries\" : [";
@@ -207,23 +242,78 @@ Rcpp::StringVector rcpp_sfc_to_geojson(Rcpp::List sfc) {
 	return os.str();
 }
 
+
+void properties_to_json(std::ostringstream& os, Rcpp::List sf_row) {
+	// iterate over rows and add to JSON stream
+
+}
+
+
+//void get_column_types(Rcpp::StringVector& column_types, Rcpp::List& sf) {
+//  for (int i = 0; i < sf.ncol(); i++) {
+//  	column_types[i] = get_column_type(sf[i]);
+//  	//Rcpp::Rcout << "debug: column type: " << column_types[i] << std::endl;
+//  }
+//}
+
 // [[Rcpp::export]]
 Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 
+	std::ostringstream os;
 	// If it contains properties
 	// it's a 'feature' (or featureCollection)
 	//
 	// if 'atomise', return one object per row
-	std::ostringstream os;
+
+	Rcpp::StringVector column_types(sf.size() - 1);
+	//get_column_type(sf, column_types);
+	Rcpp::StringVector property_names(sf.size() - 1);
+
 	std::string geom_column = sf.attr("sf_column");
+	Rcpp::StringVector col_names = sf.names();
+
+	// fill 'property_names' with all the columns which aren't 'sf_column'
+	int property_counter = 0;
+	for (int i = 0; i < sf.length(); i++) {
+		if (col_names[i] != geom_column) {
+			property_names[property_counter] = col_names[i];
+			property_counter++;
+		}
+	}
+
+	get_column_type(sf, property_names, column_types);
+	Rcpp::Rcout << "debug property names : " << property_names << std::endl;
+	Rcpp::Rcout << "debug column types : " << column_types << std::endl;
+
 	Rcpp::List sfc = sf[geom_column];
+	Rcpp::List properties;
+
+	// TODO:
+	// construct a StringMatrix with the dimensions of sf
+	// then I can fill a column at a time with a string of JSON...
+	// then can manipulate it as I want at the end; either atomising or combining
+	Rcpp::NumericMatrix json_mat(sfc.length(), sf.size()); // row x cols
+	for (int i = 0; i < sf.size(); i++) {
+		// iterate the list elements
+		for (int j = 0; j < sfc.length(); j++) {
+			// iterate each row
+			// construct a string of the property { name : value }
+
+
+			// TODO: what if there's a mssing element?
+
+		}
+	}
+
 
 	sfc_to_geojson(os, sfc);
-	//for (int i = 0; i < sf.size(); i++) {
-	//	Rcpp::List sfc = sf[i];
-	//	Rcpp::CharacterVector cls_attr = getSfClass(sfc);
-	//	add_geometry_to_stream(os, sfc);
-	//}
+
+	// iterate over each row of sf
+	// - properties to js
+	// - geometry to sf
+	// - combine
+	// IFF atomise, assign os.str() to result vector
+	// ELSE, don't.
 
 	Rcpp::StringVector res = os.str();
 
