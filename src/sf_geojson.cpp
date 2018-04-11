@@ -92,7 +92,7 @@ void add_lonlat_to_stream(std::ostringstream& os, Rcpp::NumericVector& points) {
 
 void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc, int& object_counter) {
 
-	Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
+	//Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
 
 	//Rcpp::Rcout << "debug: sfc size: " << sfc.size() << std::endl;
 	//os << "[";
@@ -129,9 +129,9 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc, int& object_coun
 				// if no class attribute, go further into the list to try and find one
 				fetch_coordinates(os, tmp, object_counter);
 			}
-			Rcpp::Rcout << "debug: updating object_counter" << std::endl;
+			//Rcpp::Rcout << "debug: updating object_counter" << std::endl;
 			object_counter++;
-			Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
+			//Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
 			break;
 		}
 		case REALSXP: {
@@ -146,9 +146,9 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc, int& object_coun
 			} else {
 				add_lonlat_to_stream(os, tmp);
 			}
-			Rcpp::Rcout << "debug: updating object_counter" << std::endl;
+			//Rcpp::Rcout << "debug: updating object_counter" << std::endl;
 			object_counter++;
-			Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
+			//Rcpp::Rcout << "debug object_couter: " << object_counter << std::endl;
 			break;
 		}
 		case INTSXP: {
@@ -165,31 +165,28 @@ void fetch_coordinates(std::ostringstream& os, Rcpp::List& sfc, int& object_coun
 
 
 void add_geometry_to_stream(std::ostringstream& os, Rcpp::List& sfc) {
-	Rcpp::Rcout << "debug: resetting object_counter" << std::endl;
+	//Rcpp::Rcout << "debug: resetting object_counter" << std::endl;
 	int object_counter = 0;
   fetch_coordinates(os, sfc, object_counter);
 }
+
+// if only one object with properties, it's a 'feature'
+// if only one object without properties, it's a 'geometry'
+// if many objects it's a 'featurecollection'
+
 
 void sfg_to_geojson(std::ostringstream& os, Rcpp::List& sfc) {
 	Rcpp::CharacterVector cls;
 	std::string geom_type;
 	Rcpp::List sfci(1);
-
+	Rcpp::List sfg_geojson(sfc.size());
 	for (int i = 0; i < sfc.size(); i++) {
+		// iff 'atomise'; return a StringVector of each geometry
+		// iff not, return an array of each vecor
 
-		// recurse into each geometry
-		// if it's a list, AND has a class/attribute, 'begin GEOJSON string', recurse again to get the vec/matrix/obj
-		// if if's not a list, get the obj & 'begin GEOJSON string'
-		// - get the obj & convert to GEOJSON
-		//
-		// move the 'getSfClass' into the recursing bit, 'begin' the stream if the sfg class exists
-		// recurse again to get the objects (if it's a list, it will recurse once more)
-		// - just need to make sure to close of geometrycollection objects...?
-		// keep track of inner-objects? like a counter
-
-			sfci[0] = sfc[i];
-			add_geometry_to_stream(os, sfci);
-			coord_separator(os, i, sfc.size());
+		sfci[0] = sfc[i];
+		add_geometry_to_stream(os, sfci);
+		coord_separator(os, i, sfc.size());
 	}
 }
 

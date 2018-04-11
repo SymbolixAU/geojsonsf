@@ -12,11 +12,10 @@ Converts
 
 ## Install
 
-This is a development package, which itself is dependant on another development package [rapidjsonr](https://github.com/SymbolixAU/rapidjsonr)
+This is a development package so can be installed directly from github
 
 ```
-devtools::install_github("SymbolixAU/rapidjsonr")
-devtools::install_github("SymbolixAU/geo")
+devtools::install_github("SymbolixAU/geojsonsf")
 ```
 
 ## Motivation
