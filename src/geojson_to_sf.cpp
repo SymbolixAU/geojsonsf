@@ -1,7 +1,7 @@
-#include "rapidjson/document.h"
 
 #include <algorithm>
 #include <Rcpp.h>
+#include "rapidjson/document.h"
 #include "geojsonsf.h"
 #include "geojson_to_sf.h"
 #include "geojson_sfc.h"
