@@ -1,5 +1,8 @@
+#include "geojsonsf.h"
 #include "geojson_wkt.h"
 #include "sf_geojson.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
 
 #include <Rcpp.h>
 using namespace Rcpp;
@@ -248,29 +251,104 @@ void properties_to_json(std::ostringstream& os, Rcpp::List sf_row) {
 
 }
 
+rapidjson::Value get_json_value(SEXP s, rapidjson::Document::AllocatorType& allocator) {
+	// TODO:
+	// switch on R type and return the rapidjson equivalent
+	rapidjson::Value v1;
+	switch (TYPEOF(s)) {
+	case VECSXP: {
+		rapidjson::Value v(rapidjson::kStringType);
+		std::string st = "bar";
+		v.SetString(st.c_str(), allocator);
+		return v;
+		}
+	default: {
+		rapidjson::Value v(rapidjson::kStringType);
+		return v;
+	}
+	}
+	return v1;
+}
 
-//void get_column_types(Rcpp::StringVector& column_types, Rcpp::List& sf) {
-//  for (int i = 0; i < sf.ncol(); i++) {
-//  	column_types[i] = get_column_type(sf[i]);
-//  	//Rcpp::Rcout << "debug: column type: " << column_types[i] << std::endl;
-//  }
-//}
+/*
+// There's o such thing as a data.frame 'row'.
+// have to operate on the lists/vector columns
+void create_json(Rcpp::DataFrame df) {
+
+	rapidjson::Document d;
+	d.SetObject();
+	//rapidjson::Value o(rapidjson::kObjectType);
+
+	rapidjson::Document::AllocatorType& allocator = d.GetAllocator();
+
+	for (int i = 0; i < df.nrow(); i++) {
+		rapidjson::Value o(rapidjson::kObjectType);
+		for (int j = 0; j < df.ncol(); j++) {
+
+			// TOOD:
+			// iterate over the data.frame rows and create the properties object
+
+  		rapidjson::Value v(rapidjson::kStringType);
+			v.SetString("world", allocator);
+  		o.AddMember("foo", v, allocator);
+  		o.AddMember("bar", 2, allocator);
+		}
+		d.AddMember("properties", o, allocator);
+	}
+
+ 	StringBuffer strbuf;
+ 	Writer<StringBuffer> writer(strbuf);
+ 	d.Accept(writer);
+
+ 	std::cout << strbuf.GetString() << std::endl;
+}
+*/
+
+
+// TODO:
+// For each column construct a JSON array of objects.
+// and add the array to the document.
+// Then reconstruct each array?
+// the arrays will have nrow() members
+void vector_to_json(Rcpp::StringVector& sv, std::string& this_type) {
+	std::string this_value;
+	if (this_type == "Number") {
+		for (int j = 0; j < sv.size(); j++) {
+			sv[j] = sv[j];
+		}
+		// dont' do anything
+	} else if (this_type == "Logical") {
+    // convert to lower
+    for (int j = 0; j < sv.size(); j++) {
+      this_value = sv[j];
+	  	transform(this_value.begin(), this_value.end(), this_value.begin(), tolower);
+	  	sv[j] = this_value;
+    }
+	} else {
+		for (int j = 0; j < sv.size(); j++) {
+			sv[j] = "\"" + sv[j] + "\"";
+		}
+	}
+}
+
+
 
 // [[Rcpp::export]]
 Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 
 	std::ostringstream os;
+	Rcpp::List sf_copy = clone(sf);
 	// If it contains properties
 	// it's a 'feature' (or featureCollection)
 	//
 	// if 'atomise', return one object per row
 
-	Rcpp::StringVector column_types(sf.size() - 1);
+	Rcpp::StringVector column_types(sf_copy.size() - 1);
 	//get_column_type(sf, column_types);
-	Rcpp::StringVector property_names(sf.size() - 1);
+	Rcpp::StringVector property_names(sf_copy.size() - 1);
 
-	std::string geom_column = sf.attr("sf_column");
-	Rcpp::StringVector col_names = sf.names();
+	std::string geom_column = sf_copy.attr("sf_column");
+	Rcpp::StringVector col_names = sf_copy.names();
 
 	// fill 'property_names' with all the columns which aren't 'sf_column'
 	int property_counter = 0;
@@ -281,30 +359,36 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 		}
 	}
 
-	get_column_type(sf, property_names, column_types);
-	Rcpp::Rcout << "debug property names : " << property_names << std::endl;
-	Rcpp::Rcout << "debug column types : " << column_types << std::endl;
+	get_column_type(sf_copy, property_names, column_types);
+	//Rcpp::Rcout << "debug property names : " << property_names << std::endl;
+	//Rcpp::Rcout << "debug column types : " << column_types << std::endl;
 
-	Rcpp::List sfc = sf[geom_column];
+	Rcpp::List sfc = sf_copy[geom_column];
 	Rcpp::List properties;
 
 	// TODO:
 	// construct a StringMatrix with the dimensions of sf
 	// then I can fill a column at a time with a string of JSON...
 	// then can manipulate it as I want at the end; either atomising or combining
-	Rcpp::NumericMatrix json_mat(sfc.length(), sf.size()); // row x cols
+	Rcpp::NumericMatrix json_mat(sfc.length(), sf_copy.size()); // row x cols
+	std::string this_name;
+	std::string this_type;
+	std::string this_value;
+	Rcpp::StringVector this_vector;
 
-	for (int i = 0; i < sf.size(); i++) {
+	for (int i = 0; i < property_names.length(); i++) {
 		// iterate the list elements
+		this_name = property_names[i];
+		this_type = column_types[i];
 
-		for (int j = 0; j < sfc.length(); j++) {
-			// iterate each row
-			// construct a string of the property { name : value }
+		Rcpp::Rcout << "column: " << this_name << ", type: " << this_type << std::endl;
 
+		this_vector = as< Rcpp::StringVector >(sf_copy[this_name]);
 
+		vector_to_json(this_vector, this_type);
+		Rcpp::Rcout << this_vector << std::endl;
 
-			// TODO: what if there's a mssing element?
-		}
+		// TODO: what if there's a mssing element?
 	}
 
 
