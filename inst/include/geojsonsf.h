@@ -1,10 +1,11 @@
 #ifndef GEOJSONSF_H
 #define GEOJSONSF_H
 
-// [[Rcpp::depends(rapidjsonr)]]
 
 #include <Rcpp.h>
 using namespace Rcpp;
+
+// [[Rcpp::depends(rapidjsonr)]]
 
 namespace geojsonsf {
   const int EPSG = 4326;
