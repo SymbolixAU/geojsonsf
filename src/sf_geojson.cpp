@@ -293,15 +293,17 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 	// then I can fill a column at a time with a string of JSON...
 	// then can manipulate it as I want at the end; either atomising or combining
 	Rcpp::NumericMatrix json_mat(sfc.length(), sf.size()); // row x cols
+
 	for (int i = 0; i < sf.size(); i++) {
 		// iterate the list elements
+
 		for (int j = 0; j < sfc.length(); j++) {
 			// iterate each row
 			// construct a string of the property { name : value }
 
 
-			// TODO: what if there's a mssing element?
 
+			// TODO: what if there's a mssing element?
 		}
 	}
 
