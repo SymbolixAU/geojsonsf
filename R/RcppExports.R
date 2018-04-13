@@ -17,7 +17,3 @@ rcpp_geojson_to_wkt <- function(geojson) {
     .Call(`_geojsonsf_rcpp_geojson_to_wkt`, geojson)
 }
 
-rcpp_stream_in <- function(url) {
-    invisible(.Call(`_geojsonsf_rcpp_stream_in`, url))
-}
-

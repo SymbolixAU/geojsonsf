@@ -376,7 +376,7 @@ Rcpp::List create_sfc(Rcpp::StringVector geojson) {
 	// iterate over the geojson
 	int n = geojson.size();
 	int sfg_objects = 0;  // keep track of number of objects
-	int row_index;
+	//int row_index;
 
 	// Attributes to keep track of along the way
 	Rcpp::NumericVector bbox = start_bbox();
