@@ -76,8 +76,6 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
                                             int& sfg_objects) {
   std::string geom_type;
 
-	// TODO:
-	// - validate geometries element
 	validate_geometries(val, sfg_objects);
   auto geometries = val["geometries"].GetArray();
   int n = geometries.Size();

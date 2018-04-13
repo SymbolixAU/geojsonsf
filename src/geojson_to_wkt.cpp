@@ -66,8 +66,6 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
                                             std::set< std::string >& geometry_types,
                                             int& wkt_objects) {
 	std::string geom_type;
-	// TODO:
-	// - validate geometries
 
 	validate_geometries(val, wkt_objects);
 	auto geometries = val["geometries"].GetArray();
@@ -231,8 +229,7 @@ Rcpp::List geojson_to_wkt(const char* geojson,
                           Document& doc_properties,
                           std::map< std::string, std::string >& property_types
                             ) {
-  // TODO:
-  // grab the geometry data and stream to WKT
+
   Document d;
   safe_parse(d, geojson);
   Rcpp::List sf(1);

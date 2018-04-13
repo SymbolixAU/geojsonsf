@@ -69,8 +69,6 @@ void addLonLatToWKTStream(std::ostringstream& os, float lon, float lat ) {
 }
 
 void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
-  // TODO:
-  // return the WKT representation of a point
   Rcpp::NumericVector point(2);
   point[0] = get_lon(coord_array);
   point[1] = get_lat(coord_array);

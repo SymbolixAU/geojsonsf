@@ -109,8 +109,6 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case REALSXP: {
       Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
       if(Rf_isNull(tmp.attr("class"))){
-        // TODO:
-        // handle missing geo_type in vector
         Rcpp::stop("Geometry could not be determined");
       } else {
         res[sfg_counter] = tmp;
@@ -121,8 +119,6 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case INTSXP: {
       Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
       if(Rf_isNull(tmp.attr("class"))){
-        // TODO:
-        //handle missing geo_type in vector
         Rcpp::stop("Geometry could not be determined");
       } else {
         res[sfg_counter] = tmp;
@@ -133,8 +129,6 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case STRSXP: {
     	Rcpp::StringVector tmp = as<Rcpp::StringVector>(*it);
     	if(Rf_isNull(tmp.attr("class"))){
-    		// TODO:
-    		//handle missing geo_type in vector
     		Rcpp::stop("Geometry could not be determined");
     	} else {
     		res[sfg_counter] = tmp;
