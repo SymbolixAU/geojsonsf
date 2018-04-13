@@ -7,8 +7,16 @@
 geojson_wkt(geojson)
 }
 \arguments{
-\item{geojson}{}
+\item{geojson}{string or vector of GeoJSON}
+}
+\value{
+data.frame with a 'geometry' column of well-known text
 }
 \description{
 Converts GeoJSON to Well-Known Text
+}
+\examples{
+geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
+geojson_wkt(geojson)
+
 }

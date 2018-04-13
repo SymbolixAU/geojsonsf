@@ -1,5 +1,21 @@
 context("properties")
 
+test_that("object and array properties are strings", {
+
+	f <- '{
+		"type": "Feature",
+  	"properties": { "id" : [1,2,3], "name" : { "foo" : "bar" } },
+  	"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+  }'
+
+	sf <- geojson_sf(f)
+
+	expect_true(sf[1, ]$id == "[1,2,3]")
+	expect_true(sf[1, ]$name == '{"foo":"bar"}')
+
+})
+
+
 test_that("properties captured correctly", {
 
 	f <- '{
@@ -149,6 +165,5 @@ test_that("properties captured correctly", {
 	expect_true(
 		wkt$value[!is.na(wkt$value)] == "foo"
 	)
-
 
 })

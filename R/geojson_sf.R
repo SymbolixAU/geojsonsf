@@ -11,10 +11,7 @@
 #' geojson_sfc(geojson)
 #'
 #' @export
-geojson_sfc <- function(geojson) {
-	rcpp_geojson_to_sfc(geojson)
-}
-
+geojson_sfc <- function(geojson) rcpp_geojson_to_sfc(geojson)
 
 #' Geojson to sf
 #'
@@ -29,6 +26,4 @@ geojson_sfc <- function(geojson) {
 #'
 #' @inheritParams geojson_sfc
 #' @export
-geojson_sf <- function(geojson){
-	rcpp_geojson_to_sf(geojson)
-}
+geojson_sf <- function(geojson) rcpp_geojson_to_sf(geojson)

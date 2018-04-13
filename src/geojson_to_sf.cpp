@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <Rcpp.h>
 #include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+
 #include "geojsonsf.h"
 #include "geojson_to_sf.h"
 #include "geojson_sfc.h"
@@ -332,8 +335,36 @@ void fill_property_vectors(Document& doc_properties,
 				// don't do anything...
 			} else if (value_type == "Object") {
 				// TODO: convert to string?
+				Value st = p.value.GetObject();
+				StringBuffer sb;
+				Writer<StringBuffer> writer(sb);
+				st.Accept(writer);
+				std::string this_value = sb.GetString();
+
+				if (type != "String") {
+					std::string value = any_to_string(this_value);
+					update_string_vector(properties, key, value, row_index-1);
+				} else {
+					std::string value = this_value;
+					update_string_vector(properties, key, value, row_index-1);
+				}
+
 			} else if (value_type == "Array") {
 				// TODO: convert to string?
+				Value st = p.value.GetArray();
+				StringBuffer sb;
+				Writer<StringBuffer> writer(sb);
+				st.Accept(writer);
+				std::string this_value = sb.GetString();
+
+				if (type != "String") {
+					std::string value = any_to_string(this_value);
+					update_string_vector(properties, key, value, row_index-1);
+				} else {
+					std::string value = this_value;
+					update_string_vector(properties, key, value, row_index-1);
+				}
+
 			} else {
 				Rcpp::stop("unknown column data type " + type);
 			}
