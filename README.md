@@ -1,11 +1,24 @@
+geojsonsf
+================
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geojsonsf)](http://cran.r-project.org/package=geojsonsf)
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geojsonsf)
+[![CRAN RStudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](http://cran.r-project.org/web/packages/geojsonsf/index.html)
+[![Github
+Stars](https://img.shields.io/github/stars/SymbolixAU/geojsonsf.svg?style=social&label=Github)](https://github.com/SymbolixAU/geojsonsf)
+[![Build
+Status](https://travis-ci.org/SymbolixAU/geojsonsf.svg?branch=master)](https://travis-ci.org/SymbolixAU/geojsonsf)
+[![Coverage
+Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
-# geojsonsf
+geojsonsf
+---------
 
-The goal of geojsonsf is to …
+Convert GeoJSON to `sf` objects.
 
-## Installation
+Installation
+------------
 
 You can install geojsonsf from GitHub with:
 
@@ -14,7 +27,8 @@ You can install geojsonsf from GitHub with:
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
 
-## Motivation
+Motivation
+----------
 
 To quickly parse GeoJSON to `sf` objects, and to handle cases not
 supported by `sf`, e.g. arrays of geometries
@@ -91,9 +105,9 @@ geojson_sf(js)
     myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
     geo <- readLines(url(myurl))
     geo <- paste0(geo, collapse = "")
-    
+
     library(microbenchmark)
-    
+
     microbenchmark(
         geojsonsf = {
             geojson_sf(geo)
@@ -107,11 +121,11 @@ geojson_sf(js)
     #       expr      min       lq     mean   median       uq      max neval
     #  geojsonsf 1.049637 1.049637 1.073559 1.073559 1.097481 1.097481     2
     #         sf 4.445201 4.445201 4.565980 4.565980 4.686758 4.686758     2
-    
+
     myurl <- "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.min.geojson"
-    
+
     geo <- readLines(url(myurl))
-    
+
     microbenchmark(
       geojson_sf = {
         geojson_sf(geo)
@@ -128,7 +142,8 @@ geojson_sf(js)
       times = 2
     )
 
-## Examples
+Examples
+--------
 
 ### Geometry
 
@@ -167,7 +182,8 @@ geojson_sf(f)
 #> 1 LINESTRING (101 0, 102 1)
 ```
 
-## Geometry Collection
+Geometry Collection
+-------------------
 
 ``` r
 gc <- '{
@@ -227,25 +243,28 @@ geojson_sf(fc)
 
 Reading from file (using `geojsonio` data)
 
-    library(sf) ## for print methods
-    file <- system.file("examples", "california.geojson", package = "geojsonio")
-    
-    geo <- paste0(readLines(file), collapse = "")
-    geojsonsf::geojson_sf(geo)
-    
-    # Simple feature collection with 1 feature and 11 fields
-    # geometry type:  MULTIPOLYGON
-    # dimension:      XY
-    # bbox:           xmin: -124.4096 ymin: 32.53416 xmax: -114.1315 ymax: 42.00952
-    # epsg (SRID):    4326
-    # proj4string:    +proj=longlat +datum=WGS84 +no_defs
-    #  abbreviation   area    capital        city                       geometry     group # 
-    # houseseats landarea
-    # 1           CA 423968 Sacramento Los Angeles MULTIPOLYGON (((-120.2485 3... US States         53   403466
-    #         name population  statehood waterarea
-    # 1 California   38332521 1850-09-09     20502
+``` r
+library(sf) ## for print methods
+file <- system.file("examples", "california.geojson", package = "geojsonio")
 
-## Well-known Text
+geo <- paste0(readLines(file), collapse = "")
+geojsonsf::geojson_sf(geo)
+#> Simple feature collection with 1 feature and 11 fields
+#> geometry type:  MULTIPOLYGON
+#> dimension:      XY
+#> bbox:           xmin: -124.4096 ymin: 32.53416 xmax: -114.1315 ymax: 42.00952
+#> epsg (SRID):    4326
+#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#>   abbreviation   area    capital        city
+#> 1           CA 423968 Sacramento Los Angeles
+#>                         geometry     group houseseats landarea       name
+#> 1 MULTIPOLYGON (((-120.2485 3... US States         53   403466 California
+#>   population  statehood waterarea
+#> 1   38332521 1850-09-09     20502
+```
+
+Well-known Text
+---------------
 
 It also converts GeoJSON to Well-Known Text and returns a `data.frame`
 
