@@ -5,7 +5,7 @@ Version: 0.1.001
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
-Description: Converts GeoJSON to Simple Feature objects. 
+Description: Converts GeoJSON to simple feature objects. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
