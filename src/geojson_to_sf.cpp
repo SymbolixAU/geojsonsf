@@ -78,6 +78,7 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
 
 	// TODO:
 	// - validate geometries element
+	validate_geometries(val, sfg_objects);
   auto geometries = val["geometries"].GetArray();
   int n = geometries.Size();
 
@@ -334,7 +335,8 @@ void fill_property_vectors(Document& doc_properties,
 			} else if (value_type == "Null") {
 				// don't do anything...
 			} else if (value_type == "Object") {
-				// TODO: convert to string?
+
+				// TODO: tidy!
 				Value st = p.value.GetObject();
 				StringBuffer sb;
 				Writer<StringBuffer> writer(sb);
@@ -350,7 +352,7 @@ void fill_property_vectors(Document& doc_properties,
 				}
 
 			} else if (value_type == "Array") {
-				// TODO: convert to string?
+
 				Value st = p.value.GetArray();
 				StringBuffer sb;
 				Writer<StringBuffer> writer(sb);

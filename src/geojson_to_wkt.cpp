@@ -68,8 +68,8 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
 	std::string geom_type;
 	// TODO:
 	// - validate geometries
-	//validate_geometry(val, wkt_objects);
 
+	validate_geometries(val, wkt_objects);
 	auto geometries = val["geometries"].GetArray();
 	int n = geometries.Size();
 

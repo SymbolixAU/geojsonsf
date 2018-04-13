@@ -65,6 +65,12 @@ void validate_geometry(const Value& v, int& sfg_objects) {
 	}
 }
 
+void validate_geometries(const Value& v, int& sfg_objects) {
+	if (v.HasMember("geometries") == FALSE) {
+		geojson_object_error("geometries", sfg_objects);
+	}
+}
+
 void validate_coordinates(const Value& v, int& sfg_objects) {
 	if (v.HasMember("coordinates") == FALSE) {
 		geojson_object_error("coordinates", sfg_objects);
