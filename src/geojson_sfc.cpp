@@ -33,8 +33,9 @@ void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
 }
 
 
-std::string attach_class(Rcpp::List& sfc, std::string geom_type,
-                          std::set< std::string >& geometry_types) {
+std::string attach_class(Rcpp::List& sfc,
+                         std::string geom_type,
+                         std::set< std::string >& geometry_types) {
 
   std::string geometry_class;
   if (geom_type == "GEOMETRYCOLLECTION") {
@@ -43,6 +44,18 @@ std::string attach_class(Rcpp::List& sfc, std::string geom_type,
 
     if (geometry_types.size() > 1) {
       geometry_class = "GEOMETRY";
+
+    	Rcpp::StringVector sfc_classes = start_sfc_classes(sfc.size());
+    	for (int i = 0; i < sfc.size(); i++) {
+    		SEXP sfci = sfc[i];
+    		Rcpp::CharacterVector cls = getSfcClass(sfci);
+    		sfc_classes[i] = cls[1];
+    	}
+
+    	// attribute::classes
+    	//Rcpp::List sfc_attr = Rcpp::List::create(Named("classes") = sfc_classes);
+    	sfc.attr("classes") = sfc_classes;
+
     } else {
     	std::string type = *geometry_types.begin();
     	transform(type.begin(), type.end(), type.begin(), toupper);
@@ -63,18 +76,18 @@ void attach_sfc_attributes(Rcpp::List& sfc,
   double prec = 0;
   int n_empty = 0;
 
+  /*
   Rcpp::StringVector sfc_classes = start_sfc_classes(sfc.size());
   for (int i = 0; i < sfc.size(); i++) {
-  	//Rcpp::Rcout << i << std::endl;
   	SEXP sfci = sfc[i];
   	Rcpp::CharacterVector cls = getSfcClass(sfci);
   	sfc_classes[i] = cls[1];
-  	//Rcpp::Rcout << cv << std::endl;
   }
 
   // attribute::classes
   //Rcpp::List sfc_attr = Rcpp::List::create(Named("classes") = sfc_classes);
   sfc.attr("classes") = sfc_classes;
+  */
 
   // attribute::crs
   Rcpp::List crs = Rcpp::List::create(Named("epsg") = geojsonsf::EPSG,
