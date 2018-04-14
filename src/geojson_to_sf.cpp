@@ -270,6 +270,27 @@ void setup_property_vectors(std::map< std::string, std::string>& property_types,
 	}
 }
 
+
+void nested_json_to_string(rapidjson::Value& v,
+                           std::string& type,
+                           Rcpp::List& properties,
+                           int& row_index,
+                           std::string& key) {
+
+	StringBuffer sb;
+	Writer<StringBuffer> writer(sb);
+	v.Accept(writer);
+	std::string this_value = sb.GetString();
+
+	if (type != "String") {
+		std::string value = any_to_string(this_value);
+		update_string_vector(properties, key, value, row_index-1);
+	} else {
+		std::string value = this_value;
+		update_string_vector(properties, key, value, row_index-1);
+	}
+}
+
 void fill_property_vectors(Document& doc_properties,
                            std::map< std::string, std::string>& property_types,
                            Rcpp::List& properties,
@@ -282,7 +303,6 @@ void fill_property_vectors(Document& doc_properties,
 
 			std::string key = p.name.GetString();
 			std::string type = property_types[key];
-
 			std::string value_type = geojsonsf::ARRAY_TYPES[p.value.GetType()];
 
 			if (value_type == "String") {
@@ -334,36 +354,13 @@ void fill_property_vectors(Document& doc_properties,
 				// don't do anything...
 			} else if (value_type == "Object") {
 
-				// TODO: tidy!
-				Value st = p.value.GetObject();
-				StringBuffer sb;
-				Writer<StringBuffer> writer(sb);
-				st.Accept(writer);
-				std::string this_value = sb.GetString();
-
-				if (type != "String") {
-					std::string value = any_to_string(this_value);
-					update_string_vector(properties, key, value, row_index-1);
-				} else {
-					std::string value = this_value;
-					update_string_vector(properties, key, value, row_index-1);
-				}
+				Value v = p.value.GetObject();
+				nested_json_to_string(v, type, properties, row_index, key);
 
 			} else if (value_type == "Array") {
 
-				Value st = p.value.GetArray();
-				StringBuffer sb;
-				Writer<StringBuffer> writer(sb);
-				st.Accept(writer);
-				std::string this_value = sb.GetString();
-
-				if (type != "String") {
-					std::string value = any_to_string(this_value);
-					update_string_vector(properties, key, value, row_index-1);
-				} else {
-					std::string value = this_value;
-					update_string_vector(properties, key, value, row_index-1);
-				}
+				Value v = p.value.GetArray();
+				nested_json_to_string(v, type, properties, row_index, key);
 
 			} else {
 				Rcpp::stop("unknown column data type " + type);

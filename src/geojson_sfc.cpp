@@ -53,7 +53,6 @@ std::string attach_class(Rcpp::List& sfc,
     	}
 
     	// attribute::classes
-    	//Rcpp::List sfc_attr = Rcpp::List::create(Named("classes") = sfc_classes);
     	sfc.attr("classes") = sfc_classes;
 
     } else {

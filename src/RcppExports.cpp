@@ -6,6 +6,17 @@
 
 using namespace Rcpp;
 
+// read_file_cpp2
+CharacterVector read_file_cpp2(std::string path);
+RcppExport SEXP _geojsonsf_read_file_cpp2(SEXP pathSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type path(pathSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_file_cpp2(path));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_geojson_to_sfc
 Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson);
 RcppExport SEXP _geojsonsf_rcpp_geojson_to_sfc(SEXP geojsonSEXP) {
@@ -41,6 +52,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_geojsonsf_read_file_cpp2", (DL_FUNC) &_geojsonsf_read_file_cpp2, 1},
     {"_geojsonsf_rcpp_geojson_to_sfc", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sfc, 1},
     {"_geojsonsf_rcpp_geojson_to_sf", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sf, 1},
     {"_geojsonsf_rcpp_geojson_to_wkt", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_wkt, 1},
