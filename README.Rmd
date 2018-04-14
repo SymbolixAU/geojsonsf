@@ -1,13 +1,14 @@
 ---
 title: geojsonsf
 output: github_document
+always_allow_html: yes
 ---
 
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "# ",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -39,6 +40,11 @@ When released on CRAN you install it in the usual way
 
 ```{r, eval = F}
 install.packages("geojsonsf")
+```
+
+```{r, echo = F}
+library(googleway)
+set_key(read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY"))
 ```
 
 Install the development version from GitHub with
@@ -107,7 +113,9 @@ geojson_sf(js)
 
 ### Speed
 
-```
+This benchmark shows a comparison with `library(sf)` for converting GeoJSON of 3,221 counties in the US in to an `sf` object
+
+```{r}
 library(RCurl)
 myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
 geo <- readLines(url(myurl))
@@ -124,34 +132,34 @@ microbenchmark(
 	},
 	times = 2
 )
-# Unit: seconds
-#       expr      min       lq     mean   median       uq      max neval
-#  geojsonsf 1.049637 1.049637 1.073559 1.073559 1.097481 1.097481     2
-#         sf 4.445201 4.445201 4.565980 4.565980 4.686758 4.686758     2
-
-myurl <- "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.min.geojson"
-
-geo <- readLines(url(myurl))
-
-microbenchmark(
-  geojson_sf = {
-    geojson_sf(geo)
-  },
-  geojson_wkt = {
-    geojson_wkt(geo)
-  },
-  sf = {
-    sf::st_read(geo, quiet = T)
-  },
-  #wellknown = {
-  #  wellknown::geojson2wkt(geo)
-  #},
-  times = 2
-)
 
 ```
 
+A visual check to see both objects are the same
+
+```{r, eval = F}
+library(googleway)
+gsf <- geojson_sf(geo)
+
+google_map() %>%
+	add_polygons(gsf[!gsf$STATE %in% c("02","15","72") ], 
+			fill_colour = "CENSUSAREA", 
+			stroke_weight = 0)
+```
+
+```{r, echo = FALSE}
+knitr::include_graphics("./man/figures/GeoJSONSF.png")
+```
+
+```{r}
+sf <- st_read(geo, quiet = T)
+plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
+```
+
+
 ## Examples
+
+Here are more examples of parsing various GeoJSON geometries. 
 
 ### Geometry
 ```{r}

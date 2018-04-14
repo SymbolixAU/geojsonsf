@@ -54,7 +54,7 @@ supported by `sf`, e.g. arrays of geometries
 ``` r
 library(geojsonsf)
 library(sf)        ## for sf print methods
-#> Linking to GEOS 3.6.1, GDAL 2.1.3, proj.4 4.9.3
+#  Linking to GEOS 3.6.1, GDAL 2.1.3, proj.4 4.9.3
 
 js <- '[
 {
@@ -100,80 +100,92 @@ js <- '[
 ]'
 
 geojson_sf(js)
-#> Simple feature collection with 6 features and 0 fields
-#> geometry type:  GEOMETRY
-#> dimension:      XY
-#> bbox:           xmin: 100 ymin: 0 xmax: 601 ymax: 1
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#>                    geometry
-#> 1             POINT (100 0)
-#> 2 LINESTRING (201 0, 102 1)
-#> 3 LINESTRING (301 0, 102 1)
-#> 4             POINT (100 0)
-#> 5 LINESTRING (501 0, 102 1)
-#> 6 LINESTRING (601 0, 102 1)
+#  Simple feature collection with 6 features and 0 fields
+#  geometry type:  GEOMETRY
+#  dimension:      XY
+#  bbox:           xmin: 100 ymin: 0 xmax: 601 ymax: 1
+#  epsg (SRID):    4326
+#  proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#                     geometry
+#  1             POINT (100 0)
+#  2 LINESTRING (201 0, 102 1)
+#  3 LINESTRING (301 0, 102 1)
+#  4             POINT (100 0)
+#  5 LINESTRING (501 0, 102 1)
+#  6 LINESTRING (601 0, 102 1)
 ```
 
 ### Speed
 
-    library(RCurl)
-    myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
-    geo <- readLines(url(myurl))
-    geo <- paste0(geo, collapse = "")
+This benchmark shows a comparison with `library(sf)` for converting
+GeoJSON of 3,221 counties in the US in to an `sf` object
 
-    library(microbenchmark)
+``` r
+library(RCurl)
+#  Loading required package: bitops
+myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+geo <- readLines(url(myurl))
+geo <- paste0(geo, collapse = "")
 
-    microbenchmark(
-        geojsonsf = {
-            geojson_sf(geo)
-        },
-        sf = {
-            sf::st_read(geo, quiet = T)
-        },
-        times = 2
-    )
-    # Unit: seconds
-    #       expr      min       lq     mean   median       uq      max neval
-    #  geojsonsf 1.049637 1.049637 1.073559 1.073559 1.097481 1.097481     2
-    #         sf 4.445201 4.445201 4.565980 4.565980 4.686758 4.686758     2
+library(microbenchmark)
 
-    myurl <- "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.min.geojson"
-
-    geo <- readLines(url(myurl))
-
-    microbenchmark(
-      geojson_sf = {
+microbenchmark(
+    geojsonsf = {
         geojson_sf(geo)
-      },
-      geojson_wkt = {
-        geojson_wkt(geo)
-      },
-      sf = {
+    },
+    sf = {
         sf::st_read(geo, quiet = T)
-      },
-      #wellknown = {
-      #  wellknown::geojson2wkt(geo)
-      #},
-      times = 2
-    )
+    },
+    times = 2
+)
+#  Unit: milliseconds
+#        expr       min        lq      mean    median        uq       max
+#   geojsonsf  646.9807  646.9807  665.9285  665.9285  684.8763  684.8763
+#          sf 4640.5411 4640.5411 4672.8394 4672.8394 4705.1378 4705.1378
+#   neval
+#       2
+#       2
+```
+
+A visual check to see both objects are the same
+
+``` r
+library(googleway)
+gsf <- geojson_sf(geo)
+
+google_map() %>%
+    add_polygons(gsf[!gsf$STATE %in% c("02","15","72") ], 
+            fill_colour = "CENSUSAREA", 
+            stroke_weight = 0)
+```
+
+<img src="./man/figures/GeoJSONSF.png" width="100%" />
+
+``` r
+sf <- st_read(geo, quiet = T)
+plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 Examples
 --------
+
+Here are more examples of parsing various GeoJSON geometries.
 
 ### Geometry
 
 ``` r
 g <- '{"type": "Point", "coordinates": [100.0, 0.0]}'
 geojson_sf(g)
-#> Simple feature collection with 1 feature and 0 fields
-#> geometry type:  POINT
-#> dimension:      XY
-#> bbox:           xmin: 100 ymin: 0 xmax: 100 ymax: 0
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#>        geometry
-#> 1 POINT (100 0)
+#  Simple feature collection with 1 feature and 0 fields
+#  geometry type:  POINT
+#  dimension:      XY
+#  bbox:           xmin: 100 ymin: 0 xmax: 100 ymax: 0
+#  epsg (SRID):    4326
+#  proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#         geometry
+#  1 POINT (100 0)
 ```
 
 ### Feature
@@ -188,14 +200,14 @@ f <- '{
       }
     }'
 geojson_sf(f)
-#> Simple feature collection with 1 feature and 0 fields
-#> geometry type:  LINESTRING
-#> dimension:      XY
-#> bbox:           xmin: 101 ymin: 0 xmax: 102 ymax: 1
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#>                    geometry
-#> 1 LINESTRING (101 0, 102 1)
+#  Simple feature collection with 1 feature and 0 fields
+#  geometry type:  LINESTRING
+#  dimension:      XY
+#  bbox:           xmin: 101 ymin: 0 xmax: 102 ymax: 1
+#  epsg (SRID):    4326
+#  proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#                     geometry
+#  1 LINESTRING (101 0, 102 1)
 ```
 
 Geometry Collection
@@ -211,14 +223,14 @@ gc <- '{
   ]
 }'
 geojson_sf(gc)
-#> Simple feature collection with 1 feature and 0 fields
-#> geometry type:  GEOMETRY
-#> dimension:      XY
-#> bbox:           xmin: 0 ymin: 0 xmax: 102 ymax: 2
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#>                         geometry
-#> 1 GEOMETRYCOLLECTION (POINT (...
+#  Simple feature collection with 1 feature and 0 fields
+#  geometry type:  GEOMETRY
+#  dimension:      XY
+#  bbox:           xmin: 0 ymin: 0 xmax: 102 ymax: 2
+#  epsg (SRID):    4326
+#  proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#                          geometry
+#  1 GEOMETRYCOLLECTION (POINT (...
 ```
 
 ### Feature Collection
@@ -245,16 +257,16 @@ fc <- '{
  ]
 }'
 geojson_sf(fc)
-#> Simple feature collection with 3 features and 2 fields
-#> geometry type:  GEOMETRY
-#> dimension:      XY
-#> bbox:           xmin: 100 ymin: 0 xmax: 102 ymax: 1
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#>           bar         foo                  geometry
-#> 1 feature 1.2 feature 1.1             POINT (100 0)
-#> 2        <NA>        <NA> LINESTRING (101 0, 102 1)
-#> 3 feature 3.2 feature 3.1 LINESTRING (101 0, 102 1)
+#  Simple feature collection with 3 features and 2 fields
+#  geometry type:  GEOMETRY
+#  dimension:      XY
+#  bbox:           xmin: 100 ymin: 0 xmax: 102 ymax: 1
+#  epsg (SRID):    4326
+#  proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#            bar         foo                  geometry
+#  1 feature 1.2 feature 1.1             POINT (100 0)
+#  2        <NA>        <NA> LINESTRING (101 0, 102 1)
+#  3 feature 3.2 feature 3.1 LINESTRING (101 0, 102 1)
 ```
 
 Reading from file (using `geojsonio` data)
@@ -265,18 +277,18 @@ file <- system.file("examples", "california.geojson", package = "geojsonio")
 
 geo <- paste0(readLines(file), collapse = "")
 geojsonsf::geojson_sf(geo)
-#> Simple feature collection with 1 feature and 11 fields
-#> geometry type:  MULTIPOLYGON
-#> dimension:      XY
-#> bbox:           xmin: -124.4096 ymin: 32.53416 xmax: -114.1315 ymax: 42.00952
-#> epsg (SRID):    4326
-#> proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#>   abbreviation   area    capital        city
-#> 1           CA 423968 Sacramento Los Angeles
-#>                         geometry     group houseseats landarea       name
-#> 1 MULTIPOLYGON (((-120.2485 3... US States         53   403466 California
-#>   population  statehood waterarea
-#> 1   38332521 1850-09-09     20502
+#  Simple feature collection with 1 feature and 11 fields
+#  geometry type:  MULTIPOLYGON
+#  dimension:      XY
+#  bbox:           xmin: -124.4096 ymin: 32.53416 xmax: -114.1315 ymax: 42.00952
+#  epsg (SRID):    4326
+#  proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#    abbreviation   area    capital        city
+#  1           CA 423968 Sacramento Los Angeles
+#                          geometry     group houseseats landarea       name
+#  1 MULTIPOLYGON (((-120.2485 3... US States         53   403466 California
+#    population  statehood waterarea
+#  1   38332521 1850-09-09     20502
 ```
 
 Well-known Text
@@ -306,8 +318,8 @@ fc <- '{
  ]
 }'
 geojson_wkt(fc)
-#>           bar         foo                  geometry
-#> 1 feature 1.2 feature 1.1             POINT (100 0)
-#> 2        <NA>        <NA> LINESTRING (101 0, 102 1)
-#> 3 feature 3.2 feature 3.1 LINESTRING (101 0, 102 1)
+#            bar         foo                  geometry
+#  1 feature 1.2 feature 1.1             POINT (100 0)
+#  2        <NA>        <NA> LINESTRING (101 0, 102 1)
+#  3 feature 3.2 feature 3.1 LINESTRING (101 0, 102 1)
 ```
