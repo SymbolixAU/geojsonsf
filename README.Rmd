@@ -115,7 +115,7 @@ geojson_sf(js)
 
 This benchmark shows a comparison with `library(sf)` for converting GeoJSON of 3,221 counties in the US in to an `sf` object
 
-```{r}
+```{r, warning=FALSE}
 library(RCurl)
 myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
 geo <- readLines(url(myurl))

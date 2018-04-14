@@ -5,10 +5,12 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
+
 template <int RTYPE>
 Rcpp::CharacterVector sfcClass(Vector<RTYPE> v);
 
 Rcpp::CharacterVector getSfcClass(SEXP sfc);
+
 
 void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter);
 
@@ -25,7 +27,7 @@ Rcpp::NumericVector start_bbox();
 
 std::set< std::string > start_geometry_types();
 
-//Rcpp::StringVector start_sfc_classes(size_t collectionCount);
+Rcpp::StringVector start_sfc_classes(size_t collectionCount);
 
 //void sfc_get_sfg(bsoncxx::array::view& coord_array, int& geom_type,
 //                Rcpp::List& sfc, int& counter, Rcpp::NumericVector& bbox);
