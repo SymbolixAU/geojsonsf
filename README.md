@@ -15,12 +15,28 @@ Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=maste
 geojsonsf
 ---------
 
-Convert GeoJSON to `sf` objects.
+**v0.2**
+
+Converts GeoJSON ([RFC 7946
+specification)](https://tools.ietf.org/html/rfc7946#page-11) to
+
+-   `sf` and `sfc` objects
+-   Well-Known Text
+
+As per RFC 7946, foreign members are ignored, and nested objects and
+arrays inside the `properties` object are converted to
+string/characters.
 
 Installation
 ------------
 
-You can install geojsonsf from GitHub with:
+When released on CRAN you install it in the usual way
+
+``` r
+install.packages("geojsonsf")
+```
+
+Install the development version from GitHub with
 
 ``` r
 # install.packages("devtools")

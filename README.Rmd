@@ -22,11 +22,26 @@ knitr::opts_chunk$set(
 
 ## geojsonsf
 
-Convert GeoJSON to `sf` objects. 
+**v0.2** 
+
+Converts GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#page-11) to 
+
+- `sf` and `sfc` objects 
+- Well-Known Text 
+
+As per RFC 7946, foreign members are ignored, and nested objects and arrays inside the `properties` object are converted to string/characters. 
+
 
 ## Installation
 
-You can install geojsonsf from GitHub with:
+When released on CRAN you install it in the usual way
+
+
+```{r, eval = F}
+install.packages("geojsonsf")
+```
+
+Install the development version from GitHub with
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
@@ -208,6 +223,7 @@ geo <- paste0(readLines(file), collapse = "")
 geojsonsf::geojson_sf(geo)
 
 ```
+
 ## Well-known Text
 
 It also converts GeoJSON to Well-Known Text and returns a `data.frame`

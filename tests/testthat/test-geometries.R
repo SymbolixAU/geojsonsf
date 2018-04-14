@@ -70,10 +70,13 @@ test_that("geometries are parsed correctly", {
 			]
 	  }'
 
+	sfc <- geojson_sfc(js)
 	sf <- geojson_sf(js)
+
 	expect_true(
 		all(c("sfc_GEOMETRY", "sfc") %in% attr(sf$geometry, "class"))
 	)
+
 
 	js <- '{
 		"type": "GeometryCollection",
