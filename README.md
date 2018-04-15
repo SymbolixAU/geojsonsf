@@ -139,13 +139,27 @@ microbenchmark(
     times = 2
 )
 #  Unit: milliseconds
-#        expr       min        lq      mean    median        uq       max
-#   geojsonsf  448.5969  448.5969  535.4632  535.4632  622.3295  622.3295
-#          sf 3920.8412 3920.8412 3947.1213 3947.1213 3973.4014 3973.4014
-#   neval
-#       2
-#       2
+#        expr      min       lq      mean    median        uq       max neval
+#   geojsonsf  456.442  456.442  473.2956  473.2956  490.1493  490.1493     2
+#          sf 3956.146 3956.146 3958.3012 3958.3012 3960.4568 3960.4568     2
 ```
+
+    library(rgdal)
+    microbenchmark(
+        gdal = {
+        readOGR(myurl, "OGRGeoJSON")
+        },
+        geojsonsf = {
+            myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+            geo <- readLines(url(myurl))
+            geo <- paste0(geo, collapse = "")
+        },
+        times = 5
+    )
+    # Unit: seconds
+    #       expr      min       lq     mean    median        uq       max neval
+    #      gdal 92.22109 95.22459 98.96683 101.02806 101.20985 105.15056     5
+    # geojsonsf 19.46873 20.21221 23.84940  24.73949  24.77509  30.05148     5
 
 A visual check to see both objects are the same
 
