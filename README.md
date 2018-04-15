@@ -139,9 +139,12 @@ microbenchmark(
     times = 2
 )
 #  Unit: milliseconds
-#        expr       min        lq     mean   median        uq       max neval
-#   geojsonsf  494.5853  494.5853  560.080  560.080  625.5747  625.5747     2
-#          sf 3917.9244 3917.9244 4039.329 4039.329 4160.7340 4160.7340     2
+#        expr       min        lq      mean    median        uq       max
+#   geojsonsf  508.6597  508.6597  595.6057  595.6057  682.5516  682.5516
+#          sf 4142.9372 4142.9372 4220.3404 4220.3404 4297.7436 4297.7436
+#   neval
+#       2
+#       2
 ```
 
     library(rgdal)
@@ -169,7 +172,7 @@ library(googleway)
 gsf <- geojson_sf(geo)
 
 google_map() %>%
-    add_polygons(gsf[!gsf$STATE %in% c("02","15","72") ], 
+    add_polygons(gsf[!gsf$STATE %in% c("02","15","72"), ], 
             fill_colour = "CENSUSAREA", 
             stroke_weight = 0)
 ```

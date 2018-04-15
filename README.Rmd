@@ -164,7 +164,7 @@ library(googleway)
 gsf <- geojson_sf(geo)
 
 google_map() %>%
-	add_polygons(gsf[!gsf$STATE %in% c("02","15","72") ], 
+	add_polygons(gsf[!gsf$STATE %in% c("02","15","72"), ], 
 			fill_colour = "CENSUSAREA", 
 			stroke_weight = 0)
 ```
