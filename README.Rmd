@@ -35,8 +35,13 @@ As per RFC 7946, foreign members are ignored, and nested objects and arrays insi
 
 ## Installation
 
-When released on CRAN you install it in the usual way
+The geojsonsf package relies on C++ headers from the `rapidjsonr` package so install that first
 
+```{r, eval = F}
+install.packages("rapidjsonr")
+```
+
+When released on CRAN you install `geojsonsf` in the usual way
 
 ```{r, eval = F}
 install.packages("geojsonsf")
@@ -53,6 +58,7 @@ Install the development version from GitHub with
 # install.packages("devtools")
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
+
 
 ## Motivation
 
