@@ -72,11 +72,12 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
 
   validate_geometries(val, sfg_objects);
   auto geometries = val["geometries"].GetArray();
-  int n = geometries.Size();
+  unsigned int n = geometries.Size();
+  unsigned int i;
 
   Rcpp::List geom_collection(n);
 
-  for (int i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     const Value& gcval = geometries[i];
     validate_type(gcval, sfg_objects);
     geom_type = gcval["type"].GetString();
@@ -133,11 +134,12 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
 
   auto features = fc["features"].GetArray();
 
-  int n = features.Size(); // number of features
+  unsigned int n = features.Size(); // number of features
+  unsigned int i;
   Rcpp::List feature_collection(n);
   //std::string geom_type = "FeatureCollection";
 
-  for (int i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     const Value& feature = features[i];
     feature_collection[i] = parse_feature_object(feature, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
   }

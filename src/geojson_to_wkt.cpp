@@ -69,12 +69,13 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
 
   validate_geometries(val, wkt_objects);
   auto geometries = val["geometries"].GetArray();
-  int n = geometries.Size();
+  unsigned int n = geometries.Size();
+  unsigned int i;
 
   Rcpp::List geom_collection(n);
   Rcpp::List geom_collection_wkt(1);
 
-  for (int i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     const Value& gcval = geometries[i];
     validate_type(gcval, wkt_objects);
     geom_type = gcval["type"].GetString();
@@ -84,7 +85,7 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
   // collapse into a single WKT string
   std::ostringstream os;
   os << "GEOMETRYCOLLECTION (";
-  for (int i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     std::string g = geom_collection[i];
     os << g;
     coordSeparateWKT(os, i, n);
@@ -143,11 +144,12 @@ Rcpp::List parse_feature_collection_object_wkt(const Value& fc,
 
   auto features = fc["features"].GetArray();
 
-  int n = features.Size(); // number of features
+  unsigned int n = features.Size(); // number of features
+  unsigned int i;
   Rcpp::List feature_collection(n);
   //std::string geom_type = "FeatureCollection";
 
-  for (int i = 0; i < n; i++) {
+  for (i = 0; i < n; i++) {
     const Value& feature = features[i];
     feature_collection[i] = parse_feature_object_wkt(feature, geometry_types, wkt_objects, property_keys, doc_properties, property_types);
   }
