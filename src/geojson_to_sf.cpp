@@ -227,6 +227,7 @@ Rcpp::List geojson_to_sf(const char* geojson,
   Rcpp::List sf(1);
   Rcpp::List sfc(1);
   Rcpp::List properties(1);
+  unsigned int doc_ele;
 
   if (d.IsObject()) {
 
@@ -239,7 +240,7 @@ Rcpp::List geojson_to_sf(const char* geojson,
     Rcpp::List sfgs(d.Size());
    // Rcpp::LogicalVector doc_ele_properties(d.Size());
 
-    for (int doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
+    for (doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
       parse_geojson_array(d, sfgs, properties, doc_ele, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
     }
     sfc[0] = sfgs;

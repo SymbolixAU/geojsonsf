@@ -235,6 +235,7 @@ Rcpp::List geojson_to_wkt(const char* geojson,
   Rcpp::List sf(1);
   Rcpp::List sfc(1);
   Rcpp::List properties(1);
+  unsigned int doc_ele;
 
   std::ostringstream os;
   // Need to 'recurse' into the GeoJSON like what i did for geo_sf
@@ -248,7 +249,7 @@ Rcpp::List geojson_to_wkt(const char* geojson,
   } else if (d.IsArray()) {
     Rcpp::List sfgs(d.Size());
 
-    for (int doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
+    for (doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
       parse_geojson_array_wkt(d, sfgs, properties, doc_ele, geometry_types, wkt_objects, property_keys, doc_properties, property_types);
     }
     sfc[0] = sfgs;

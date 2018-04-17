@@ -83,6 +83,7 @@ Rcpp::List get_multi_polygon(const Value& multi_polygon_array, Rcpp::NumericVect
   size_t n = multi_polygon_array.Size();
   Rcpp::List multi_polygon(n);
   unsigned int i;
+  unsigned int j;
 
   for (i = 0; i < n; i++) {
     validate_array(multi_polygon_array[i]);
@@ -90,7 +91,7 @@ Rcpp::List get_multi_polygon(const Value& multi_polygon_array, Rcpp::NumericVect
     Rcpp::List polygon(np);
     const Value& polygon_array = multi_polygon_array[i];
 
-    for (int j = 0; j < np; j++) {
+    for (j = 0; j < np; j++) {
       validate_array(polygon_array[j]);
       polygon[j] = parse_line(polygon_array[j], bbox);
     }
