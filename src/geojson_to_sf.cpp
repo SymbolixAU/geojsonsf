@@ -291,6 +291,9 @@ void fill_property_vectors(Document& doc_properties,
                            Rcpp::List& properties,
                            int& row_index) {
 
+	static const char* ARRAY_TYPES[] =
+		{ "Null", "False", "True", "Object", "Array", "String", "Number" };
+
   for (auto& m : doc_properties.GetObject()) {
     row_index = std::stoi(m.name.GetString());
 
@@ -298,6 +301,7 @@ void fill_property_vectors(Document& doc_properties,
 
       std::string key = p.name.GetString();
       std::string type = property_types[key];
+
       std::string value_type = ARRAY_TYPES[p.value.GetType()];
 
       if (value_type == "String") {

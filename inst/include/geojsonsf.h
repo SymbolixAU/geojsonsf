@@ -12,9 +12,6 @@ namespace geojsonsf {
   const std::string PROJ4STRING = "+proj=longlat +datum=WGS84 +no_defs";
 }
 
-static const char* ARRAY_TYPES[] =
-	{ "Null", "False", "True", "Object", "Array", "String", "Number" };
-
 #define UNKNOWN            0
 #define POINT              1
 #define MULTIPOINT         2
