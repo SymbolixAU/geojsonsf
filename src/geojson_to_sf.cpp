@@ -298,7 +298,7 @@ void fill_property_vectors(Document& doc_properties,
 
       std::string key = p.name.GetString();
       std::string type = property_types[key];
-      std::string value_type = geojsonsf::ARRAY_TYPES[p.value.GetType()];
+      std::string value_type = ARRAY_TYPES[p.value.GetType()];
 
       if (value_type == "String") {
         std::string this_value = p.value.GetString();
