@@ -19,9 +19,15 @@ void vector_to_string(Rcpp::List& lst, std::string& key) {
 
 
 void get_property_types(const Value& v, std::map< std::string, std::string>& property_types) {
+
+	// TODO: move to a header??
+	static const char* ARRAY_TYPES[] =
+		{ "Null", "False", "True", "Object", "Array", "String", "Number" };
+
   for (Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter){
     std::string property = iter->name.GetString();
-    std::string type =  geojsonsf::ARRAY_TYPES[iter->value.GetType()];
+
+    std::string type = ARRAY_TYPES[iter->value.GetType()];
 
     // check if key exists
     if (property_types.count(property) == 1) {

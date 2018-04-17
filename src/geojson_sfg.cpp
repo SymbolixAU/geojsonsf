@@ -21,9 +21,9 @@ double get_lat(const Value& coord_array) {
 }
 
 Rcpp::NumericVector parse_point(const Value& coord_array, Rcpp::NumericVector& bbox) {
-	Rcpp::NumericVector point(2);
-	point[0] = get_lon(coord_array);
-	point[1] = get_lat(coord_array);
+  Rcpp::NumericVector point(2);
+  point[0] = get_lon(coord_array);
+  point[1] = get_lat(coord_array);
   calculate_bbox(bbox, point);
   return point;
 }
@@ -36,8 +36,9 @@ Rcpp::NumericVector get_point(const Value& point_array, Rcpp::NumericVector& bbo
 Rcpp::NumericMatrix parse_line(const Value& coord_array, Rcpp::NumericVector& bbox) {
   size_t n = coord_array.Size();
   Rcpp::NumericMatrix line_string(n, 2);
-  for (int i = 0; i < n; i++) {
-  	validate_array(coord_array[i]);
+  unsigned int i;
+  for (i = 0; i < n; i++) {
+    validate_array(coord_array[i]);
     line_string(i, _) = parse_point(coord_array[i], bbox);
   }
   return line_string;
@@ -57,9 +58,10 @@ Rcpp::NumericMatrix get_line_string(const Value& line_array, Rcpp::NumericVector
 Rcpp::List get_multi_line_string(const Value& multi_line_array, Rcpp::NumericVector& bbox) {
   size_t n = multi_line_array.Size();
   Rcpp::List multi_line(n);
+  unsigned int i;
 
-  for (int i = 0; i < n; i++) {
-  	validate_array(multi_line_array[i]);
+  for (i = 0; i < n; i++) {
+    validate_array(multi_line_array[i]);
     multi_line[i] = parse_line(multi_line_array[i], bbox);
   }
   return multi_line;
@@ -68,9 +70,10 @@ Rcpp::List get_multi_line_string(const Value& multi_line_array, Rcpp::NumericVec
 Rcpp::List get_polygon(const Value& polygon_array, Rcpp::NumericVector& bbox) {
   size_t n = polygon_array.Size();
   Rcpp::List polygon(n);
+  unsigned int i;
 
-  for (int i = 0; i < n; i++) {
-  	validate_array(polygon_array[i]);
+  for (i = 0; i < n; i++) {
+    validate_array(polygon_array[i]);
     polygon[i] = parse_line(polygon_array[i], bbox);
   }
   return polygon;
@@ -79,15 +82,17 @@ Rcpp::List get_polygon(const Value& polygon_array, Rcpp::NumericVector& bbox) {
 Rcpp::List get_multi_polygon(const Value& multi_polygon_array, Rcpp::NumericVector& bbox) {
   size_t n = multi_polygon_array.Size();
   Rcpp::List multi_polygon(n);
+  unsigned int i;
+  unsigned int j;
 
-  for (int i = 0; i < n; i++) {
-  	validate_array(multi_polygon_array[i]);
+  for (i = 0; i < n; i++) {
+    validate_array(multi_polygon_array[i]);
     size_t np = multi_polygon_array[i].Size();
     Rcpp::List polygon(np);
     const Value& polygon_array = multi_polygon_array[i];
 
-    for (int j = 0; j < np; j++) {
-    	validate_array(polygon_array[j]);
+    for (j = 0; j < np; j++) {
+      validate_array(polygon_array[j]);
       polygon[j] = parse_line(polygon_array[j], bbox);
     }
     multi_polygon[i] = polygon;

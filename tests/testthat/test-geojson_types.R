@@ -150,8 +150,37 @@ test_that("geojson property types correctly captured in df", {
 	)
 
 
-	## TODO:
-	## - Object type converted to JSON string
-	## - Array type converted to JSON string
+	test_that("object and array properties are strings", {
+
+		geo <- '{
+		  "type": "Feature",
+		  "properties": { "id" : [1,2,3], "name" : { "foo" : "bar" } },
+		  "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+  	}'
+
+		sf <- geojson_sf(geo)
+
+		expect_true(sf[1, ]$id == "[1,2,3]")
+		expect_true(sf[1, ]$name == '{"foo":"bar"}')
+
+		geo <- '[
+	{
+		"type" : "Feature",
+		"properties" : { "id" : 1 },
+		"geometry" : { "type" : "Point", "coordinates" : [0,1] }
+	},
+		{
+		"type" : "Feature",
+		"properties" : { "id" : {"a":"b"}},
+		"geometry" : { "type" : "Point", "coordinates" : [0,0] }
+		}]'
+	sf <- geojson_sf(geo)
+
+		expect_true(
+			is.character(sf$id)
+		)
+
+
+})
 
 })

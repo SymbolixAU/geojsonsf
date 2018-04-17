@@ -9,21 +9,21 @@ using namespace Rcpp;
 
 void begin_wkt(std::ostringstream& os, std::string& geom_type) {
 
-	if (geom_type == "Point") {
-		os << "POINT (";
-	} else if (geom_type == "MultiPoint") {
-		os << "MULTIPOINT ((";
-	} else if (geom_type == "LineString") {
-		os << "LINESTRING (";
-	} else if (geom_type == "MultiLineString") {
-		os << "MULTILINESTRING ((";
-	} else if (geom_type == "Polygon") {
-		os << "POLYGON ((";
-	} else if (geom_type == "MultiPolygon") {
-		os << "MULTIPOLYGON (((";
-	} else if (geom_type == "GeometryCollection") {
-		os << "GEOMETRYCOLLECTION (";
-	}
+  if (geom_type == "Point") {
+    os << "POINT (";
+  } else if (geom_type == "MultiPoint") {
+    os << "MULTIPOINT ((";
+  } else if (geom_type == "LineString") {
+    os << "LINESTRING (";
+  } else if (geom_type == "MultiLineString") {
+    os << "MULTILINESTRING ((";
+  } else if (geom_type == "Polygon") {
+    os << "POLYGON ((";
+  } else if (geom_type == "MultiPolygon") {
+    os << "MULTIPOLYGON (((";
+  } else if (geom_type == "GeometryCollection") {
+    os << "GEOMETRYCOLLECTION (";
+  }
 }
 
 void end_wkt(std::ostringstream& os, std::string& geom_type) {
@@ -57,13 +57,13 @@ void coord_separator(std::ostringstream& os, int i, int n) {
 
 void line_separator_wkt(std::ostringstream& os, int i, int n) {
   if (i < (n - 1) ) {
-  	os << "),(";
+    os << "),(";
   }
 }
 
 void polygonSeparateWKT(std::ostringstream& os, int i, int n) {
 	if (i < (n - 1) ) {
-		os << ")),((";
+    os << ")),((";
 	}
 }
 
@@ -73,8 +73,6 @@ void addLonLatToWKTStream(std::ostringstream& os, float lon, float lat ) {
 }
 
 void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
-  // TODO:
-  // return the WKT representation of a point
   Rcpp::NumericVector point(2);
   point[0] = get_lon(coord_array);
   point[1] = get_lat(coord_array);
@@ -84,51 +82,52 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
 
 void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array) {
   size_t n = coord_array.Size();
-  for (int i = 0; i < n; i++) {
-  	validate_array(coord_array[i]);
+	unsigned int i;
+  for (i = 0; i < n; i++) {
+    validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i]);
     coord_separator(os, i, n);
   }
 }
 
 void line_string_to_wkt(std::ostringstream& os, const Value& coord_array) {
-	size_t n = coord_array.Size();
-
-	for (int i = 0; i < n; i++) {
-		validate_array(coord_array[i]);
-		point_to_wkt(os, coord_array[i]);
-		coord_separator(os, i, n);
-	}
+  size_t n = coord_array.Size();
+	unsigned int i;
+  for (i = 0; i < n; i++) {
+    validate_array(coord_array[i]);
+    point_to_wkt(os, coord_array[i]);
+    coord_separator(os, i, n);
+  }
 }
 
 void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array) {
   size_t n = coord_array.Size();
-
-	for (int i = 0; i < n; i++) {
-		validate_array(coord_array[i]);
-		line_string_to_wkt(os, coord_array[i]);
-		line_separator_wkt(os, i, n);
-	}
-
+	unsigned int i;
+  for (i = 0; i < n; i++) {
+    validate_array(coord_array[i]);
+    line_string_to_wkt(os, coord_array[i]);
+    line_separator_wkt(os, i, n);
+  }
 }
 
 void polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
-	size_t n = coord_array.Size();
-
-	for (int i = 0; i < n; i++) {
-		validate_array(coord_array[i]);
-		line_string_to_wkt(os, coord_array[i]);
-		line_separator_wkt(os, i, n);
-	}
+  size_t n = coord_array.Size();
+	unsigned int i;
+  for (i = 0; i < n; i++) {
+    validate_array(coord_array[i]);
+    line_string_to_wkt(os, coord_array[i]);
+    line_separator_wkt(os, i, n);
+  }
 }
 
 void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
-	size_t n = coord_array.Size();
-	for (int i = 0; i < n; i++) {
-		validate_array(coord_array[i]);
-		polygon_to_wkt(os, coord_array[i]);
-		polygonSeparateWKT(os, i, n);
-	}
+  size_t n = coord_array.Size();
+	unsigned int i;
+  for (i = 0; i < n; i++) {
+    validate_array(coord_array[i]);
+    polygon_to_wkt(os, coord_array[i]);
+    polygonSeparateWKT(os, i, n);
+  }
 }
 
 

@@ -150,5 +150,21 @@ test_that("properties captured correctly", {
 		wkt$value[!is.na(wkt$value)] == "foo"
 	)
 
+})
+
+test_that("sf and sfc created equally", {
+
+	f <- '{
+		"type": "Feature",
+  	"properties": { "id" : 1, "name" : "foo" },
+  	"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+  }'
+
+	sf <- geojson_sf(f)
+	sfc <- geojson_sfc(f)
+
+	expect_true(
+		all(class(sf$geometry) == class(sfc))
+	)
 
 })
