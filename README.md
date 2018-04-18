@@ -12,23 +12,21 @@ Status](https://travis-ci.org/SymbolixAU/geojsonsf.svg?branch=master)](https://t
 [![Coverage
 Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
-geojsonsf
----------
+## geojsonsf
 
 **v0.2**
 
 Converts GeoJSON ([RFC 7946
 specification)](https://tools.ietf.org/html/rfc7946#page-11) to
 
--   `sf` and `sfc` objects
--   Well-Known Text
+  - `sf` and `sfc` objects
+  - Well-Known Text
 
 As per RFC 7946, foreign members are ignored, and nested objects and
 arrays inside the `properties` object are converted to
 string/characters.
 
-Installation
-------------
+## Installation
 
 When released on CRAN you install it in the usual way
 
@@ -43,8 +41,7 @@ Install the development version from GitHub with
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
 
-Motivation
-----------
+## Motivation
 
 To quickly parse GeoJSON to `sf` objects, and to handle cases not
 supported by `sf`, e.g. arrays of geometries
@@ -118,13 +115,12 @@ geojson_sf(js)
 ### Speed
 
 This benchmark shows a comparison with `library(sf)` for converting
-GeoJSON of 3,221 counties in the US in to an `sf` object
+GeoJSON of 3,221 counties in the US in to an `sf`
+object
 
 ``` r
-library(RCurl)
-#  Loading required package: bitops
 myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
-geo <- readLines(url(myurl))
+geo <- readLines(myurl)
 geo <- paste0(geo, collapse = "")
 
 library(microbenchmark)
@@ -139,12 +135,9 @@ microbenchmark(
     times = 2
 )
 #  Unit: milliseconds
-#        expr       min        lq      mean    median        uq       max
-#   geojsonsf  552.5999  552.5999  698.2411  698.2411  843.8823  843.8823
-#          sf 4762.4683 4762.4683 4775.4048 4775.4048 4788.3414 4788.3414
-#   neval
-#       2
-#       2
+#        expr       min        lq     mean   median        uq       max neval
+#   geojsonsf  213.9981  213.9981  245.631  245.631  277.2639  277.2639     2
+#          sf 1934.4646 1934.4646 1941.234 1941.234 1948.0041 1948.0041     2
 ```
 
     library(rgdal)
@@ -154,16 +147,15 @@ microbenchmark(
         },
         geojsonsf = {
             myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
-            geo <- readLines(url(myurl))
+            geo <- readLines(myurl)
             geo <- paste0(geo, collapse = "")
             geojson_sf(geo)
         },
         times = 5
     )
-    # Unit: seconds
-    #      expr       min        lq      mean    median        uq       max neval
-    #      gdal 101.35865 104.05475 109.58369 110.44524 115.57287 116.48696     5
-    # geojsonsf  21.74936  27.25304  26.79775  27.41131  27.68181  29.89324     5
+    #      expr      min       lq     mean   median       uq      max neval
+    #      gdal 58.51037 60.05683 66.33925 65.07506 72.08371 75.97028     5
+    # geojsonsf 11.91515 13.37422 14.02232 13.88782 14.61826 16.31612     5
 
 A visual check to see both objects are the same
 
@@ -186,8 +178,7 @@ plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
-Examples
---------
+## Examples
 
 Here are more examples of parsing various GeoJSON geometries.
 
@@ -228,8 +219,7 @@ geojson_sf(f)
 #  1 LINESTRING (101 0, 102 1)
 ```
 
-Geometry Collection
--------------------
+## Geometry Collection
 
 ``` r
 gc <- '{
@@ -309,8 +299,7 @@ geojsonsf::geojson_sf(geo)
 #  1   38332521 1850-09-09     20502
 ```
 
-Well-known Text
----------------
+## Well-known Text
 
 It also converts GeoJSON to Well-Known Text and returns a `data.frame`
 
