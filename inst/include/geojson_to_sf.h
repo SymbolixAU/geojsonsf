@@ -81,4 +81,12 @@ void fill_property_vectors(Document& doc_properties,
                            Rcpp::List& properties,
                            int& row_index);
 
+Rcpp::List construct_sf(Rcpp::List& lst, std::set< std::string >& property_keys,
+                        std::map< std::string, std::string>& property_types,
+                        Document& doc_properties,
+                        int& sfg_objects,
+                        int& row_index);
+
+Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson);
+
 #endif
