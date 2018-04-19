@@ -12,8 +12,7 @@ sf::st_geometry(sf) <- NULL
 
 sf <- sf[22, ]
 js <- jsonlite::toJSON(sf)
-js <- gsub('\\[|\\]','',js)
-js <- paste0('"properties":',js,'')
+js <- paste0('"properties":',gsub('\\[|\\]','',js),'')
 
 geo_melbourne <- paste0('{"type":"Feature",',js, ',',coords,'}')
 sf <- geojson_sf(geo_melbourne)
