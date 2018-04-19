@@ -3,6 +3,9 @@ context("read geojson")
 
 test_that("can read from various sources", {
 
+	skip_on_cran()
+	skip_on_travis()
+
 	url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_outline_500k.json"
 
 	## direct from url
@@ -13,7 +16,7 @@ test_that("can read from various sources", {
 		all(class(sf) == c("sf", "data.frame"))
 	)
 	expect_true(
-  	all(class(sfc) == c("sfc_LINESTRING", "sfc"))
+		all(class(sfc) == c("sfc_LINESTRING", "sfc"))
 	)
 
 	expect_true(
@@ -53,7 +56,7 @@ test_that("can read from various sources", {
 		nrow(sf) == length(sfc)
 	)
 	expect_true(
-		nrow(sf) == 41
+		nrow(sf) == 1
 	)
 
 
