@@ -36,3 +36,12 @@ test_that("can read from various sources", {
 	expect_true(nrow(sf) == length(sfc))
 	expect_true(nrow(sf) == 1)
 })
+
+test_that("read utils work", {
+
+	expect_true(geojsonsf:::is_url("http://www"))
+	expect_true(geojsonsf:::is_url("https://www"))
+	expect_false(geojsonsf:::is_url("me.com"))
+})
+
+
