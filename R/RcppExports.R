@@ -13,3 +13,11 @@ rcpp_geojson_to_wkt <- function(geojson) {
     .Call(`_geojsonsf_rcpp_geojson_to_wkt`, geojson)
 }
 
+rcpp_read_sfc_file <- function(file) {
+    .Call(`_geojsonsf_rcpp_read_sfc_file`, file)
+}
+
+rcpp_read_sf_file <- function(file) {
+    .Call(`_geojsonsf_rcpp_read_sf_file`, file)
+}
+

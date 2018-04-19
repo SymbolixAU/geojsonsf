@@ -7,7 +7,7 @@
 geojson_sf(geojson)
 }
 \arguments{
-\item{geojson}{string or vector of GeoJSON}
+\item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
 }
 \description{
 Converts GeoJSON to an `sf` object
