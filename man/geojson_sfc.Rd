@@ -7,7 +7,7 @@
 geojson_sfc(geojson)
 }
 \arguments{
-\item{geojson}{string or vector of GeoJSON}
+\item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
 }
 \description{
 Extracts geometries from GeoJSON and returns an `sfc` object

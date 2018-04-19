@@ -113,7 +113,7 @@ geojson_sf(js)
 
 ### Speed
 
-This benchmark shows a comparison with `library(sf)` for converting GeoJSON of 3,221 counties in the US in to an `sf` object
+This benchmark shows a comparison with `library(sf)` for converting a string of GeoJSON of 3,221 counties in the US in to an `sf` object
 
 ```{r, warning=FALSE}
 myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
@@ -123,11 +123,29 @@ geo <- paste0(geo, collapse = "")
 library(microbenchmark)
 
 microbenchmark(
+    geojsonsf = {
+        geojson_sf(geo)
+    },
+    sf = {
+        sf::st_read(geo, quiet = T)
+    },
+    times = 2
+)
+```
+
+Reading directly from a URL is comparable between the two
+
+```{r, warning=FALSE}
+myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+
+library(microbenchmark)
+
+microbenchmark(
 	geojsonsf = {
-		geojson_sf(geo)
+		geojson_sf(myurl)
 	},
 	sf = {
-		sf::st_read(geo, quiet = T)
+		sf::st_read(myurl, quiet = T)
 	},
 	times = 2
 )
