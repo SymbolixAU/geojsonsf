@@ -34,21 +34,6 @@ geojson_sfc.connection <- function(geojson) geojson_sfc(read_url(geojson))
 #' @export
 geojson_sfc.default <- function(geojson) rcpp_geojson_to_sfc(geojson)
 
-is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
-
-read_url <- function(con) {
-	out <- tryCatch({
-		paste0(readLines(con), collapse = "")
-	},
-	error = function(cond){
-		warning("There was an error downloading the geojson")
-	},
-	finally = {
-		close(con)
-	})
-}
-
-
 #' Geojson to sf
 #'
 #' Converts GeoJSON to an `sf` object
@@ -92,7 +77,7 @@ read_url <- function(con) {
 		paste0(readLines(con), collapse = "")
 	},
 	error = function(cond){
-		warning("There was an error downloading the geojson")
+		stop("There was an error downloading the geojson")
 	},
 	finally = {
 		close(con)

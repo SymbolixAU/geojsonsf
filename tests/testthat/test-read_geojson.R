@@ -44,4 +44,17 @@ test_that("read utils work", {
 	expect_false(geojsonsf:::is_url("me.com"))
 })
 
+test_that("read_rul works", {
+	skip_on_cran()
+	skip_on_travis()
+
+	url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_outline_500k.json"
+	con <- curl::curl(url)
+	geo <- geojsonsf:::read_url(con)
+	expect_true(nchar(geo) == 1078089)
+
+	url <- "http://notaurl"
+	con <- curl::curl(url)
+	expect_error(geojsonsf:::read_url(con), "There was an error downloading the geojson")
+})
 
