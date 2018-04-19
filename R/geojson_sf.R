@@ -20,7 +20,6 @@ geojson_sfc.character <- function(geojson) {
 	if(length(geojson) > 1) {
 		return(rcpp_geojson_to_sfc(geojson))
 	}
-
 	if (is_url(geojson)) {
 		return(geojson_sfc(curl::curl(geojson)))
 	} else if (file.exists(geojson) ) {
@@ -72,7 +71,6 @@ geojson_sf.character <- function(geojson) {
 	if(length(geojson) > 1) {
 		return(rcpp_geojson_to_sf(geojson))
 	}
-
 	if (is_url(geojson)) {
 		return(geojson_sf(curl::curl(geojson)))
 	} else if (file.exists(geojson) ) {
