@@ -2,22 +2,30 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 rcpp_geojson_to_sfc <- function(geojson) {
-    .Call(`_geojsonsf_rcpp_geojson_to_sfc`, geojson)
+    .Call('_geojsonsf_rcpp_geojson_to_sfc', PACKAGE = 'geojsonsf', geojson)
 }
 
 rcpp_geojson_to_sf <- function(geojson) {
-    .Call(`_geojsonsf_rcpp_geojson_to_sf`, geojson)
+    .Call('_geojsonsf_rcpp_geojson_to_sf', PACKAGE = 'geojsonsf', geojson)
 }
 
 rcpp_geojson_to_wkt <- function(geojson) {
-    .Call(`_geojsonsf_rcpp_geojson_to_wkt`, geojson)
+    .Call('_geojsonsf_rcpp_geojson_to_wkt', PACKAGE = 'geojsonsf', geojson)
+}
+
+rcpp_read_sfc_file <- function(file) {
+    .Call('_geojsonsf_rcpp_read_sfc_file', PACKAGE = 'geojsonsf', file)
+}
+
+rcpp_read_sf_file <- function(file) {
+    .Call('_geojsonsf_rcpp_read_sf_file', PACKAGE = 'geojsonsf', file)
 }
 
 rcpp_sfc_to_geojson <- function(sfc) {
-    .Call(`_geojsonsf_rcpp_sfc_to_geojson`, sfc)
+    .Call('_geojsonsf_rcpp_sfc_to_geojson', PACKAGE = 'geojsonsf', sfc)
 }
 
 rcpp_sf_to_geojson <- function(sf) {
-    .Call(`_geojsonsf_rcpp_sf_to_geojson`, sf)
+    .Call('_geojsonsf_rcpp_sf_to_geojson', PACKAGE = 'geojsonsf', sf)
 }
 

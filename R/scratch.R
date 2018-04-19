@@ -1,4 +1,3 @@
-
 ## sf to GeoJSON
 
 ## stream the data.frame, row by row.

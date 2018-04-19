@@ -7,7 +7,7 @@
 geojson_wkt(geojson)
 }
 \arguments{
-\item{geojson}{string or vector of GeoJSON}
+\item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
 }
 \value{
 data.frame with a 'geometry' column of well-known text

@@ -7,15 +7,24 @@
 geojson_sfc(geojson)
 }
 \arguments{
-\item{geojson}{string or vector of GeoJSON}
+\item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
 }
 \description{
 Extracts geometries from GeoJSON and returns an `sfc` object
 }
 \examples{
+
+## character string of GeoJSON
+
 ## load 'sf' for print methods
 # library(sf)
 geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
 geojson_sfc(geojson)
+
+\dontrun{
+## GeoJSON at a url
+myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+sf <- geojson_sfc(myurl)
+}
 
 }

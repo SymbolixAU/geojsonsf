@@ -388,14 +388,12 @@ Rcpp::List create_sfc(Rcpp::StringVector geojson) {
     sfc[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
   }
 
-  Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
-  return res;
+  return construct_sfc(sfg_objects, sfc, bbox, geometry_types);
 }
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson) {
-	Rcpp::List sfc = create_sfc(geojson);
-	return sfc;
+	return create_sfc(geojson);
 }
 
 Rcpp::List construct_sf(Rcpp::List& lst, std::set< std::string >& property_keys,
@@ -421,30 +419,31 @@ Rcpp::List construct_sf(Rcpp::List& lst, std::set< std::string >& property_keys,
   return properties;
 }
 
+Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson) {
+	// iterate over the geojson
+	int n = geojson.size();
+	int sfg_objects = 0;  // keep track of number of objects
+	int row_index;
+
+	// Attributes to keep track of along the way
+	Rcpp::NumericVector bbox = start_bbox();
+	std::set< std::string > geometry_types = start_geometry_types();
+	std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
+	std::map< std::string, std::string > property_types;
+
+	Document doc_properties;    // Document to store the 'properties'
+	doc_properties.SetObject();
+	Rcpp::List sfc(n);
+
+	for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
+		sfc[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
+	}
+
+	Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
+	return construct_sf(res, property_keys, property_types, doc_properties, sfg_objects, row_index);
+}
+
 // [[Rcpp::export]]
 Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson) {
-
-	// iterate over the geojson
-  int n = geojson.size();
-  int sfg_objects = 0;  // keep track of number of objects
-  int row_index;
-
-  // Attributes to keep track of along the way
-  Rcpp::NumericVector bbox = start_bbox();
-  std::set< std::string > geometry_types = start_geometry_types();
-  std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
-  std::map< std::string, std::string> property_types;
-
-  Document doc_properties;    // Document to store the 'properties'
-  doc_properties.SetObject();
-  Rcpp::List sfc(n);
-
-  for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
-    sfc[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
-  }
-
-  Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
-  Rcpp::List sf = construct_sf(res, property_keys, property_types, doc_properties, sfg_objects, row_index);
-
-  return sf;
+	return generic_geojson_to_sf(geojson);
 }

@@ -12,18 +12,13 @@ test_that("geojson property types correctly captured in df", {
 	}'
 
 	sf <- geojson_sf(geo)
+	sfc <- geojson_sfc(geo)
 
-	expect_true(
-		all(c("geometry", "id", "val") %in% names(sf))
-	)
+	expect_true(nrow(sf) == 1)
+	expect_true(nrow(sf) == length(sfc))
+	expect_true(all(c("geometry", "id", "val") %in% names(sf)))
 
-	expect_true(
-		nrow(sf) == 1
-	)
-
-	expect_true(
-		is.numeric(sf[['id']])
-	)
+	expect_true(is.numeric(sf[['id']]))
 
 	## null property
 	geo <- '
@@ -34,10 +29,10 @@ test_that("geojson property types correctly captured in df", {
 	}'
 
 	sf <- geojson_sf(geo)
+	sfc <- geojson_sfc(geo)
 
-	expect_true(
-		all(names(sf) %in% c("geometry"))
-	)
+	expect_true(nrow(sf) == length(sfc))
+	expect_true(all(names(sf) %in% c("geometry")))
 
 	## null property value
 	geo <- '
@@ -48,10 +43,9 @@ test_that("geojson property types correctly captured in df", {
 	}'
 
 	sf <- geojson_sf(geo)
-
-	expect_true(
-		all(names(sf) %in% c("geometry", "id"))
-	)
+	sfc <- geojson_sfc(geo)
+	expect_true(nrow(sf) == length(sfc))
+	expect_true(all(names(sf) %in% c("geometry", "id")))
 
 	## logical property value
 	geo <- '
@@ -62,14 +56,12 @@ test_that("geojson property types correctly captured in df", {
 	}'
 
 	sf <- geojson_sf(geo)
+	sfc <- geojson_sfc(geo)
 
-	expect_true(
-		all(names(sf) %in% c("geometry", "id"))
-	)
+	expect_true(nrow(sf) == length(sfc))
+	expect_true(all(names(sf) %in% c("geometry", "id")))
 
-	expect_true(
-		is.logical(sf[['id']])
-	)
+	expect_true(is.logical(sf[['id']]))
 
 	geo <- '
 	{
@@ -79,6 +71,9 @@ test_that("geojson property types correctly captured in df", {
   }'
 
 	sf <- geojson_sf(geo)
+	sfc <- geojson_sfc(geo)
+
+	expect_true(nrow(sf) == length(sfc))
 
 	## Different types for teh same property
 	geo <- '
@@ -97,21 +92,17 @@ test_that("geojson property types correctly captured in df", {
 }'
 
 	sf <- geojson_sf(geo)
-	expect_true(
-		is.character(sf$id)
-	)
+	sfc <- geojson_sfc(geo)
+	expect_true(is.character(sf$id))
+	expect_true(nrow(sf) == length(sfc))
 
 	geo <- '[
-	{
-    "type" : "Feature",
-    "properties" : { "id" : 1},
-    "geometry" : { "type" : "Point", "coordinates" : [0,0] }
-	},
-  {
-    "type" : "Feature",
-  	"properties" : { "id" : true},
-  	"geometry" : { "type" : "Point", "coordinates" : [2,2] }
-  }]'
+	{"type" : "Feature",
+   "properties" : { "id" : 1},
+   "geometry" : { "type" : "Point", "coordinates" : [0,0] }},
+  {"type" : "Feature",
+   "properties" : { "id" : true},
+   "geometry" : { "type" : "Point", "coordinates" : [2,2] }}]'
 	sf <- geojson_sf(geo)
 	expect_true(
 		is.character(sf$id)
@@ -129,9 +120,9 @@ test_that("geojson property types correctly captured in df", {
 	  "geometry" : { "type" : "Point", "coordinates" : [0,0] }
 	}]'
 	sf <- geojson_sf(geo)
-	expect_true(
-		sum(is.na(sf$id)) == 2
-	)
+	sfc <- geojson_sfc(geo)
+	expect_true(sum(is.na(sf$id)) == 2)
+	expect_true(nrow(sf) == length(sfc))
 
 	geo <- '[
 	{
@@ -174,11 +165,9 @@ test_that("geojson property types correctly captured in df", {
 		"properties" : { "id" : {"a":"b"}},
 		"geometry" : { "type" : "Point", "coordinates" : [0,0] }
 		}]'
-	sf <- geojson_sf(geo)
+	  sf <- geojson_sf(geo)
 
-		expect_true(
-			is.character(sf$id)
-		)
+	  expect_true(is.character(sf$id))
 
 
 })
