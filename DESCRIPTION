@@ -1,7 +1,7 @@
 Package: geojsonsf
 Type: Package
 Title: GeoJSON to Simple Feature Converter
-Version: 0.3.0002
+Version: 0.3.0003
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -9,6 +9,7 @@ Description: Converts GeoJSON to simple feature objects.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 3.3.0)
 LinkingTo: 
     Rcpp, 
     rapidjsonr
