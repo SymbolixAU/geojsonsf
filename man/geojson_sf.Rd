@@ -14,9 +14,18 @@ Converts GeoJSON to an `sf` object
 }
 \examples{
 
+## character string of GeoJSON
+
 ## load 'sf' for print methods
 # library(sf)
 geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
 geojson_sf(geojson)
+
+
+\dontrun{
+## GeoJSON at a url
+myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+sf <- geojson_sf(myurl)
+}
 
 }

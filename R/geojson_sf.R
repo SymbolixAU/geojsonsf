@@ -5,10 +5,19 @@
 #' @param geojson string or vector of GeoJSON, or a URL or file pointing to a geojson file
 #'
 #' @examples
+#'
+#' ## character string of GeoJSON
+#'
 #' ## load 'sf' for print methods
 #' # library(sf)
 #' geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
 #' geojson_sfc(geojson)
+#'
+#'\dontrun{
+#' ## GeoJSON at a url
+#' myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+#' sf <- geojson_sfc(myurl)
+#'}
 #'
 #' @export
 geojson_sfc <- function(geojson) UseMethod("geojson_sfc")
@@ -40,10 +49,19 @@ geojson_sfc.default <- function(geojson) rcpp_geojson_to_sfc(geojson)
 #'
 #' @examples
 #'
+#' ## character string of GeoJSON
+#'
 #' ## load 'sf' for print methods
 #' # library(sf)
 #' geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
 #' geojson_sf(geojson)
+#'
+#'
+#'\dontrun{
+#' ## GeoJSON at a url
+#' myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+#' sf <- geojson_sf(myurl)
+#'}
 #'
 #' @inheritParams geojson_sfc
 #' @export
