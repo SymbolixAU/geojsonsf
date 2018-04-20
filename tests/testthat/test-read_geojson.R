@@ -34,7 +34,7 @@ test_that("can read from various sources", {
 	sfc <- geojson_sfc(geo_melbourne)
 
 	expect_true(nrow(sf) == length(sfc))
-	expect_true(nrow(sf) == 1)
+	expect_true(nrow(sf) == 41)
 })
 
 test_that("read utils work", {
