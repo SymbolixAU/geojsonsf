@@ -407,3 +407,18 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 }
 
 
+/// DESIGN:
+/// should work for both properties & non-property sf
+// result vector res(nrow(sf));
+// property_columns();
+// property_column_types();
+// for (i = 0; i < nrow(sf); i++) {
+//   for (j = 0; j < ncol(properties); j++){
+//      stream each column into "properties": { }
+//   }
+//   if (ncol(properties) > 0) {
+//      needs to be a {"type":"Feature", ...}
+//   then create "geometry":{"type" :"geom","coordinates":[]}
+// }
+// result will be a vector of JSON.
+// can combine or keep 'atomic'.
