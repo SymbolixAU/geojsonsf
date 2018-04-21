@@ -62,7 +62,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_to_geojson
-Rcpp::StringMatrix rcpp_sf_to_geojson(Rcpp::List sf);
+Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf);
 RcppExport SEXP _geojsonsf_rcpp_sf_to_geojson(SEXP sfSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

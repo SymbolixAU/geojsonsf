@@ -61,14 +61,14 @@ void line_separator_wkt(std::ostringstream& os, int i, int n) {
   }
 }
 
-void polygonSeparateWKT(std::ostringstream& os, int i, int n) {
+void polygon_separate_wkt(std::ostringstream& os, int i, int n) {
 	if (i < (n - 1) ) {
     os << ")),((";
 	}
 }
 
 
-void addLonLatToWKTStream(std::ostringstream& os, float lon, float lat ) {
+void add_lonlat_to_wkt_stream(std::ostringstream& os, float lon, float lat ) {
   os << lon << " " << lat;
 }
 
@@ -76,7 +76,7 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
   Rcpp::NumericVector point(2);
   point[0] = get_lon(coord_array);
   point[1] = get_lat(coord_array);
-  addLonLatToWKTStream(os, point[0], point[1]);
+  add_lonlat_to_wkt_stream(os, point[0], point[1]);
 }
 
 
@@ -126,7 +126,7 @@ void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
   for (i = 0; i < n; i++) {
     validate_array(coord_array[i]);
     polygon_to_wkt(os, coord_array[i]);
-    polygonSeparateWKT(os, i, n);
+    polygon_separate_wkt(os, i, n);
   }
 }
 
