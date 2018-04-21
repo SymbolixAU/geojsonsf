@@ -24,7 +24,7 @@
 # sf_geojson(sf)
 #
 # js <- '[{"type" : "Polygon", "coordinates" : [ [ [0, 0], [1, 1] ] ]},
-# {"type" : "MultiLineString", "coordinates" : [ [ [0, 0], [1, 1] ] ]}]'
+# {"type" : "MultiLineString", "coordinates" : [ [ [0, 0], [1, 1] ], [[3,3],[4,4]] ]}]'
 # sf <- geojson_sf(js)
 # sf
 # sf_geojson(sf)
@@ -36,8 +36,10 @@
 #     {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
 #   ]}'
 # sf <- geojson_sf(js)
-# sf
-# sf_geojson(sf)
+# j <- sf_geojson(sf)
+#
+# j
+# gsub(" |\\n|\\r","",js)
 
 
 # js <- '[{"type" : "Polygon", "coordinates" : [ [ [0, 0], [1, 1] ] ]},
@@ -79,13 +81,49 @@
 # 	}
 # }
 # ]'
-# 	sf <- geojson_sf(js)
-# 	sf_geojson(sf)
+# sf <- geojson_sf(js)
+# sf_geojson(sf)
+# geojson_sf( sf_geojson(sf) )
 
 
 
+# js <- '{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0]]]]}'
+# sf_geojson(geojson_sf(js))
+
+# js <- '{
+#   "type":"MultiLineString",
+#   "coordinates":[
+#     [
+#       [0,0],[0,1],[1,1],[1,0],[0,0]
+#     ],
+#     [
+#       [2,2],[2,3],[3,3],[3,2],[2,2]
+#     ]
+#   ]
+# }'
+#
+# sf_geojson(geojson_sf(js))
 
 
-
+# js <- '{
+#   "type":"MultiPolygon",
+#   "coordinates":[
+#     [
+#       [
+#         [0,0],[0,1],[1,1],[1,0],[0,0]
+#       ],
+#       [
+#         [0.5,0.5],[0.5,0.75],[0.75,0.75],[0.75,0.5],[0.5,0.5]
+#       ]
+#     ],
+#     [
+#       [
+#         [2,2],[2,3],[3,3],[3,2],[2,2]
+#       ]
+#     ]
+#   ]
+# }'
+#
+# sf_geojson(geojson_sf(js))
 
 

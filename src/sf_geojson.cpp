@@ -102,6 +102,10 @@ void coord_separator(Rcpp::String& geojson, int i, int n) {
 	}
 }
 
+void object_separator(Rcpp::String& geojson, int i, int n) {
+	geojson += ",";
+}
+
 void line_separator_geojson(Rcpp::String& geojson, int i, int n) {
 	if (i < (n - 1) ) {
 		geojson += "],[";
@@ -114,7 +118,10 @@ void polygon_separator_geojson(Rcpp::String& geojson, int i, int n) {
 	}
 }
 
-void add_lonlat_to_stream(Rcpp::String& geojson, Rcpp::NumericVector& points) {
+void add_lonlat_to_geojson(Rcpp::String& geojson, Rcpp::NumericVector& points) {
+
+	Rcpp::Rcout << "adding lonlat" << std::endl;
+	Rcpp::Rcout << points << std::endl;
 
 	points.attr("dim") = Dimension(points.size() / 2, 2);
 	Rcpp::NumericMatrix m = as< Rcpp::NumericMatrix >(points);
@@ -129,16 +136,77 @@ void add_lonlat_to_stream(Rcpp::String& geojson, Rcpp::NumericVector& points) {
 	}
 }
 
+void point_to_geojson(Rcpp::String& geojson, Rcpp::NumericVector& point) {
+	Rcpp::Rcout << "adding points" << std::endl;
+//	Rcpp::NumericVector points = as<Rcpp::NumericVector>(sfg);
+//	Rcpp::Rcout << points << std::endl;
+	add_lonlat_to_geojson(geojson, point);
+}
+
+void multi_point_to_geojson(Rcpp::String& geojson, Rcpp::NumericVector& points) {
+
+  for (int i = 0; i < points.size(); i++) {
+  	Rcpp::Rcout << "adding multipoint" << std::endl;
+  	Rcpp::NumericVector point = points[i];
+//  	Rcpp::List sfgi = sfg[i];
+    add_lonlat_to_geojson(geojson, point);
+  }
+}
+
+void line_string_to_geojson(Rcpp::String& geojson, Rcpp::NumericVector& line) {
+	Rcpp::Rcout << "adding line string" << std::endl;
+	Rcpp::Rcout << line << std::endl;
+//	Rcpp::List line = as<Rcpp::NumericVector>(sfg);
+//	add_lonlat_to_geojson(geojson, line);
+  add_lonlat_to_geojson(geojson, line);
+}
+
+void multi_line_string_to_geojson(Rcpp::String& geojson, Rcpp::List& sfg) {
+	for (int i = 0; i < sfg.size(); i++) {
+		Rcpp::Rcout << "adding multi line" << std::endl;
+		Rcpp::NumericVector sfgi = sfg[i];
+		add_lonlat_to_geojson(geojson, sfgi);
+		line_separator_geojson(geojson, i, sfg.size());
+	}
+}
+
+void polygon_to_geojson(Rcpp::String& geojson, Rcpp::List& sfg) {
+	for (int i = 0; i < sfg.size(); i++) {
+		Rcpp::Rcout << "adding polygon" << std::endl;
+		Rcpp::NumericVector sfgi = sfg[i];
+		add_lonlat_to_geojson(geojson, sfgi);
+		line_separator_geojson(geojson, i, sfg.size());
+	}
+}
+
+void multi_polygon_to_geojson(Rcpp::String& geojson, Rcpp::List& sfg) {
+	for (int i = 0; i < sfg.size(); i++) {
+		Rcpp::Rcout << "adding multi polygon" << std::endl;
+		Rcpp::List sfgi = sfg[i];
+		polygon_to_geojson(geojson, sfgi);
+		polygon_separator_geojson(geojson, i, sfg.size());
+	}
+
+}
+
+// need to keep track of lines & polygons
+// so we can correctly insert the inner braces ],[
 void fetch_coordinates(Rcpp::String& geojson, Rcpp::List& sfc, int& object_counter) {
 
 	Rcpp::CharacterVector cls;
 	std::string geom_type;
 
+	Rcpp::Rcout << "sfc size: " << sfc.size() << std::endl;
+
 	for (Rcpp::List::iterator it = sfc.begin(); it != sfc.end(); it++) {
 
-		if (object_counter > 0) {
-			geojson += ",";
-		}
+		Rcpp::Rcout << "object counter " << object_counter << std::endl;
+
+		//if (object_counter > 0) {
+    //    geojson += ",";
+		//}
+		//line_separator_geojson(geojson, object_counter, sfc.size());
+
 		switch( TYPEOF(*it) ) {
 		case VECSXP: {
 			Rcpp::List tmp = as<Rcpp::List>(*it);
@@ -153,6 +221,7 @@ void fetch_coordinates(Rcpp::String& geojson, Rcpp::List& sfc, int& object_count
 				// if no class attribute, go further into the list to try and find one
 				fetch_coordinates(geojson, tmp, object_counter);
 			}
+			//line_separator_geojson(geojson, object_counter, sfc.size());
 			object_counter++;
 			break;
 		}
@@ -163,11 +232,12 @@ void fetch_coordinates(Rcpp::String& geojson, Rcpp::List& sfc, int& object_count
 				cls = getSfClass(tmp);
 				geom_type = cls[1];
 				begin_geojson_geometry(geojson, geom_type);
-				add_lonlat_to_stream(geojson, tmp);
+				add_lonlat_to_geojson(geojson, tmp);
 				end_geojson_geometry(geojson, geom_type);
 			} else {
-				add_lonlat_to_stream(geojson, tmp);
+				add_lonlat_to_geojson(geojson, tmp);
 			}
+			//line_separator_geojson(geojson, object_counter, sfc.size());
 			object_counter++;
 			break;
 		}
@@ -185,7 +255,8 @@ Rcpp::String add_geometry_to_stream(Rcpp::List& sfg) {
 
   Rcpp::String geojson;
 	int object_counter = 0;
-	fetch_coordinates(geojson, sfg, object_counter);
+
+//	fetch_coordinates(geojson, sfg, object_counter);
 
 	return geojson;
 }
@@ -249,12 +320,55 @@ void vector_to_json(Rcpp::StringVector& sv, std::string& this_type, std::string&
 	}
 }
 
+void write_geojson(Rcpp::String& geojson, SEXP sfg, std::string& geom_type) {
+
+	//geometry_json[i] = add_geometry_to_stream(sfg);
+	if (geom_type == "POINT") {
+		Rcpp::NumericVector point = as<Rcpp::NumericVector>(sfg);
+		point_to_geojson(geojson, point);
+	} else if (geom_type == "MULTIPIONT") {
+		Rcpp::NumericVector multipoint = as<Rcpp::NumericVector>(sfg);
+		multi_point_to_geojson(geojson, multipoint);
+	} else if (geom_type == "LINESTRING") {
+		Rcpp::NumericVector line = as<Rcpp::NumericVector>(sfg);
+		line_string_to_geojson(geojson, line);
+	} else if (geom_type == "MULTILINESTRING") {
+		Rcpp::List multiline = as<Rcpp::List>(sfg);
+		multi_line_string_to_geojson(geojson, multiline);
+	} else if (geom_type == "POLYGON") {
+		Rcpp::List polygon = as<Rcpp::List>(sfg);
+		polygon_to_geojson(geojson, polygon);
+	} else if (geom_type == "MULTIPOLYGON") {
+		Rcpp::List multipolygon = as<Rcpp::List>(sfg);
+		multi_polygon_to_geojson(geojson, multipolygon);
+	} else if (geom_type == "GEOMETRYCOLLEcTION") {
+
+	}
+}
+
+void write_geometry(Rcpp::String& geojson, std::string& geom_type) {
+	begin_geojson_geometry(geojson, geom_type);
+
+}
+
 void geometry_vector_to_geojson(Rcpp::StringVector& geometry_json, Rcpp::List& sfc) {
-	Rcpp::List sfg(1);
+
+	Rcpp::List sfg;
+	Rcpp::String geojson;
   for (int i = 0; i < sfc.size(); i++) {
-  	sfg[0] = sfc[i];
-  	geometry_json[i] = add_geometry_to_stream(sfg);
+  	sfg = sfc[i];
+  	Rcpp::CharacterVector cls = getSfClass(sfg);
+  	Rcpp::Rcout << "cls : " << cls << std::endl;
+  	Rcpp::String g = cls[1];
+  	std::string geom_type = g;
+  	begin_geojson_geometry(geojson, geom_type);
+
+  	write_geojson(geojson, sfg, geom_type);
+
+  	end_geojson_geometry(geojson, geom_type);
+  	geometry_json[i] = geojson;
   }
+
 }
 
 Rcpp::String matrix_row_to_json(Rcpp::StringMatrix& json_mat, int i) {
