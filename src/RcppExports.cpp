@@ -61,19 +61,8 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_sfc_to_geojson
-Rcpp::StringVector rcpp_sfc_to_geojson(Rcpp::List sfc);
-RcppExport SEXP _geojsonsf_rcpp_sfc_to_geojson(SEXP sfcSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::List >::type sfc(sfcSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sfc_to_geojson(sfc));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_sf_to_geojson
-Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf);
+Rcpp::StringMatrix rcpp_sf_to_geojson(Rcpp::List sf);
 RcppExport SEXP _geojsonsf_rcpp_sf_to_geojson(SEXP sfSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -90,7 +79,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_geojsonsf_rcpp_geojson_to_wkt", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_wkt, 1},
     {"_geojsonsf_rcpp_read_sfc_file", (DL_FUNC) &_geojsonsf_rcpp_read_sfc_file, 1},
     {"_geojsonsf_rcpp_read_sf_file", (DL_FUNC) &_geojsonsf_rcpp_read_sf_file, 1},
-    {"_geojsonsf_rcpp_sfc_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_sfc_to_geojson, 1},
     {"_geojsonsf_rcpp_sf_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson, 1},
     {NULL, NULL, 0}
 };

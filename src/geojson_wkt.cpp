@@ -51,7 +51,7 @@ void object_separator(std::ostringstream& os) {
 
 void coord_separator(std::ostringstream& os, int i, int n) {
   if (i < (n - 1) ) {
-    os << ", ";
+    os << ",";
   }
 }
 
