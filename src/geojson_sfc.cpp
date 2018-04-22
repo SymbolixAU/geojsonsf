@@ -118,6 +118,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
   for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
 
     switch( TYPEOF(*it) ) {
+
     case VECSXP: {
       Rcpp::List tmp = as<Rcpp::List>(*it);
       if(Rf_isNull(tmp.attr("class"))){
