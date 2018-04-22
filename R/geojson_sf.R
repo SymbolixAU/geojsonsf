@@ -96,19 +96,24 @@ geojson_sf.default <- function(geojson) rcpp_geojson_to_sf(geojson)
 
 #' sf to GeoJSON
 #'
+#' Converts `sf`, `sfc` and `sfg` objects to GeoJSON
+#'
+#' @param sf simple feature object
+#' @param atomise logical
+#'
 #' @export
-sf_geojson <- function(sf) UseMethod("sf_geojson")
+sf_geojson <- function(sf, atomise = FALSE) UseMethod("sf_geojson")
 
 #' @export
-sf_geojson.sf <- function(sf) rcpp_sf_to_geojson(sf)
+sf_geojson.sf <- function(sf, atomise) rcpp_sf_to_geojson(sf, atomise)
 
 #' @export
-sf_geojson.sfc <- function(sf) rcpp_sfc_to_geojson(sf)
+sf_geojson.sfc <- function(sf, atomise) rcpp_sf_to_geojson(sf, atomise)
 
 #' @export
-sf_geojson.sfg <- function(sf) rcpp_sfg_to_geojson(sf)
+sf_geojson.sfg <- function(sf, atomise) rcpp_sf_to_geojson(sf, atomise)
 
-sf_geojson.default <- function(sf) stop("Expected an sf object")
+sf_geojson.default <- function(sf, atomise) stop("Expected an sf object")
 
 
 

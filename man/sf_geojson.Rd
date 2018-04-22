@@ -4,8 +4,13 @@
 \alias{sf_geojson}
 \title{sf to GeoJSON}
 \usage{
-sf_geojson(sf)
+sf_geojson(sf, atomise = FALSE)
+}
+\arguments{
+\item{sf}{simple feature object}
+
+\item{atomise}{logical}
 }
 \description{
-sf to GeoJSON
+Converts `sf`, `sfc` and `sfg` objects to GeoJSON
 }

@@ -342,13 +342,16 @@ void geometry_vector_to_geojson(Rcpp::StringVector& geometry_json, Rcpp::List& s
 
 Rcpp::String matrix_row_to_json(Rcpp::StringMatrix& json_mat, int i) {
   std::ostringstream os;
+	os << "{";
   int n = json_mat.ncol();
-  os << "{\"type\":\"Feature\",\"properties\":{";
-  for (int j = 0; j < (n-1); j++) {
-    os << json_mat(i, j);
-    coord_separator(os, j, (n-1));
-  }
-  os << "},";
+  //if (n > 1) {
+    os << "\"type\":\"Feature\",\"properties\":{";
+    for (int j = 0; j < (n-1); j++) {
+      os << json_mat(i, j);
+      coord_separator(os, j, (n-1));
+    }
+    os << "},";
+  //}
   os << "\"geometry\":";
   os << json_mat(i, (n-1));
   os << "}";
@@ -358,7 +361,7 @@ Rcpp::String matrix_row_to_json(Rcpp::StringMatrix& json_mat, int i) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
+Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 
 	//std::ostringstream os;
 	Rcpp::List sf_copy = clone(sf);
@@ -368,7 +371,6 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 	// if 'atomise', return one object per row
 
 	Rcpp::StringVector column_types(sf_copy.size() - 1);
-	//get_column_type(sf, column_types);
 	Rcpp::StringVector property_names(sf_copy.size() - 1);
 
 	std::string geom_column = sf_copy.attr("sf_column");
@@ -402,11 +404,8 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 		this_name = property_names[i];
 		this_type = column_types[i];
 		this_vector = as< Rcpp::StringVector >(sf_copy[this_name]);
-
 		vector_to_json(this_vector, this_type, this_name);
-		//this_vector = "{\"properties\":{" + this_vector + "}";
 		json_mat(_, i) = this_vector;
-
 		// TODO: what if there's a mssing element?
 	}
 
@@ -417,9 +416,19 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf) {
 	Rcpp::StringVector res(json_mat.nrow());
 
 	// If properties, do this bit. else return a vector (column of matrix)
-	for (int i = 0; i < res.length(); i++) {
-		res[i] = matrix_row_to_json(json_mat, i);
-	}
+  if (json_mat.ncol() > 1) {
+  	for (int i = 0; i < res.length(); i++) {
+      res[i] = matrix_row_to_json(json_mat, i);
+    }
+  } else {
+  	res = json_mat(_, 0);
+  }
 
-	return res;
+  if(atomise) {
+  	return res;
+  }
+
+  // TODO: convert to FeatureCollection
+  return res;
+
 }

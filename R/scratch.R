@@ -124,6 +124,6 @@
 #   ]
 # }'
 #
-# sf_geojson(geojson_sf(js))
+# sf_geojson(geojson_sf(js), TRUE)
 
 
