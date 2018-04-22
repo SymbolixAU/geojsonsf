@@ -26,4 +26,6 @@ void validate_geometries(const Value& v, int& sfg_objects);
 
 void validate_coordinates(const Value& v, int& sfg_objects);
 
+void validate_points(const Value& v);
+
 #endif

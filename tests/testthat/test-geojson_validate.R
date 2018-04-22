@@ -3,16 +3,8 @@ context("validate")
 
 test_that("Geometry object has correct members", {
 
-	## type : Point
-	## Must have
-	## - coordinates : [ ]
-
 	## no 'coordinates' array
-	js <- '
-	{
-    "type" : "Point",
-    "coordinate" : [ 0, 0 ]
-	}'
+	js <- '{"type":"Point","coordinate":[0,0]}'
 
 	expect_error(
 		geojsonsf:::rcpp_geojson_to_sf(js),
@@ -20,16 +12,21 @@ test_that("Geometry object has correct members", {
 	)
 
 	## no 'type' key
-	js <- '
-	{
-	  "geometry" : "Point",
-	  "coordinates" : [ 0, 0 ]
-  }'
+	js <- '{"geometry":"Point","coordinates":[0,0]}'
 
 	expect_error(
 		geojsonsf:::rcpp_geojson_to_sf(js),
 		"No 'type' member at object index 0 - invalid GeoJSON"
 	)
+
+	js <- '{"type":"Point"}'
+	expect_error(geojson_sf(js), "No 'coordinates' member at object index 0 - invalid GeoJSON")
+
+	js <- '{"type":"Point","coordinates":null}'
+	expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")
+
+	js <- '{"type":"Point","coordinates":[]}'
+	expect_error(geojson_sf(js), "Invalid lon/lat object")
 
 })
 

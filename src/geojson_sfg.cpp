@@ -21,6 +21,7 @@ double get_lat(const Value& coord_array) {
 }
 
 Rcpp::NumericVector parse_point(const Value& coord_array, Rcpp::NumericVector& bbox) {
+	validate_points(coord_array);
   Rcpp::NumericVector point(2);
   point[0] = get_lon(coord_array);
   point[1] = get_lat(coord_array);
