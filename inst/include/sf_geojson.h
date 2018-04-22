@@ -25,6 +25,8 @@ void polygon_separator_geojson(Rcpp::String& geojson, int i, int n);
 
 void write_geometry(Rcpp::List& sfg, Rcpp::String& geojson);
 
+void write_geometry(SEXP sfg, Rcpp::String& geojson);
+
 void make_gc_type(Rcpp::String& geojson, Rcpp::List& sfg, std::string& geom_type, Rcpp::CharacterVector& cls);
 
 #endif
