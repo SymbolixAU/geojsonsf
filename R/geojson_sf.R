@@ -137,10 +137,10 @@ sf_geojson.sf <- function(sf, atomise = FALSE) rcpp_sf_to_geojson(sf, atomise)
 sfc_geojson <- function(sfc) UseMethod("sfc_geojson")
 
 #' @export
-sfc_geojson.sfc <- function(sf) rcpp_sfc_to_geojson(sf)
+sfc_geojson.sfc <- function(sfc) rcpp_sfc_to_geojson(sfc)
 
 sf_geojson.default <- function(sf, atomise = FALSE) stop("Expected an sf object")
-sfc_geojson.default <- function(sf) stop("Expected an sfc object")
+sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 
 
 
