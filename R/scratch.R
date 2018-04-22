@@ -168,9 +168,14 @@
 
 
 # js <- '{
-#   "type": "GeometryCollection", "geometries": [
-#     {"type": "Point", "coordinates": [100.0, 0.0]},
-#     {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
-#     {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
-#   ]}'
+#   "type" : "Feature",
+#   "properties" : {},
+#   "geometry" : {
+#     "type": "GeometryCollection", "geometries": [
+#       {"type": "Point", "coordinates": [100.0, 0.0]},
+#       {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+#       {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+#     ]
+#   }
+# }'
 # geojson_sf(js)
