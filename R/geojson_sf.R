@@ -96,10 +96,21 @@ geojson_sf.default <- function(geojson) rcpp_geojson_to_sf(geojson)
 
 #' sf to GeoJSON
 #'
-#' Converts `sf`, `sfc` and `sfg` objects to GeoJSON
+#' Converts `sf` objects to GeoJSON
 #'
 #' @param sf simple feature object
 #' @param atomise logical
+#'
+#' @return vector of GeoJSON
+#'
+#' @examples
+#' \dontrun{
+#' library(sf)
+#' sf <- sf::st_sf(geometry = sf::st_sfc(list(sf::st_point(c(0,0)), sf::st_point(c(1,1)))))
+#' sf$id <- 1:2
+#' sf_geojson(sf)
+#' sf_geojson(sf, atomise = T)
+#' }
 #'
 #' @export
 sf_geojson <- function(sf, atomise = FALSE) UseMethod("sf_geojson")
@@ -107,10 +118,29 @@ sf_geojson <- function(sf, atomise = FALSE) UseMethod("sf_geojson")
 #' @export
 sf_geojson.sf <- function(sf, atomise = FALSE) rcpp_sf_to_geojson(sf, atomise)
 
-#sf_geojson.sfc <- function(sf, atomise = FALSE) rcpp_sf_to_geojson(sf, atomise)
 
+#' sfc to GeoJSON
+#'
+#' Converts `sfc` objects to GeoJSON
+#'
+#' @param sfc simple feature collection object
+#'
+#' @return vector of GeoJSON
+#'
+#' @examples
+#' \dontrun{
+#' library(sf)
+#' sf <- sf::st_sfc(list(sf::st_point(c(0,0)), sf::st_point(c(1,1))))
+#' sfc_geojson(sf)
+#' }
+#' @export
+sfc_geojson <- function(sfc) UseMethod("sfc_geojson")
+
+#' @export
+sfc_geojson.sfc <- function(sf) rcpp_sfc_to_geojson(sf)
 
 sf_geojson.default <- function(sf, atomise = FALSE) stop("Expected an sf object")
+sfc_geojson.default <- function(sf) stop("Expected an sfc object")
 
 
 

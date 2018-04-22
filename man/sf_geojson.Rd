@@ -11,6 +11,19 @@ sf_geojson(sf, atomise = FALSE)
 
 \item{atomise}{logical}
 }
+\value{
+vector of GeoJSON
+}
 \description{
-Converts `sf`, `sfc` and `sfg` objects to GeoJSON
+Converts `sf` objects to GeoJSON
+}
+\examples{
+\dontrun{
+library(sf)
+sf <- sf::st_sf(geometry = sf::st_sfc(list(sf::st_point(c(0,0)), sf::st_point(c(1,1)))))
+sf$id <- 1:2
+sf_geojson(sf)
+sf_geojson(sf, atomise = T)
+}
+
 }

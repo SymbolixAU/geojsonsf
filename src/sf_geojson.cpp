@@ -329,14 +329,16 @@ Rcpp::String matrix_row_to_json(Rcpp::StringMatrix& json_mat, int i) {
 }
 
 // [[Rcpp::export]]
+Rcpp::StringVector rcpp_sfc_to_geojson(Rcpp::List sfc) {
+	Rcpp::StringVector geometry_json(sfc.length());
+	geometry_vector_to_geojson(geometry_json, sfc);
+	return geometry_json;
+}
+
+// [[Rcpp::export]]
 Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 
-	//std::ostringstream os;
 	Rcpp::List sf_copy = clone(sf);
-	// If it contains properties
-	// it's a 'feature' (or featureCollection)
-	//
-	// if 'atomise', return one object per row
 
 	Rcpp::StringVector column_types(sf_copy.size() - 1);
 	Rcpp::StringVector property_names(sf_copy.size() - 1);
@@ -355,6 +357,7 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 
 	get_column_type(sf_copy, property_names, column_types);
 	Rcpp::List sfc = sf_copy[geom_column];
+
 	Rcpp::List properties;
 
 	Rcpp::StringMatrix json_mat(sfc.length(), col_names.size()); // row x cols
@@ -363,16 +366,14 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 	std::string this_value;
 	Rcpp::StringVector this_vector;
 
-	if(!Rf_isNull(property_names)) {
-  	for (int i = 0; i < property_names.length(); i++) {
-  		// iterate the list elements
-  		this_name = property_names[i];
-  		this_type = column_types[i];
-  		this_vector = as< Rcpp::StringVector >(sf_copy[this_name]);
-  		vector_to_json(this_vector, this_type, this_name);
-  		json_mat(_, i) = this_vector;
-		// TODO: what if there's a mssing element?
-  	}
+	for (int i = 0; i < property_names.length(); i++) {
+		// iterate the list elements
+		this_name = property_names[i];
+		this_type = column_types[i];
+		this_vector = as< Rcpp::StringVector >(sf_copy[this_name]);
+		vector_to_json(this_vector, this_type, this_name);
+		json_mat(_, i) = this_vector;
+	// TODO: what if there's a mssing element?
 	}
 
 	Rcpp::StringVector geometry_json(sfc.length());
@@ -402,7 +403,6 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 
   	// Iff more than one row, it's a feature collection
   	// else, it's just a feature...
-
   	os << "{\"type\":\"FeatureCollection\",\"features\":[";
   	for (int i = 0; i < res.length(); i++) {
   		os << res[i];
