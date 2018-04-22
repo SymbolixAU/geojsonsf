@@ -126,4 +126,56 @@
 #
 # sf_geojson(geojson_sf(js), TRUE)
 
+# js <- '
+# {
+#   "type": "Feature",
+#   "geometry": {
+#     "type": "LineString",
+#     "coordinates": [[100.0, 0.0], [101.0, 1.0]]
+#   },
+#   "properties": {
+#   "prop0": "value0",
+#   "prop1": "value1"
+#   }
+# }'
+# geojson_sf(js)
 
+# fgc <- '
+# {
+#   "type": "Feature",
+#   "geometry": {
+#     "type": "GeometryCollection",
+#      "geometries": [
+#       {
+# 	      "type": "Point",
+# 	      "coordinates": [100.0, 0.0]
+#       },
+# 	    {
+# 	      "type": "LineString",
+# 	      "coordinates": [
+#           [101.0, 0.0], [102.0, 1.0]
+#         ]
+#       }
+# 	  ]
+#   },
+# 	"properties": {
+# 	  "prop0": "value0",
+# 	  "prop1": "value1"
+# 	}
+# }'
+
+# geojson_sf(fgc)
+
+
+# js <- '{
+#   "type" : "Feature",
+#   "properties" : {},
+#   "geometry" : {
+#     "type": "GeometryCollection", "geometries": [
+#       {"type": "Point", "coordinates": [100.0, 0.0]},
+#       {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+#       {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+#     ]
+#   }
+# }'
+# geojson_sf(js)

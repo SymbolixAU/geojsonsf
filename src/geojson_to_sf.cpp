@@ -29,6 +29,7 @@ void parse_geometry_object(Rcpp::List& sfc,
   const Value& coord_array = geometry["coordinates"];
   geometry_types.insert(geom_type);
 
+
   if (geom_type == "Point") {
     Rcpp::NumericVector point = get_point(coord_array, bbox);
     point.attr("class") = sfg_attributes("POINT");
@@ -89,7 +90,6 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
 }
 
 
-
 Rcpp::List parse_feature_object(const Value& feature,
                                 Rcpp::NumericVector& bbox,
                                 std::set< std::string >& geometry_types,
@@ -102,8 +102,16 @@ Rcpp::List parse_feature_object(const Value& feature,
   validate_properties(feature, sfg_objects);
 
   const Value& geometry = feature["geometry"];
+  validate_type(geometry, sfg_objects);
+  std::string type = geometry["type"].GetString();
   Rcpp::List sfc(1);
-  parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
+
+  if (type == "GeometryCollection") {
+  	sfc[0] = parse_geometry_collection_object(geometry, bbox, geometry_types, sfg_objects);
+  } else {
+    parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
+  }
+
   sfg_objects++;
 
   const Value& p = feature["properties"];
@@ -162,10 +170,9 @@ void parse_geojson(const Value& v,
   Rcpp::List res(1);
   validate_type(v, sfg_objects);
 
-  std::string geom_type = v["type"].GetString();;
+  std::string geom_type = v["type"].GetString();
 
   if (geom_type == "Feature") {
-
     res = parse_feature_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
     sfc[i] = res;
 
@@ -230,7 +237,6 @@ Rcpp::List geojson_to_sf(const char* geojson,
   unsigned int doc_ele;
 
   if (d.IsObject()) {
-
     Rcpp::List sfg(1);
     parse_geojson_object(d, sfg, properties, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
     sfc[0] = sfg;
@@ -238,7 +244,6 @@ Rcpp::List geojson_to_sf(const char* geojson,
   } else if (d.IsArray()) {
 
     Rcpp::List sfgs(d.Size());
-   // Rcpp::LogicalVector doc_ele_properties(d.Size());
 
     for (doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
       parse_geojson_array(d, sfgs, properties, doc_ele, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
@@ -438,6 +443,7 @@ Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson) {
 	for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
 		sfc[geo_ele] = geojson_to_sf(geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types);
 	}
+
 
 	Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types);
 	return construct_sf(res, property_keys, property_types, doc_properties, sfg_objects, row_index);
