@@ -26,9 +26,10 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
   const Value& coord_array = geometry["coordinates"];
   geometry_types.insert(geom_type);
 
-  std::ostringstream os;
-  Rcpp::StringVector wkt;
-  beginWKT(os, geom_type);
+	std::ostringstream os;
+	Rcpp::StringVector wkt;
+	begin_wkt(os, geom_type);
+
 
   if (geom_type == "Point") {
     point_to_wkt(os, coord_array);
@@ -52,7 +53,7 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
     Rcpp::stop("unknown sfg type");
   }
 
-  endWKT(os, geom_type);
+	end_wkt(os, geom_type);
 
   wkt = os.str();
   transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
@@ -65,6 +66,7 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
 Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
                                             std::set< std::string >& geometry_types,
                                             int& wkt_objects) {
+
   std::string geom_type;
 
   validate_geometries(val, wkt_objects);
@@ -88,7 +90,7 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
   for (i = 0; i < n; i++) {
     std::string g = geom_collection[i];
     os << g;
-    coordSeparateWKT(os, i, n);
+    coord_separator(os, i, n);
   }
   os << ")";
 

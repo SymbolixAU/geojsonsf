@@ -11,25 +11,12 @@ test_that("properties captured correctly", {
 	sf <- geojson_sf(f)
 	wkt <- geojson_wkt(f)
 
-	expect_true(
-		all(names(sf) == c("geometry", "id", "name"))
-	)
-	expect_true(
-		all(names(wkt) == c("geometry", "id", "name"))
-	)
-
-	expect_true(
-	  sf$id == 1
-	)
-	expect_true(
-		wkt$id == 1
-	)
-	expect_true(
-		sf$name == "foo"
-	)
-	expect_true(
-		wkt$name == "foo"
-	)
+	expect_true(all(names(sf) == c("geometry", "id", "name")))
+	expect_true(all(names(wkt) == c("geometry", "id", "name")))
+	expect_true(sf$id == 1)
+	expect_true(wkt$id == 1)
+	expect_true(sf$name == "foo")
+	expect_true(wkt$name == "foo")
 
 	js <- '[
 	{
@@ -131,24 +118,12 @@ test_that("properties captured correctly", {
 	sf <- geojson_sf(js)
 	wkt <- geojson_wkt(js)
 
-	expect_true(
-		ncol(sf) == 3
-	)
-	expect_true(
-		ncol(wkt) == 3
-	)
-	expect_true(
-		sum(sf$id, na.rm = T) == 3
-	)
-	expect_true(
-		sum(wkt$id, na.rm = T) == 3
-	)
-	expect_true(
-		sf$value[!is.na(sf$value)] == "foo"
-	)
-	expect_true(
-		wkt$value[!is.na(wkt$value)] == "foo"
-	)
+	expect_true(ncol(sf) == 3)
+	expect_true(ncol(wkt) == 3)
+	expect_true(sum(sf$id, na.rm = T) == 3)
+	expect_true(sum(wkt$id, na.rm = T) == 3)
+	expect_true(sf$value[!is.na(sf$value)] == "foo")
+	expect_true(wkt$value[!is.na(wkt$value)] == "foo")
 
 })
 
@@ -163,8 +138,6 @@ test_that("sf and sfc created equally", {
 	sf <- geojson_sf(f)
 	sfc <- geojson_sfc(f)
 
-	expect_true(
-		all(class(sf$geometry) == class(sfc))
-	)
+	expect_true(all(class(sf$geometry) == class(sfc)))
 
 })

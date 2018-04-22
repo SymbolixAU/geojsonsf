@@ -88,6 +88,36 @@ geojson_sf.connection <- function(geojson) geojson_sf(read_url(geojson))
 #' @export
 geojson_sf.default <- function(geojson) rcpp_geojson_to_sf(geojson)
 
+
+## TODO:
+## - atomise - logical?
+## -- Return a JSON array of objects
+## -- Return an R Vector of objects?
+
+#' sf to GeoJSON
+#'
+#' Converts `sf`, `sfc` and `sfg` objects to GeoJSON
+#'
+#' @param sf simple feature object
+#' @param atomise logical
+#'
+#' @export
+sf_geojson <- function(sf, atomise = FALSE) UseMethod("sf_geojson")
+
+#' @export
+sf_geojson.sf <- function(sf, atomise) rcpp_sf_to_geojson(sf, atomise)
+
+#' @export
+sf_geojson.sfc <- function(sf, atomise) rcpp_sf_to_geojson(sf, atomise)
+
+#' @export
+sf_geojson.sfg <- function(sf, atomise) rcpp_sf_to_geojson(sf, atomise)
+
+sf_geojson.default <- function(sf, atomise) stop("Expected an sf object")
+
+
+
+
 is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
 
 read_url <- function(con) {

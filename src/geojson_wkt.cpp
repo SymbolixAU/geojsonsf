@@ -7,7 +7,7 @@
 using namespace rapidjson;
 using namespace Rcpp;
 
-void beginWKT(std::ostringstream& os, std::string& geom_type) {
+void begin_wkt(std::ostringstream& os, std::string& geom_type) {
 
   if (geom_type == "Point") {
     os << "POINT (";
@@ -26,7 +26,7 @@ void beginWKT(std::ostringstream& os, std::string& geom_type) {
   }
 }
 
-void endWKT(std::ostringstream& os, std::string& geom_type) {
+void end_wkt(std::ostringstream& os, std::string& geom_type) {
 
   if (geom_type == "Point") {
     os << ")";
@@ -45,26 +45,30 @@ void endWKT(std::ostringstream& os, std::string& geom_type) {
   }
 }
 
-void coordSeparateWKT(std::ostringstream& os, int i, int n) {
+void object_separator(std::ostringstream& os) {
+	os << ",";
+}
+
+void coord_separator(std::ostringstream& os, int i, int n) {
   if (i < (n - 1) ) {
-    os << ", ";
+    os << ",";
   }
 }
 
-void lineSeparateWKT(std::ostringstream& os, int i, int n) {
+void line_separator_wkt(std::ostringstream& os, int i, int n) {
   if (i < (n - 1) ) {
     os << "),(";
   }
 }
 
-void polygonSeparateWKT(std::ostringstream& os, int i, int n) {
+void polygon_separate_wkt(std::ostringstream& os, int i, int n) {
 	if (i < (n - 1) ) {
     os << ")),((";
 	}
 }
 
 
-void addLonLatToWKTStream(std::ostringstream& os, float lon, float lat ) {
+void add_lonlat_to_wkt_stream(std::ostringstream& os, float lon, float lat ) {
   os << lon << " " << lat;
 }
 
@@ -72,7 +76,7 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
   Rcpp::NumericVector point(2);
   point[0] = get_lon(coord_array);
   point[1] = get_lat(coord_array);
-  addLonLatToWKTStream(os, point[0], point[1]);
+  add_lonlat_to_wkt_stream(os, point[0], point[1]);
 }
 
 
@@ -82,7 +86,7 @@ void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array) {
   for (i = 0; i < n; i++) {
     validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i]);
-    coordSeparateWKT(os, i, n);
+    coord_separator(os, i, n);
   }
 }
 
@@ -92,7 +96,7 @@ void line_string_to_wkt(std::ostringstream& os, const Value& coord_array) {
   for (i = 0; i < n; i++) {
     validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i]);
-    coordSeparateWKT(os, i, n);
+    coord_separator(os, i, n);
   }
 }
 
@@ -102,7 +106,7 @@ void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array) 
   for (i = 0; i < n; i++) {
     validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i]);
-    lineSeparateWKT(os, i, n);
+    line_separator_wkt(os, i, n);
   }
 }
 
@@ -112,7 +116,7 @@ void polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
   for (i = 0; i < n; i++) {
     validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i]);
-    lineSeparateWKT(os, i, n);
+    line_separator_wkt(os, i, n);
   }
 }
 
@@ -122,7 +126,7 @@ void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
   for (i = 0; i < n; i++) {
     validate_array(coord_array[i]);
     polygon_to_wkt(os, coord_array[i]);
-    polygonSeparateWKT(os, i, n);
+    polygon_separate_wkt(os, i, n);
   }
 }
 
