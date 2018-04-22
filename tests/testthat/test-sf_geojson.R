@@ -163,7 +163,47 @@ test_that("sf with properties converted to FeatureCollection", {
 	sf <- geojson_sf(fc1)
   expect_false(grepl("properties",sf_geojson(sf)))
 
+  js <- '{
+  	"type": "FeatureCollection",
+  	"features": [
+  		{
+  			"type": "Feature",
+  			"id": "id0",
+  			"geometry": {
+  				"type": "LineString",
+  				"coordinates": [
+  					[102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+  					]
+  			},
+  			"properties": {
+  				"prop0": "value0",
+  				"prop1": "value1"
+  			}
+  		},
+  		{
+  			"type": "Feature",
+  			"id": "id1",
+  			"geometry": {
+  				"type": "Polygon",
+  				"coordinates": [
+  					[
+  						[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]
+  						]
+  					]
+  			},
+  			"properties": {
+  				"prop0": "value0",
+  				"prop1": "value1"
+  			}
+  		}
+  		]
+  }'
 
+  sf <- geojson_sf(js)
+  expect_true(grepl("properties",sf_geojson(sf)))
+  expect_true(jsonlite::validate(sf_geojson(sf)))
+  expect_true(length(sf_geojson(sf, atomise = T)) == 2)
+  expect_true(all(sapply(sf_geojson(sf, atomise = T), jsonlite::validate)))
 })
 
 
