@@ -259,3 +259,23 @@ test_that("errors are handled", {
 
 
 })
+
+test_that("factors are strings", {
+
+	skip_on_cran()
+	skip_on_travis()
+
+	fgc <- '
+	{"type": "Feature","geometry": {"type": "GeometryCollection","geometries": [
+	{"type": "Point","coordinates": [100.0, 0.0]},
+	{"type": "LineString","coordinates": [[101.0, 0.0], [102.0, 1.0]]}]},
+	"properties": {"prop0": "value0","prop1": "value1"}}'
+
+	sf <- geojson_sf(fgc)
+	sf$prop0 <- as.factor(sf$prop0)
+
+	expect_true(jsonlite::validate(sf_geojson(sf)))
+
+})
+
+

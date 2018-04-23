@@ -36,20 +36,24 @@ void get_column_type(Rcpp::List& sf,
 		Rcpp::String col = property_names[i];
 		SEXP vec = sf[col];
 
-		switch(TYPEOF(vec)) {
-		case REALSXP:
-			column_types[i] = "Number";
-			break;
-		case INTSXP:
-			column_types[i] = "Number";
-			break;
-		case LGLSXP:
-			column_types[i] = "Logical";
-			break;
-		default: {
-				column_types[i] = "String";
+		if (Rf_isFactor(vec)) {
+			column_types[i] = "String";
+		} else {
+			switch(TYPEOF(vec)) {
+			case REALSXP:
+				column_types[i] = "Number";
 				break;
-		}
+			case INTSXP:
+				column_types[i] = "Number";
+				break;
+			case LGLSXP:
+				column_types[i] = "Logical";
+				break;
+			default: {
+					column_types[i] = "String";
+					break;
+			}
+			}
 		}
 	}
 }
