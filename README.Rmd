@@ -23,14 +23,24 @@ knitr::opts_chunk$set(
 
 ## geojsonsf
 
+**v0.3+** 
+
+(Development / github version)
+
+Added conversions
+
+- `sf`    --> GeoJSON
+- `sfc`   --> GeoJSON
+
 **v0.2** 
 
-Converts GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#page-11) to 
+Converts
 
-- `sf` and `sfc` objects 
-- Well-Known Text 
+- GeoJSON --> `sf`
+- GeoJSON --> `sfc`
+- GeoJSON --> Well-known text
 
-As per RFC 7946, foreign members are ignored, and nested objects and arrays inside the `properties` object are converted to string/characters. 
+As per GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#page-11), foreign members are ignored, and nested objects and arrays inside the `properties` object are converted to string/characters. 
 
 
 ## Installation
@@ -192,6 +202,25 @@ knitr::include_graphics("./man/figures/GeoJSONSF.png")
 ```{r}
 sf <- st_read(geo, quiet = T)
 plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
+```
+
+## sf to GeoJSON
+
+```{r}
+nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
+geo <- sf_geojson(nc)
+
+str(geo)
+```
+
+You can set `atomise = TRUE` to convert each row of the `sf` object into individual GeoJSON objects, returned as an R vector.
+
+```{r}
+
+geo <- sf_geojson(nc, atomise = T)
+
+str(geo)
+geo[1]
 ```
 
 

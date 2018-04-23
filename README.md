@@ -15,17 +15,27 @@ Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=maste
 geojsonsf
 ---------
 
+**v0.3+**
+
+(Development / github version)
+
+Added conversions
+
+-   `sf` –&gt; GeoJSON
+-   `sfc` –&gt; GeoJSON
+
 **v0.2**
 
-Converts GeoJSON ([RFC 7946
-specification)](https://tools.ietf.org/html/rfc7946#page-11) to
+Converts
 
--   `sf` and `sfc` objects
--   Well-Known Text
+-   GeoJSON –&gt; `sf`
+-   GeoJSON –&gt; `sfc`
+-   GeoJSON –&gt; Well-known text
 
-As per RFC 7946, foreign members are ignored, and nested objects and
-arrays inside the `properties` object are converted to
-string/characters.
+As per GeoJSON ([RFC 7946
+specification)](https://tools.ietf.org/html/rfc7946#page-11), foreign
+members are ignored, and nested objects and arrays inside the
+`properties` object are converted to string/characters.
 
 Installation
 ------------
@@ -143,8 +153,8 @@ microbenchmark(
 )
 #  Unit: seconds
 #        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 1.738935 1.738935 1.982654 1.982654 2.226373 2.226373     2
-#          sf 4.900815 4.900815 4.936001 4.936001 4.971187 4.971187     2
+#   geojsonsf 1.718010 1.718010 1.812560 1.812560 1.907110 1.907110     2
+#          sf 5.269319 5.269319 5.496132 5.496132 5.722944 5.722944     2
 ```
 
 Reading directly from a URL is comparable between the two
@@ -164,9 +174,9 @@ microbenchmark(
     times = 2
 )
 #  Unit: seconds
-#        expr     min      lq     mean   median       uq      max neval
-#   geojsonsf 18.0638 18.0638 18.77848 18.77848 19.49317 19.49317     2
-#          sf 17.3770 17.3770 18.43824 18.43824 19.49948 19.49948     2
+#        expr      min       lq     mean   median       uq      max neval
+#   geojsonsf 10.06078 10.06078 12.53540 12.53540 15.01002 15.01002     2
+#          sf 11.65602 11.65602 12.04578 12.04578 12.43554 12.43554     2
 ```
 
     library(rgdal)
@@ -206,6 +216,37 @@ plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+
+sf to GeoJSON
+-------------
+
+``` r
+nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
+#  Reading layer `nc' from data source `/Library/Frameworks/R.framework/Versions/3.4/Resources/library/sf/shape/nc.shp' using driver `ESRI Shapefile'
+#  Simple feature collection with 100 features and 14 fields
+#  geometry type:  MULTIPOLYGON
+#  dimension:      XY
+#  bbox:           xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965
+#  epsg (SRID):    4267
+#  proj4string:    +proj=longlat +datum=NAD27 +no_defs
+geo <- sf_geojson(nc)
+
+str(geo)
+#   chr "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"AREA\":0.114,\"PERIMETER\"| __truncated__
+```
+
+You can set `atomise = TRUE` to convert each row of the `sf` object into
+individual GeoJSON objects, returned as an R vector.
+
+``` r
+
+geo <- sf_geojson(nc, atomise = T)
+
+str(geo)
+#   chr [1:100] "{\"type\":\"Feature\",\"properties\":{\"AREA\":0.114,\"PERIMETER\":1.442,\"CNTY_\":1825,\"CNTY_ID\":1825,\"NAME"| __truncated__ ...
+geo[1]
+#  [1] "{\"type\":\"Feature\",\"properties\":{\"AREA\":0.114,\"PERIMETER\":1.442,\"CNTY_\":1825,\"CNTY_ID\":1825,\"NAME\":Ashe,\"FIPS\":37009,\"FIPSNO\":37009,\"CRESS_ID\":5,\"BIR74\":1091,\"SID74\":1,\"NWBIR74\":10,\"BIR79\":1364,\"SID79\":0,\"NWBIR79\":19},\"geometry\":{\"type\":\"MultiPolygon\",\"coordinates\":[[[[-81.472755,36.234356],[-81.54084,36.272507],[-81.561981,36.273594],[-81.633064,36.340687],[-81.741074,36.391785],[-81.69828,36.471779],[-81.702797,36.519341],[-81.669998,36.589649],[-81.345299,36.572865],[-81.347542,36.537914],[-81.324776,36.51368],[-81.313324,36.480698],[-81.266235,36.437206],[-81.26284,36.405041],[-81.240692,36.379417],[-81.239891,36.365364],[-81.264244,36.352413],[-81.328995,36.363503],[-81.361374,36.353161],[-81.365692,36.33905],[-81.354134,36.299717],[-81.367455,36.278698],[-81.406387,36.285053],[-81.412331,36.267292],[-81.431038,36.260719],[-81.452888,36.239586],[-81.472755,36.234356]]]]}}"
+```
 
 Examples
 --------
@@ -357,8 +398,8 @@ fc <- '{
  ]
 }'
 geojson_wkt(fc)
-#            bar         foo                  geometry
-#  1 feature 1.2 feature 1.1             POINT (100 0)
-#  2        <NA>        <NA> LINESTRING (101 0, 102 1)
-#  3 feature 3.2 feature 3.1 LINESTRING (101 0, 102 1)
+#            bar         foo                 geometry
+#  1 feature 1.2 feature 1.1            POINT (100 0)
+#  2        <NA>        <NA> LINESTRING (101 0,102 1)
+#  3 feature 3.2 feature 3.1 LINESTRING (101 0,102 1)
 ```

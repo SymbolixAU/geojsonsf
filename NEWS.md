@@ -1,5 +1,6 @@
 # geojsonsf 0.3
 
+* `sf_geojson()` and `sfc_geojson()` to convert from `sf` to GeoJSON
 * `geojson_sf()` and `geojson_sfc()` can now read from a url or file
 
 
