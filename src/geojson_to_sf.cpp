@@ -89,7 +89,6 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   return geom_collection;
 }
 
-
 Rcpp::List parse_feature_object(const Value& feature,
                                 Rcpp::NumericVector& bbox,
                                 std::set< std::string >& geometry_types,
@@ -117,8 +116,22 @@ Rcpp::List parse_feature_object(const Value& feature,
 			parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
 		}
 	} else {
+		// TODO:
+		// insert the geometry as per teh rules followed by 'sf'
+		//
 		// needs to be a null geometry
 		Rcpp::List nullObj;
+		/*
+		std::string temp_geom;
+		if (geometry_types.empty()) {
+			temp_geom = "POINT";
+		} else {
+			temp_geom = *geometry_types.rbegin();
+			transform(temp_geom.begin(), temp_geom.end(), temp_geom.begin(), ::toupper);
+		}
+		*/
+		//Rcpp::Rcout << "debug: temp_geom: " << temp_geom << std::endl;
+
 		nullObj.attr("class") = sfg_attributes("POLYGON");
 		sfc[0] = nullObj;
 		geometry_types.insert("POLYGON");
