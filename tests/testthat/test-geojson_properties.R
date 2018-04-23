@@ -141,3 +141,56 @@ test_that("sf and sfc created equally", {
 	expect_true(all(class(sf$geometry) == class(sfc)))
 
 })
+
+test_that("null geometries are valid for features", {
+
+	js <- '{"type":"Point","coordinates":[null,null]}'
+	geojson_sf(js) ## TODO: needs to error!!
+
+	js <- '{"type":"Point","coordinates":[,]}'
+	expect_error(geojson_sf(js), "Invalid JSON")
+
+	js <- '{"type":"Point","coordinates":[]}'
+	expect_error(geojson_sf(js), "Invalid lon/lat object")
+
+	js <- '{"type":"Point","coordinates":{}}'
+	expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")
+
+	js <- '{"type","Feature","geometry":null}'
+	expect_error(geojson_sf(js), "Invalid JSON")
+
+	js <- '{"type","Feature","geometry":null,"properties":{}}'
+	expect_error(geojson_sf(js), "Invalid JSON")
+
+	## NULL geometry should be fine / parse
+	js <- '{"type":"FeatureCollection","features":[
+	{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}},
+	{"type":"Feature","properties":{"id":2},"geometry":null}
+	]}'
+	expect_true(nrow(geojson_sf(js)) == 2)
+	## TODO: Which geometry should the empty row be?
+
+	js <- '{"type":"Feature","properties":{"id":2},"geometry": null}'
+	expect_true(nrow(geojson_sf(js)) == 1)
+	## TODO: Which geometry should the empty row be?
+
+	js <- '{"type":"FeatureCollection","features":[
+	{"type":"Feature","properties":{"id":1},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
+	{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0,0]}},
+	{"type":"Feature","properties":{"id":3},"geometry":null}
+	]}'
+	expect_true(nrow(geojson_sf(js)) == 3)
+	## TODO: Which geometry should this be?
+
+	## null geometries that aren't part of features should still error
+	js <- '{"type":"Point","coordinates":null}'
+  expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")
+
+
+})
+
+
+
+
+
+
