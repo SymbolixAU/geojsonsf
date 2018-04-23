@@ -160,7 +160,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     	break;
     }
     default: {
-    	Rcpp::Rcout << "debug: default geometry" << std::endl;
+    	//Rcpp::Rcout << "debug: default geometry" << std::endl;
     	//Rcpp::List tmp;
     	//tmp.attr("class") = Rcpp::CharacterVector::create("XY","POLYGON","sfg");
       Rcpp::stop("Geometry could not be determined");
