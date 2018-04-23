@@ -83,7 +83,7 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
     validate_type(gcval, sfg_objects);
     geom_type = gcval["type"].GetString();
     parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
-  }
+}
   geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
 
   return geom_collection;
@@ -101,19 +101,7 @@ Rcpp::List parse_feature_object(const Value& feature,
   validate_geometry(feature, sfg_objects);
   validate_properties(feature, sfg_objects);
 
-  const Value& geometry = feature["geometry"];
-  validate_type(geometry, sfg_objects);
-  std::string type = geometry["type"].GetString();
-  Rcpp::List sfc(1);
-
-  if (type == "GeometryCollection") {
-  	sfc[0] = parse_geometry_collection_object(geometry, bbox, geometry_types, sfg_objects);
-  } else {
-    parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
-  }
-
-  sfg_objects++;
-
+  // PROPERTIES
   const Value& p = feature["properties"];
   get_property_keys(p, property_keys);
   get_property_types(p, property_types);
@@ -125,6 +113,26 @@ Rcpp::List parse_feature_object(const Value& feature,
   // TODO: is this method deep-cloning?
   Value properties(feature["properties"], doc_properties.GetAllocator());
   doc_properties.AddMember(n, properties, doc_properties.GetAllocator());
+
+  // GEOMETRY
+  Rcpp::List sfc(1);
+
+  const Value& geometry = feature["geometry"];
+
+  Rcpp::Rcout << "debug: geometry size: " << geometry.Size() << std::endl;
+  //if (geometry.Size() > 0) {
+
+	  validate_type(geometry, sfg_objects);
+	  std::string type = geometry["type"].GetString();
+
+	  if (type == "GeometryCollection") {
+	  	sfc[0] = parse_geometry_collection_object(geometry, bbox, geometry_types, sfg_objects);
+	  } else {
+	    parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
+	  }
+  //}
+
+  sfg_objects++;
 
   return sfc;
 }
