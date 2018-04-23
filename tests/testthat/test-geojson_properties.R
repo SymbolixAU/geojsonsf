@@ -18,41 +18,22 @@ test_that("properties captured correctly", {
 	expect_true(sf$name == "foo")
 	expect_true(wkt$name == "foo")
 
-	js <- '[
-	{
+	js <- '[{
 	  "type": "Feature",
 	  "properties" : {},
 	  "geometry": {
 	    "type": "Polygon",
 	    "coordinates": [
-	      [
-	        [-10.0, -10.0],
-	        [10.0, -10.0],
-	        [10.0, 10.0],
-	        [-10.0, -10.0]
-	      ]
-	    ]
-	  }
-	},
-	{
-	  "type": "Feature",
-	  "properties" : { "id" : 1 },
+	      [[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]
+      }
+	  },
+	  {
+      "type": "Feature",
+	    "properties" : {"id":1},
 	  "geometry": {
 	    "type": "MultiPolygon",
-	    "coordinates": [
-	      [
-	        [
-	          [180.0, 40.0], [180.0, 50.0], [170.0, 50.0],
-	          [170.0, 40.0], [180.0, 40.0]
-	        ]
-	      ],
-	      [
-	        [
-	          [-170.0, 40.0], [-170.0, 50.0], [-180.0, 50.0],
-	          [-180.0, 40.0], [-170.0, 40.0]
-	        ]
-	      ]
-	    ]
+	    "coordinates": [[[[180.0, 40.0], [180.0, 50.0], [170.0, 50.0],[170.0, 40.0], [180.0, 40.0]]],
+	      [[[-170.0, 40.0], [-170.0, 50.0], [-180.0, 50.0],[-180.0, 40.0], [-170.0, 40.0]]]]
 	  }
 	},
 	{
@@ -61,20 +42,14 @@ test_that("properties captured correctly", {
 	    {
 	      "type": "Feature",
 	      "properties": {"id" : 2, "value" : "foo"},
-	      "geometry": {
-	        "type": "Point",
-	        "coordinates": [100.0, 0.0]
-	      }
+	      "geometry": {"type": "Point","coordinates": [100.0, 0.0]}
 	    },
 	    {
 	      "type": "Feature",
 	      "properties": null,
 	      "geometry": {
 	        "type": "LineString",
-	        "coordinates": [
-	          [101.0, 0.0],
-	          [102.0, 1.0]
-	        ]
+	        "coordinates": [[101.0, 0.0],[102.0, 1.0]]
 	      }
 	    }
 	  ]
@@ -82,38 +57,12 @@ test_that("properties captured correctly", {
 	{
 	  "type": "GeometryCollection",
 	  "geometries": [
-	    {
-	      "type": "Point",
-	      "coordinates": [100.0, 0.0]
-	    },
-	    {
-	      "type": "LineString",
-	      "coordinates": [
-	        [101.0, 0.0],
-	        [102.0, 1.0]
-	      ]
-	    },
-	    {
-	      "type" : "MultiPoint",
-	      "coordinates" : [
-	        [0,0],
-	        [1,1],
-	        [2,2]
-	      ]
-	    }
+	    {"type": "Point","coordinates": [100.0, 0.0]},
+	    {"type": "LineString","coordinates": [[101.0, 0.0],[102.0, 1.0]]},
+	    {"type" : "MultiPoint","coordinates" : [[0,0],[1,1],[2,2]]}
 	  ]
 	},
-	{
-	"type": "Polygon",
-	    "coordinates": [
-	      [
-	        [-10.0, -10.0],
-	        [10.0, -10.0],
-	        [10.0, 10.0],
-	        [-10.0, -10.0]
-	      ]
-	    ]
-	}
+	{"type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
 	]'
 	sf <- geojson_sf(js)
 	wkt <- geojson_wkt(js)
@@ -180,11 +129,26 @@ test_that("null geometries are valid for features", {
 	{"type":"Feature","properties":{"id":3},"geometry":null}
 	]}'
 	expect_true(nrow(geojson_sf(js)) == 3)
+	expect_true(all(geojson_sf(js)[['id']] == 1:3))
+	expect_true(is.null(geojson_sf(js)[3, 'geometry'][[1]][[1]][1][[1]]))
 	## TODO: Which geometry should this be?
+
+
+	js <- '{"type":"FeatureCollection","features":[
+	{"type":"Feature","properties":{"id":3},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
+	{"type":"Feature","properties":{"id":1},"geometry":null},
+	{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0,0]}}
+	]}'
+	expect_true(nrow(geojson_sf(js)) == 3)
+	expect_true(all(geojson_sf(js)[['id']] == c(3,1,2)))
+	expect_true(is.null(geojson_sf(js)[2, 'geometry'][[1]][[1]][1][[1]]))
+	## TODO: Which geometry should this be?
+
 
 	## null geometries that aren't part of features should still error
 	js <- '{"type":"Point","coordinates":null}'
   expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")
+
 
 
 })
