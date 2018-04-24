@@ -96,6 +96,11 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 std::set< std::string >& property_keys,
                                 Document& doc_properties,
                                 std::map< std::string, std::string>& property_types) {
+  // TODO:
+  // unnest GEOMETRYCOLLECTION?
+  // - replicate the 'properties' by length(GEOMETRYCOLLECTION)
+  // - dont' 'parse_geometry_collection_objet', and instead iterate through
+  // 'parse_geometry_object'
 
 	validate_geometry(feature, sfg_objects);
 	validate_properties(feature, sfg_objects);
@@ -137,8 +142,13 @@ Rcpp::List parse_feature_object(const Value& feature,
 		geometry_types.insert("POLYGON");
 	}
 
+	// TODO:
+	// if 'unnest GEOMETRYCOLLECTION', increment this by the number of internal geometries
+	// chuck these steps in a loop, from (i = 0; i < gc.size() || 1; i++)
 	sfg_objects++;
 
+	// TODO:
+	// if 'unnest GEOMETRYCOLLECTION', replicate these steps by teh number of internal geometries
 	const Value& p = feature["properties"];
 	get_property_keys(p, property_keys);
 	get_property_types(p, property_types);
