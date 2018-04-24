@@ -139,7 +139,6 @@ test_that("null geometries are valid for features", {
 	## null geometries that aren't part of features should still error
 	js <- '{"type":"Point","coordinates":null}'
   expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")
-
 })
 
 

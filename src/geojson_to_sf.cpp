@@ -21,6 +21,8 @@ void parse_geometry_object(Rcpp::List& sfc,
                            std::set< std::string >& geometry_types,
                            int& sfg_objects) {
 
+	Rcpp::Rcout << "debug: parse_geometry_object" << std::endl;
+
   validate_type(geometry, sfg_objects);
   validate_coordinates(geometry, sfg_objects);
   validate_array(geometry["coordinates"], sfg_objects);
@@ -101,24 +103,47 @@ Rcpp::List parse_feature_object(const Value& feature,
   // - replicate the 'properties' by length(GEOMETRYCOLLECTION)
   // - dont' 'parse_geometry_collection_objet', and instead iterate through
   // 'parse_geometry_object'
-
 	validate_geometry(feature, sfg_objects);
 	validate_properties(feature, sfg_objects);
 
 	const Value& geometry = feature["geometry"];
 	//validate_type(geometry, sfg_objects);
 	//std::string type = geometry["type"].GetString();
-	Rcpp::List sfc(1);
+	//Rcpp::List sfc(1);
+
+	bool unnest = true;
+	validate_geometries(geometry, sfg_objects);
+	auto geometries = geometry["geometries"].GetArray();
+	unsigned int geomsize = geometries.Size();
+	unsigned int i;
+	Rcpp::List sfc(geomsize);
 
 	if (geometry.Size() > 0) {
 
 		validate_type(geometry, sfg_objects);
 		std::string type = geometry["type"].GetString();
 
-		if (type == "GeometryCollection") {
+		if (type == "GeometryCollection" && !unnest) {
+			Rcpp::Rcout << "debug: not unnesting" << std::endl;
 			sfc[0] = parse_geometry_collection_object(geometry, bbox, geometry_types, sfg_objects);
 		} else {
-			parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
+
+			if (type == "GeometryCollection") {
+
+				Rcpp::Rcout << "debug: unnesting" << std::endl;
+				Rcpp::Rcout << "debug: geomsize: " << geomsize << std::endl;
+				std::string geom_type;
+				for (i = 0; i < geomsize; i++) {
+					const Value& gcval = geometries[i];
+					validate_type(gcval, sfg_objects);
+					geom_type = gcval["type"].GetString();
+					parse_geometry_object(sfc, i, gcval, bbox, geometry_types, sfg_objects);
+				}
+
+			} else {
+			  parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
+			}
+
 		}
 	} else {
 		// TODO:
@@ -145,10 +170,10 @@ Rcpp::List parse_feature_object(const Value& feature,
 	// TODO:
 	// if 'unnest GEOMETRYCOLLECTION', increment this by the number of internal geometries
 	// chuck these steps in a loop, from (i = 0; i < gc.size() || 1; i++)
-	sfg_objects++;
+	sfg_objects += geomsize;
 
-	// TODO:
-	// if 'unnest GEOMETRYCOLLECTION', replicate these steps by teh number of internal geometries
+	Rcpp::Rcout << "debug: parsing properties" << std::endl;
+
 	const Value& p = feature["properties"];
 	get_property_keys(p, property_keys);
 	get_property_types(p, property_types);
