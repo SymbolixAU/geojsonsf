@@ -24,16 +24,14 @@ test_that("unnesting preserves properties, ", {
 	js <- '[{
 	"type": "Feature",
 	"properties" : {},
-	"geometry": {
-	  "type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
-  },
-	{
+	"geometry": {"type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
+  },{
 	"type": "Feature",
 	"properties" : {"id":1},
 	"geometry": {"type": "MultiPolygon",
 	"coordinates": [[[[180.0, 40.0], [180.0, 50.0], [170.0, 50.0],[170.0, 40.0], [180.0, 40.0]]],
 	[[[-170.0, 40.0], [-170.0, 50.0], [-180.0, 50.0],[-180.0, 40.0], [-170.0, 40.0]]]]}
-	},	{
+	},{
 	"type": "FeatureCollection",
 	"features": [{
 	"type": "Feature",
