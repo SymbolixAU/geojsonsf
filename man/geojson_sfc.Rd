@@ -4,10 +4,12 @@
 \alias{geojson_sfc}
 \title{Geojson to sfc}
 \usage{
-geojson_sfc(geojson)
+geojson_sfc(geojson, unnest = FALSE)
 }
 \arguments{
 \item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
+
+\item{unnest}{logical indicating whether to unnest GEOMETRYCOLLECTION rows}
 }
 \description{
 Extracts geometries from GeoJSON and returns an `sfc` object

@@ -3,7 +3,7 @@
 #' Extracts geometries from GeoJSON and returns an `sfc` object
 #'
 #' @param geojson string or vector of GeoJSON, or a URL or file pointing to a geojson file
-#'
+#' @param unnest logical indicating whether to unnest GEOMETRYCOLLECTION rows
 #' @examples
 #'
 #' ## character string of GeoJSON
@@ -20,28 +20,28 @@
 #'}
 #'
 #' @export
-geojson_sfc <- function(geojson) UseMethod("geojson_sfc")
+geojson_sfc <- function(geojson, unnest = FALSE) UseMethod("geojson_sfc")
 
 
 #' @export
-geojson_sfc.character <- function(geojson) {
+geojson_sfc.character <- function(geojson, unnest = FALSE) {
 
 	if(length(geojson) > 1) {
-		return(rcpp_geojson_to_sfc(geojson))
+		return(rcpp_geojson_to_sfc(geojson, unnest))
 	}
 	if (is_url(geojson)) {
 		return(geojson_sfc(curl::curl(geojson)))
 	} else if (file.exists(geojson) ) {
-		return(rcpp_read_sfc_file(normalizePath(geojson)))
+		return(rcpp_read_sfc_file(normalizePath(geojson), unnest))
 	}
-	return(rcpp_geojson_to_sfc(geojson))
+	return(rcpp_geojson_to_sfc(geojson, unnest))
 }
 
 #' @export
-geojson_sfc.connection <- function(geojson) geojson_sfc(read_url(geojson))
+geojson_sfc.connection <- function(geojson, unnest = FALSE) geojson_sfc(read_url(geojson), unnest)
 
 #' @export
-geojson_sfc.default <- function(geojson) rcpp_geojson_to_sfc(geojson)
+geojson_sfc.default <- function(geojson, unnest = FALSE) rcpp_geojson_to_sfc(geojson, unnest)
 
 #' Geojson to sf
 #'
@@ -65,28 +65,28 @@ geojson_sfc.default <- function(geojson) rcpp_geojson_to_sfc(geojson)
 #'
 #' @inheritParams geojson_sfc
 #' @export
-geojson_sf <- function(geojson) UseMethod("geojson_sf")
+geojson_sf <- function(geojson, unnest = FALSE) UseMethod("geojson_sf")
 
 
 #' @export
-geojson_sf.character <- function(geojson) {
+geojson_sf.character <- function(geojson, unnest = FALSE) {
 
 	if(length(geojson) > 1) {
-		return(rcpp_geojson_to_sf(geojson))
+		return(rcpp_geojson_to_sf(geojson, unnest))
 	}
 	if (is_url(geojson)) {
 		return(geojson_sf(curl::curl(geojson)))
 	} else if (file.exists(geojson) ) {
-		return(rcpp_read_sf_file(normalizePath(geojson)))
+		return(rcpp_read_sf_file(normalizePath(geojson), unnest))
 	}
-	 return(rcpp_geojson_to_sf(geojson))
+	 return(rcpp_geojson_to_sf(geojson, unnest))
 }
 
 #' @export
-geojson_sf.connection <- function(geojson) geojson_sf(read_url(geojson))
+geojson_sf.connection <- function(geojson) geojson_sf(read_url(geojson), unnest)
 
 #' @export
-geojson_sf.default <- function(geojson) rcpp_geojson_to_sf(geojson)
+geojson_sf.default <- function(geojson) rcpp_geojson_to_sf(geojson, unnest)
 
 
 ## TODO:

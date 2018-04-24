@@ -4,10 +4,12 @@
 \alias{geojson_sf}
 \title{Geojson to sf}
 \usage{
-geojson_sf(geojson)
+geojson_sf(geojson, unnest = FALSE)
 }
 \arguments{
 \item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
+
+\item{unnest}{logical indicating whether to unnest GEOMETRYCOLLECTION rows}
 }
 \description{
 Converts GeoJSON to an `sf` object
