@@ -3,7 +3,16 @@
 #' Extracts geometries from GeoJSON and returns an `sfc` object
 #'
 #' @param geojson string or vector of GeoJSON, or a URL or file pointing to a geojson file
-#' @param unnest logical indicating whether to unnest GEOMETRYCOLLECTION rows
+#' @param unnest logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details
+#'
+#' @details
+#' specifying \code{unnest = TRUE} will expand individual \code{GEOMETRYCOLLECTION}
+#' geometries to their own row in the resulting `sf` object. If the geometries are part
+#' of a \code{Feature} (i.e., with properties), the properties will be repeated on each row.
+#'
+#' The \code{GEOMETRYCOLLECTION} information is not kept when using \code{unnest = TRUE}. Therefore,
+#' it is not possible to reconstruct the \code{GEOMETRYCOLLECTION} after unnesting it.
+#'
 #' @examples
 #'
 #' ## character string of GeoJSON
@@ -63,7 +72,7 @@ geojson_sfc.default <- function(geojson, unnest = FALSE) rcpp_geojson_to_sfc(geo
 #' sf <- geojson_sf(myurl)
 #'}
 #'
-#' @inheritParams geojson_sfc
+#' @inherit geojson_sfc params details
 #' @export
 geojson_sf <- function(geojson, unnest = FALSE) UseMethod("geojson_sf")
 
