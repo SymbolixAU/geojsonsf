@@ -30,7 +30,7 @@ geojson_sfc.character <- function(geojson, unnest = FALSE) {
 		return(rcpp_geojson_to_sfc(geojson, unnest))
 	}
 	if (is_url(geojson)) {
-		return(geojson_sfc(curl::curl(geojson)))
+		return(geojson_sfc(curl::curl(geojson), unnest))
 	} else if (file.exists(geojson) ) {
 		return(rcpp_read_sfc_file(normalizePath(geojson), unnest))
 	}
@@ -75,7 +75,7 @@ geojson_sf.character <- function(geojson, unnest = FALSE) {
 		return(rcpp_geojson_to_sf(geojson, unnest))
 	}
 	if (is_url(geojson)) {
-		return(geojson_sf(curl::curl(geojson)))
+		return(geojson_sf(curl::curl(geojson), unnest))
 	} else if (file.exists(geojson) ) {
 		return(rcpp_read_sf_file(normalizePath(geojson), unnest))
 	}
@@ -83,10 +83,10 @@ geojson_sf.character <- function(geojson, unnest = FALSE) {
 }
 
 #' @export
-geojson_sf.connection <- function(geojson) geojson_sf(read_url(geojson), unnest)
+geojson_sf.connection <- function(geojson, unnest = F) geojson_sf(read_url(geojson), unnest)
 
 #' @export
-geojson_sf.default <- function(geojson) rcpp_geojson_to_sf(geojson, unnest)
+geojson_sf.default <- function(geojson, unnest = F) rcpp_geojson_to_sf(geojson, unnest)
 
 
 ## TODO:

@@ -56,6 +56,7 @@ test_that("unnesting preserves properties, ", {
 	{"type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
 	]'
 
-	geojson_sf(js, unnest = F)
+	expect_true(nrow(geojson_sf(js, unnest = F)) == 6)
+	expect_true(nrow(geojson_sf(js, unnest = T)) == 8)
 
 })

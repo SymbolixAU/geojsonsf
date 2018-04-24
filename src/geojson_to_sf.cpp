@@ -90,7 +90,7 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   	geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
   } else {
   	sfg_objects+=n;
-  	Rcpp::Rcout << "debug: unnest gc sfg_objects " << sfg_objects << std::endl;
+  	//Rcpp::Rcout << "debug: unnest gc sfg_objects " << sfg_objects << std::endl;
   }
   return geom_collection;
 }
@@ -117,7 +117,7 @@ Rcpp::List parse_feature_object(const Value& feature,
 
 		validate_type(geometry, sfg_objects);
 		type = geometry["type"].GetString();
-		Rcpp::Rcout << "debug: type = " << type << std::endl;
+		//Rcpp::Rcout << "debug: type = " << type << std::endl;
 
 		if (type == "GeometryCollection") {
 			sfc[0] = parse_geometry_collection_object(geometry, bbox, geometry_types, sfg_objects, unnest);
@@ -151,15 +151,15 @@ Rcpp::List parse_feature_object(const Value& feature,
 	// chuck these steps in a loop, from (i = 0; i < gc.size() || 1; i++)
 
 	// IFF GEOMETRYCOLLECTION && UNNEST, we've already added on the objects
-	Rcpp::Rcout << "debug: parse_feature_object sfg_objects: " << sfg_objects << std::endl;
+	//Rcpp::Rcout << "debug: parse_feature_object sfg_objects: " << sfg_objects << std::endl;
 	if (type != "GeometryCollection") {
-		Rcpp::Rcout << "debug: type != GC "<< std::endl;
+		//Rcpp::Rcout << "debug: type != GC "<< std::endl;
 		sfg_objects++;
 	} else if (type == "GeometryCollection" && !unnest){
-		Rcpp::Rcout << "debug: type == GC && !unnest "<< std::endl;
+		//Rcpp::Rcout << "debug: type == GC && !unnest "<< std::endl;
 		sfg_objects++;
 	}
-	Rcpp::Rcout << "debug: parse_feature_object sfg_objects: " << sfg_objects << std::endl;
+	//Rcpp::Rcout << "debug: parse_feature_object sfg_objects: " << sfg_objects << std::endl;
 
 	const Value& p = feature["properties"];
 	get_property_keys(p, property_keys);
@@ -256,7 +256,7 @@ void parse_geojson(const Value& v,
   	if (!unnest) {
   		sfg_objects++;
   	}
-    Rcpp::Rcout << "debug: gc unnest sfg_objects2 : " << sfg_objects << std::endl;
+    //Rcpp::Rcout << "debug: gc unnest sfg_objects2 : " << sfg_objects << std::endl;
     sfc[i] = res;
 
   } else {
