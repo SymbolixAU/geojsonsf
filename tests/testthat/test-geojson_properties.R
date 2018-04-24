@@ -2,11 +2,8 @@ context("properties")
 
 test_that("properties captured correctly", {
 
-	f <- '{
-		"type": "Feature",
-		"properties": { "id" : 1, "name" : "foo" },
-		"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
-		}'
+	f <- '{"type": "Feature","properties": { "id" : 1, "name" : "foo" },
+	       "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}}'
 
 	sf <- geojson_sf(f)
 	wkt <- geojson_wkt(f)
@@ -22,37 +19,29 @@ test_that("properties captured correctly", {
 	  "type": "Feature",
 	  "properties" : {},
 	  "geometry": {
-	    "type": "Polygon",
-	    "coordinates": [
-	      [[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]
-      }
+	    "type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
 	  },
 	  {
       "type": "Feature",
 	    "properties" : {"id":1},
-	  "geometry": {
-	    "type": "MultiPolygon",
+	    "geometry": {"type": "MultiPolygon",
 	    "coordinates": [[[[180.0, 40.0], [180.0, 50.0], [170.0, 50.0],[170.0, 40.0], [180.0, 40.0]]],
-	      [[[-170.0, 40.0], [-170.0, 50.0], [-180.0, 50.0],[-180.0, 40.0], [-170.0, 40.0]]]]
-	  }
-	},
-	{
+	      [[[-170.0, 40.0], [-170.0, 50.0], [-180.0, 50.0],[-180.0, 40.0], [-170.0, 40.0]]]]}
+	  },
+	  {
 	  "type": "FeatureCollection",
-	  "features": [
-	    {
+	  "features": [{
 	      "type": "Feature",
 	      "properties": {"id" : 2, "value" : "foo"},
 	      "geometry": {"type": "Point","coordinates": [100.0, 0.0]}
-	    },
-	    {
+	    },{
 	      "type": "Feature",
 	      "properties": null,
 	      "geometry": {
 	        "type": "LineString",
 	        "coordinates": [[101.0, 0.0],[102.0, 1.0]]
-	      }
-	    }
-	  ]
+	      }}
+    ]
 	},
 	{
 	  "type": "GeometryCollection",
@@ -131,7 +120,7 @@ test_that("null geometries are valid for features", {
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == 1:3))
 	sf <- geojson_sf(js)
-	expect_true(as.character(sf[sf$id == 3, 'geometry']) == "list(list())")
+	expect_true(length(as.character(sf$geometry[[3]])) == 0)
 	## TODO: Which geometry should this be?
 
 
@@ -143,7 +132,7 @@ test_that("null geometries are valid for features", {
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == c(3,1,2)))
 	sf <- geojson_sf(js)
-	expect_true(as.character(sf[sf$id == 1, 'geometry']) == "list(list())")
+	expect_true(length(as.character(sf$geometry[[2]])) == 0)
 	## TODO: Which geometry should this be?
 
 
