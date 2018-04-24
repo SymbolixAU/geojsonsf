@@ -130,7 +130,8 @@ test_that("null geometries are valid for features", {
 	]}'
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == 1:3))
-	expect_true(is.null(geojson_sf(js)[3, 'geometry'][[1]][[1]][1][[1]]))
+	sf <- geojson_sf(js)
+	expect_true(as.character(sf[sf$id == 3, 'geometry']) == "list(list())")
 	## TODO: Which geometry should this be?
 
 
@@ -141,15 +142,14 @@ test_that("null geometries are valid for features", {
 	]}'
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == c(3,1,2)))
-	expect_true(is.null(geojson_sf(js)[2, 'geometry'][[1]][[1]][1][[1]]))
+	sf <- geojson_sf(js)
+	expect_true(as.character(sf[sf$id == 1, 'geometry']) == "list(list())")
 	## TODO: Which geometry should this be?
 
 
 	## null geometries that aren't part of features should still error
 	js <- '{"type":"Point","coordinates":null}'
   expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")
-
-
 
 })
 
