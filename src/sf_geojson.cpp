@@ -7,26 +7,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-template <int RTYPE>
-Rcpp::CharacterVector sfClass(Vector<RTYPE> v) {
-	return v.attr("class");
-}
-
-Rcpp::CharacterVector getSfClass(SEXP sf) {
-
-  switch( TYPEOF(sf) ) {
-  case REALSXP:
-    return sfClass<REALSXP>(sf);
-  case VECSXP:
-    return sfClass<VECSXP>(sf);
-  case INTSXP:
-   return sfClass<INTSXP>(sf);
-  default: Rcpp::stop("unknown sf type");
-  }
-  return "";
-}
-
-
 void get_column_type(Rcpp::List& sf,
                      Rcpp::StringVector& property_names,
                      Rcpp::StringVector& column_types) {

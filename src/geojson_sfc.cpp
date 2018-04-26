@@ -4,25 +4,6 @@
 
 using namespace Rcpp;
 
-template <int RTYPE>
-Rcpp::CharacterVector sfcClass(Vector<RTYPE> v) {
-  return v.attr("class");
-}
-
-Rcpp::CharacterVector getSfcClass(SEXP sf) {
-
-  switch( TYPEOF(sf) ) {
-  case REALSXP:
-    return sfcClass<REALSXP>(sf);
-  case VECSXP:
-    return sfcClass<VECSXP>(sf);
-  case INTSXP:
-    return sfcClass<INTSXP>(sf);
-  default: Rcpp::stop("unknown sf type");
-  }
-  return "";
-}
-
 void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
   //xmin, ymin, xmax, ymax
   bbox[0] = std::min(point[0], bbox[0]);
@@ -48,7 +29,7 @@ std::string attach_class(Rcpp::List& sfc,
       Rcpp::StringVector sfc_classes = start_sfc_classes(sfc.size());
       for (int i = 0; i < sfc.size(); i++) {
         SEXP sfci = sfc[i];
-        Rcpp::CharacterVector cls = getSfcClass(sfci);
+        Rcpp::CharacterVector cls = getSfClass(sfci);
         sfc_classes[i] = cls[1];
       }
 

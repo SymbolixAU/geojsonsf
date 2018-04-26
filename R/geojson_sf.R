@@ -26,7 +26,7 @@
 #' ## GeoJSON at a url
 #' myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
 #' sf <- geojson_sfc(myurl)
-#'}
+#' }
 #'
 #' @export
 geojson_sfc <- function(geojson, flatten_geometries = FALSE) UseMethod("geojson_sfc")
@@ -150,9 +150,6 @@ sfc_geojson.sfc <- function(sfc) rcpp_sfc_to_geojson(sfc)
 
 sf_geojson.default <- function(sf, atomise = FALSE) stop("Expected an sf object")
 sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
-
-
-
 
 is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
 

@@ -12,6 +12,11 @@ namespace geojsonsf {
   const std::string PROJ4STRING = "+proj=longlat +datum=WGS84 +no_defs";
 }
 
+template <int RTYPE>
+Rcpp::CharacterVector sfClass(Vector<RTYPE> v);
+
+Rcpp::CharacterVector getSfClass(SEXP sf);
+
 #define UNKNOWN            0
 #define POINT              1
 #define MULTIPOINT         2

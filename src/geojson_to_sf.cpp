@@ -14,6 +14,25 @@
 
 using namespace Rcpp;
 
+template <int RTYPE>
+Rcpp::CharacterVector sfClass(Vector<RTYPE> v) {
+	return v.attr("class");
+}
+
+Rcpp::CharacterVector getSfClass(SEXP sf) {
+
+	switch( TYPEOF(sf) ) {
+	case REALSXP:
+		return sfClass<REALSXP>(sf);
+	case VECSXP:
+		return sfClass<VECSXP>(sf);
+	case INTSXP:
+		return sfClass<INTSXP>(sf);
+	default: Rcpp::stop("unknown sf type");
+	}
+	return "";
+}
+
 void parse_geometry_object(Rcpp::List& sfc,
                            int i,
                            const Value& geometry,
@@ -125,19 +144,7 @@ Rcpp::List parse_feature_object(const Value& feature,
 	} else {
 		// TODO:
 		// insert the geometry as per teh rules followed by 'sf'
-		//
-		// needs to be a null geometry
 		Rcpp::List nullObj;
-		/*
-		std::string temp_geom;
-		if (geometry_types.empty()) {
-			temp_geom = "POINT";
-		} else {
-			temp_geom = *geometry_types.rbegin();
-			transform(temp_geom.begin(), temp_geom.end(), temp_geom.begin(), ::toupper);
-		}
-		*/
-		//Rcpp::Rcout << "debug: temp_geom: " << temp_geom << std::endl;
 
 		nullObj.attr("class") = sfg_attributes("POLYGON");
 		sfc[0] = nullObj;
