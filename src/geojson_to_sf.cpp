@@ -86,11 +86,9 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   }
 
   if (!flatten_geometries) {
-  	//sfg_objects++;
   	geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
   } else {
   	sfg_objects+=n;
-  	//Rcpp::Rcout << "debug: flatten_geometries gc sfg_objects " << sfg_objects << std::endl;
   }
   return geom_collection;
 }
@@ -146,27 +144,15 @@ Rcpp::List parse_feature_object(const Value& feature,
 		geometry_types.insert("POLYGON");
 	}
 
-	// TODO:
-	// if 'flatten_geometries GEOMETRYCOLLECTION', increment this by the number of internal geometries
-	// chuck these steps in a loop, from (i = 0; i < gc.size() || 1; i++)
-
-	// IFF GEOMETRYCOLLECTION && flatten_geometries, we've already added on the objects
-	//Rcpp::Rcout << "debug: parse_feature_object sfg_objects: " << sfg_objects << std::endl;
 	if (type != "GeometryCollection") {
-		//Rcpp::Rcout << "debug: type != GC "<< std::endl;
 		sfg_objects++;
 	} else if (type == "GeometryCollection" && !flatten_geometries){
-		//Rcpp::Rcout << "debug: type == GC && !flatten_geometries "<< std::endl;
 		sfg_objects++;
 	}
-	//Rcpp::Rcout << "debug: parse_feature_object sfg_objects: " << sfg_objects << std::endl;
 
 	const Value& p = feature["properties"];
 	get_property_keys(p, property_keys);
 	get_property_types(p, property_types);
-
-	// TODO:
-	// - if flatten_geometriesing GEOMETRYCOLLECTION need to expand the properties by the number of geometries.
 
 	unsigned int geomsize = 1;
 	unsigned int i;
@@ -210,7 +196,6 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
   unsigned int n = features.Size(); // number of features
   unsigned int i;
   Rcpp::List feature_collection(n);
-  //std::string geom_type = "FeatureCollection";
 
   for (i = 0; i < n; i++) {
     const Value& feature = features[i];
@@ -256,7 +241,6 @@ void parse_geojson(const Value& v,
   	if (!flatten_geometries) {
   		sfg_objects++;
   	}
-    //Rcpp::Rcout << "debug: gc flatten_geometries sfg_objects2 : " << sfg_objects << std::endl;
     sfc[i] = res;
 
   } else {

@@ -42,8 +42,7 @@ test_that("geometries are parsed correctly", {
 			{"type": "Point", "coordinates": [100.0, 0.0]},
 			{"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
 			{"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
-			]
-	  }'
+			]}'
 
 	sfc <- geojson_sfc(js)
 	sf <- geojson_sf(js)
@@ -55,8 +54,7 @@ test_that("geometries are parsed correctly", {
 	    {"type": "Point", "coordinates": [100.0, 0.0]},
 	    {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
 	    {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
-  	]
-  }'
+  	]}'
 
 	expect_error(geojson_sf(js),"No 'geometries' member at object index 0 - invalid GeoJSON")
 	expect_error(geojson_wkt(js),"No 'geometries' member at object index 0 - invalid GeoJSON")
