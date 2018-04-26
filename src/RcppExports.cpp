@@ -7,26 +7,26 @@
 using namespace Rcpp;
 
 // rcpp_geojson_to_sfc
-Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson, bool& unnest);
-RcppExport SEXP _geojsonsf_rcpp_geojson_to_sfc(SEXP geojsonSEXP, SEXP unnestSEXP) {
+Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson, bool& flatten_geometries);
+RcppExport SEXP _geojsonsf_rcpp_geojson_to_sfc(SEXP geojsonSEXP, SEXP flatten_geometriesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type geojson(geojsonSEXP);
-    Rcpp::traits::input_parameter< bool& >::type unnest(unnestSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_geojson_to_sfc(geojson, unnest));
+    Rcpp::traits::input_parameter< bool& >::type flatten_geometries(flatten_geometriesSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_geojson_to_sfc(geojson, flatten_geometries));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_geojson_to_sf
-Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson, bool unnest);
-RcppExport SEXP _geojsonsf_rcpp_geojson_to_sf(SEXP geojsonSEXP, SEXP unnestSEXP) {
+Rcpp::List rcpp_geojson_to_sf(Rcpp::StringVector geojson, bool flatten_geometries);
+RcppExport SEXP _geojsonsf_rcpp_geojson_to_sf(SEXP geojsonSEXP, SEXP flatten_geometriesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::StringVector >::type geojson(geojsonSEXP);
-    Rcpp::traits::input_parameter< bool >::type unnest(unnestSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_geojson_to_sf(geojson, unnest));
+    Rcpp::traits::input_parameter< bool >::type flatten_geometries(flatten_geometriesSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_geojson_to_sf(geojson, flatten_geometries));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -42,26 +42,26 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_read_sfc_file
-Rcpp::List rcpp_read_sfc_file(std::string file, bool unnest);
-RcppExport SEXP _geojsonsf_rcpp_read_sfc_file(SEXP fileSEXP, SEXP unnestSEXP) {
+Rcpp::List rcpp_read_sfc_file(std::string file, bool flatten_geometries);
+RcppExport SEXP _geojsonsf_rcpp_read_sfc_file(SEXP fileSEXP, SEXP flatten_geometriesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type file(fileSEXP);
-    Rcpp::traits::input_parameter< bool >::type unnest(unnestSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_read_sfc_file(file, unnest));
+    Rcpp::traits::input_parameter< bool >::type flatten_geometries(flatten_geometriesSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_read_sfc_file(file, flatten_geometries));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_read_sf_file
-Rcpp::List rcpp_read_sf_file(std::string file, bool unnest);
-RcppExport SEXP _geojsonsf_rcpp_read_sf_file(SEXP fileSEXP, SEXP unnestSEXP) {
+Rcpp::List rcpp_read_sf_file(std::string file, bool flatten_geometries);
+RcppExport SEXP _geojsonsf_rcpp_read_sf_file(SEXP fileSEXP, SEXP flatten_geometriesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type file(fileSEXP);
-    Rcpp::traits::input_parameter< bool >::type unnest(unnestSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_read_sf_file(file, unnest));
+    Rcpp::traits::input_parameter< bool >::type flatten_geometries(flatten_geometriesSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_read_sf_file(file, flatten_geometries));
     return rcpp_result_gen;
 END_RCPP
 }

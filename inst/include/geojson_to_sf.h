@@ -18,7 +18,7 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
                                             Rcpp::NumericVector& bbox,
                                             std::set< std::string >& geometry_types,
                                             int& sfg_objects,
-                                            bool& unnest);
+                                            bool& flatten_geometries);
 
 Rcpp::List parse_feature_object(const Value& feature,
                                 Rcpp::NumericVector& bbox,
@@ -27,7 +27,7 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 std::set< std::string >& property_keys,
                                 Document& doc_properties,
                                 std::map< std::string, std::string>& property_types,
-                                bool& unnest);
+                                bool& flatten_geometries);
 
 Rcpp::List parse_feature_collection_object(const Value& fc,
                                            Rcpp::NumericVector& bbox,
@@ -36,7 +36,7 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
                                            std::set< std::string >& property_keys,
                                            Document& doc_properties,
                                            std::map< std::string, std::string>& property_types,
-                                           bool& unnest);
+                                           bool& flatten_geometries);
 
 void parse_geojson(const Value& v,
                    Rcpp::List& sfc,
@@ -48,7 +48,7 @@ void parse_geojson(const Value& v,
                    std::set< std::string >& property_keys,
                    Document& doc_properties,
                    std::map< std::string, std::string>& property_types,
-                   bool& unnest);
+                   bool& flatten_geometries);
 
 void parse_geojson_array(Document& d,
                          Rcpp::List& sfc,
@@ -60,7 +60,7 @@ void parse_geojson_array(Document& d,
                          std::set< std::string >& property_keys,
                          Document& doc_properties,
                          std::map< std::string, std::string>& property_types,
-                         bool& unnest);
+                         bool& flatten_geometries);
 
 void parse_geojson_object(Document& d,
                           Rcpp::List& sfc,
@@ -71,7 +71,7 @@ void parse_geojson_object(Document& d,
                           std::set< std::string >& property_keys,
                           Document& doc_properties,
                           std::map< std::string, std::string>& property_types,
-                          bool& unnest);
+                          bool& flatten_geometries);
 
 Rcpp::List geojson_to_sf(const char* geojson, Rcpp::NumericVector& bbox,
                          std::set< std::string >& geometry_types,
@@ -79,7 +79,7 @@ Rcpp::List geojson_to_sf(const char* geojson, Rcpp::NumericVector& bbox,
                          std::set< std::string >& property_keys,
                          Document& doc_properties,
                          std::map< std::string, std::string>& property_types,
-                         bool& unnest);
+                         bool& flatten_geometries);
 
 void setup_property_vectors(std::map< std::string, std::string>& property_types,
                             Rcpp::List& properties, int& sfg_objects);
@@ -95,8 +95,8 @@ Rcpp::List construct_sf(Rcpp::List& lst, std::set< std::string >& property_keys,
                         int& sfg_objects,
                         int& row_index);
 
-Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& unnest);
+Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& flatten_geometries);
 
-Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& unnest);
+Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& flatten_geometries);
 
 #endif
