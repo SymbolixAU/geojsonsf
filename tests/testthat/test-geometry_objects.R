@@ -4,22 +4,14 @@ context("objects")
 test_that("individual objects converted to sf", {
 
 	g <- '{"type": "Point", "coordinates": [100.0, 0.0]}'
-
-	f <- '{
-		"type": "Feature",
-		"properties": null,
-		"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
-		}'
-
+	f <- '{"type": "Feature","properties": null,
+		"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}}'
 	gc <- '{
 	    "type": "GeometryCollection",
 	    "geometries": [
 	        {"type": "Point", "coordinates": [100.0, 0.0]},
 	        {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
-	        {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
-	    ]
-	}'
-
+	        {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}]}'
 	fc <- '{
 	  "type": "FeatureCollection",
 	  "features": [
@@ -37,21 +29,11 @@ test_that("individual objects converted to sf", {
 	    "type": "Feature",
 		    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
 		    "geometry": {"type": "LineString", "coordinates": [[109.0, 0.0], [102.0, 1.0]]}
-		}
-	 ]
-	}'
-
-
+		}]}'
 	fc1 <- '{
 	  "type": "FeatureCollection",
-	  "features": [
-	  {
-	    "type": "Feature",
-	    "properties": null,
-	    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
-	  }]
-	}'
-
+	  "features": [{"type": "Feature","properties": null,
+	    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}}]}'
 	fgc <- '{
     "type" : "Feature",
 	  "properties" : {},
@@ -59,10 +41,7 @@ test_that("individual objects converted to sf", {
 	    "type": "GeometryCollection", "geometries": [
 	      {"type": "Point", "coordinates": [100.0, 0.0]},
 	      {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
-	      {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
-	    ]
-	  }
-  }'
+	      {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}]}}'
 
 	sf_f <- geojson_sf(f)
 	sf_g <- geojson_sf(g)

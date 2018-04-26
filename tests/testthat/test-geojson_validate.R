@@ -7,15 +7,14 @@ test_that("Geometry object has correct members", {
 	js <- '{"type":"Point","coordinate":[0,0]}'
 
 	expect_error(
-		geojsonsf:::rcpp_geojson_to_sf(js),
+		geojsonsf:::rcpp_geojson_to_sf(js, F),
 		"No 'coordinates' member at object index 0 - invalid GeoJSON"
 	)
 
 	## no 'type' key
 	js <- '{"geometry":"Point","coordinates":[0,0]}'
-
 	expect_error(
-		geojsonsf:::rcpp_geojson_to_sf(js),
+		geojsonsf:::rcpp_geojson_to_sf(js, F),
 		"No 'type' member at object index 0 - invalid GeoJSON"
 	)
 
@@ -39,58 +38,29 @@ test_that("Feature Object has correct members", {
 
 	## invalid 'geometry' member
 	js <- '
-  {
-    "type" : "Feature",
-    "properties" : {},
-    "geom" : {
-      "type" : "Point",
-      "coordinates" : [ 0, 0]
-    }
-  }
-	'
+  {"type" : "Feature","properties" : {},
+    "geom" : {"type" : "Point","coordinates" : [ 0, 0]}}'
 	expect_error(
-		geojsonsf:::rcpp_geojson_to_sf(js),
+		geojsonsf:::rcpp_geojson_to_sf(js, F),
 		"No 'geometry' member at object index 0 - invalid GeoJSON"
 	)
 
 	## invalid 'properties' member
-	js <- '
-	{
-	  "type" : "Feature",
-	  "property" : {},
-	  "geometry" : {
-	    "type" : "Point",
-	    "coordinates" : [ 0, 0]
-	  }
-	}
-	'
+	js <- '{"type" : "Feature","property" : {},"geometry" : {"type" : "Point","coordinates" : [ 0, 0]}}'
 	expect_error(
-		geojsonsf:::rcpp_geojson_to_sf(js),
+		geojsonsf:::rcpp_geojson_to_sf(js, F),
 		"No 'properties' member at object index 0 - invalid GeoJSON"
 	)
 
-	js <- '
-	[
-    {
-	    "type" : "Feature",
+	js <- '[
+    {"type" : "Feature",
 	    "properties" : {},
-	    "geometry" : {
-	      "type" : "Point",
-	      "coordinates" : [ 0, 0]
-	    }
-    },
-	  {
-	    "type" : "Feature",
-	    "property" : {},
-	    "geometry" : {
-	      "type" : "Point",
-	      "coordinates" : [ 0, 0]
-	    }
-	  }
-  ]
-	'
+	    "geometry" : {"type" : "Point","coordinates" : [ 0, 0]}
+    },{
+	    "type" : "Feature","property" : {},"geometry" : {"type" : "Point","coordinates" : [ 0, 0]}
+	  }]'
 	expect_error(
-		geojsonsf:::rcpp_geojson_to_sf(js),
+		geojsonsf:::rcpp_geojson_to_sf(js, F),
 		"No 'properties' member at object index 1 - invalid GeoJSON"
 	)
 })
@@ -126,7 +96,7 @@ test_that("Featurecollection has correct members", {
   }'
 
 	expect_error(
-		geojsonsf:::rcpp_geojson_to_sf(js),
+		geojsonsf:::rcpp_geojson_to_sf(js, F),
 		"No 'features' member at object index 0 - invalid GeoJSON"
 	)
 
