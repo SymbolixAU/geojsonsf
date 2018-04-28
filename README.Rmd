@@ -53,6 +53,8 @@ install.packages("geojsonsf")
 ```
 
 ```{r, echo = F}
+library(geojsonsf)
+library(sf)
 library(googleway)
 set_key(read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY"))
 ```
@@ -68,11 +70,9 @@ devtools::install_github("SymbolixAU/geojsonsf")
 
 To quickly parse GeoJSON to `sf` objects, and to handle cases not supported by `sf`, e.g. arrays of geometries
 
-### Array of geometries
+### Arrays of GeoJSON
 
 ```{r}
-library(geojsonsf)
-library(sf)        ## for sf print methods
 
 js <- '[
 {
@@ -120,6 +120,7 @@ js <- '[
 geojson_sf(js)
 
 ```
+
 
 ### Speed
 
@@ -200,132 +201,10 @@ knitr::include_graphics("./man/figures/GeoJSONSF.png")
 ```
 
 ```{r}
-sf <- st_read(geo, quiet = T)
+sf <- sf::st_read(geo, quiet = T)
 plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
 ```
 
-## sf to GeoJSON
 
-```{r}
-nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
-geo <- sf_geojson(nc)
-
-str(geo)
-```
-
-You can set `atomise = TRUE` to convert each row of the `sf` object into individual GeoJSON objects, returned as an R vector.
-
-```{r}
-
-geo <- sf_geojson(nc, atomise = T)
-
-str(geo)
-geo[1]
-```
-
-
-## Examples
-
-Here are more examples of parsing various GeoJSON geometries. 
-
-### Geometry
-```{r}
-g <- '{"type": "Point", "coordinates": [100.0, 0.0]}'
-geojson_sf(g)
-```
-
-### Feature
-```{r}
-f <- '{
-	"type": "Feature",
-	"properties": null,
-	"geometry": {
-	  "type": "LineString", 
-	  "coordinates": [[101.0, 0.0], [102.0, 1.0]]
-	  }
-	}'
-geojson_sf(f)
-```
-
-
-## Geometry Collection
-
-```{r}
-gc <- '{
-  "type": "GeometryCollection",
-  "geometries": [
-    {"type": "Point", "coordinates": [100.0, 0.0]},
-    {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
-    {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
-  ]
-}'
-geojson_sf(gc)
-```
-
-### Feature Collection
-
-```{r}
-fc <- '{
-  "type": "FeatureCollection",
-  "features": [
-  {
-    "type": "Feature",
-    "properties": {"foo" : "feature 1.1", "bar" : "feature 1.2"},
-    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
-  },
-  {
-    "type": "Feature",
-    "properties": null,
-    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
-  },
-  {
-    "type": "Feature",
-	    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
-	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
-	}
- ]
-}'
-geojson_sf(fc)
-```
-
-Reading from file (using `geojsonio` data)
-
-```{r}
-library(sf) ## for print methods
-file <- system.file("examples", "california.geojson", package = "geojsonio")
-
-geo <- paste0(readLines(file), collapse = "")
-geojsonsf::geojson_sf(geo)
-
-```
-
-## Well-known Text
-
-It also converts GeoJSON to Well-Known Text and returns a `data.frame`
-
-
-```{r}
-fc <- '{
-  "type": "FeatureCollection",
-  "features": [
-  {
-    "type": "Feature",
-    "properties": {"foo" : "feature 1.1", "bar" : "feature 1.2"},
-    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
-  },
-  {
-    "type": "Feature",
-    "properties": null,
-    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
-  },
-  {
-    "type": "Feature",
-	    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
-	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
-	}
- ]
-}'
-geojson_wkt(fc)
-```
 
 

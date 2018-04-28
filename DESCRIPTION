@@ -20,4 +20,9 @@ Imports:
 RoxygenNote: 6.0.1
 Suggests: 
     covr,
-    testthat
+    testthat,
+    knitr,
+    rmarkdown,
+    sf,
+    microbenchmark
+VignetteBuilder: knitr

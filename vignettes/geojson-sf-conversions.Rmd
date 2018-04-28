@@ -1,0 +1,239 @@
+---
+title: "Converting between GeoJSON and sf"
+author: "D Cooley"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    fig_caption: yes
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Converting between GeoJSON and sf}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Motivation
+
+To quickly convert between GeoJSON and `sf` objects
+
+## GeoJSON
+
+```{r}
+library(geojsonsf)
+library(sf) ## for plot methods
+```
+
+### Geometry 
+
+```{r}
+p <- '{"type":"Point","coordinates":[0,0]}'
+geojson_sf(p)
+```
+
+### Geometry Collection
+
+```{r}
+gc <- '{
+  "type": "GeometryCollection",
+  "geometries": [
+    {"type": "Point", "coordinates": [100.0, 0.0]},
+    {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+    {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+  ]
+}'
+geojson_sf(gc)
+```
+
+Some web-plotting libraries (such as `googleway`) can't plot GeometryCollections directly. Therefore, you can set `flatten_geometries` to `TRUE` and it will extract each geometry from a GeometryCollection and create a row for each one
+
+
+```{r}
+gc <- '{
+  "type": "GeometryCollection",
+  "geometries": [
+    {"type": "Point", "coordinates": [100.0, 0.0]},
+    {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]},
+    {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
+  ]
+}'
+geojson_sf(gc, flatten_geometries = T)
+```
+
+
+### Feature
+
+```{r}
+f <- '{
+	"type": "Feature",
+	"properties": {"id":1,"value":100,"text":"the quick brown fox"},
+	"geometry": {
+	  "type": "LineString", 
+	  "coordinates": [[101.0, 0.0], [102.0, 1.0]]
+	  }
+	}'
+geojson_sf(f)
+```
+
+
+### Feature Collection
+
+```{r}
+fc <- '{
+  "type": "FeatureCollection",
+  "features": [
+  {
+    "type": "Feature",
+    "properties": {"foo" : "feature 1.1", "bar" : "feature 1.2"},
+    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+  },
+  {
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+  },
+  {
+    "type": "Feature",
+	    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
+	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+	}
+ ]
+}'
+geojson_sf(fc)
+```
+
+
+## Vectors of GeoJSON
+
+```{r}
+geo <- c(p, gc, f, fc)
+geojson_sf(geo)
+```
+
+
+## JSON Arrays of GeoJSON
+
+
+```{r}
+
+js <- '[
+{
+  "type": "FeatureCollection",
+  "features": [
+  {
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+  },
+  {
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "LineString", "coordinates": [[201.0, 0.0], [102.0, 1.0]]}
+  },
+  {
+    "type": "Feature",
+	    "properties": null,
+	    "geometry": {"type": "LineString", "coordinates": [[301.0, 0.0], [102.0, 1.0]]}
+	}
+ ]
+},
+{
+  "type": "FeatureCollection",
+	"features": [
+	{
+	  "type": "Feature",
+	  "properties": null,
+	  "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+	},
+	{
+	  "type": "Feature",
+	  "properties": null,
+	  "geometry": {"type": "LineString", "coordinates": [[501.0, 0.0], [102.0, 1.0]]}
+	},
+	{
+	  "type": "Feature",
+	  "properties": null,
+	  "geometry": {"type": "LineString", "coordinates": [[601.0, 0.0], [102.0, 1.0]]}
+	}
+  ]
+}
+]'
+
+geojson_sf(js)
+
+```
+
+
+## Reading from URL
+
+```{r}
+url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+geojson_sf(url)
+```
+
+## Reading from file
+
+```{r}
+geojson_sf(system.file("examples", "geo_melbourne.geojson", package = "geojsonsf"))
+```
+
+## sf to GeoJSON
+
+```{r}
+nc <- sf::st_read(system.file("shape/nc.shp", package="sf"), quiet = T)
+geo <- sf_geojson(nc)
+str(geo)
+```
+
+### Atomising
+
+Sometimes it's useful to convert each row of an `sf` object into it's own GeoJSON object, for example when you want to keep each geometry separate in a database. Set `atomise = TRUE` to return a vector of GeoJSON
+
+```{r}
+geo <- sf_geojson(nc, atomise = T)
+```
+
+now `geo` is a vector of GeoJSON
+
+```{r}
+geo[1]
+geo[2]
+```
+
+## Well-known Text
+
+It also converts GeoJSON to Well-Known Text and returns a `data.frame`
+
+
+```{r}
+fc <- '{
+  "type": "FeatureCollection",
+  "features": [
+  {
+    "type": "Feature",
+    "properties": {"foo" : "feature 1.1", "bar" : "feature 1.2"},
+    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+  },
+  {
+    "type": "Feature",
+    "properties": null,
+    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+  },
+  {
+    "type": "Feature",
+	    "properties": {"foo" : "feature 3.1", "bar" : "feature 3.2"},
+	    "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
+	}
+ ]
+}'
+geojson_wkt(fc)
+```
+
+
