@@ -20,16 +20,21 @@ knitr::opts_chunk$set(
 ```
 
 
-## Motivation
+## What it does
 
-To quickly convert between GeoJSON and `sf` objects
+Quickly converts between GeoJSON and `sf` objects
 
-## GeoJSON
+## What it doesn't do
+
+As per GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#page-11), foreign members are ignored, and nested objects and arrays inside the `properties` object are converted to string/characters. 
+
 
 ```{r}
 library(geojsonsf)
 library(sf) ## for plot methods
 ```
+
+## GeoJSON
 
 ### Geometry 
 
