@@ -22,7 +22,5 @@ Suggests:
     covr,
     testthat,
     knitr,
-    rmarkdown,
-    sf,
-    microbenchmark
+    rmarkdown
 VignetteBuilder: knitr

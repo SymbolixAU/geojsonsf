@@ -31,8 +31,9 @@ As per GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#pa
 
 ```{r}
 library(geojsonsf)
-library(sf) ## for plot methods
 ```
+
+You would also typically load `library(sf)` to take advantange of its `plot` methods. 
 
 ## GeoJSON
 
@@ -40,7 +41,8 @@ library(sf) ## for plot methods
 
 ```{r}
 p <- '{"type":"Point","coordinates":[0,0]}'
-geojson_sf(p)
+sf <- geojson_sf(p)
+head(sf)
 ```
 
 ### Geometry Collection
@@ -54,7 +56,8 @@ gc <- '{
     {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
   ]
 }'
-geojson_sf(gc)
+sf <- geojson_sf(gc)
+head(sf)
 ```
 
 Some web-plotting libraries (such as `googleway`) can't plot GeometryCollections directly. Therefore, you can set `flatten_geometries` to `TRUE` and it will extract each geometry from a GeometryCollection and create a row for each one
@@ -69,7 +72,8 @@ gc <- '{
     {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
   ]
 }'
-geojson_sf(gc, flatten_geometries = T)
+sf <- geojson_sf(gc, flatten_geometries = T)
+head(sf)
 ```
 
 
@@ -84,7 +88,8 @@ f <- '{
 	  "coordinates": [[101.0, 0.0], [102.0, 1.0]]
 	  }
 	}'
-geojson_sf(f)
+sf <- geojson_sf(f)
+head(sf)
 ```
 
 
@@ -111,7 +116,9 @@ fc <- '{
 	}
  ]
 }'
-geojson_sf(fc)
+sf <- geojson_sf(fc)
+head(sf)
+
 ```
 
 
@@ -119,7 +126,8 @@ geojson_sf(fc)
 
 ```{r}
 geo <- c(p, gc, f, fc)
-geojson_sf(geo)
+sf <- geojson_sf(geo)
+head(sf)
 ```
 
 
@@ -171,8 +179,8 @@ js <- '[
 }
 ]'
 
-geojson_sf(js)
-
+sf <- geojson_sf(js)
+head(sf)
 ```
 
 
@@ -180,21 +188,22 @@ geojson_sf(js)
 
 ```{r}
 url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
-geojson_sf(url)
+sf <- geojson_sf(url)
+head(sf)
 ```
 
 ## Reading from file
 
 ```{r}
-geojson_sf(system.file("examples", "geo_melbourne.geojson", package = "geojsonsf"))
+sf <- geojson_sf(system.file("examples", "geo_melbourne.geojson", package = "geojsonsf"))
+head(sf)
 ```
 
 ## sf to GeoJSON
 
 ```{r}
-nc <- sf::st_read(system.file("shape/nc.shp", package="sf"), quiet = T)
-geo <- sf_geojson(nc)
-str(geo)
+geo <- sf_geojson(sf)
+substr(geo, 1, 80)
 ```
 
 ### Atomising
@@ -202,14 +211,14 @@ str(geo)
 Sometimes it's useful to convert each row of an `sf` object into it's own GeoJSON object, for example when you want to keep each geometry separate in a database. Set `atomise = TRUE` to return a vector of GeoJSON
 
 ```{r}
-geo <- sf_geojson(nc, atomise = T)
+geo <- sf_geojson(sf, atomise = T)
 ```
 
 now `geo` is a vector of GeoJSON
 
 ```{r}
-geo[1]
-geo[2]
+substr(geo[1], 1, 80)
+substr(geo[2], 1, 80)
 ```
 
 ## Well-known Text
@@ -238,7 +247,8 @@ fc <- '{
 	}
  ]
 }'
-geojson_wkt(fc)
+df <- geojson_wkt(fc)
+head(df)
 ```
 
 
