@@ -52,12 +52,6 @@ When released on CRAN you install it in the usual way
 install.packages("geojsonsf")
 ```
 
-```{r, echo = F}
-library(geojsonsf)
-library(sf)
-library(googleway)
-set_key(read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY"))
-```
 
 Install the development version from GitHub with
 
@@ -69,6 +63,13 @@ devtools::install_github("SymbolixAU/geojsonsf")
 ## Motivation
 
 To quickly parse GeoJSON to `sf` objects, and to handle cases not supported by `sf`, e.g. arrays of geometries
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(geojsonsf)
+library(sf)
+library(googleway)
+set_key(read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY"))
+```
 
 ### Arrays of GeoJSON
 

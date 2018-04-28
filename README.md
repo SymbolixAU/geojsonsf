@@ -44,13 +44,6 @@ When released on CRAN you install it in the usual way
 install.packages("geojsonsf")
 ```
 
-    #  Linking to GEOS 3.6.1, GDAL 2.1.3, proj.4 4.9.3
-    #  
-    #  Attaching package: 'googleway'
-    #  The following object is masked from 'package:geojsonsf':
-    #  
-    #      geo_melbourne
-
 Install the development version from GitHub with
 
 ``` r
@@ -150,8 +143,8 @@ microbenchmark(
 )
 #  Unit: seconds
 #        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 1.469383 1.469383 1.527734 1.527734 1.586085 1.586085     2
-#          sf 4.372365 4.372365 4.437708 4.437708 4.503050 4.503050     2
+#   geojsonsf 1.379338 1.379338 1.409345 1.409345 1.439353 1.439353     2
+#          sf 4.099153 4.099153 4.099914 4.099914 4.100675 4.100675     2
 ```
 
 Reading directly from a URL is comparable between the
@@ -173,8 +166,8 @@ microbenchmark(
 )
 #  Unit: seconds
 #        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 8.550951 8.550951 10.21943 10.21943 11.88792 11.88792     2
-#          sf 9.777136 9.777136 10.34907 10.34907 10.92101 10.92101     2
+#   geojsonsf 12.82191 12.82191 12.91686 12.91686 13.01181 13.01181     2
+#          sf 10.09462 10.09462 19.17912 19.17912 28.26363 28.26363     2
 ```
 
     library(rgdal)
