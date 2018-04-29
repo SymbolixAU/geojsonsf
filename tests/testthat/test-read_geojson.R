@@ -10,7 +10,7 @@ test_that("can read from various sources", {
 	## direct from url
 	con <- curl::curl(url)
 	lines <- geojsonsf:::read_url(con)
-	close(con)
+	#close(con)
 	expect_true(nchar(lines) == 1078089)
 
 	sf <- geojson_sf(lines)

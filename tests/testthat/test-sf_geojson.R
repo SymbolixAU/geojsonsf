@@ -160,7 +160,7 @@ test_that("sf with properties converted to FeatureCollection", {
 		}
 	}]'
 	sf <- geojson_sf(js)
-	jsonlite::validate(sf_geojson(sf, atomise = F))
+	#jsonlite::validate(sf_geojson(sf, atomise = F))
 	v <- sf_geojson(sf, atomise = T)
 	expect_true(all(sapply(v, jsonlite::validate)))
 

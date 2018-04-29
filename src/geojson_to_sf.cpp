@@ -144,11 +144,15 @@ Rcpp::List parse_feature_object(const Value& feature,
 	} else {
 		// TODO:
 		// insert the geometry as per teh rules followed by 'sf'
-		Rcpp::List nullObj;
+		//Rcpp::List nullObj;
+		//nullObj.attr("class") = sfg_attributes("POLYGON");
+		//sfc[0] = nullObj;
+		//geometry_types.insert("POLYGON");
 
-		nullObj.attr("class") = sfg_attributes("POLYGON");
+		Rcpp::NumericVector nullObj(2, NA_REAL);
+		nullObj.attr("class") = sfg_attributes("POINT");
 		sfc[0] = nullObj;
-		geometry_types.insert("POLYGON");
+		geometry_types.insert("POINT");
 	}
 
 	if (type != "GeometryCollection") {

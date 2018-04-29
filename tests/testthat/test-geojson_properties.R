@@ -120,7 +120,8 @@ test_that("null geometries are valid for features", {
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == 1:3))
 	sf <- geojson_sf(js)
-	expect_true(length(as.character(sf$geometry[[3]])) == 0)
+	expect_true(length(sf$geometry[[3]]) == 2)  ## POINT: numeric vector length 2
+#	expect_true(length(as.character(sf$geometry[[3]])) == 0)  ## POLYGON LIST
 	## TODO: Which geometry should this be?
 
 
@@ -132,7 +133,8 @@ test_that("null geometries are valid for features", {
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == c(3,1,2)))
 	sf <- geojson_sf(js)
-	expect_true(length(as.character(sf$geometry[[2]])) == 0)
+	expect_true(length(sf$geometry[[2]]) == 2)
+	# expect_true(length(as.character(sf$geometry[[2]])) == 0) ## POLGON LIST
 	## TODO: Which geometry should this be?
 
 
