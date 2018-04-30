@@ -127,6 +127,7 @@ void create_null_object(Rcpp::List& sfc,
 	if (geom_type == "POINT" ) {
 
 		Rcpp::NumericVector nullObj(2, NA_REAL);
+		//Rcpp::NumericVector nullObj;
 		nullObj.attr("class") = sfg_attributes(geom_type);
 		sfc[0] = nullObj;
 
@@ -171,7 +172,6 @@ Rcpp::List parse_feature_object(const Value& feature,
 
 		validate_type(geometry, sfg_objects);
 		type = geometry["type"].GetString();
-		//Rcpp::Rcout << "debug: type = " << type << std::endl;
 
 		if (type == "GeometryCollection") {
 			sfc[0] = parse_geometry_collection_object(geometry, bbox, geometry_types, sfg_objects, flatten_geometries);

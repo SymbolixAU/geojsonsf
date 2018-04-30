@@ -82,8 +82,9 @@ test_that("sf and sfc created equally", {
 
 test_that("null geometries are valid for features", {
 
-	js <- '{"type":"Point","coordinates":[null,null]}'
-	geojson_sf(js) ## TODO: needs to error!!
+	## TODO: needs to error!!
+	# js <- '{"type":"Point","coordinates":[null,null]}'
+	# geojson_sf(js)
 
 	js <- '{"type":"Point","coordinates":[,]}'
 	expect_error(geojson_sf(js), "Invalid JSON")

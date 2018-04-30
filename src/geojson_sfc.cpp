@@ -23,11 +23,6 @@ std::string attach_class(Rcpp::List& sfc,
     geometry_class = "GEOMETRYCOLLECTION";
   } else {
 
-  	//Rcpp::Rcout << "debug: geometry_types.size(): " << geometry_types.size() << std::endl;
-  	//for (std::string gt : geometry_types) {
-  	//	Rcpp::Rcout << gt << ", ";
-  	//}
-
     if (geometry_types.size() > 1) {
       geometry_class = "GEOMETRY";
 
@@ -60,7 +55,6 @@ void attach_sfc_attributes(Rcpp::List& sfc,
   sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
 
   double prec = 0;
-  //int n_empty = 0;
 
   // attribute::crs
   Rcpp::List crs = Rcpp::List::create(Named("epsg") = geojsonsf::EPSG,
@@ -147,12 +141,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     	break;
     }
     default: {
-    	//Rcpp::Rcout << "debug: default geometry" << std::endl;
-    	//Rcpp::List tmp;
-    	//tmp.attr("class") = Rcpp::CharacterVector::create("XY","POLYGON","sfg");
       Rcpp::stop("Geometry could not be determined");
-      //res[sfg_counter] = tmp;
-      //sfg_counter++;
     }
     }
   }
