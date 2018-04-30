@@ -48,13 +48,14 @@ std::string attach_class(Rcpp::List& sfc,
 void attach_sfc_attributes(Rcpp::List& sfc,
                            std::string& type,
                            Rcpp::NumericVector& bbox,
-                           std::set< std::string >& geometry_types) {
+                           std::set< std::string >& geometry_types,
+                           int& nempty) {
 
   std::string geometry_class = attach_class(sfc, type, geometry_types);
   sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
 
   double prec = 0;
-  int n_empty = 0;
+  //int n_empty = 0;
 
   // attribute::crs
   Rcpp::List crs = Rcpp::List::create(Named("epsg") = geojsonsf::EPSG,
@@ -67,7 +68,7 @@ void attach_sfc_attributes(Rcpp::List& sfc,
   sfc.attr("precision") = prec;
 
   // attribute::n_empty
-  sfc.attr("n_empty") = n_empty;
+  sfc.attr("n_empty") = nempty;
 
   // attribute::bbox
   bbox.attr("class") = Rcpp::CharacterVector::create("bbox");
@@ -156,7 +157,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 Rcpp::List construct_sfc(int& sfg_objects,
                          Rcpp::List& sf,
                          Rcpp::NumericVector& bbox,
-                         std::set< std::string >& geometry_types) {
+                         std::set< std::string >& geometry_types,
+                         int& nempty) {
 
   Rcpp::List sfc_output(sfg_objects);
   std::string geom_attr;
@@ -164,7 +166,7 @@ Rcpp::List construct_sfc(int& sfg_objects,
   int sfg_counter = 0;
 
   fetch_geometries(sf, sfc_output, sfg_counter);
-  attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types);
+  attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types, nempty);
 
   return sfc_output;
 }

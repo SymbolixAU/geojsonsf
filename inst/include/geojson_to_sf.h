@@ -27,7 +27,8 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 std::set< std::string >& property_keys,
                                 Document& doc_properties,
                                 std::map< std::string, std::string>& property_types,
-                                bool& flatten_geometries);
+                                bool& flatten_geometries,
+                                int& nempty);
 
 Rcpp::List parse_feature_collection_object(const Value& fc,
                                            Rcpp::NumericVector& bbox,
