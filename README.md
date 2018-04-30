@@ -14,6 +14,11 @@ Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=maste
 
 ## geojsonsf
 
+A simple, low-dependency and **fast** converter between GeoJSON and
+Simple Feature objects in R.
+
+-----
+
 **v0.3+**
 
 (Development / github version)
@@ -141,10 +146,13 @@ microbenchmark(
     },
     times = 2
 )
-#  Unit: seconds
-#        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 1.379338 1.379338 1.409345 1.409345 1.439353 1.439353     2
-#          sf 4.099153 4.099153 4.099914 4.099914 4.100675 4.100675     2
+#  Unit: milliseconds
+#        expr       min        lq      mean    median        uq       max
+#   geojsonsf  730.9794  730.9794  747.9109  747.9109  764.8423  764.8423
+#          sf 2025.0283 2025.0283 2037.2848 2037.2848 2049.5412 2049.5412
+#   neval
+#       2
+#       2
 ```
 
 Reading directly from a URL is comparable between the
@@ -165,9 +173,9 @@ microbenchmark(
     times = 2
 )
 #  Unit: seconds
-#        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 12.82191 12.82191 12.91686 12.91686 13.01181 13.01181     2
-#          sf 10.09462 10.09462 19.17912 19.17912 28.26363 28.26363     2
+#        expr      min       lq      mean    median        uq       max neval
+#   geojsonsf 6.848541 6.848541  7.163919  7.163919  7.479298  7.479298     2
+#          sf 9.109991 9.109991 13.029119 13.029119 16.948246 16.948246     2
 ```
 
     library(rgdal)

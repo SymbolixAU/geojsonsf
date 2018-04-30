@@ -23,6 +23,10 @@ knitr::opts_chunk$set(
 
 ## geojsonsf
 
+A simple, low-dependency and **fast** converter between GeoJSON and Simple Feature objects in R. 
+
+---
+
 **v0.3+** 
 
 (Development / github version)
