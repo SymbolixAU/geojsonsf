@@ -112,6 +112,41 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   return geom_collection;
 }
 
+void create_null_object(Rcpp::List& sfc,
+                        std::set< std::string >& geometry_types,
+                        int& nempty) {
+
+	std::string geom_type;
+	if (geometry_types.size() == 0) {
+		geom_type = "POINT";
+	} else {
+		geom_type = *geometry_types.begin();
+	  transform(geom_type.begin(), geom_type.end(), geom_type.begin(), toupper);
+	}
+
+	//std::string geom_type = "POINT";
+
+	if (geom_type == "POINT" ) {
+		Rcpp::NumericVector nullObj(2, NA_REAL);
+		nullObj.attr("class") = sfg_attributes(geom_type);
+		sfc[0] = nullObj;
+		geometry_types.insert(geom_type);
+	} else if (geom_type == "MULTIPOINT" || geom_type == "LINESTRING") {
+
+		Rcpp::NumericMatrix nullObj;
+		nullObj.attr("class") = sfg_attributes(geom_type);
+		sfc[0] = nullObj;
+		geometry_types.insert(geom_type);
+
+	} else {
+		Rcpp::List nullObj;
+		nullObj.attr("class") = sfg_attributes(geom_type);
+		sfc[0] = nullObj;
+		geometry_types.insert(geom_type);
+	}
+	nempty++;
+}
+
 Rcpp::List parse_feature_object(const Value& feature,
                                 Rcpp::NumericVector& bbox,
                                 std::set< std::string >& geometry_types,
@@ -143,18 +178,7 @@ Rcpp::List parse_feature_object(const Value& feature,
 			parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
 		}
 	} else {
-		// TODO:
-		// insert the geometry as per teh rules followed by 'sf'
-		//Rcpp::List nullObj;
-		//nullObj.attr("class") = sfg_attributes("POLYGON");
-		//sfc[0] = nullObj;
-		//geometry_types.insert("POLYGON");
-
-		Rcpp::NumericVector nullObj(2, NA_REAL);
-		nullObj.attr("class") = sfg_attributes("POINT");
-		sfc[0] = nullObj;
-		geometry_types.insert("POINT");
-		nempty++;
+		create_null_object(sfc, geometry_types, nempty);
 	}
 
 	if (type != "GeometryCollection") {
