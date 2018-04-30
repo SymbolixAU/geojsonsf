@@ -23,6 +23,11 @@ std::string attach_class(Rcpp::List& sfc,
     geometry_class = "GEOMETRYCOLLECTION";
   } else {
 
+  	//Rcpp::Rcout << "debug: geometry_types.size(): " << geometry_types.size() << std::endl;
+  	//for (std::string gt : geometry_types) {
+  	//	Rcpp::Rcout << gt << ", ";
+  	//}
+
     if (geometry_types.size() > 1) {
       geometry_class = "GEOMETRY";
 

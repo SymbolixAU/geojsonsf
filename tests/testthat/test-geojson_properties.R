@@ -106,11 +106,9 @@ test_that("null geometries are valid for features", {
 	{"type":"Feature","properties":{"id":2},"geometry":null}
 	]}'
 	expect_true(nrow(geojson_sf(js)) == 2)
-	## TODO: Which geometry should the empty row be?
 
 	js <- '{"type":"Feature","properties":{"id":2},"geometry": null}'
 	expect_true(nrow(geojson_sf(js)) == 1)
-	## TODO: Which geometry should the empty row be?
 
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":1},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
@@ -120,10 +118,7 @@ test_that("null geometries are valid for features", {
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == 1:3))
 	sf <- geojson_sf(js)
-	expect_true(length(sf$geometry[[3]]) == 2)  ## POINT: numeric vector length 2
-#	expect_true(length(as.character(sf$geometry[[3]])) == 0)  ## POLYGON LIST
-	## TODO: Which geometry should this be?
-
+	expect_true(length(sf$geometry[[3]]) == 0)  ## MULTIPOINT is an empty matrix
 
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":3},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
@@ -133,10 +128,7 @@ test_that("null geometries are valid for features", {
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == c(3,1,2)))
 	sf <- geojson_sf(js)
-	expect_true(length(sf$geometry[[2]]) == 2)
-	# expect_true(length(as.character(sf$geometry[[2]])) == 0) ## POLGON LIST
-	## TODO: Which geometry should this be?
-
+	expect_true(length(sf$geometry[[2]]) == 0)
 
 	## null geometries that aren't part of features should still error
 	js <- '{"type":"Point","coordinates":null}'

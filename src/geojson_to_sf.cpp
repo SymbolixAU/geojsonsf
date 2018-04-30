@@ -115,35 +115,36 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
 void create_null_object(Rcpp::List& sfc,
                         std::set< std::string >& geometry_types,
                         int& nempty) {
-
 	std::string geom_type;
 	if (geometry_types.size() == 0) {
-		geom_type = "POINT";
+		geom_type = "Point";
 	} else {
 		geom_type = *geometry_types.begin();
-	  transform(geom_type.begin(), geom_type.end(), geom_type.begin(), toupper);
 	}
-
-	//std::string geom_type = "POINT";
+  geometry_types.insert(geom_type);
+	transform(geom_type.begin(), geom_type.end(), geom_type.begin(), toupper);
 
 	if (geom_type == "POINT" ) {
+
 		Rcpp::NumericVector nullObj(2, NA_REAL);
 		nullObj.attr("class") = sfg_attributes(geom_type);
 		sfc[0] = nullObj;
-		geometry_types.insert(geom_type);
+
 	} else if (geom_type == "MULTIPOINT" || geom_type == "LINESTRING") {
 
 		Rcpp::NumericMatrix nullObj;
 		nullObj.attr("class") = sfg_attributes(geom_type);
 		sfc[0] = nullObj;
-		geometry_types.insert(geom_type);
 
 	} else {
+
 		Rcpp::List nullObj;
 		nullObj.attr("class") = sfg_attributes(geom_type);
 		sfc[0] = nullObj;
-		geometry_types.insert(geom_type);
-	}
+
+  }
+
+
 	nempty++;
 }
 

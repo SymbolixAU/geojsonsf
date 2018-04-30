@@ -300,13 +300,10 @@ Rcpp::IntegerVector is_sexp_empty(SEXP s) {
 
 	switch( TYPEOF(s) ) {
 	case REALSXP:
-		Rcpp::Rcout << "debug: REALSXP" << std::endl;
 		return sexp_n_empty<REALSXP>(s);
 	case VECSXP:
-		Rcpp::Rcout << "debug: VECSXP" << std::endl;
 		return sexp_n_empty<VECSXP>(s);
 	case INTSXP:
-		Rcpp::Rcout << "debug: INTSXP" << std::endl;
 		return sexp_n_empty<INTSXP>(s);
 	default: Rcpp::stop("unknown sf type");
 	}
@@ -320,12 +317,7 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
   Rcpp::String g = cls[1];
   geom_type = g;
 
-  // TODO(null geometries):
-  // - if the geometry is EMPTY, don't write geometry, just return 'null'
-  // - need to test length of SEXP object
-  //
   int sfglength = get_sexp_length(sfg);
-  Rcpp::Rcout << "debug: sfg length: " << sfglength << std::endl;
 
   if (sfglength == 0) {
   	geojson += "null";
@@ -338,8 +330,10 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
 
 void geometry_vector_to_geojson(Rcpp::StringVector& geometry_json, Rcpp::List& sfc) {
 
+	//TODO(remove len):
+	// - this isn't used yet, so can delete this line
+	// and teh associated code above.
 	Rcpp::IntegerVector len = is_sexp_empty(sfc);
-	Rcpp::Rcout << "debug: sexp n_empty: " << len << std::endl;
 
   SEXP sfg;
   for (int i = 0; i < sfc.size(); i++) {
@@ -354,19 +348,15 @@ Rcpp::String matrix_row_to_json(Rcpp::StringMatrix& json_mat, int i) {
   std::ostringstream os;
 	os << "{";
   int n = json_mat.ncol();
-  //if (n > 1) {
-    os << "\"type\":\"Feature\",\"properties\":{";
-    for (int j = 0; j < (n-1); j++) {
-      os << json_mat(i, j);
-      coord_separator(os, j, (n-1));
-    }
-    os << "},";
-  //}
+  os << "\"type\":\"Feature\",\"properties\":{";
+  for (int j = 0; j < (n-1); j++) {
+    os << json_mat(i, j);
+    coord_separator(os, j, (n-1));
+  }
+  os << "},";
   os << "\"geometry\":";
-  //Rcpp::Rcout << "geom row: " << json_mat(i, (n-1)) << std::endl;
   Rcpp::StringVector this_row;
   this_row = json_mat(i, (n-1));
-  Rcpp::Rcout << "json_mat row: " << this_row << std::endl;
 
   //Rcpp::LogicalVector lv = Rcpp::StringVector::is_na(this_row);
 
