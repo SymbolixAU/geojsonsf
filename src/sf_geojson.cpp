@@ -39,11 +39,6 @@ void get_column_type(Rcpp::List& sf,
 }
 
 void begin_geojson_geometry(Rcpp::String& geojson, std::string& geom_type) {
-    Rcpp::List sfc;
-	  begin_geojson_geometry(geojson, sfc, geom_type);
-}
-
-void begin_geojson_geometry(Rcpp::String& geojson, Rcpp::List& sfc, std::string& geom_type) {
 
   geojson += "{\"type\":";
   if (geom_type == "POINT") {
@@ -153,7 +148,6 @@ void multi_polygon_to_geojson(Rcpp::String& geojson, Rcpp::List& sfg) {
     polygon_separator_geojson(geojson, i, sfg.size());
   }
 }
-
 
 void vector_to_json(Rcpp::StringVector& sv, std::string& this_type, std::string& this_name) {
 	std::string this_value;
@@ -269,6 +263,25 @@ void make_gc_type(Rcpp::String& geojson, Rcpp::List& sfg,
   }
 }
 
+
+template <int RTYPE>
+int sexp_length(Vector<RTYPE> v) {
+	return v.length();
+}
+
+int get_sexp_length(SEXP s) {
+	switch( TYPEOF(s) ) {
+	case REALSXP:
+		return sexp_length<REALSXP>(s);
+	case VECSXP:
+		return sexp_length<VECSXP>(s);
+	case INTSXP:
+		return sexp_length<INTSXP>(s);
+	default: Rcpp::stop("unknown sf type");
+	}
+	return 0;
+}
+
 void write_geometry(SEXP sfg, Rcpp::String& geojson) {
 
   std::string geom_type;
@@ -276,9 +289,15 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
   Rcpp::String g = cls[1];
   geom_type = g;
 
-  begin_geojson_geometry(geojson, geom_type);
-  write_geojson(geojson, sfg, geom_type, cls);
-  end_geojson_geometry(geojson, geom_type);
+  int sfglength = get_sexp_length(sfg);
+
+  if (sfglength == 0) {
+  	geojson += "null";
+  } else {
+  	begin_geojson_geometry(geojson, geom_type);
+  	write_geojson(geojson, sfg, geom_type, cls);
+  	end_geojson_geometry(geojson, geom_type);
+  }
 }
 
 void geometry_vector_to_geojson(Rcpp::StringVector& geometry_json, Rcpp::List& sfc) {
@@ -296,16 +315,26 @@ Rcpp::String matrix_row_to_json(Rcpp::StringMatrix& json_mat, int i) {
   std::ostringstream os;
 	os << "{";
   int n = json_mat.ncol();
-  //if (n > 1) {
-    os << "\"type\":\"Feature\",\"properties\":{";
-    for (int j = 0; j < (n-1); j++) {
-      os << json_mat(i, j);
-      coord_separator(os, j, (n-1));
-    }
-    os << "},";
-  //}
+  os << "\"type\":\"Feature\",\"properties\":{";
+  for (int j = 0; j < (n-1); j++) {
+    os << json_mat(i, j);
+    coord_separator(os, j, (n-1));
+  }
+  os << "},";
   os << "\"geometry\":";
-  os << json_mat(i, (n-1));
+  Rcpp::StringVector this_row;
+  this_row = json_mat(i, (n-1));
+
+  // TODO(change):
+  // this testing step seems over the top. However, a point is different to other geometries
+  // and needs to be initialised size: 2, NA_REAL values
+  // so that library(sf) prints it correctly
+  int test = (this_row[0] == "NA") ? 0 : 1;
+  if ( test == 0 ) {
+  	os << "null";
+  } else {
+  	os << json_mat(i, (n-1));
+  }
   os << "}";
 
   Rcpp::String res = os.str();
@@ -378,8 +407,6 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
   	return res;
   }
 
-  // TODO: If it has properties convert to FeatureCollection
-  // If no properties, return the vector... ?
   if (json_mat.ncol() > 1) {
   	// it has properties
   	Rcpp::StringVector fc;

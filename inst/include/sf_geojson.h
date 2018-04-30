@@ -9,8 +9,6 @@ using namespace Rcpp;
 
 void begin_geojson_geometry(Rcpp::String& geojson, std::string& geom_type);
 
-void begin_geojson_geometry(Rcpp::String& geojson, Rcpp::List& sfc, std::string& geom_type);
-
 void end_geojson_geometry(Rcpp::String& geojson, std::string& geom_type);
 
 void add_lonlat_to_stream(Rcpp::String& geojson, Rcpp::NumericVector& points);

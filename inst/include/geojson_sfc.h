@@ -14,7 +14,8 @@ std::string attach_class(Rcpp::List& sfc, std::string geom_type,
 
 void attach_sfc_attributes(Rcpp::List& sfc, std::string& type,
                            Rcpp::NumericVector& bbox,
-                           std::set< std::string >& geometry_types);
+                           std::set< std::string >& geometry_types,
+                           int& nempty);
 
 Rcpp::NumericVector start_bbox();
 
@@ -28,6 +29,7 @@ Rcpp::StringVector start_sfc_classes(size_t collectionCount);
 Rcpp::List construct_sfc(int& sfg_objects,
                          Rcpp::List& sfc,
                          Rcpp::NumericVector& bbox,
-                         std::set< std::string >& geometry_types);
+                         std::set< std::string >& geometry_types,
+                         int& nempty);
 
 #endif
