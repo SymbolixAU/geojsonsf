@@ -16,8 +16,28 @@
 # ]}'
 #
 # sf <- sf::st_read(js)
-# unlist(sf$geometry)
 #
+# sf_geojson(sf)
+
+# js <- '{"type":"FeatureCollection","features":[
+# {"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}},
+# {"type":"Feature","properties":{"id":2},"geometry":null}
+# ]}'
+#
+# sf <- sf::st_read(js)
+#
+# sf_geojson(sf)
+#
+#
+# js <- '{"type":"FeatureCollection","features":[
+# {"type":"Feature","properties":{"id":1},"geometry":{"type":"LineString","coordinates":[[0,0],[1,1]]}},
+# {"type":"Feature","properties":{"id":2},"geometry":null}
+# ]}'
+#
+# sf <- sf::st_read(js)
+#
+# sf_geojson(sf)
+
 # ## TODO:
 # ## - there needs to handle the case where the `sf` object will have any geometry type.
 # ## - in this example, it's a POLYGON.

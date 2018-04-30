@@ -43,6 +43,8 @@ void begin_geojson_geometry(Rcpp::String& geojson, std::string& geom_type) {
 	  begin_geojson_geometry(geojson, sfc, geom_type);
 }
 
+// TODO(remove sfc):
+// the sfc argumnt isn't doing anything in this function
 void begin_geojson_geometry(Rcpp::String& geojson, Rcpp::List& sfc, std::string& geom_type) {
 
   geojson += "{\"type\":";
@@ -153,7 +155,6 @@ void multi_polygon_to_geojson(Rcpp::String& geojson, Rcpp::List& sfg) {
     polygon_separator_geojson(geojson, i, sfg.size());
   }
 }
-
 
 void vector_to_json(Rcpp::StringVector& sv, std::string& this_type, std::string& this_name) {
 	std::string this_value;
@@ -269,6 +270,49 @@ void make_gc_type(Rcpp::String& geojson, Rcpp::List& sfg,
   }
 }
 
+
+template <int RTYPE>
+int sexp_length(Vector<RTYPE> v) {
+	return v.length();
+}
+
+int get_sexp_length(SEXP s) {
+	switch( TYPEOF(s) ) {
+	case REALSXP:
+		return sexp_length<REALSXP>(s);
+	case VECSXP:
+		return sexp_length<VECSXP>(s);
+	case INTSXP:
+		return sexp_length<INTSXP>(s);
+	default: Rcpp::stop("unknown sf type");
+	}
+	return 0;
+}
+
+
+template <int RTYPE>
+Rcpp::IntegerVector sexp_n_empty(Vector<RTYPE> v) {
+	//Rcpp::Rcout << "debug v.size() : " << v.size() << std::endl;
+	return v.attr("n_empty");
+}
+
+Rcpp::IntegerVector is_sexp_empty(SEXP s) {
+
+	switch( TYPEOF(s) ) {
+	case REALSXP:
+		Rcpp::Rcout << "debug: REALSXP" << std::endl;
+		return sexp_n_empty<REALSXP>(s);
+	case VECSXP:
+		Rcpp::Rcout << "debug: VECSXP" << std::endl;
+		return sexp_n_empty<VECSXP>(s);
+	case INTSXP:
+		Rcpp::Rcout << "debug: INTSXP" << std::endl;
+		return sexp_n_empty<INTSXP>(s);
+	default: Rcpp::stop("unknown sf type");
+	}
+	return 0;
+}
+
 void write_geometry(SEXP sfg, Rcpp::String& geojson) {
 
   std::string geom_type;
@@ -276,12 +320,26 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
   Rcpp::String g = cls[1];
   geom_type = g;
 
-  begin_geojson_geometry(geojson, geom_type);
-  write_geojson(geojson, sfg, geom_type, cls);
-  end_geojson_geometry(geojson, geom_type);
+  // TODO(null geometries):
+  // - if the geometry is EMPTY, don't write geometry, just return 'null'
+  // - need to test length of SEXP object
+  //
+  int sfglength = get_sexp_length(sfg);
+  Rcpp::Rcout << "debug: sfg length: " << sfglength << std::endl;
+
+  if (sfglength == 0) {
+  	geojson += "null";
+  } else {
+  	begin_geojson_geometry(geojson, geom_type);
+  	write_geojson(geojson, sfg, geom_type, cls);
+  	end_geojson_geometry(geojson, geom_type);
+  }
 }
 
 void geometry_vector_to_geojson(Rcpp::StringVector& geometry_json, Rcpp::List& sfc) {
+
+	Rcpp::IntegerVector len = is_sexp_empty(sfc);
+	Rcpp::Rcout << "debug: sexp n_empty: " << len << std::endl;
 
   SEXP sfg;
   for (int i = 0; i < sfc.size(); i++) {
@@ -308,19 +366,19 @@ Rcpp::String matrix_row_to_json(Rcpp::StringMatrix& json_mat, int i) {
   //Rcpp::Rcout << "geom row: " << json_mat(i, (n-1)) << std::endl;
   Rcpp::StringVector this_row;
   this_row = json_mat(i, (n-1));
-  //Rcpp::Rcout << "json_mat row: " << this_row << std::endl;
+  Rcpp::Rcout << "json_mat row: " << this_row << std::endl;
 
-  Rcpp::LogicalVector lv = Rcpp::StringVector::is_na(this_row);
+  //Rcpp::LogicalVector lv = Rcpp::StringVector::is_na(this_row);
 
   //Rcpp::Rcout << "this row: " << lv << std::endl;
-  int test = (this_row[0] == "NA") ? 0 : 1;
+  //int test = (this_row[0] == "NA") ? 0 : 1;
   //Rcpp::Rcout << "test: " << test << std::endl;
 
-  if ( test == 0 ) {
-  	os << "null";
-  } else {
+  //if ( test == 0 ) {
+  //	os << "null";
+  //} else {
   	os << json_mat(i, (n-1));
-  }
+  //}
   os << "}";
 
   Rcpp::String res = os.str();
@@ -347,6 +405,9 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 
 	std::string geom_column = sf_copy.attr("sf_column");
 	Rcpp::StringVector col_names = sf_copy.names();
+
+	//Rcpp::IntegerVector len = sf_copy.attr("n_empty");
+	//Rcpp::Rcout << "debug: sexp n_empty: " << len << std::endl;
 
 	// fill 'property_names' with all the columns which aren't 'sf_column'
 	int property_counter = 0;
