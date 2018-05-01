@@ -410,6 +410,7 @@ void fill_property_vectors(Document& doc_properties,
                            Rcpp::List& properties,
                            int& row_index) {
 
+	// TODO(move to header):
 	static const char* ARRAY_TYPES[] =
 		{ "Null", "False", "True", "Object", "Array", "String", "Number" };
 

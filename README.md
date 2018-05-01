@@ -268,12 +268,9 @@ microbenchmark(
     times = 2
 )
 #  Unit: milliseconds
-#        expr       min        lq      mean    median        uq       max
-#   geojsonsf  699.8189  699.8189  720.8484  720.8484  741.8778  741.8778
-#          sf 1880.0041 1880.0041 1898.8072 1898.8072 1917.6103 1917.6103
-#   neval
-#       2
-#       2
+#        expr      min       lq      mean    median        uq       max neval
+#   geojsonsf  681.376  681.376  718.0487  718.0487  754.7214  754.7214     2
+#          sf 1814.307 1814.307 1816.5013 1816.5013 1818.6955 1818.6955     2
 ```
 
 Reading directly from a URL is comparable between the
@@ -295,8 +292,8 @@ microbenchmark(
 )
 #  Unit: seconds
 #        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 6.688483 6.688483 7.374822 7.374822 8.061162 8.061162     2
-#          sf 7.013835 7.013835 7.917269 7.917269 8.820703 8.820703     2
+#   geojsonsf 6.617584 6.617584 6.680125 6.680125 6.742666 6.742666     2
+#          sf 6.914326 6.914326 7.672934 7.672934 8.431542 8.431542     2
 ```
 
     library(rgdal)
