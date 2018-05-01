@@ -67,11 +67,19 @@ test_that("null geometries parsed correctly", {
 
 	js <- '{"type":"FeatureCollection","features":[
   {"type":"Feature","properties":{"id":1},"geometry":{"type":"GeometryCollection","geometries": [
-	{"type": "Point","coordinates": [100.0, 0.0]},
-	{"type": "LineString","coordinates": [[101.0, 0.0], [102.0, 1.0]]}]}},
+	{"type": "Point","coordinates": [100, 0]},
+	{"type": "LineString","coordinates": [[101, 0], [102, 1]]}]}},
 	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
-	geojson_sf(js)
+	sf <- geojson_sf(js)
+	expect_true(attr(sf$geometry, "n_empty") == 1)
+	js2 <- sf_geojson(sf)
+	expect_true(gsub(" |\\r|\\n|\\t","",js) == js2)
 
+	js <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"id":1},"geometry":{"type":"GeometryCollection","geometries": [
+	{"type": null},
+	{"type": "LineString","coordinates": [[101.0, 0.0], [102.0, 1.0]]}]}}]}'
+	expect_error(geojson_sf(js), "No 'type' member at object index 0 - invalid GeoJSON")
 
 })
 

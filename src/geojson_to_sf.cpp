@@ -94,8 +94,8 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   auto geometries = val["geometries"].GetArray();
   unsigned int n = geometries.Size();
   unsigned int i;
-
   Rcpp::List geom_collection(n);
+
 
   for (i = 0; i < n; i++) {
     const Value& gcval = geometries[i];

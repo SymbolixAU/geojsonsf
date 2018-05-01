@@ -111,6 +111,9 @@ Rcpp::List parse_feature_object_wkt(const Value& feature,
   validate_properties(feature, wkt_objects);
 
   const Value& geometry = feature["geometry"];
+
+  Rcpp::Rcout << "debug: geometry.Size(): " << geometry.Size() << std::endl;
+
   Rcpp::List sfc(1);
   parse_geometry_object_wkt(sfc, 0, geometry, geometry_types, wkt_objects);
   wkt_objects++;
@@ -168,6 +171,7 @@ void parse_geojson_wkt(const Value& v,
   validate_type(v, wkt_objects);
 
   std::string geom_type = v["type"].GetString();
+  Rcpp::Rcout << "debug: geom_type " << geom_type << std::endl;
 
   if (geom_type == "Feature") {
 
@@ -199,7 +203,7 @@ void parse_geojson_object_wkt(Document& d,
                               int& wkt_objects,
                               std::set< std::string >& property_keys,
                               Document& doc_properties,
-                              std::map< std::string, std::string>& property_types
+                              std::map< std::string, std::string >& property_types
                                 ) {
   const Value& v = d;
   parse_geojson_wkt(v, sfc, properties, 0, geometry_types, wkt_objects, property_keys, doc_properties, property_types);
