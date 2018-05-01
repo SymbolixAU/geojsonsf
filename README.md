@@ -19,21 +19,14 @@ Simple Feature objects in R.
 
 -----
 
-**v0.3+**
-
-(Development / github version)
-
-Added conversions
-
-  - `sf` –\> GeoJSON
-  - `sfc` –\> GeoJSON
-
-**v0.2**
+**v1.0**
 
 Converts
 
   - GeoJSON –\> `sf`
   - GeoJSON –\> `sfc`
+  - `sf` –\> GeoJSON
+  - `sfc` –\> GeoJSON
   - GeoJSON –\> Well-known text
 
 As per GeoJSON ([RFC 7946
@@ -58,8 +51,8 @@ devtools::install_github("SymbolixAU/geojsonsf")
 
 ## Motivation
 
-To quickly parse GeoJSON to `sf` objects, and to handle cases not
-supported by `sf`, e.g. arrays of geometries
+To quickly parse between GeoJSON and `sf` objects, and to handle cases
+not supported by `sf`, e.g. arrays of geometries
 
 ### Arrays of GeoJSON
 
@@ -71,17 +64,17 @@ js <- '[
   "features": [
   {
     "type": "Feature",
-    "properties": null,
+    "properties": {"id":1,"val":true},
     "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
   },
   {
     "type": "Feature",
-    "properties": null,
+    "properties": {"id":2,"val":false},
     "geometry": {"type": "LineString", "coordinates": [[201.0, 0.0], [102.0, 1.0]]}
   },
   {
     "type": "Feature",
-        "properties": null,
+        "properties": {"id":3},
         "geometry": {"type": "LineString", "coordinates": [[301.0, 0.0], [102.0, 1.0]]}
     }
  ]
@@ -91,37 +84,165 @@ js <- '[
     "features": [
     {
       "type": "Feature",
-      "properties": null,
+      "properties": {"id":1},
       "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
     },
     {
       "type": "Feature",
-      "properties": null,
+      "properties": {"val":false},
       "geometry": {"type": "LineString", "coordinates": [[501.0, 0.0], [102.0, 1.0]]}
     },
     {
       "type": "Feature",
-      "properties": null,
+      "properties": {"hello":"world"},
       "geometry": {"type": "LineString", "coordinates": [[601.0, 0.0], [102.0, 1.0]]}
     }
   ]
 }
 ]'
 
-geojson_sf(js)
-#  Simple feature collection with 6 features and 0 fields
+sf <- geojson_sf(js)
+sf
+#  Simple feature collection with 6 features and 3 fields
 #  geometry type:  GEOMETRY
 #  dimension:      XY
 #  bbox:           xmin: 100 ymin: 0 xmax: 601 ymax: 1
 #  epsg (SRID):    4326
 #  proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#                     geometry
-#  1             POINT (100 0)
-#  2 LINESTRING (201 0, 102 1)
-#  3 LINESTRING (301 0, 102 1)
-#  4             POINT (100 0)
-#  5 LINESTRING (501 0, 102 1)
-#  6 LINESTRING (601 0, 102 1)
+#                     geometry hello id  val
+#  1             POINT (100 0)  <NA>  1    1
+#  2 LINESTRING (201 0, 102 1)  <NA>  2    0
+#  3 LINESTRING (301 0, 102 1)  <NA>  3 <NA>
+#  4             POINT (100 0)  <NA>  1 <NA>
+#  5 LINESTRING (501 0, 102 1)  <NA> NA    0
+#  6 LINESTRING (601 0, 102 1) world NA <NA>
+```
+
+And back again to GeoJSON
+
+``` r
+js <- sf_geojson(sf)
+jsonlite::prettify(js)
+#  {
+#      "type": "FeatureCollection",
+#      "features": [
+#          {
+#              "type": "Feature",
+#              "properties": {
+#                  "hello": null,
+#                  "id": 1,
+#                  "val": "1"
+#              },
+#              "geometry": {
+#                  "type": "Point",
+#                  "coordinates": [
+#                      100,
+#                      0
+#                  ]
+#              }
+#          },
+#          {
+#              "type": "Feature",
+#              "properties": {
+#                  "hello": null,
+#                  "id": 2,
+#                  "val": "0"
+#              },
+#              "geometry": {
+#                  "type": "LineString",
+#                  "coordinates": [
+#                      [
+#                          201,
+#                          0
+#                      ],
+#                      [
+#                          102,
+#                          1
+#                      ]
+#                  ]
+#              }
+#          },
+#          {
+#              "type": "Feature",
+#              "properties": {
+#                  "hello": null,
+#                  "id": 3,
+#                  "val": null
+#              },
+#              "geometry": {
+#                  "type": "LineString",
+#                  "coordinates": [
+#                      [
+#                          301,
+#                          0
+#                      ],
+#                      [
+#                          102,
+#                          1
+#                      ]
+#                  ]
+#              }
+#          },
+#          {
+#              "type": "Feature",
+#              "properties": {
+#                  "hello": null,
+#                  "id": 1,
+#                  "val": null
+#              },
+#              "geometry": {
+#                  "type": "Point",
+#                  "coordinates": [
+#                      100,
+#                      0
+#                  ]
+#              }
+#          },
+#          {
+#              "type": "Feature",
+#              "properties": {
+#                  "hello": null,
+#                  "id": null,
+#                  "val": "0"
+#              },
+#              "geometry": {
+#                  "type": "LineString",
+#                  "coordinates": [
+#                      [
+#                          501,
+#                          0
+#                      ],
+#                      [
+#                          102,
+#                          1
+#                      ]
+#                  ]
+#              }
+#          },
+#          {
+#              "type": "Feature",
+#              "properties": {
+#                  "hello": "world",
+#                  "id": null,
+#                  "val": null
+#              },
+#              "geometry": {
+#                  "type": "LineString",
+#                  "coordinates": [
+#                      [
+#                          601,
+#                          0
+#                      ],
+#                      [
+#                          102,
+#                          1
+#                      ]
+#                  ]
+#              }
+#          }
+#      ]
+#  }
+#  
 ```
 
 ### Speed
@@ -148,8 +269,8 @@ microbenchmark(
 )
 #  Unit: milliseconds
 #        expr       min        lq      mean    median        uq       max
-#   geojsonsf  730.9794  730.9794  747.9109  747.9109  764.8423  764.8423
-#          sf 2025.0283 2025.0283 2037.2848 2037.2848 2049.5412 2049.5412
+#   geojsonsf  699.8189  699.8189  720.8484  720.8484  741.8778  741.8778
+#          sf 1880.0041 1880.0041 1898.8072 1898.8072 1917.6103 1917.6103
 #   neval
 #       2
 #       2
@@ -173,9 +294,9 @@ microbenchmark(
     times = 2
 )
 #  Unit: seconds
-#        expr      min       lq      mean    median        uq       max neval
-#   geojsonsf 6.848541 6.848541  7.163919  7.163919  7.479298  7.479298     2
-#          sf 9.109991 9.109991 13.029119 13.029119 16.948246 16.948246     2
+#        expr      min       lq     mean   median       uq      max neval
+#   geojsonsf 6.688483 6.688483 7.374822 7.374822 8.061162 8.061162     2
+#          sf 7.013835 7.013835 7.917269 7.917269 8.820703 8.820703     2
 ```
 
     library(rgdal)
@@ -214,4 +335,4 @@ sf <- sf::st_read(geo, quiet = T)
 plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />

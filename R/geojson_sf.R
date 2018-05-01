@@ -97,12 +97,6 @@ geojson_sf.connection <- function(geojson, expand_geometries = F) geojson_sf(rea
 #' @export
 geojson_sf.default <- function(geojson, expand_geometries = F) rcpp_geojson_to_sf(geojson, expand_geometries)
 
-
-## TODO:
-## - atomise - logical?
-## -- Return a JSON array of objects
-## -- Return an R Vector of objects?
-
 #' sf to GeoJSON
 #'
 #' Converts `sf` objects to GeoJSON

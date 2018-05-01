@@ -28,4 +28,6 @@ void validate_coordinates(const Value& v, int& sfg_objects);
 
 void validate_points(const Value& v);
 
+void validate_point(const Value& v);
+
 #endif

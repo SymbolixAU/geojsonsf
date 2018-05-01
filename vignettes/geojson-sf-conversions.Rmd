@@ -31,6 +31,7 @@ As per GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#pa
 
 ```{r}
 library(geojsonsf)
+# library(sf)
 ```
 
 You would also typically load `library(sf)` to take advantange of its `plot` methods. 

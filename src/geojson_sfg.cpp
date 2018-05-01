@@ -13,10 +13,12 @@ Rcpp::CharacterVector sfg_attributes(std::string geom_type) {
 }
 
 double get_lon(const Value& coord_array) {
+	validate_point(coord_array[0]);
   return coord_array[0].GetDouble();
 }
 
 double get_lat(const Value& coord_array) {
+	validate_point(coord_array[1]);
   return coord_array[1].GetDouble();
 }
 
