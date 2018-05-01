@@ -60,7 +60,7 @@ sf <- geojson_sf(gc)
 head(sf)
 ```
 
-Some web-plotting libraries (such as `googleway`) can't plot GeometryCollections directly. Therefore, you can set `flatten_geometries` to `TRUE` and it will extract each geometry from a GeometryCollection and create a row for each one
+Some web-plotting libraries (such as `googleway`) can't plot GeometryCollections directly. Therefore, you can set `expand_geometries` to `TRUE` and it will extract each geometry from a GeometryCollection and create a row for each one
 
 
 ```{r}
@@ -72,7 +72,7 @@ gc <- '{
     {"type" : "MultiPoint", "coordinates" : [[0,0], [1,1], [2,2]]}
   ]
 }'
-sf <- geojson_sf(gc, flatten_geometries = T)
+sf <- geojson_sf(gc, expand_geometries = T)
 head(sf)
 ```
 

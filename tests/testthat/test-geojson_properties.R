@@ -2,9 +2,7 @@ context("properties")
 
 test_that("properties captured correctly", {
 
-	f <- '{"type": "Feature","properties": { "id" : 1, "name" : "foo" },
-	       "geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}}'
-
+	f <- '{"type":"Feature","properties":{"id":1,"name":"foo"},"geometry":{"type":"LineString","coordinates":[[101,0],[102,1]]}}'
 	sf <- geojson_sf(f)
 	wkt <- geojson_wkt(f)
 
@@ -15,44 +13,31 @@ test_that("properties captured correctly", {
 	expect_true(sf$name == "foo")
 	expect_true(wkt$name == "foo")
 
-	js <- '[{
-	  "type": "Feature",
+	js <- '[{"type": "Feature",
 	  "properties" : {},
 	  "geometry": {
 	    "type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
-	  },
-	  {
-      "type": "Feature",
+	  },{"type": "Feature",
 	    "properties" : {"id":1},
 	    "geometry": {"type": "MultiPolygon",
 	    "coordinates": [[[[180.0, 40.0], [180.0, 50.0], [170.0, 50.0],[170.0, 40.0], [180.0, 40.0]]],
 	      [[[-170.0, 40.0], [-170.0, 50.0], [-180.0, 50.0],[-180.0, 40.0], [-170.0, 40.0]]]]}
-	  },
-	  {
-	  "type": "FeatureCollection",
+	  },{"type": "FeatureCollection",
 	  "features": [{
 	      "type": "Feature",
 	      "properties": {"id" : 2, "value" : "foo"},
 	      "geometry": {"type": "Point","coordinates": [100.0, 0.0]}
-	    },{
-	      "type": "Feature",
+    },{"type": "Feature",
 	      "properties": null,
 	      "geometry": {
 	        "type": "LineString",
-	        "coordinates": [[101.0, 0.0],[102.0, 1.0]]
-	      }}
-    ]
-	},
-	{
-	  "type": "GeometryCollection",
+	        "coordinates": [[101.0, 0.0],[102.0, 1.0]]}}]
+    },{"type": "GeometryCollection",
 	  "geometries": [
 	    {"type": "Point","coordinates": [100.0, 0.0]},
 	    {"type": "LineString","coordinates": [[101.0, 0.0],[102.0, 1.0]]},
 	    {"type" : "MultiPoint","coordinates" : [[0,0],[1,1],[2,2]]}
-	  ]
-	},
-	{"type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
-	]'
+	  ]},{"type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}]'
 	sf <- geojson_sf(js)
 	wkt <- geojson_wkt(js)
 
@@ -62,22 +47,14 @@ test_that("properties captured correctly", {
 	expect_true(sum(wkt$id, na.rm = T) == 3)
 	expect_true(sf$value[!is.na(sf$value)] == "foo")
 	expect_true(wkt$value[!is.na(wkt$value)] == "foo")
-
 })
 
 test_that("sf and sfc created equally", {
 
-	f <- '{
-		"type": "Feature",
-  	"properties": { "id" : 1, "name" : "foo" },
-  	"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}
-  }'
-
+	f <- '{"type":"Feature","properties":{"id":1,"name":"foo"},"geometry":{"type":"LineString","coordinates":[[101,0],[102,1]]}}'
 	sf <- geojson_sf(f)
 	sfc <- geojson_sfc(f)
-
 	expect_true(all(class(sf$geometry) == class(sfc)))
-
 })
 
 test_that("null geometries are valid for features", {
@@ -104,8 +81,7 @@ test_that("null geometries are valid for features", {
 	## NULL geometry should be fine / parse
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}},
-	{"type":"Feature","properties":{"id":2},"geometry":null}
-	]}'
+	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
 	expect_true(nrow(geojson_sf(js)) == 2)
 
 	js <- '{"type":"Feature","properties":{"id":2},"geometry": null}'
@@ -114,8 +90,7 @@ test_that("null geometries are valid for features", {
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":1},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
 	{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0,0]}},
-	{"type":"Feature","properties":{"id":3},"geometry":null}
-	]}'
+	{"type":"Feature","properties":{"id":3},"geometry":null}]}'
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == 1:3))
 	sf <- geojson_sf(js)
@@ -124,8 +99,7 @@ test_that("null geometries are valid for features", {
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":3},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
 	{"type":"Feature","properties":{"id":1},"geometry":null},
-	{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0,0]}}
-	]}'
+	{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0,0]}}]}'
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == c(3,1,2)))
 	sf <- geojson_sf(js)

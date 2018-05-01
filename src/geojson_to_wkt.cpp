@@ -30,7 +30,6 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
 	Rcpp::StringVector wkt;
 	begin_wkt(os, geom_type);
 
-
   if (geom_type == "Point") {
     point_to_wkt(os, coord_array);
 
@@ -59,7 +58,6 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
   transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
   wkt.attr("class") = sfg_attributes(geom_type);
   sfc[i] = wkt;
-
 }
 
 
@@ -95,12 +93,9 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
   os << ")";
 
   geom_collection_wkt = os.str();
-
   geom_collection_wkt.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
-
   return geom_collection_wkt;
 }
-
 
 
 Rcpp::List parse_feature_object_wkt(const Value& feature,
@@ -114,14 +109,31 @@ Rcpp::List parse_feature_object_wkt(const Value& feature,
   validate_properties(feature, wkt_objects);
 
   const Value& geometry = feature["geometry"];
+
   Rcpp::List sfc(1);
-  parse_geometry_object_wkt(sfc, 0, geometry, geometry_types, wkt_objects);
+
+  if (geometry.Size() > 0) {
+  	validate_type(geometry, wkt_objects);
+  	std::string geom_type = geometry["type"].GetString();
+
+  	if (geom_type == "GeometryCollection") {
+  		Rcpp::List gc = parse_geometry_collection_object_wkt(geometry, geometry_types, wkt_objects);
+  		sfc[0] = gc;
+  	} else {
+  		parse_geometry_object_wkt(sfc, 0, geometry, geometry_types, wkt_objects);
+  	}
+
+  } else {
+  	Rcpp::StringVector wkt = "POINT EMPTY";
+  	wkt.attr("class") = sfg_attributes("POINT");
+  	sfc[0] = wkt;
+  }
+
   wkt_objects++;
   // get property keys
   const Value& p = feature["properties"];
   get_property_keys(p, property_keys);
   get_property_types(p, property_types);
-
 
   //https://stackoverflow.com/a/33473321/5977215
   std::string s = std::to_string(wkt_objects);
@@ -149,7 +161,6 @@ Rcpp::List parse_feature_collection_object_wkt(const Value& fc,
   unsigned int n = features.Size(); // number of features
   unsigned int i;
   Rcpp::List feature_collection(n);
-  //std::string geom_type = "FeatureCollection";
 
   for (i = 0; i < n; i++) {
     const Value& feature = features[i];
@@ -204,7 +215,7 @@ void parse_geojson_object_wkt(Document& d,
                               int& wkt_objects,
                               std::set< std::string >& property_keys,
                               Document& doc_properties,
-                              std::map< std::string, std::string>& property_types
+                              std::map< std::string, std::string >& property_types
                                 ) {
   const Value& v = d;
   parse_geojson_wkt(v, sfc, properties, 0, geometry_types, wkt_objects, property_keys, doc_properties, property_types);

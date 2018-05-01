@@ -36,8 +36,11 @@ void validate_array(const Value& v, int& sfg_objects) {
 
 
 void validate_type(const Value& v, int& sfg_objects) {
-  if (v.HasMember("type") == FALSE) {
+  if (v.HasMember("type") == FALSE ) {
     geojson_object_error("type", sfg_objects);
+  }
+  if (v["type"].IsNull()) {
+  	geojson_object_error("type", sfg_objects);
   }
 }
 
