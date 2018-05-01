@@ -30,7 +30,6 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
 	Rcpp::StringVector wkt;
 	begin_wkt(os, geom_type);
 
-
   if (geom_type == "Point") {
     point_to_wkt(os, coord_array);
 
@@ -59,7 +58,6 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
   transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
   wkt.attr("class") = sfg_attributes(geom_type);
   sfc[i] = wkt;
-
 }
 
 
@@ -112,10 +110,25 @@ Rcpp::List parse_feature_object_wkt(const Value& feature,
 
   const Value& geometry = feature["geometry"];
 
-  Rcpp::Rcout << "debug: geometry.Size(): " << geometry.Size() << std::endl;
-
   Rcpp::List sfc(1);
-  parse_geometry_object_wkt(sfc, 0, geometry, geometry_types, wkt_objects);
+
+  if (geometry.Size() > 0) {
+  	validate_type(geometry, wkt_objects);
+  	std::string geom_type = geometry["type"].GetString();
+
+  	if (geom_type == "GeometryCollection") {
+  		Rcpp::List gc = parse_geometry_collection_object_wkt(geometry, geometry_types, wkt_objects);
+  		sfc[0] = gc;
+  	} else {
+  		parse_geometry_object_wkt(sfc, 0, geometry, geometry_types, wkt_objects);
+  	}
+
+  } else {
+  	Rcpp::StringVector wkt = "POINT EMPTY";
+  	wkt.attr("class") = sfg_attributes("POINT");
+  	sfc[0] = wkt;
+  }
+
   wkt_objects++;
   // get property keys
   const Value& p = feature["properties"];
@@ -171,7 +184,6 @@ void parse_geojson_wkt(const Value& v,
   validate_type(v, wkt_objects);
 
   std::string geom_type = v["type"].GetString();
-  Rcpp::Rcout << "debug: geom_type " << geom_type << std::endl;
 
   if (geom_type == "Feature") {
 
