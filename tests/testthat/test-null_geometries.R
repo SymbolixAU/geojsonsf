@@ -11,7 +11,6 @@ test_that("null geometries parsed correctly", {
 	wkt <- geojson_wkt(js)
 	expect_true(wkt[1, 'geometry'] == "POINT EMPTY")
 
-
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}},
 	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
@@ -95,6 +94,5 @@ test_that("null geometries parsed correctly", {
 	js <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1},"geometry":{"type":"GeometryCollection","geometries": [{"type": null},{"type": "LineString","coordinates": [[101.0,0.0],[102.0,1.0]]}]}}]}'
 	expect_error(geojson_sf(js), "No 'type' member at object index 0 - invalid GeoJSON")
 	expect_error(geojson_wkt(js), "No 'type' member at object index 0 - invalid GeoJSON")
-
 })
 
