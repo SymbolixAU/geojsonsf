@@ -4,7 +4,7 @@ test_that("null geometries parsed correctly", {
 
 	js <- '{"type":"Feature","properties":{"id":1},"geometry":null}'
 
-	geojson_wkt(js)
+	#geojson_wkt(js)
 
 	sf <- geojson_sf(js)
 	expect_true(attr(sf$geometry, "n_empty") == 1)
@@ -75,7 +75,7 @@ test_that("null geometries parsed correctly", {
 	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
 	sf <- geojson_sf(js)
 
-	geojson_wkt(js)
+	#geojson_wkt(js)
 
 	expect_true(attr(sf$geometry, "n_empty") == 1)
 	js2 <- sf_geojson(sf)
