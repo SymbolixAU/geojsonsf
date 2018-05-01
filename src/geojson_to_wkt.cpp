@@ -95,12 +95,9 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
   os << ")";
 
   geom_collection_wkt = os.str();
-
   geom_collection_wkt.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
-
   return geom_collection_wkt;
 }
-
 
 
 Rcpp::List parse_feature_object_wkt(const Value& feature,
@@ -121,7 +118,6 @@ Rcpp::List parse_feature_object_wkt(const Value& feature,
   const Value& p = feature["properties"];
   get_property_keys(p, property_keys);
   get_property_types(p, property_types);
-
 
   //https://stackoverflow.com/a/33473321/5977215
   std::string s = std::to_string(wkt_objects);
@@ -149,7 +145,6 @@ Rcpp::List parse_feature_collection_object_wkt(const Value& fc,
   unsigned int n = features.Size(); // number of features
   unsigned int i;
   Rcpp::List feature_collection(n);
-  //std::string geom_type = "FeatureCollection";
 
   for (i = 0; i < n; i++) {
     const Value& feature = features[i];

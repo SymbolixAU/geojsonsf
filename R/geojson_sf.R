@@ -3,14 +3,14 @@
 #' Extracts geometries from GeoJSON and returns an `sfc` object
 #'
 #' @param geojson string or vector of GeoJSON, or a URL or file pointing to a geojson file
-#' @param flatten_geometries logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details
+#' @param expand_geometries logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details
 #'
 #' @details
-#' specifying \code{flatten_geometries = TRUE} will expand individual \code{GEOMETRYCOLLECTION}
+#' specifying \code{expand_geometries = TRUE} will expand individual \code{GEOMETRYCOLLECTION}
 #' geometries to their own row in the resulting `sf` object. If the geometries are part
 #' of a \code{Feature} (i.e., with properties), the properties will be repeated on each row.
 #'
-#' The \code{GEOMETRYCOLLECTION} information is not kept when using \code{flatten_geometries = TRUE}. Therefore,
+#' The \code{GEOMETRYCOLLECTION} information is not kept when using \code{expand_geometries = TRUE}. Therefore,
 #' it is not possible to reconstruct the \code{GEOMETRYCOLLECTION} after unnesting it.
 #'
 #' @examples
@@ -29,28 +29,28 @@
 #' }
 #'
 #' @export
-geojson_sfc <- function(geojson, flatten_geometries = FALSE) UseMethod("geojson_sfc")
+geojson_sfc <- function(geojson, expand_geometries = FALSE) UseMethod("geojson_sfc")
 
 
 #' @export
-geojson_sfc.character <- function(geojson, flatten_geometries = FALSE) {
+geojson_sfc.character <- function(geojson, expand_geometries = FALSE) {
 
 	if(length(geojson) > 1) {
-		return(rcpp_geojson_to_sfc(geojson, flatten_geometries))
+		return(rcpp_geojson_to_sfc(geojson, expand_geometries))
 	}
 	if (is_url(geojson)) {
-		return(geojson_sfc(curl::curl(geojson), flatten_geometries))
+		return(geojson_sfc(curl::curl(geojson), expand_geometries))
 	} else if (file.exists(geojson) ) {
-		return(rcpp_read_sfc_file(normalizePath(geojson), flatten_geometries))
+		return(rcpp_read_sfc_file(normalizePath(geojson), expand_geometries))
 	}
-	return(rcpp_geojson_to_sfc(geojson, flatten_geometries))
+	return(rcpp_geojson_to_sfc(geojson, expand_geometries))
 }
 
 #' @export
-geojson_sfc.connection <- function(geojson, flatten_geometries = FALSE) geojson_sfc(read_url(geojson), flatten_geometries)
+geojson_sfc.connection <- function(geojson, expand_geometries = FALSE) geojson_sfc(read_url(geojson), expand_geometries)
 
 #' @export
-geojson_sfc.default <- function(geojson, flatten_geometries = FALSE) rcpp_geojson_to_sfc(geojson, flatten_geometries)
+geojson_sfc.default <- function(geojson, expand_geometries = FALSE) rcpp_geojson_to_sfc(geojson, expand_geometries)
 
 #' Geojson to sf
 #'
@@ -74,28 +74,28 @@ geojson_sfc.default <- function(geojson, flatten_geometries = FALSE) rcpp_geojso
 #'
 #' @inherit geojson_sfc params details
 #' @export
-geojson_sf <- function(geojson, flatten_geometries = FALSE) UseMethod("geojson_sf")
+geojson_sf <- function(geojson, expand_geometries = FALSE) UseMethod("geojson_sf")
 
 
 #' @export
-geojson_sf.character <- function(geojson, flatten_geometries = FALSE) {
+geojson_sf.character <- function(geojson, expand_geometries = FALSE) {
 
 	if(length(geojson) > 1) {
-		return(rcpp_geojson_to_sf(geojson, flatten_geometries))
+		return(rcpp_geojson_to_sf(geojson, expand_geometries))
 	}
 	if (is_url(geojson)) {
-		return(geojson_sf(curl::curl(geojson), flatten_geometries))
+		return(geojson_sf(curl::curl(geojson), expand_geometries))
 	} else if (file.exists(geojson) ) {
-		return(rcpp_read_sf_file(normalizePath(geojson), flatten_geometries))
+		return(rcpp_read_sf_file(normalizePath(geojson), expand_geometries))
 	}
-	 return(rcpp_geojson_to_sf(geojson, flatten_geometries))
+	 return(rcpp_geojson_to_sf(geojson, expand_geometries))
 }
 
 #' @export
-geojson_sf.connection <- function(geojson, flatten_geometries = F) geojson_sf(read_url(geojson), flatten_geometries)
+geojson_sf.connection <- function(geojson, expand_geometries = F) geojson_sf(read_url(geojson), expand_geometries)
 
 #' @export
-geojson_sf.default <- function(geojson, flatten_geometries = F) rcpp_geojson_to_sf(geojson, flatten_geometries)
+geojson_sf.default <- function(geojson, expand_geometries = F) rcpp_geojson_to_sf(geojson, expand_geometries)
 
 
 ## TODO:

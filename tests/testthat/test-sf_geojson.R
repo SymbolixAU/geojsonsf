@@ -227,8 +227,6 @@ test_that("errors are handled", {
 	js <- '{"type":"Point","coordinates":[0,0]}'
 	sf <- geojson_sfc(js)
 	expect_error(sf_geojson(sf),"Expected an sf object")
-
-
 })
 
 test_that("factors are strings", {

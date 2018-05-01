@@ -65,5 +65,13 @@ test_that("null geometries parsed correctly", {
 	js2 <- sf_geojson(sf)
 	expect_true(gsub(" |\\r|\\n|\\t","",js) == js2)
 
+	js <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"id":1},"geometry":{"type":"GeometryCollection","geometries": [
+	{"type": "Point","coordinates": [100.0, 0.0]},
+	{"type": "LineString","coordinates": [[101.0, 0.0], [102.0, 1.0]]}]}},
+	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
+	geojson_sf(js)
+
+
 })
 

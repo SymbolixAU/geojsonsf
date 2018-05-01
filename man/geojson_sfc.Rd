@@ -4,22 +4,22 @@
 \alias{geojson_sfc}
 \title{Geojson to sfc}
 \usage{
-geojson_sfc(geojson, flatten_geometries = FALSE)
+geojson_sfc(geojson, expand_geometries = FALSE)
 }
 \arguments{
 \item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
 
-\item{flatten_geometries}{logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details}
+\item{expand_geometries}{logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details}
 }
 \description{
 Extracts geometries from GeoJSON and returns an `sfc` object
 }
 \details{
-specifying \code{flatten_geometries = TRUE} will expand individual \code{GEOMETRYCOLLECTION}
+specifying \code{expand_geometries = TRUE} will expand individual \code{GEOMETRYCOLLECTION}
 geometries to their own row in the resulting `sf` object. If the geometries are part
 of a \code{Feature} (i.e., with properties), the properties will be repeated on each row.
 
-The \code{GEOMETRYCOLLECTION} information is not kept when using \code{flatten_geometries = TRUE}. Therefore,
+The \code{GEOMETRYCOLLECTION} information is not kept when using \code{expand_geometries = TRUE}. Therefore,
 it is not possible to reconstruct the \code{GEOMETRYCOLLECTION} after unnesting it.
 }
 \examples{

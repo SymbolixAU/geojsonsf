@@ -1,6 +1,6 @@
 context("geometrycollection")
 
-test_that("flatten_geometriesing preserves properties, ", {
+test_that("expand_geometriesing preserves properties, ", {
 
 	js <- '{
 	"type": "GeometryCollection",
@@ -9,8 +9,8 @@ test_that("flatten_geometriesing preserves properties, ", {
 	{"type": "LineString","coordinates": [[101.0, 0.0],[102.0, 1.0]]},
 	{"type" : "MultiPoint","coordinates" : [[0,0],[1,1],[2,2]]}]}'
 
-	expect_true(nrow(geojson_sf(js, flatten_geometries = F)) == 1)
-	expect_true(nrow(geojson_sf(js, flatten_geometries = T)) == 3)
+	expect_true(nrow(geojson_sf(js, expand_geometries = F)) == 1)
+	expect_true(nrow(geojson_sf(js, expand_geometries = T)) == 3)
 
 	js <- '{"type":"Feature","properties":{"id":1},"geometry":{
 	"type": "GeometryCollection",
@@ -19,9 +19,9 @@ test_that("flatten_geometriesing preserves properties, ", {
 	{"type": "LineString","coordinates": [[101.0, 0.0],[102.0, 1.0]]},
 	{"type" : "MultiPoint","coordinates" : [[0,0],[1,1],[2,2]]}]}}'
 
-	expect_true(nrow(geojson_sf(js, flatten_geometries = F)) == 1)
-	expect_true(nrow(geojson_sf(js, flatten_geometries = T)) == 3)
-	expect_true(unique(geojson_sf(js, flatten_geometries = T)[['id']]) == 1)
+	expect_true(nrow(geojson_sf(js, expand_geometries = F)) == 1)
+	expect_true(nrow(geojson_sf(js, expand_geometries = T)) == 3)
+	expect_true(unique(geojson_sf(js, expand_geometries = T)[['id']]) == 1)
 
 	js <- '[{
 	"type": "Feature",
@@ -56,7 +56,7 @@ test_that("flatten_geometriesing preserves properties, ", {
 	{"type": "Polygon","coordinates": [[[-10.0, -10.0],[10.0, -10.0],[10.0, 10.0],[-10.0, -10.0]]]}
 	]'
 
-	expect_true(nrow(geojson_sf(js, flatten_geometries = F)) == 6)
-	expect_true(nrow(geojson_sf(js, flatten_geometries = T)) == 8)
+	expect_true(nrow(geojson_sf(js, expand_geometries = F)) == 6)
+	expect_true(nrow(geojson_sf(js, expand_geometries = T)) == 8)
 
 })
