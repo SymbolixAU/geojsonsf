@@ -96,24 +96,11 @@ test_that("sf without properties not converted to FeatureCollections", {
 
 test_that("sf with properties converted to FeatureCollection", {
 
-	## Array of features is actually a FeatureCollection
-	skip_on_cran()
-	skip_on_travis()
-	js <- '[{"type":"Feature","properties":{"id":null,"foo":null,"bar":null},"geometry":{"type":"Polygon","coordinates":[[[-10,-10],[10,-10],[10,10],[-10,-10]]]}},
-  {"type": "Feature","properties":{"id":1,"foo":false,"bar":"world"},"geometry":{"type": "MultiPolygon","coordinates":[[[[180,40],[180,50],[170,50],[170,40],[180,40]]],[[[-170,40],[-170,50],[-180,50],[-180,40],[-170,40]]]]}}]'
-	sf <- geojson_sf(js)
-	v <- sf_geojson(sf, atomise = T)
-	expect_true(all(sapply(v, jsonlite::validate)))
-
 	js <- '{"type":"Feature","properties":{"prop0":"value0"},"geometry":{"type":"LineString","coordinates":[[100,0],[101,1]]}}'
-	sf_geojson( geojson_sf(js), atomise = T) == gsub(" |\\r|\\n|\\t","",js)
-
-	js <- '{"type": "Feature","geometry":{"type":"LineString","coordinates":[[100,0],[101,1]]},"properties":{"prop0":"value0","prop1":"value1"}}'
-	expect_true(jsonlite::validate(sf_geojson( geojson_sf(js))))
+	expect_true(sf_geojson( geojson_sf(js), atomise = T) == gsub(" |\\r|\\n|\\t","",js))
 
 	fgc <- '{"type":"Feature","geometry":{"type":"GeometryCollection","geometries": [{"type":"Point","coordinates":[100,0]},{"type":"LineString","coordinates":[[101,0],[102,1]]}]},"properties":{"prop0":"value0","prop1":"value1"}}'
 	sf <- geojson_sf(fgc)
-	expect_true(jsonlite::validate(sf_geojson(sf)))
 	expect_true(grepl("prop0",sf_geojson(sf)))
 	expect_true(grepl("prop1",sf_geojson(sf)))
 	expect_true(grepl("FeatureCollection",sf_geojson(sf)))
@@ -131,9 +118,7 @@ test_that("sf with properties converted to FeatureCollection", {
 
   sf <- geojson_sf(js)
   expect_true(grepl("properties",sf_geojson(sf)))
-  expect_true(jsonlite::validate(sf_geojson(sf)))
   expect_true(length(sf_geojson(sf, atomise = T)) == 2)
-  expect_true(all(sapply(sf_geojson(sf, atomise = T), jsonlite::validate)))
 })
 
 
@@ -162,7 +147,6 @@ test_that("factors are strings", {
 	fgc <- '{"type":"Feature","geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100,0]},{"type":"LineString","coordinates":[[101,0],[102,1]]}]},"properties":{"prop0":"value0","prop1":"value1"}}'
 	sf <- geojson_sf(fgc)
 	sf$prop0 <- as.factor(sf$prop0)
-	expect_true(jsonlite::validate(sf_geojson(sf)))
 })
 
 

@@ -1,14 +1,18 @@
 ## Release Summary
-* v0.2 to v1.0 (added functionality)
-* fixed [NOTE](https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/geojsonsf-00check.html) (and other builds) by importing and using 'rapidjsonr' 
-* fixed [NOTE](https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-gcc/geojsonsf-00check.html) package file size is 1.3 Mb
+
+* updates v1.0 to v1.1
+* Removed dependencies on undeclared packages from unit tests, as per CRAN request - email "CRAN packages maintained by you" from Kurt Hornik, 2018-05-18
 
 
-## Test environments
-* local OS X install, R 3.4.4
-* ubuntu 14.04 (on travis-ci), R 3.4.4
+## Test Environments
+
+* local OS X 15.6.0 (High Sierra) install, R 3.5.0
+* travis-ci (ubuntu 14.04.5, R Under development r74781)
 * win-builder (devel and release)
+
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+* ERRORS : 0 
+* WARNINGS : 0
+* NOTES : 0
