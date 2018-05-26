@@ -289,6 +289,9 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
   Rcpp::String g = cls[1];
   geom_type = g;
 
+  // need to keep track of GEOMETRYCOLLECTIONs so we can correctly close them
+  bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION") ? true : false;
+
   int sfglength = get_sexp_length(sfg);
 
   if (sfglength == 0) {
@@ -296,6 +299,8 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
   } else {
   	begin_geojson_geometry(geojson, geom_type);
   	write_geojson(geojson, sfg, geom_type, cls);
+
+  	geom_type = (isGeometryCollection) ? "GEOMETRYCOLLECTION" : geom_type;
   	end_geojson_geometry(geojson, geom_type);
   }
 }
