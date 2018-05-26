@@ -62,9 +62,7 @@ To quickly parse between GeoJSON and `sf` objects, and to handle cases not suppo
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(geojsonsf)
-library(sf)
-library(googleway)
-set_key(read.dcf("~/Documents/.googleAPI", fields = "GOOGLE_MAP_KEY"))
+library(sf)        ## Loaded for sf print methods
 ```
 
 ### Arrays of GeoJSON
@@ -192,6 +190,8 @@ A visual check to see both objects are the same
 
 ```{r, eval = F}
 library(googleway)
+set_key("GOOGLE_MAP_KEY")
+
 gsf <- geojson_sf(geo)
 
 google_map() %>%
