@@ -153,12 +153,11 @@ test_that("errors are handled", {
 
 test_that("factors are strings", {
 
-	skip_on_cran()
-	skip_on_travis()
-
 	fgc <- '{"type":"Feature","geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100,0]},{"type":"LineString","coordinates":[[101,0],[102,1]]}]},"properties":{"prop0":"value0","prop1":"value1"}}'
 	sf <- geojson_sf(fgc)
 	sf$prop0 <- as.factor(sf$prop0)
+	geo <- sf_geojson(sf)
+	expect_true(grepl("value0", geo))
 })
 
 
