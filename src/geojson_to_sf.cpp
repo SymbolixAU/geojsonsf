@@ -14,6 +14,10 @@
 
 using namespace Rcpp;
 
+void mongo_geo_test() {
+	Rcpp::Rcout << "mongo geo test" << std::endl;
+}
+
 template <int RTYPE>
 Rcpp::CharacterVector sfClass(Vector<RTYPE> v) {
 	return v.attr("class");
@@ -543,6 +547,7 @@ Rcpp::List construct_sf(Rcpp::List& lst, std::set< std::string >& property_keys,
   return properties;
 }
 
+
 Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries) {
 	// iterate over the geojson
 	int n = geojson.size();
@@ -566,7 +571,6 @@ Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geomet
 			doc_properties, property_types, expand_geometries, nempty
 		);
 	}
-
 
 	Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types, nempty);
 	return construct_sf(res, property_keys, property_types, doc_properties, sfg_objects, row_index);

@@ -86,7 +86,6 @@ std::set< std::string> start_geometry_types() {
   return geometry_types;
 }
 
-
 Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
   Rcpp::StringVector sfc_classes(collectionCount);
   return sfc_classes;

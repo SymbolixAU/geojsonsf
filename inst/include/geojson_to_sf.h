@@ -7,6 +7,8 @@
 using namespace Rcpp;
 using namespace rapidjson;
 
+void mongo_geo_test();
+
 Rcpp::CharacterVector sfg_attributes(std::string geom_type);
 
 void parse_geometry_object(Rcpp::List& sfc, int i, const Value& geometry,
@@ -97,6 +99,7 @@ Rcpp::List construct_sf(Rcpp::List& lst, std::set< std::string >& property_keys,
                         int& row_index);
 
 Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries);
+
 
 Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries);
 
