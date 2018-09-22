@@ -2,6 +2,7 @@
 
 * Updates v1.1 to v1.2
 * fixed bug in handling `Date` and `Posix` clases
+
 * Build Note - Fedora clang & gcc  : installed size is 5.5mb / 6.8mb
   - The builds says the `libs` file is 3.7mb/5.0mb. I can't reduce this file size, all the compiled c++ headers and files are required. 
 * New gcc compiler warning : https://www.stats.ox.ac.uk/pub/bdr/gcc8/geojsonsf.out
