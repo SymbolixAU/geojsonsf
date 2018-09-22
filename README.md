@@ -12,6 +12,24 @@ Status](https://travis-ci.org/SymbolixAU/geojsonsf.svg?branch=master)](https://t
 [![Coverage
 Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
+–
+
+## Warning Note: 2018-09-22
+
+I have found [an
+issue](https://github.com/SymbolixAU/geojsonsf/issues/32) with `Dates`
+and `POSIXct` columns not being handled correctly.
+
+I have made a fix in the development version, but I am not able to
+upload to CRAN until the down-stream `rapidjson` library [fixes
+gcc-compiler](https://github.com/SymbolixAU/geojsonsf/issues/27)
+warnings.
+
+In order to handle `Dates` and `POSIXct` columns correctly you will need
+to convert them to characters first.
+
+-----
+
 ## geojsonsf
 
 A simple, low-dependency and **fast** converter between GeoJSON and
@@ -19,7 +37,7 @@ Simple Feature objects in R.
 
 -----
 
-**v1.0**
+**v1.1**
 
 Converts
 
@@ -267,10 +285,10 @@ microbenchmark(
     },
     times = 2
 )
-#  Unit: milliseconds
-#        expr      min       lq      mean    median        uq       max neval
-#   geojsonsf  681.376  681.376  718.0487  718.0487  754.7214  754.7214     2
-#          sf 1814.307 1814.307 1816.5013 1816.5013 1818.6955 1818.6955     2
+#  Unit: seconds
+#        expr      min       lq     mean   median      uq     max neval
+#   geojsonsf 1.407215 1.407215 1.431913 1.431913 1.45661 1.45661     2
+#          sf 4.049296 4.049296 4.090843 4.090843 4.13239 4.13239     2
 ```
 
 Reading directly from a URL is comparable between the
@@ -291,9 +309,9 @@ microbenchmark(
     times = 2
 )
 #  Unit: seconds
-#        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 6.617584 6.617584 6.680125 6.680125 6.742666 6.742666     2
-#          sf 6.914326 6.914326 7.672934 7.672934 8.431542 8.431542     2
+#        expr       min        lq      mean    median       uq      max neval
+#   geojsonsf  6.285199  6.285199  7.550965  7.550965  8.81673  8.81673     2
+#          sf 13.268988 13.268988 14.462881 14.462881 15.65677 15.65677     2
 ```
 
     library(rgdal)
@@ -317,6 +335,8 @@ A visual check to see both objects are the same
 
 ``` r
 library(googleway)
+set_key("GOOGLE_MAP_KEY")
+
 gsf <- geojson_sf(geo)
 
 google_map() %>%

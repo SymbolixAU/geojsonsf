@@ -20,6 +20,18 @@ knitr::opts_chunk$set(
 [![Build Status](https://travis-ci.org/SymbolixAU/geojsonsf.svg?branch=master)](https://travis-ci.org/SymbolixAU/geojsonsf)
 [![Coverage Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
+--
+
+## Warning Note: 2018-09-22
+
+I have found [an issue](https://github.com/SymbolixAU/geojsonsf/issues/32) with `Dates` and `POSIXct` columns not being handled correctly. 
+
+I have made a fix in the development version, but I am not able to upload to CRAN until the down-stream `rapidjson` library [fixes gcc-compiler](https://github.com/SymbolixAU/geojsonsf/issues/27) warnings. 
+
+In order to handle `Dates` and `POSIXct` columns correctly you will need to convert them to characters first. 
+
+---
+
 ## geojsonsf
 
 A simple, low-dependency and **fast** converter between GeoJSON and Simple Feature objects in R. 
