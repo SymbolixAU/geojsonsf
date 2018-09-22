@@ -119,7 +119,10 @@ geojson_sf.default <- function(geojson, expand_geometries = F) rcpp_geojson_to_s
 sf_geojson <- function(sf, atomise = FALSE) UseMethod("sf_geojson")
 
 #' @export
-sf_geojson.sf <- function(sf, atomise = FALSE) rcpp_sf_to_geojson(sf, atomise)
+sf_geojson.sf <- function(sf, atomise = FALSE) {
+	sf <- handle_dates( sf )
+	rcpp_sf_to_geojson(sf, atomise)
+}
 
 
 #' sfc to GeoJSON
@@ -144,6 +147,16 @@ sfc_geojson.sfc <- function(sfc) rcpp_sfc_to_geojson(sfc)
 
 sf_geojson.default <- function(sf, atomise = FALSE) stop("Expected an sf object")
 sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
+
+date_columns <- function( sf ) names(which(vapply(sf , function(x) { inherits(x, "Date") | inherits(x, "POSIXct") }, T)))
+
+handle_dates <- function( x ) {
+	dte <- date_columns( x )
+	x[dte] <- lapply(x[dte], as.character)
+	return( x )
+}
+
+return_x <- function( x ) x
 
 is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
 

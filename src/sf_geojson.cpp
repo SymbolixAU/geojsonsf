@@ -16,10 +16,10 @@ void get_column_type(Rcpp::List& sf,
 		Rcpp::String col = property_names[i];
 		SEXP vec = sf[col];
 
-		if (Rf_isFactor(vec)) {
+		if (Rf_isFactor( vec ) ) {
 			column_types[i] = "String";
 		} else {
-			switch(TYPEOF(vec)) {
+			switch(TYPEOF( vec ) ) {
 			case REALSXP:
 				column_types[i] = "Number";
 				break;
@@ -188,7 +188,7 @@ void write_geojson(Rcpp::String& geojson, SEXP sfg,
 	//geometry_json[i] = add_geometry_to_stream(sfg);
   if (geom_type == "POINT") {
 
-    Rcpp::NumericVector point = as<Rcpp::NumericVector>(sfg);
+    Rcpp::NumericVector point = as< Rcpp::NumericVector >(sfg);
     point_to_geojson(geojson, point);
 
   } else if (geom_type == "MULTIPOINT") {
@@ -307,6 +307,7 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
 
 void geometry_vector_to_geojson(Rcpp::StringVector& geometry_json, Rcpp::List& sfc) {
 
+
   SEXP sfg;
   for (int i = 0; i < sfc.size(); i++) {
   	Rcpp::String geojson;
@@ -374,7 +375,8 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 	}
 
 	get_column_type(sf_copy, property_names, column_types);
-	Rcpp::List sfc = sf_copy[geom_column];
+
+	Rcpp::List sfc = sf_copy[ geom_column ];
 
 	Rcpp::List properties;
 
@@ -394,7 +396,7 @@ Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::List sf, bool atomise) {
 	// TODO: what if there's a mssing element?
 	}
 
-	Rcpp::StringVector geometry_json(sfc.length());
+	Rcpp::StringVector geometry_json( sfc.length() );
 	geometry_vector_to_geojson(geometry_json, sfc);
 	json_mat(_, (json_mat.ncol() - 1) ) = geometry_json;
 	Rcpp::StringVector res(json_mat.nrow());
