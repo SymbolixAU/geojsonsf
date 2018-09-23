@@ -13,10 +13,10 @@ LazyData: true
 Depends: R (>= 3.3.0)
 LinkingTo: 
     Rcpp, 
-    rapidjsonr
+    rapidjsonr (>= 1.1)
 Imports: 
     Rcpp, 
-    rapidjsonr,
+    rapidjsonr (>= 1.1),
     curl
 RoxygenNote: 6.0.1
 Suggests: 
