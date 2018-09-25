@@ -152,7 +152,7 @@ date_columns <- function( sf ) names(which(vapply(sf , function(x) { inherits(x,
 
 handle_dates <- function( x ) {
 	dte <- date_columns( x )
-	x[dte] <- lapply(x[dte], as.character)
+	x[dte] <- lapply(as.data.frame(x)[dte], as.character)
 	return( x )
 }
 
