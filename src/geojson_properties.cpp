@@ -18,7 +18,7 @@ void vector_to_string(Rcpp::List& lst, std::string& key) {
 
 
 
-void get_property_types(const Value& v, std::map< std::string, std::string>& property_types) {
+void get_property_types(const Value& v, std::unordered_map< std::string, std::string>& property_types) {
 
 	// TODO: move to a header??
 	static const char* ARRAY_TYPES[] =
