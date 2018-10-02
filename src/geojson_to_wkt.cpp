@@ -315,7 +315,8 @@ Rcpp::List rcpp_geojson_to_wkt(Rcpp::StringVector geojson) {
   int row_index;
 
   // Attributes to keep track of along the way
-  std::set< std::string > geometry_types = start_geometry_types();
+  //std::set< std::string > geometry_types = start_geometry_types();
+  std::set< std::string > geometry_types;
   std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
   std::unordered_map< std::string, std::string> property_types;
 
