@@ -18,7 +18,7 @@ Imports:
     Rcpp, 
     rapidjsonr (>= 1.1),
     curl
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: 
     covr,
     testthat,

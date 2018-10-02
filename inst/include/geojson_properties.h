@@ -18,7 +18,7 @@ std::string any_to_string(const T& obj) {
 	return ss.str();
 }
 
-void get_property_types(const Value& v, std::map< std::string, std::string>& property_types);
+void get_property_types(const Value& v, std::unordered_map< std::string, std::string>& property_types);
 
 void get_property_keys(const Value& v, std::set< std::string >& property_keys);
 
