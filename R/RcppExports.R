@@ -29,3 +29,7 @@ rcpp_sf_to_geojson <- function(sf, atomise) {
     .Call(`_geojsonsf_rcpp_sf_to_geojson`, sf, atomise)
 }
 
+test_sf_to_json <- function(sf) {
+    .Call(`_geojsonsf_test_sf_to_json`, sf)
+}
+

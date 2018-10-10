@@ -307,7 +307,6 @@ void write_geometry(SEXP sfg, Rcpp::String& geojson) {
 
 void geometry_vector_to_geojson(Rcpp::StringVector& geometry_json, Rcpp::List& sfc) {
 
-
   SEXP sfg;
   for (int i = 0; i < sfc.size(); i++) {
   	Rcpp::String geojson;
