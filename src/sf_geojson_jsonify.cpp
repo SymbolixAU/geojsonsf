@@ -1,6 +1,7 @@
 
 #include <Rcpp.h>
 #include "geojsonsf.h"
+#include "sf_geojson_test.hpp"
 #include "jsonify/jsonify.hpp"
 #include "jsonify/to_json/dataframe.hpp"
 
@@ -61,7 +62,10 @@ void begin_geojson_geometry(Writer& writer, std::string& geom_type) {
 	writer.String("type");
 	if (geom_type == "POINT") {
 		writer.String("Point");
+
+		// TODO( NULL TEST )
 		write_coordinate_string( writer );
+
 	} else if (geom_type == "MULTIPOINT") {
 		writer.String("MultiPoint");
 		write_coordinate_string( writer );
@@ -123,10 +127,50 @@ void end_geojson_geometry(Writer& writer, std::string& geom_type) {
 	}
 }
 
+template< typename Writer >
+void polygon_separator( Writer& writer, int i, int n ) {
+	if (i < ( n - 1 ) ) {
+		writer.EndArray();
+		writer.EndArray();
+		writer.StartArray();
+		writer.StartArray();
+	}
+}
+
+template< typename Writer >
+void line_separator( Writer& writer, int i, int n) {
+	if ( i < ( n - 1 ) ) {
+		writer.EndArray();
+		writer.StartArray();
+	}
+}
+
+void number_type( SEXP sfg ) {
+	switch( TYPEOF( sfg ) ) {
+	case INTSXP: {
+		Rcpp::Rcout << "integer" << std::endl;
+		break;
+	}
+	case REALSXP: {
+		Rcpp::Rcout << "numeric" << std::endl;
+		break;
+	}
+	}
+}
+
+template< typename Writer >
+void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point ) {
+	int n = point.size();
+	int i;
+	writer.StartArray();
+	for ( i = 0; i < n; i++ ) {
+		writer.Int( point[i] );
+	}
+	writer.EndArray();
+}
 
 template< typename Writer >
 void points_to_geojson( Writer& writer, Rcpp::NumericVector& point ) {
-
 	int n = point.size();
 	int i;
 	writer.StartArray();
@@ -137,12 +181,54 @@ void points_to_geojson( Writer& writer, Rcpp::NumericVector& point ) {
 }
 
 template< typename Writer >
-void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line ) {
+void points_to_geojson( Writer& writer, SEXP& point ) {
+  switch( TYPEOF( point ) ) {
+  case INTSXP: {
+  	Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( point );
+  	points_to_geojson( writer, iv );
+  	break;
+  }
+  case REALSXP: {
+  	Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( point );
+  	points_to_geojson( writer, nv );
+  	break;
+  }
+  }
+}
+
+template< typename Writer >
+void linestring_to_geojson( Writer& writer, Rcpp::IntegerMatrix& line ) {
   int i;
+	int nrow = line.nrow();
+	for ( i = 0; i < nrow; i++ ) {
+		Rcpp::IntegerVector this_row = line(i, Rcpp::_ );
+		points_to_geojson( writer, this_row );
+	}
+}
+
+template< typename Writer >
+void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line ) {
+	int i;
 	int nrow = line.nrow();
 	for ( i = 0; i < nrow; i++ ) {
 		Rcpp::NumericVector this_row = line(i, Rcpp::_ );
 		points_to_geojson( writer, this_row );
+	}
+}
+
+template< typename Writer >
+void linestring_to_geojson( Writer& writer, SEXP& line ) {
+	switch( TYPEOF( line ) ) {
+	case INTSXP: {
+		Rcpp::IntegerMatrix iv = Rcpp::as< Rcpp::IntegerMatrix >( line );
+		linestring_to_geojson( writer, iv );
+		break;
+	}
+	case REALSXP: {
+		Rcpp::NumericMatrix nv = Rcpp::as< Rcpp::NumericMatrix >( line );
+		linestring_to_geojson( writer, nv );
+		break;
+	}
 	}
 }
 
@@ -153,6 +239,7 @@ void polygon_to_geojson( Writer& writer, Rcpp::List& sfg ) {
 	for ( i = 0; i < n; i++ ) {
 		Rcpp::NumericMatrix sfgi = sfg[i];
 		linestring_to_geojson( writer, sfgi );
+		line_separator( writer, i, n );
 	}
 }
 
@@ -163,52 +250,124 @@ void multi_polygon_to_geojson( Writer& writer, Rcpp::List& sfg ) {
 	for ( i = 0; i < n; i++ ) {
 		Rcpp::List sfgi = sfg[i];
 		polygon_to_geojson( writer, sfgi );
+		polygon_separator( writer, i, n );
 	}
 }
-
 
 template< typename Writer >
 void test_write_geojson(Writer& writer, SEXP sfg,
                    std::string& geom_type, Rcpp::CharacterVector& cls ) {
 
+	//number_type( sfg );
+
 	//geometry_json[i] = add_geometry_to_stream(sfg);
 	if (geom_type == "POINT") {
-
-		Rcpp::NumericVector point = as< Rcpp::NumericVector >( sfg );
-		points_to_geojson( writer, point );
+		//Rcpp::NumericVector point = Rcpp::as< Rcpp::NumericVector >( sfg );
+		points_to_geojson( writer, sfg );
 
 	} else if (geom_type == "MULTIPOINT") {
 
-		Rcpp::NumericMatrix multipoint = as< Rcpp::NumericMatrix >( sfg );
-		linestring_to_geojson( writer, multipoint );
+		//Rcpp::NumericMatrix multipoint = Rcpp::as< Rcpp::NumericMatrix >( sfg );
+		linestring_to_geojson( writer, sfg );
 
 	} else if (geom_type == "LINESTRING") {
-		Rcpp::NumericMatrix line = as< Rcpp::NumericMatrix >( sfg );
-		linestring_to_geojson( writer, line );
+		//Rcpp::NumericMatrix line = Rcpp::as< Rcpp::NumericMatrix >( sfg );
+		linestring_to_geojson( writer, sfg );
 
 	} else if (geom_type == "MULTILINESTRING") {
 
-		Rcpp::List multiline = as< Rcpp::List >( sfg );
+		Rcpp::List multiline = Rcpp::as< Rcpp::List >( sfg );
 		polygon_to_geojson( writer, multiline );
 
 	} else if (geom_type == "POLYGON") {
 
-		Rcpp::List polygon = as< Rcpp::List >(sfg);
+		Rcpp::List polygon = Rcpp::as< Rcpp::List >(sfg);
 		polygon_to_geojson( writer, polygon );
 
 	} else if (geom_type == "MULTIPOLYGON") {
 
-		Rcpp::List multipolygon = as< Rcpp::List >( sfg );
+		Rcpp::List multipolygon = Rcpp::as< Rcpp::List >( sfg );
 		multi_polygon_to_geojson( writer, multipolygon );
 
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
 
-		Rcpp::List gc = as<Rcpp::List>(sfg);
+		Rcpp::List gc = Rcpp::as< Rcpp::List >( sfg );
 		Rcpp::List sfgi(1);
 		for (int i = 0; i < gc.size(); i++) {
 			sfgi[0] = gc[i];
-			//make_gc_type(geojson, sfgi, geom_type, cls);
-			//coord_separator(geojson, i, gc.size());
+			make_gc_type(writer, sfgi, geom_type, cls);
+		}
+	}
+}
+
+bool is_null_geometry( SEXP& sfg, std::string& geom_type ) {
+	int n = test_get_sexp_length( sfg );
+	if( geom_type == "POINT" ) {
+		Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
+		if (ISNAN( nv[0] ) ) {
+			return true;
+		}
+	} else if ( n == 0 ) {
+		return true;
+	}
+	return false;
+}
+
+template< typename Writer >
+void make_gc_type(Writer& writer, Rcpp::List& sfg,
+                  std::string& geom_type, Rcpp::CharacterVector& cls) {
+
+	bool isnull = false;
+
+	for (Rcpp::List::iterator it = sfg.begin(); it != sfg.end(); it++) {
+
+		switch( TYPEOF( *it ) ) {
+		case VECSXP: {
+			Rcpp::List tmp = Rcpp::as< Rcpp::List >(*it);
+			if (!Rf_isNull(tmp.attr("class"))) {
+
+				cls = tmp.attr("class");
+				// TODO: error handle (there should aways be 3 elements as we're workgin wtih sfg objects)
+				geom_type = cls[1];
+
+				SEXP tst = *it;
+				isnull = is_null_geometry( tst, geom_type );
+				if (isnull ) {
+					//writer.String("geometry");
+					writer.Null();
+				} else {
+					begin_geojson_geometry(writer, geom_type);
+					test_write_geojson(writer, tmp, geom_type, cls);
+					end_geojson_geometry(writer, geom_type);
+				}
+			} else {
+				make_gc_type(writer, tmp, geom_type, cls);
+			}
+			break;
+		}
+		case REALSXP: {
+			Rcpp::NumericVector tmp = Rcpp::as< Rcpp::NumericVector >( *it );
+			if (!Rf_isNull(tmp.attr("class"))) {
+
+				cls = tmp.attr("class");
+				geom_type = cls[1];
+
+				SEXP tst = *it;
+				isnull = is_null_geometry( tst, geom_type );
+				if ( isnull ) {
+					//writer.String("geometry");
+					writer.Null();
+				} else {
+					begin_geojson_geometry(writer, geom_type);
+					test_write_geojson(writer, tmp, geom_type, cls);
+					end_geojson_geometry(writer, geom_type);
+				}
+			}
+			break;
+		}
+		default: {
+			Rcpp::stop("Coordinates could not be found");
+		}
 		}
 	}
 }
@@ -230,21 +389,26 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 	// need to keep track of GEOMETRYCOLLECTIONs so we can correctly close them
 	bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION") ? true : false;
 
-	int sfglength = test_get_sexp_length(sfg);
+	int sfglength = test_get_sexp_length( sfg );
+
+	//Rcpp::Rcout << "sfglength: " << sfglength << std::endl;
 
 	if (sfglength == 0) {
-		//geojson += "null";
 		writer.Null();
 	} else {
-		begin_geojson_geometry(writer, geom_type);
-		test_write_geojson(writer, sfg, geom_type, cls );
 
-		geom_type = (isGeometryCollection) ? "GEOMETRYCOLLECTION" : geom_type;
-		end_geojson_geometry(writer, geom_type);
+		bool isnull = is_null_geometry( sfg, geom_type );
+		if ( isnull ) {
+			writer.Null();
+		} else {
+			begin_geojson_geometry(writer, geom_type);
+			test_write_geojson(writer, sfg, geom_type, cls );
+
+			geom_type = (isGeometryCollection) ? "GEOMETRYCOLLECTION" : geom_type;
+			end_geojson_geometry( writer, geom_type );
+		}
 	}
 }
-
-
 
 // [[Rcpp::export]]
 Rcpp::StringVector test_sf_to_json( Rcpp::DataFrame& sf ) {
@@ -284,9 +448,9 @@ Rcpp::StringVector test_sf_to_json( Rcpp::DataFrame& sf ) {
 
 		writer.StartObject();
 
+	  // properties first, then sfc
 		for( j = 0; j < n_properties; j++ ) {
 
-			// TODO( do properties first, then sfc );
 
 			const char *h = property_names[ j ];
 
@@ -298,15 +462,13 @@ Rcpp::StringVector test_sf_to_json( Rcpp::DataFrame& sf ) {
 
 		writer.EndObject();
 
-		// now do property column
+		// now geometries
 		writer.String("geometry");
-		// writer.StartObject();
 
 		Rcpp::List sfc = sf[ geom_column ];
 		write_geometry( writer, sfc, i );
 
-		// writer.EndObject();
-
+		writer.EndObject();
 	}
 
 	writer.EndArray();
