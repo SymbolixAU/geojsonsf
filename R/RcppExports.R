@@ -25,11 +25,11 @@ rcpp_sfc_to_geojson <- function(sfc) {
     .Call(`_geojsonsf_rcpp_sfc_to_geojson`, sfc)
 }
 
-rcpp_sf_to_geojson <- function(sf, atomise) {
-    .Call(`_geojsonsf_rcpp_sf_to_geojson`, sf, atomise)
+rcpp_sf_to_geojson_atomise <- function(sf) {
+    .Call(`_geojsonsf_rcpp_sf_to_geojson_atomise`, sf)
 }
 
-test_sf_to_json <- function(sf) {
-    .Call(`_geojsonsf_test_sf_to_json`, sf)
+rcpp_sf_to_geojson <- function(sf) {
+    .Call(`_geojsonsf_rcpp_sf_to_geojson`, sf)
 }
 

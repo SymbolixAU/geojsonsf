@@ -121,7 +121,9 @@ sf_geojson <- function(sf, atomise = FALSE) UseMethod("sf_geojson")
 #' @export
 sf_geojson.sf <- function(sf, atomise = FALSE) {
 	sf <- handle_dates( sf )
-	rcpp_sf_to_geojson(sf, atomise)
+	if( atomise | ncol( sf ) == 1 ) return( rcpp_sf_to_geojson_atomise( sf ) )
+	return( rcpp_sf_to_geojson( sf ) )
+	# rcpp_sf_to_geojson_old(sf, atomise)
 }
 
 
@@ -140,7 +142,7 @@ sf_geojson.sf <- function(sf, atomise = FALSE) {
 #' sfc_geojson(sf)
 #' }
 #' @export
-sfc_geojson <- function(sfc) UseMethod("sfc_geojson")
+sfc_geojson <- function( sfc ) UseMethod("sfc_geojson")
 
 #' @export
 sfc_geojson.sfc <- function(sfc) rcpp_sfc_to_geojson(sfc)

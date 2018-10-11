@@ -1,4 +1,4 @@
-#
+
 # library(sf)
 #
 # sf1 <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(c(0,0))))
@@ -21,7 +21,10 @@
 # sf$id <- 1:13
 # sf$val <- letters[1:13]
 #
-# geojsonsf:::test_sf_to_json( sf[c(4,5), ] )
+# geojsonsf:::sf_to_geojson( sf )
+#
+# jsonify::validate_json( geojsonsf:::sf_to_geojson( sf ) )
+#
 # sf_geojson( sf[1:3,] )
 # sf_geojson( sf , atomise = T )
 
@@ -30,27 +33,27 @@
 # geojsonsf:::test_sf_to_json( pt )
 # pt <- sf::st_sf(geometry = sf::st_sfc(sf::st_point(c(1,1))))
 # geojsonsf:::test_sf_to_json( pt )
-
-
-# #
-# # geojsonsf:::test_sf_to_json( sf[8, ])
-# # jsonify::validate_json( geojsonsf:::test_sf_to_json( sf[1, ]) )
-# #
-# #
-# # sf <- geojsonsf::geojson_sf( "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json" )
-# #
-# # library(microbenchmark)
-# #
-# # microbenchmark(
-# # 	new = { geo1 <- geojsonsf:::test_sf_to_json( sf ) },
-# # 	old = { geo2 <- geojsonsf::sf_geojson( sf ) },
-# # 	times = 10
-# # )
-# # Unit: milliseconds
-# # expr       min        lq      mean    median        uq       max neval
-# #  new  295.4253  305.2067  353.1528  329.7259  384.4229  491.3823    10
-# #  old 1339.2306 1392.2578 1410.1997 1396.9011 1421.0761 1517.5825    10
 #
 #
-#
-#
+# # #
+# # # geojsonsf:::test_sf_to_json( sf[8, ])
+# # # jsonify::validate_json( geojsonsf:::test_sf_to_json( sf[1, ]) )
+# # #
+# # #
+# # # sf <- geojsonsf::geojson_sf( "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json" )
+# # #
+# # # library(microbenchmark)
+# # #
+# # # microbenchmark(
+# # # 	new = { geo1 <- geojsonsf:::test_sf_to_json( sf ) },
+# # # 	old = { geo2 <- geojsonsf::sf_geojson( sf ) },
+# # # 	times = 10
+# # # )
+# # # Unit: milliseconds
+# # # expr       min        lq      mean    median        uq       max neval
+# # #  new  295.4253  305.2067  353.1528  329.7259  384.4229  491.3823    10
+# # #  old 1339.2306 1392.2578 1410.1997 1396.9011 1421.0761 1517.5825    10
+# #
+# #
+# #
+# #
