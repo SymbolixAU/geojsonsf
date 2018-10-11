@@ -8,28 +8,6 @@
 // TODO
 // - sfc
 // - atomize
-// - sf (properties)
-
-// #define XYUNKNOWN 0
-// #define XY        2
-// #define XYZ       3
-// #define XYM       3
-// #define XYZM      4
-//
-// void make_dim_divisor(const char *cls, int *d) {
-// 	int divisor = 2;
-// 	if (strcmp(cls, "XY") == 0)
-// 		divisor = XY;
-// 	else if (strcmp(cls, "XYZ") == 0)
-// 		divisor = XYZ;
-// 	else if (strcmp(cls, "XYM") == 0)
-// 		divisor = XYM;
-// 	else if (strcmp(cls, "XYZM") == 0)
-// 		divisor = XYZM;
-// 	else
-// 		Rcpp::stop("Unknown dimension attribute");
-// 	*d = divisor;
-// }
 
 template <int RTYPE>
 int test_sexp_length(Vector<RTYPE> v) {
@@ -57,15 +35,11 @@ void write_coordinate_string( Writer& writer ) {
 template< typename Writer >
 void begin_geojson_geometry(Writer& writer, std::string& geom_type) {
 
-	//geojson += "{\"type\":";
 	writer.StartObject();
 	writer.String("type");
 	if (geom_type == "POINT") {
 		writer.String("Point");
-
-		// TODO( NULL TEST )
 		write_coordinate_string( writer );
-
 	} else if (geom_type == "MULTIPOINT") {
 		writer.String("MultiPoint");
 		write_coordinate_string( writer );
@@ -142,19 +116,6 @@ void line_separator( Writer& writer, int i, int n) {
 	if ( i < ( n - 1 ) ) {
 		writer.EndArray();
 		writer.StartArray();
-	}
-}
-
-void number_type( SEXP sfg ) {
-	switch( TYPEOF( sfg ) ) {
-	case INTSXP: {
-		Rcpp::Rcout << "integer" << std::endl;
-		break;
-	}
-	case REALSXP: {
-		Rcpp::Rcout << "numeric" << std::endl;
-		break;
-	}
 	}
 }
 
@@ -258,39 +219,28 @@ template< typename Writer >
 void test_write_geojson(Writer& writer, SEXP sfg,
                    std::string& geom_type, Rcpp::CharacterVector& cls ) {
 
-	//number_type( sfg );
-
-	//geometry_json[i] = add_geometry_to_stream(sfg);
 	if (geom_type == "POINT") {
-		//Rcpp::NumericVector point = Rcpp::as< Rcpp::NumericVector >( sfg );
 		points_to_geojson( writer, sfg );
 
 	} else if (geom_type == "MULTIPOINT") {
-
-		//Rcpp::NumericMatrix multipoint = Rcpp::as< Rcpp::NumericMatrix >( sfg );
 		linestring_to_geojson( writer, sfg );
 
 	} else if (geom_type == "LINESTRING") {
-		//Rcpp::NumericMatrix line = Rcpp::as< Rcpp::NumericMatrix >( sfg );
 		linestring_to_geojson( writer, sfg );
 
 	} else if (geom_type == "MULTILINESTRING") {
-
 		Rcpp::List multiline = Rcpp::as< Rcpp::List >( sfg );
 		polygon_to_geojson( writer, multiline );
 
 	} else if (geom_type == "POLYGON") {
-
 		Rcpp::List polygon = Rcpp::as< Rcpp::List >(sfg);
 		polygon_to_geojson( writer, polygon );
 
 	} else if (geom_type == "MULTIPOLYGON") {
-
 		Rcpp::List multipolygon = Rcpp::as< Rcpp::List >( sfg );
 		multi_polygon_to_geojson( writer, multipolygon );
 
 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-
 		Rcpp::List gc = Rcpp::as< Rcpp::List >( sfg );
 		Rcpp::List sfgi(1);
 		for (int i = 0; i < gc.size(); i++) {
@@ -333,7 +283,6 @@ void make_gc_type(Writer& writer, Rcpp::List& sfg,
 				SEXP tst = *it;
 				isnull = is_null_geometry( tst, geom_type );
 				if (isnull ) {
-					//writer.String("geometry");
 					writer.Null();
 				} else {
 					begin_geojson_geometry(writer, geom_type);
@@ -355,7 +304,6 @@ void make_gc_type(Writer& writer, Rcpp::List& sfg,
 				SEXP tst = *it;
 				isnull = is_null_geometry( tst, geom_type );
 				if ( isnull ) {
-					//writer.String("geometry");
 					writer.Null();
 				} else {
 					begin_geojson_geometry(writer, geom_type);
@@ -382,16 +330,10 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 	Rcpp::String g = cls[1];
 	geom_type = g;
 
-	// int dim_divisor;
-	// make_dim_divisor( cls[0], &dim_divisor );
-	// Rcpp::Rcout << "divisor: " << dim_divisor << std::endl;
-
 	// need to keep track of GEOMETRYCOLLECTIONs so we can correctly close them
 	bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION") ? true : false;
 
 	int sfglength = test_get_sexp_length( sfg );
-
-	//Rcpp::Rcout << "sfglength: " << sfglength << std::endl;
 
 	if (sfglength == 0) {
 		writer.Null();
