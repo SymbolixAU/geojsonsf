@@ -2,7 +2,6 @@
 #include "geojsonsf.h"
 #include "geojson_sfc.h"
 
-using namespace Rcpp;
 
 void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
   //xmin, ymin, xmax, ymax
@@ -102,7 +101,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     switch( TYPEOF(*it) ) {
 
     case VECSXP: {
-      Rcpp::List tmp = as<Rcpp::List>(*it);
+      Rcpp::List tmp = Rcpp::as< Rcpp::List >( *it );
       if(Rf_isNull(tmp.attr("class"))){
         fetch_geometries(tmp, res, sfg_counter);
       } else {
@@ -112,8 +111,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
       break;
     }
     case REALSXP: {
-      Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
-      if(Rf_isNull(tmp.attr("class"))){
+      Rcpp::NumericVector tmp = Rcpp::as< Rcpp::NumericVector >( *it );
+      if(Rf_isNull(tmp.attr("class"))) {
         Rcpp::stop("Geometry could not be determined");
       } else {
         res[sfg_counter] = tmp;
@@ -122,8 +121,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
       break;
     }
     case INTSXP: {
-      Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
-      if(Rf_isNull(tmp.attr("class"))){
+      Rcpp::IntegerVector tmp = Rcpp::as< Rcpp::IntegerVector >( *it );
+      if(Rf_isNull( tmp.attr( "class" ) ) ){
         Rcpp::stop("Geometry could not be determined");
       } else {
         res[sfg_counter] = tmp;
@@ -132,8 +131,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
       break;
     }
     case STRSXP: {
-    	Rcpp::StringVector tmp = as<Rcpp::StringVector>(*it);
-    	if(Rf_isNull(tmp.attr("class"))){
+    	Rcpp::StringVector tmp = Rcpp::as< Rcpp::StringVector >( *it );
+    	if(Rf_isNull( tmp.attr( "class" ) ) ) {
     		Rcpp::stop("Geometry could not be determined");
     	} else {
     		res[sfg_counter] = tmp;

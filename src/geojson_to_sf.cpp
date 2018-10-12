@@ -50,34 +50,41 @@ void parse_geometry_object(Rcpp::List& sfc,
 
 
   if (geom_type == "Point") {
-    Rcpp::NumericVector point = get_point(coord_array, bbox);
-    point.attr("class") = sfg_attributes("POINT");
-    sfc[i] = point;
+    //Rcpp::NumericVector point = get_point( coord_array, bbox );
+    get_points( coord_array, bbox, sfc, i, true, "POINT");
+    //point.attr("class") = sfg_attributes("POINT");
+    //sfc[i] = point;
+    // TODO ( add POINT attribute );
 
   } else if (geom_type == "MultiPoint") {
-    Rcpp::NumericMatrix multi_point = get_multi_point(coord_array, bbox);
-    multi_point.attr("class") = sfg_attributes("MULTIPOINT");
-    sfc[i] = multi_point;
+    // Rcpp::NumericMatrix multi_point = get_multi_point(coord_array, bbox);
+    // multi_point.attr("class") = sfg_attributes("MULTIPOINT");
+    //sfc[i] = multi_point;
+
+    //get_multi_point( coord_array, bbox, sfc, i, true, "MULTIPOINT" );
+    get_line_string( coord_array, bbox, sfc, i, true, "MULTIPOINT");
 
   } else if (geom_type == "LineString") {
-    Rcpp::NumericMatrix line_string = get_line_string(coord_array, bbox);
-    line_string.attr("class") = sfg_attributes("LINESTRING");
-    sfc[i] = line_string;
+    // Rcpp::NumericMatrix line_string = get_line_string(coord_array, bbox);
+    // line_string.attr("class") = sfg_attributes("LINESTRING");
+    // sfc[i] = line_string;
+
+    get_line_string( coord_array, bbox, sfc, i, true, "LINESTRING");
 
   } else if (geom_type == "MultiLineString") {
-    Rcpp::List multi_line = get_multi_line_string(coord_array, bbox);
-    multi_line.attr("class") = sfg_attributes("MULTILINESTRING");
-    sfc[i] = multi_line;
+    // Rcpp::List multi_line = get_multi_line_string( coord_array, bbox );
+    // multi_line.attr("class") = sfg_attributes("MULTILINESTRING");
+    // sfc[i] = multi_line;
 
   } else if (geom_type == "Polygon") {
-    Rcpp::List polygon = get_polygon(coord_array, bbox);
-    polygon.attr("class") = sfg_attributes("POLYGON");
-    sfc[i] = polygon;
+    // Rcpp::List polygon = get_polygon(coord_array, bbox);
+    // polygon.attr("class") = sfg_attributes("POLYGON");
+    // sfc[i] = polygon;
 
   } else if (geom_type == "MultiPolygon") {
-    Rcpp::List multi_polygon = get_multi_polygon(coord_array, bbox);
-    multi_polygon.attr("class") = sfg_attributes("MULTIPOLYGON");
-    sfc[i] = multi_polygon;
+    // Rcpp::List multi_polygon = get_multi_polygon( coord_array, bbox );
+    // multi_polygon.attr("class") = sfg_attributes("MULTIPOLYGON");
+    // sfc[i] = multi_polygon;
 
   } else {
     Rcpp::stop("unknown sfg type");
