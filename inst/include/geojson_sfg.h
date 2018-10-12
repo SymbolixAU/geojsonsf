@@ -39,13 +39,21 @@ Rcpp::List get_multi_line_string(const Value& multi_line_array);
 
 Rcpp::List get_multi_line_string(const Value& multi_line_array, Rcpp::NumericVector& bbox);
 
+void get_multi_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
+                      bool requires_attribute, std::string attribute );
+
 Rcpp::List get_polygon(const Value& polygon_array);
 
 Rcpp::List get_polygon(const Value& polygon_array, Rcpp::NumericVector& bbox);
+
+void get_polygon( const Value& multi_line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
+                  bool requires_attribute, std::string attribute );
 
 Rcpp::List get_multi_polygon(const Value& multi_polygon_array);
 
 Rcpp::List get_multi_polygon(const Value& multi_polygon_array, Rcpp::NumericVector& bbox);
 
+void get_multi_polygon( const Value& multi_line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
+                  bool requires_attribute, std::string attribute );
 
 #endif

@@ -27,7 +27,7 @@ test_that("sfc objects converted to GeoJSON", {
 	expect_true(sfc_geojson(sf) == js)
 	jsonify::validate_json(sfc_geojson(sf))
 
-	js <- '{"type":"Polygon","coordinates":[[[0,0],[1,1]]]}'
+	js <- '{"type":"Polygon","coordinates":[[[0,0],[0,1],[1,1],[1,0],[0,0]]]}'
 	sf <- geojson_sfc(js)
 	expect_true(sfc_geojson(sf) == js)
 	jsonify::validate_json(sfc_geojson(sf))

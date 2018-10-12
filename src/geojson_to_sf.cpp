@@ -75,16 +75,19 @@ void parse_geometry_object(Rcpp::List& sfc,
     // Rcpp::List multi_line = get_multi_line_string( coord_array, bbox );
     // multi_line.attr("class") = sfg_attributes("MULTILINESTRING");
     // sfc[i] = multi_line;
+    get_multi_line_string( coord_array, bbox, sfc, i, true, "MULTILINESTRING");
 
   } else if (geom_type == "Polygon") {
     // Rcpp::List polygon = get_polygon(coord_array, bbox);
     // polygon.attr("class") = sfg_attributes("POLYGON");
     // sfc[i] = polygon;
+    get_polygon( coord_array, bbox, sfc, i, true, "POLYGON" );
 
   } else if (geom_type == "MultiPolygon") {
     // Rcpp::List multi_polygon = get_multi_polygon( coord_array, bbox );
     // multi_polygon.attr("class") = sfg_attributes("MULTIPOLYGON");
     // sfc[i] = multi_polygon;
+    get_multi_polygon( coord_array, bbox, sfc, i, true, "MULTIPOLYGON" );
 
   } else {
     Rcpp::stop("unknown sfg type");

@@ -2,7 +2,6 @@
 #include "geojsonsf.h"
 #include "geojson_sfc.h"
 
-
 void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
   //xmin, ymin, xmax, ymax
   bbox[0] = std::min(point[0], bbox[0]);
