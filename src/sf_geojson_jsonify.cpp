@@ -215,6 +215,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 			}
 
+		  //writer.EndObject();
 			writer.EndObject();
 		}
 
@@ -225,6 +226,10 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 
 		Rcpp::List sfc = sf[ geom_column ];
 		write_geometry( writer, sfc, i );
+
+		if( n_properties > 0 ) {
+			writer.EndObject();
+		}
 
 		//writer.EndObject();
 		//writer.EndObject();

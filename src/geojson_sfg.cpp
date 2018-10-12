@@ -22,16 +22,26 @@ double get_lat(const Value& coord_array) {
 	return coord_array[1].GetDouble();
 }
 
-void make_type( const Value& coord_array, int& elem, int* r_type ) {
-  const Value& v = coord_array[ elem ];
-	if( v.IsInt()  || v.IsUint() || v.IsUint64() || v.IsInt64() ) {
-		*r_type = INTSXP;
-	} else if ( v.IsDouble() ) {
-		*r_type = REALSXP;
-	} else {
-		Rcpp::stop("Unknown coordinate type");
-	}
-}
+// TODO( this will iterate along a long LINESTRING... )
+// int make_type( const Value& coord_array ) {
+// 	int n = coord_array.Size();
+// 	int i;
+//   //const Value& v = coord_array[ elem ];
+//   for ( i = 0; i < n; i++ ) {
+//   	if( coord_array[i].IsDouble() ) {
+//   		return REALSXP;
+//   	}
+//   }
+//   return INTSXP;
+
+	// if( v.IsInt()  || v.IsUint() || v.IsUint64() || v.IsInt64() ) {
+	// 	*r_type = INTSXP;
+	// } else if ( v.IsDouble() ) {
+	// 	*r_type = REALSXP;
+	// } else {
+	// 	Rcpp::stop("Unknown coordinate type");
+	// }
+// }
 
 
 
@@ -67,9 +77,10 @@ void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector n
 void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
                 bool requires_attribute, std::string attribute ) {
 	int n = point_array.Size();
-	int r_type;
-	// int elem = 0;
-	// make_type( point_array, &r_type );
+
+	//int r_type;
+
+	// r_type = make_type( point_array );
 	//
 	// switch ( r_type ) {
 	// case INTSXP: {
@@ -116,15 +127,13 @@ void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List
 void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
                       bool requires_attribute, std::string attribute ) {
 	int n = line_array.Size();
-	// int r_type;
-	// int elem = 0;
 	int max_cols = 2;
 	int row;
 
+	//int r_type;
 	// // TODO( does this take up too much time )?
-	// const Value& first_array = line_array[ 0 ];
-	// make_type( first_array, &r_type );
-
+	// r_type = make_type( line_array );
+	//
 	// switch ( r_type ) {
 	// case INTSXP: {
 	// 	Rcpp::IntegerMatrix im( n, 4 );
@@ -170,13 +179,13 @@ void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::
 			nm.attr("class") = sfg_attributes( attribute );
 		}
 	 	sfc[i] = nm;
-
-	// 	break;
-	// }
-	// default: {
-	// 	Rcpp::stop("unknown coordinate type");
-	// }
-	// }
+//
+// 		break;
+// 	}
+// 	default: {
+// 		Rcpp::stop("unknown coordinate type");
+// 	}
+// 	}
 
 }
 
@@ -266,16 +275,17 @@ void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& b
 	Rcpp::List mp( n );
 	int j, k;
 	for ( j = 0; j < n; j++ ) {
-		const Value& polygon_array = multi_polygon_array[i];
+		const Value& polygon_array = multi_polygon_array[j];
 		validate_array( polygon_array );
 		int np = polygon_array.Size();
 		Rcpp::List p( np );
 
 		for ( k = 0; k < np; k++ ) {
 			validate_array( polygon_array[k] );
-			//Rcpp::Rcout << "k: " << k << ", np: " << np <<  std::endl;
+			Rcpp::Rcout << "k: " << k << ", np: " << np <<  std::endl;
 			//const Value& v = polygon_array[k];
 			get_line_string( polygon_array[k], bbox, p, k, false, "");
+			//get_polygon( polygon_array[k], bbox, p, k, false, "");
 		}
 		mp[j] = p;
 	}
@@ -286,7 +296,6 @@ void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& b
 	Rcpp::List lst(1);
 	lst[0] = mp;
 	sfc[i] = lst;
-
 }
 
 

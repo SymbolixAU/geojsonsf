@@ -2,18 +2,19 @@ context("null geometries")
 
 test_that("null geometries parsed correctly", {
 
-	js <- '{"type":"Feature","properties":{"id":1},"geometry":null}'
+	js <- '{"type":"Feature","properties":{"id":1.0},"geometry":null}'
 	sf <- geojson_sf(js)
 	expect_true(attr(sf$geometry, "n_empty") == 1)
 	expect_true(attributes(sf$geometry)[['class']][1] == "sfc_POINT")
 	js2 <- sf_geojson(sf, atomise = T)
+	## TOD( error )
 	expect_true(gsub(" |\\r|\\n|\\t","",js) == js2)
 	wkt <- geojson_wkt(js)
 	expect_true(wkt[1, 'geometry'] == "POINT EMPTY")
 
 	js <- '{"type":"FeatureCollection","features":[
-	{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}},
-	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
+	{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+	{"type":"Feature","properties":{"id":2.0},"geometry":null}]}'
 	sf <- geojson_sf(js)
 	expect_true(attr(sf$geometry, "n_empty") == 1)
 	expect_true(attributes(sf$geometry)[['class']][1] == "sfc_POINT")
@@ -22,8 +23,9 @@ test_that("null geometries parsed correctly", {
 	wkt <- geojson_wkt(js)
 	expect_true(wkt[2, 'geometry'] == "POINT EMPTY")
 
+	## TODO( error - double vs int )
 	js <- '{"type":"FeatureCollection","features":[
-	{"type":"Feature","properties":{"id":1},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
+	{"type":"Feature","properties":{"id":1},"geometry":{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0]]}},
 	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
 	sf <- geojson_sf(js)
 	expect_true(attr(sf$geometry, "n_empty") == 1)
@@ -33,9 +35,10 @@ test_that("null geometries parsed correctly", {
 	wkt <- geojson_wkt(js)
 	expect_true(wkt[2, 'geometry'] == "POINT EMPTY")
 
+	## TODO( error - double vs int )
 	js <- '{"type":"FeatureCollection","features":[
-	{"type":"Feature","properties":{"id":1},"geometry":{"type":"LineString","coordinates":[[0,0],[1,1]]}},
-	{"type":"Feature","properties":{"id":2},"geometry":null}]}'
+	{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0]]}},
+	{"type":"Feature","properties":{"id":2.0},"geometry":null}]}'
 	sf <- geojson_sf(js)
 	expect_true(attr(sf$geometry, "n_empty") == 1)
 	expect_true(attributes(sf$geometry)[['class']][1] == "sfc_LINESTRING")
