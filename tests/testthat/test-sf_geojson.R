@@ -4,50 +4,415 @@ test_that("sfc objects converted to GeoJSON", {
 
 	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sfc(js)
-	expect_true(sfc_geojson(sf) == js)
-	expect_true( jsonify::validate_json(sfc_geojson(sf)) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
 
 	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0]]}'
 	sf <- geojson_sfc(js)
-	expect_true(sfc_geojson(sf) == js)
-	expect_true( jsonify::validate_json(sfc_geojson(sf)) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j) )
 
 	js <- '{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0]]}'
 	sf <- geojson_sfc(js)
-	expect_true(sfc_geojson(sf) == js)
-	expect_true( jsonify::validate_json(sfc_geojson(sf)) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j) )
 
 	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]]]}'
 	sf <- geojson_sfc(js)
-	expect_true(sfc_geojson(sf) == js)
-	expect_true( jsonify::validate_json(sfc_geojson(sf)) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
 
 	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]],[[2.0,2.0],[3.0,3.0]]]}'
 	sf <- geojson_sfc(js)
-	expect_true(sfc_geojson(sf) == js)
-	expect_true( jsonify::validate_json(sfc_geojson(sf)) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
 
 	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}'
 	sf <- geojson_sfc(js)
-	expect_true(sfc_geojson(sf) == js)
-	expect_true( jsonify::validate_json(sfc_geojson(sf)) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j) )
 
 	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
 	sf <- geojson_sfc(js)
-	expect_true(sfc_geojson(sf) == js)
-	expect_true( jsonify::validate_json(sfc_geojson(sf)) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
 
 	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[0.5,0.5],[0.5,0.75],[0.75,0.75],[0.75,0.5],[0.5,0.5]]],[[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
 	sf <- geojson_sfc( js )
-	expect_true( sfc_geojson( sf ) == js )
-	expect_true( jsonify::validate_json(sfc_geojson(geojson_sfc(js))) )
+	j <- sfc_geojson(sf)
+	expect_true( j == js )
+	expect_true( jsonify::validate_json( j ) )
+})
+
+
+test_that("sfc objects with ZM converted to GeoJSON", {
+
+	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XY")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Point","coordinates":[0.0,0.0,0.0]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Point","coordinates":[0.0,0.0,0.0,0.0]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XY")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XY")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XY")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0,0.0],[1.0,1.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0,1.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0,0.0,0.0],[1.0,1.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0,1.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0,1.0,1.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XY")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0,0.0],[0.0,0.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0,2.0,3.0],[1.0,0.0],[0.0,0.0]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XY")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0,2.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0,1.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZ")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0,1.0],[3.0,3.0],[3.0,2.0],[2.0,2.0,1.0,1.0]]]]}'
+	sf <- geojson_sfc(js)
+	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
+	j <- sfc_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+})
+
+
+st_that("sf objects converted to GeoJSON", {
+
+	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
+	sf <- geojson_sf(js)
+	j <- sf_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	j <- sf_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	j <- sf_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]]]}'
+	sf <- geojson_sf(js)
+	j <- sf_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]],[[2.0,2.0],[3.0,3.0]]]}'
+	sf <- geojson_sf(js)
+	j <- sf_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}'
+	sf <- geojson_sf(js)
+	j <- sf_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sf(js)
+	j <- sf_geojson(sf)
+	expect_true( j == js)
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[0.5,0.5],[0.5,0.75],[0.75,0.75],[0.75,0.5],[0.5,0.5]]],[[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sf( js )
+	j <- sf_geojson(sf)
+	expect_true( j == js )
+	expect_true( jsonify::validate_json( j ) )
+})
+
+## SF ZM
+test_that("sf objects with ZM converted to GeoJSON", {
+
+	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XY")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Point","coordinates":[0.0,0.0,0.0]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Point","coordinates":[0.0,0.0,0.0,0.0]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XY")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XY")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"LineString","coordinates":[[0.0,0.0,0.0,0.0],[1.0,1.0]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XY")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0,0.0],[1.0,1.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0,1.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0,0.0,0.0],[1.0,1.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0,1.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0,1.0,1.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XY")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0,0.0],[0.0,0.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0,2.0,3.0],[1.0,0.0],[0.0,0.0]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XY")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0,2.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0,1.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZ")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+
+	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0,1.0],[3.0,3.0],[3.0,2.0],[2.0,2.0,1.0,1.0]]]]}'
+	sf <- geojson_sf(js)
+	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
+	j <- sf_geojson( sf )
+	expect_true( jsonify::validate_json( j ) )
+})
+## SF ZM
+
+## SF features
+test_that("features with null geometries handled correctly", {
+
+	js <- '{"type":"Feature","properties":{},"geometry":null}'
+	sf <- geojson_sf( js )
+	expect_equal( attr( sf$geometry[[1]], "class")[1], "XY" )
 })
 
 test_that("GeometryCollections correctly closed", {
 	js <- '{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100.0,0.0]},{"type":"LineString","coordinates":[[101.0,0.0],[102.0,1.0]]},{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0],[2.0,2.0]]}]}'
 	sf <- geojson_sfc(js)
 	j <- sfc_geojson(sf)
-	expect_true( jsonify::validate_json(j))
+	expect_true( jsonify::validate_json( j ) )
 	expect_true(js == j)
 
 	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiLineString","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}]}'
@@ -72,71 +437,30 @@ test_that("GeometryCollections correctly closed", {
 	expect_equal(sf, sf2)
 })
 
-test_that("single sf objects converted to GeoJSON", {
-
-	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson( sf )
-	expect_true( jsonify::validate_json(j))
-	expect_true(j == js)
-
-	js <- '{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0]]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson(sf)
-	expect_true( jsonify::validate_json(j))
-	expect_true(j == js)
-
-	js <- '{"type":"LineString","coordinates":[[0.0,0.0],[1.0,1.0]]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson(sf)
-	expect_true( jsonify::validate_json(j))
-	expect_true(j == js)
-
-	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]]]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson(sf)
-	expect_true( jsonify::validate_json(j))
-	expect_true(j == js)
-
-	js <- '{"type":"MultiLineString","coordinates":[[[0.0,0.0],[1.0,1.0]],[[2.0,2.0],[3.0,3.0]]]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson( sf )
-	expect_true( jsonify::validate_json(j))
-	expect_true(j == js)
-
-	js <- '{"type":"Polygon","coordinates":[[[0.0,0.0],[1.0,1.0]]]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson(sf)
-	expect_true( jsonify::validate_json(j))
-	expect_true(j == js)
-
-	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson(sf)
-	expect_true( jsonify::validate_json(j))
-	expect_true(j == js)
-
-	js <- '{"type":"MultiPolygon","coordinates":[[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]],[[0.5,0.5],[0.5,0.75],[0.75,0.75],[0.75,0.5],[0.5,0.5]]],[[[2.0,2.0],[2.0,3.0],[3.0,3.0],[3.0,2.0],[2.0,2.0]]]]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson(sf)
-	expect_true( jsonify::validate_json(j))
-	expect_true(sf_geojson(sf, TRUE) == js)
-
-	js <- '{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100.0,0.0]},{"type":"LineString","coordinates":[[101.0,0.0],[102.0,1.0]]},{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0],[2.0,2.0]]}]}'
-	sf <- geojson_sf(js)
-	j <- sf_geojson(sf)
-	expect_true( jsonify::validate_json(j))
-	expect_true(js == j)
+test_that("geometry collections with geometries with XYZM dimensions", {
+	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0,0]]]]}]}'
+	sf <- geojson_sfc( js )
 })
+
+
 
 test_that("sf without properties not converted to FeatureCollections", {
 	js <- '[{"type":"Polygon","coordinates":[[[0,0],[1,1]]]},{"type":"MultiLineString","coordinates":[[[0,0],[1,1]],[[3,3],[4,4]]]}]'
 	sf <- geojson_sf(js)
-	expect_true(all(sf_geojson(sf, atomise = F) == sf_geojson(sf, atomise = T)))
+	j1 <- sf_geojson(sf, atomise = F)
+	j2 <- sf_geojson(sf, atomise = T)
+	expect_true(all( j1 == j2 ))
+	expect_true( all( jsonify::validate_json( j1 ) ) )
+	expect_true( all( jsonify::validate_json( j1 ) ) )
+
 
 	js <- '[{"type":"Polygon","coordinates":[[[0,0],[1,1]]]},{"type":"MultiLineString","coordinates":[[[0,0],[1,1]]]},{"type":"GeometryCollection","geometries":[{"type":"Point", "coordinates":[100.0, 0.0]},{"type":"LineString","coordinates":[[101,0],[102,1]]},{"type":"MultiPoint","coordinates":[[0,0],[1,1],[2,2]]}]}]'
 	sf <- geojson_sf(js)
-	expect_true(all(sf_geojson(sf, atomise = T) == sf_geojson(sf, atomise = F)))
+	j1 <- sf_geojson(sf, atomise = F)
+	j2 <- sf_geojson(sf, atomise = T)
+	expect_true(all( j1 == j2 ))
+	expect_true( all( jsonify::validate_json( j1 ) ) )
+	expect_true( all( jsonify::validate_json( j1 ) ) )
 })
 
 test_that("sf with properties converted to FeatureCollection", {
@@ -177,9 +501,8 @@ test_that("sf object with properties converted to sfc", {
 	expect_false(grepl("properties", sfc_geojson( sf$geometry )))
 })
 
-## TODO( Errors )
 test_that("errors are handled", {
-	js <- '{"type":"Point","coordinates":[0,0]}'
+	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sf(js)
 	expect_error(sfc_geojson(sf),"Expected an sfc object")
 

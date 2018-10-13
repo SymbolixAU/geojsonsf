@@ -8,8 +8,8 @@
 using namespace Rcpp;
 using namespace rapidjson;
 
-Rcpp::CharacterVector sfg_attributes(std::string geom_type) {
-  return Rcpp::CharacterVector::create("XY", geom_type, "sfg");
+Rcpp::CharacterVector sfg_attributes( std::string& dimension, std::string& geom_type ) {
+  return Rcpp::CharacterVector::create( dimension, geom_type, "sfg" );
 }
 
 double get_lon(const Value& coord_array) {
@@ -59,6 +59,24 @@ double get_lat(const Value& coord_array) {
 //   return point;
 // }
 
+std::string make_dimension( int n ) {
+	switch( n ) {
+	case 2: {
+	return "XY";
+	break;
+}
+	case 3: {
+		return "XYZ";
+		break;
+	}
+	case 4: {
+		return "XYZM";
+		break;
+	}
+	}
+	return "XY";
+}
+
 void get_integer_points( const Value& point_array, int& n, Rcpp::IntegerVector iv ) {
 	int i;
 	for ( i = 0; i < n; i++ ) {
@@ -66,13 +84,16 @@ void get_integer_points( const Value& point_array, int& n, Rcpp::IntegerVector i
 	}
 }
 
-void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector nv, Rcpp::NumericVector& bbox ) {
+void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector nv,
+                         Rcpp::NumericVector& bbox ) {
 	int i;
 	for ( i = 0; i < n; i++ ) {
 		nv[i] = point_array[i].GetDouble();
 	}
 	calculate_bbox(bbox, nv);
 }
+
+
 
 void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
                 bool requires_attribute, std::string attribute ) {
@@ -95,8 +116,10 @@ void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List
 	// case REALSXP: {
 		Rcpp::NumericVector nv( n );
 		get_numeric_points( point_array, n, nv, bbox );
+
 		if ( requires_attribute ) {
-			nv.attr("class") = sfg_attributes( attribute );
+		  std::string dim = make_dimension( n );
+			nv.attr("class") = sfg_attributes( dim, attribute );
 		}
 		sfc[i] = nv;
 	// 	break;
@@ -125,9 +148,9 @@ void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List
 // }
 
 void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
-                      bool requires_attribute, std::string attribute ) {
+                      bool requires_attribute, std::string attribute, int& max_cols ) {
 	int n = line_array.Size();
-	int max_cols = 2;
+	//int max_cols = 2;
 	int row;
 
 	//int r_type;
@@ -162,6 +185,8 @@ void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::
  		for( row = 0; row < n; row++ ) {
  			const Value& coord_array = line_array[ row ];
  			int n_points = coord_array.Size();
+ 			// Rcpp::Rcout << "linestring n_points: " << n_points << std::endl;
+ 			// Rcpp::Rcout << "linestring max_cols: " << max_cols << std::endl;
 			if( n_points > max_cols ) {
 				max_cols = n_points;
 			}
@@ -176,7 +201,8 @@ void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::
 		//Rcpp::Rcout << "nm: " << nm << std::endl;
 
 		if ( requires_attribute ) {
-			nm.attr("class") = sfg_attributes( attribute );
+		  std::string dim = make_dimension( max_cols );
+			nm.attr("class") = sfg_attributes( dim, attribute );
 		}
 	 	sfc[i] = nm;
 //
@@ -205,17 +231,27 @@ void get_multi_line_string( const Value& multi_line_array, Rcpp::NumericVector& 
 	int n = multi_line_array.Size();
 	Rcpp::List ml( n );
 	int j;
+	int max_dimension = 2;
 	for ( j = 0; j < n; j++ ) {
+		int max_cols = 2;
 		validate_array( multi_line_array[j] );
 		//const Value& line_array = multi_line_array[j];
-		get_line_string( multi_line_array[j], bbox, ml, j, false, attribute );
+		get_line_string( multi_line_array[j], bbox, ml, j, false, attribute, max_cols );
+		if( max_cols > max_dimension ) {
+			// Rcpp::Rcout << "max_cols: " << max_cols << std::endl;
+			// Rcpp::Rcout << "max_dimension: " << max_dimension << std::endl;
+			max_dimension = max_cols;
+		}
 	}
 	if( requires_attribute ) {
-	  ml.attr("class") = sfg_attributes( attribute );
+		//Rcpp::Rcout << "multi linestring dim: " << max_dimension << std::endl;
+		std::string dim = make_dimension( max_dimension );
+	  ml.attr("class") = sfg_attributes( dim, attribute );
 	}
-	Rcpp::List lst(1);
-	lst[0] = ml;
-	sfc[i] = lst;
+	//Rcpp::List lst(1);
+	//lst[0] = ml;
+	//sfc[i] = lst;
+	sfc[i] = ml;
 }
 
 
@@ -238,20 +274,26 @@ void get_polygon( const Value& polygon_array, Rcpp::NumericVector& bbox, Rcpp::L
 	int n = polygon_array.Size();
 	Rcpp::List pl( n );
 	int j;
+	int max_dimension = 2;
 	for ( j = 0; j < n; j++ ) {
+		int max_cols = 2;
 	 	validate_array( polygon_array[j] );
 		//Rcpp::Rcout << "polygon size n: " << n << std::endl;
-	 	get_line_string( polygon_array[j], bbox, pl, j, false, "");
+	 	get_line_string( polygon_array[j], bbox, pl, j, false, "", max_cols );
+	 	if ( max_cols > max_dimension ) {
+	 		max_dimension = max_cols;
+	 	}
 	}
 
 
 	if( requires_attribute ) {
-		pl.attr("class") = sfg_attributes( attribute );
+		std::string dim = make_dimension( max_dimension );
+		pl.attr("class") = sfg_attributes( dim, attribute );
 	}
-	Rcpp::List lst(1);
-	lst[0] = pl;
-	sfc[i] = lst;
-
+	//Rcpp::List lst(1);
+	//lst[0] = pl;
+	//sfc[i] = lst;
+	sfc[i] = pl;
 }
 
 
@@ -274,6 +316,7 @@ void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& b
 	int n = multi_polygon_array.Size();
 	Rcpp::List mp( n );
 	int j, k;
+	int max_dimension = 2;
 	for ( j = 0; j < n; j++ ) {
 		const Value& polygon_array = multi_polygon_array[j];
 		validate_array( polygon_array );
@@ -281,21 +324,29 @@ void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& b
 		Rcpp::List p( np );
 
 		for ( k = 0; k < np; k++ ) {
+			int max_cols = 2;
+			Rcpp::Rcout << "multi polygon max_cols " << max_cols << std::endl;
+			Rcpp::Rcout << "multi polygon max_dimension " << max_dimension << std::endl;
 			validate_array( polygon_array[k] );
-			Rcpp::Rcout << "k: " << k << ", np: " << np <<  std::endl;
+			//Rcpp::Rcout << "k: " << k << ", np: " << np <<  std::endl;
 			//const Value& v = polygon_array[k];
-			get_line_string( polygon_array[k], bbox, p, k, false, "");
+			get_line_string( polygon_array[k], bbox, p, k, false, "", max_cols );
+			if( max_cols > max_dimension ) {
+				max_dimension = max_cols;
+			}
 			//get_polygon( polygon_array[k], bbox, p, k, false, "");
 		}
 		mp[j] = p;
 	}
 
 	if( requires_attribute ) {
-		mp.attr("class") = sfg_attributes( attribute );
+		std::string dim = make_dimension( max_dimension );
+		mp.attr("class") = sfg_attributes( dim, attribute );
 	}
-	Rcpp::List lst(1);
-	lst[0] = mp;
-	sfc[i] = lst;
+	//Rcpp::List lst(1);
+	// lst[0] = mp;
+	// sfc[i] = lst;
+	sfc[i] = mp;
 }
 
 

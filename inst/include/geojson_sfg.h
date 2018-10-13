@@ -22,14 +22,15 @@ Rcpp::NumericVector get_point(const Value& point_array);
 
 Rcpp::NumericVector get_point(const Value& point_array, Rcpp::NumericVector& bbox);
 
-void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i, bool requires_attribute, std::string attribute );
+void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
+                 bool requires_attribute, std::string attribute );
 
 Rcpp::NumericMatrix get_multi_point(const Value& multi_point_array);
 
 Rcpp::NumericMatrix get_multi_point(const Value& multi_point_array, Rcpp::NumericVector& bbox);
 
 void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
-                      bool requires_attribute, std::string attribute );
+                      bool requires_attribute, std::string attribute, int& max_cols );
 
 Rcpp::NumericMatrix get_line_string(const Value& line_array);
 

@@ -56,7 +56,11 @@ void parse_geometry_object_wkt(Rcpp::List& sfc,
 
   wkt = os.str();
   transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
-  wkt.attr("class") = sfg_attributes(geom_type);
+
+  // TODO( dimension )
+  std::string dim = "XY";
+
+  wkt.attr("class") = sfg_attributes(dim, geom_type);
   sfc[i] = wkt;
 }
 
@@ -93,7 +97,10 @@ Rcpp::List parse_geometry_collection_object_wkt(const Value& val,
   os << ")";
 
   geom_collection_wkt = os.str();
-  geom_collection_wkt.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
+  // TODO( dimension );
+  std::string dim = "XY";
+  std::string attribute = "GEOMETRYCOLLECTION";
+  geom_collection_wkt.attr("class") = sfg_attributes( dim, attribute );
   return geom_collection_wkt;
 }
 
@@ -125,7 +132,10 @@ Rcpp::List parse_feature_object_wkt(const Value& feature,
 
   } else {
   	Rcpp::StringVector wkt = "POINT EMPTY";
-  	wkt.attr("class") = sfg_attributes("POINT");
+  	// TODO( dimension )
+  	std::string dim = "XY";
+  	std::string attribute = "POINT";
+  	wkt.attr("class") = sfg_attributes( dim, attribute );
   	sfc[0] = wkt;
   }
 

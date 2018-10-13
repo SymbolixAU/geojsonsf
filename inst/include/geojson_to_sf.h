@@ -7,7 +7,7 @@
 using namespace Rcpp;
 using namespace rapidjson;
 
-Rcpp::CharacterVector sfg_attributes(std::string geom_type);
+Rcpp::CharacterVector sfg_attributes( std::string& dimension, std::string& geom_type );
 
 void parse_geometry_object(Rcpp::List& sfc, int i, const Value& geometry,
                            Rcpp::NumericVector& bbox,

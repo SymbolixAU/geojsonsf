@@ -147,7 +147,10 @@ sfc_geojson <- function( sfc ) UseMethod("sfc_geojson")
 #' @export
 sfc_geojson.sfc <- function(sfc) rcpp_sfc_to_geojson(sfc)
 
+#' @export
 sf_geojson.default <- function(sf, atomise = FALSE) stop("Expected an sf object")
+
+#' @export
 sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 
 date_columns <- function( sf ) names(which(vapply(sf , function(x) { inherits(x, "Date") | inherits(x, "POSIXct") }, T)))
