@@ -120,12 +120,7 @@ test_that("GeometryCollections correctly closed", {
 	expect_true(js == j)
 
 	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiLineString","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}]}'
-	sfg <- geojson_sfc(js)
-
-	sf <- sf::st_read( js )
-	str( sf$geometry )
-	str( sfg )
-
+	sf <- geojson_sfc(js)
 	j <- sfc_geojson(sf)
 	expect_true( jsonify::validate_json(j))
 	sf2 <- geojson_sfc(j)
@@ -152,19 +147,6 @@ test_that("GeometryCollections correctly closed", {
 	sf2 <- geojson_sf(j)
 	expect_equal(sf, sf2)
 })
-
-test_that("geometry collections with geometries with XYZM dimensions", {
-	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0,0]]]]}]}'
-	sf <- geojson_sfc( js )
-	expect_equal( attr( sf[[1]], "class")[1], "XY" )
-
-	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0,0,0]]]]}]}'
-	sf <- geojson_sfc( js )
-	expect_equal( attr( sf[[1]], "class")[1], "XY" )
-
-})
-
-
 
 test_that("sf without properties not converted to FeatureCollections", {
 	js <- '[{"type":"Polygon","coordinates":[[[0,0],[1,1]]]},{"type":"MultiLineString","coordinates":[[[0,0],[1,1]],[[3,3],[4,4]]]}]'
