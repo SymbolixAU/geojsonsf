@@ -73,8 +73,11 @@ std::string make_dimension( int n ) {
 		return "XYZM";
 		break;
 	}
+	default: {
+		Rcpp::stop("unknown dimension attribute");
 	}
-	return "XY";
+	}
+	return "XY"; // never reached
 }
 
 void get_integer_points( const Value& point_array, int& n, Rcpp::IntegerVector iv ) {

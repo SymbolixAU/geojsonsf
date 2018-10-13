@@ -51,7 +51,18 @@
 # str( geojson_sf( js ) )
 #
 # ## can geometry collections have different dims?
-# js <- '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0,5],[0,1,5],[1,1,5],[1,0,5],[0,0,5]]]},{"type":"Point","coordinates":[0,1]}]}'
+# js <- '{
+#   "type":"GeometryCollection",
+#   "geometries":[
+#   {
+#     "type":"Polygon",
+#     "coordinates":[[[0,0,5],[1,0,5],[1,1,5],[0,1,5],[0,0,5]]]
+#   },{
+#     "type":"Point",
+#     "coordinates":[3,3]
+#   }
+#   ]
+# }'
 #
 # sf <- sf::st_read( js )
 #
@@ -66,7 +77,10 @@
 # str( sf )
 # str( geojson_sf( js ) )
 #
-# geojson_sf( js )
+# sf <- geojson_sf( js )
+#
+# sfc_geojson( sf::st_sfc( sf::st_point(x = c(0,1,2), dim = "XYM") ) )
+#
 
 # geojsonsf:::sf_to_geojson( sf )
 #

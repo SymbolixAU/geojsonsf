@@ -153,13 +153,13 @@ Rcpp::List construct_sfc(int& sfg_objects,
                          std::set< std::string >& geometry_types,
                          int& nempty) {
 
-  Rcpp::List sfc_output(sfg_objects);
+  Rcpp::List sfc_output( sfg_objects );
   std::string geom_attr;
 
   int sfg_counter = 0;
 
-  fetch_geometries(sf, sfc_output, sfg_counter);
-  attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types, nempty);
+  fetch_geometries( sf, sfc_output, sfg_counter );
+  attach_sfc_attributes( sfc_output, geom_attr, bbox, geometry_types, nempty );
 
   return sfc_output;
 }

@@ -46,7 +46,7 @@ void parse_geometry_object(Rcpp::List& sfc,
 
   std::string geom_type = geometry["type"].GetString();
   const Value& coord_array = geometry["coordinates"];
-  geometry_types.insert(geom_type);
+  geometry_types.insert( geom_type );
 
 
   if (geom_type == "Point") {
@@ -116,11 +116,14 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
 
     parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
   }
+  //geometry_types.clear();
+  geometry_types.insert( "GEOMETRYCOLLECTION" );
 
   if ( !expand_geometries ) {
   	// TODO( dimension )
   	std::string dim = "XY";
   	std::string attribute = "GEOMETRYCOLLECTION";
+  	Rcpp::Rcout << "assigning geometrycollection attribute" << std::endl;
   	geom_collection.attr("class") = sfg_attributes( dim, attribute );
   } else {
   	sfg_objects+=n;
