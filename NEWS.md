@@ -1,5 +1,6 @@
 ## v1.2.0
 
+* `simplify` argument for `geojson_sf()` to keep `FeatureCollection`s when converting `sf` without properties
 * `sf_geojson()` performance improvments using `jsonify`
 
 ### Changes
