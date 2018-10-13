@@ -16,20 +16,57 @@
 # sf11 <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipolygon(x = list(ply1, ply2))))
 # sf12 <- sf::st_sf(geometry = sf::st_sfc(sf::st_multipoint(x = matrix(c(0,0,1,1),ncol = 2))))
 # sf13 <- sf::st_sf(geometry = sf::st_sfc(sf::st_geometrycollection(x = list( sf::st_point(x = c(0,0)), sf::st_linestring(matrix(c(1,2,3,4), ncol = 2)), sf::st_point(), sf::st_multipolygon()))))
-# sf14 <- sf::st_sf(geometry = sf::st_sfc(sf::st_geometrycollection(x = list( sf::st_point(x = c(0,0,0)), sf::st_linestring(matrix(c(1,2,1,3,4,1), ncol = 2)), sf::st_point(), sf::st_multipolygon()))))
+# # sf14 <- sf::st_sf(geometry = sf::st_sfc(sf::st_geometrycollection(x = list( sf::st_point(x = c(0,0,0)), sf::st_linestring(matrix(c(1,2,1,3,4,1), ncol = 2)), sf::st_point(), sf::st_multipolygon()))))
 #
 #
-# sf <- rbind(sf1, sf2, sf3, sf4, sf5, sf6, sf7, sf8, sf9, sf10, sf11, sf12, sf13, sf14)
+# sf <- rbind(sf1, sf2, sf3, sf4, sf5, sf6, sf7, sf8, sf9, sf10, sf11, sf12, sf13)
+# sf_geojson( sf )
+#
 # sf$id <- 1:13
 # sf$val <- letters[1:13]
-
-# js <- '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0],[0,1],[1,1],[1,0],[0,0]]]}]}'
+# sf_geojson( sf )
+# jsonify::validate_json( sf_geojson( sf ) )
 #
-# sf <- sf::st_sf( geometry = sf::st_sfc( sf::st_geometrycollection( x = list( sf::st_polygon( x = list( matrix(c(0,0,0,1,1,1,1,0,0,0), ncol = 2, byrow = T ) ))))))
+# cat( sf_geojson( sf13 ) )
+#
+#
+# js <- '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0,5],[0,1,5],[1,1,5],[1,0,5],[0,0,5]]]}]}'
+#
+# sf <- sf::st_sf( geometry = sf::st_sfc( sf::st_geometrycollection( x = list(
+# 	sf::st_polygon( x = list( matrix(c(0,0,5,0,1,5,1,1,5,1,0,5,0,0,5), ncol = 3, byrow = T ) ) )
+# ))))
 #
 # str( sf )
-#
 # str( geojson_sf( js ) )
+#
+# ## GEOMETRYCOLLEcTOIN should have the same dim as the geometries inside it
+# js <- '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0,5],[0,1,5],[1,1,5],[1,0,5],[0,0,5]]]},{"type":"Point","coordinates":[0,1,2]}]}'
+#
+# sf <- sf::st_sf( geometry = sf::st_sfc( sf::st_geometrycollection( x = list(
+# 	sf::st_polygon( x = list( matrix(c(0,0,5,0,1,5,1,1,5,1,0,5,0,0,5), ncol = 3, byrow = T ) ) )
+# 	, sf::st_point( x = c(0,1,2))
+# 	))))
+#
+# str( sf )
+# str( geojson_sf( js ) )
+#
+# ## can geometry collections have different dims?
+# js <- '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0,5],[0,1,5],[1,1,5],[1,0,5],[0,0,5]]]},{"type":"Point","coordinates":[0,1]}]}'
+#
+# sf <- sf::st_read( js )
+#
+# sf$geometry[[1]]
+# # GEOMETRYCOLLECTION Z (POLYGON Z ((0 0 5, 0 1 5, 1 1 5, 1 0 5, 0 0 5)), POINT Z (0 1 0))
+#
+# sf <- sf::st_sf( geometry = sf::st_sfc( sf::st_geometrycollection( x = list(
+# 	sf::st_polygon( x = list( matrix(c(0,0,5,0,1,5,1,1,5,1,0,5,0,0,5), ncol = 3, byrow = T ) ) )
+# 	, sf::st_point( x = c(0,1))
+# ))))
+#
+# str( sf )
+# str( geojson_sf( js ) )
+#
+# geojson_sf( js )
 
 # geojsonsf:::sf_to_geojson( sf )
 #

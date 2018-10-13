@@ -402,7 +402,6 @@ test_that("sf objects with ZM converted to GeoJSON", {
 
 ## SF features
 test_that("features with null geometries handled correctly", {
-
 	js <- '{"type":"Feature","properties":{},"geometry":null}'
 	sf <- geojson_sf( js )
 	expect_equal( attr( sf$geometry[[1]], "class")[1], "XY" )
@@ -414,6 +413,13 @@ test_that("GeometryCollections correctly closed", {
 	j <- sfc_geojson(sf)
 	expect_true( jsonify::validate_json( j ) )
 	expect_true(js == j)
+
+	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiLineString","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}]}'
+	sf <- geojson_sfc(js)
+	j <- sfc_geojson(sf)
+	expect_true( jsonify::validate_json(j))
+	sf2 <- geojson_sfc(j)
+	expect_equal(sf, sf2)
 
 	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiLineString","coordinates":[[[0.0,0.0],[0.0,1.0],[1.0,1.0],[1.0,0.0],[0.0,0.0]]]}]}'
 	sf <- geojson_sf(js)
@@ -440,6 +446,12 @@ test_that("GeometryCollections correctly closed", {
 test_that("geometry collections with geometries with XYZM dimensions", {
 	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0,0]]]]}]}'
 	sf <- geojson_sfc( js )
+	expect_equal( attr( sf[[1]], "class")[1], "XY" )
+
+	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0,0,0]]]]}]}'
+	sf <- geojson_sfc( js )
+	expect_equal( attr( sf[[1]], "class")[1], "XY" )
+
 })
 
 
@@ -520,4 +532,15 @@ test_that("factors are numeric", {
 	expect_false(grepl("value0", geo))
 })
 
+test_that("null objects", {
 
+	js <- '{"type":"Feature","geometry":null}'
+	## TODO( this shouldn't work?? as it's not valid GeoJSON )
+	sf <- sf::st_read( js )
+	## TODO( errors )
+	geojson_sf( sf )
+
+	js <- '{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[0.0,0.0]},{"type":"LineString","coordinates":[[1.0,3.0],[2.0,4.0]]},{"geometry":null}]}'
+	geojson_sf( js )
+
+})
