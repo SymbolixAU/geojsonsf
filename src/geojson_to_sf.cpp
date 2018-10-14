@@ -50,45 +50,23 @@ void parse_geometry_object(Rcpp::List& sfc,
 
 
   if (geom_type == "Point") {
-    //Rcpp::NumericVector point = get_point( coord_array, bbox );
     get_points( coord_array, bbox, sfc, i, true, "POINT");
-    //point.attr("class") = sfg_attributes("POINT");
-    //sfc[i] = point;
-    // TODO ( add POINT attribute );
 
   } else if (geom_type == "MultiPoint") {
-    // Rcpp::NumericMatrix multi_point = get_multi_point(coord_array, bbox);
-    // multi_point.attr("class") = sfg_attributes("MULTIPOINT");
-    //sfc[i] = multi_point;
-
-    //get_multi_point( coord_array, bbox, sfc, i, true, "MULTIPOINT" );
     int max_cols = 2;
     get_line_string( coord_array, bbox, sfc, i, true, "MULTIPOINT", max_cols );
 
   } else if (geom_type == "LineString") {
-    // Rcpp::NumericMatrix line_string = get_line_string(coord_array, bbox);
-    // line_string.attr("class") = sfg_attributes("LINESTRING");
-    // sfc[i] = line_string;
-
     int max_cols = 2;
     get_line_string( coord_array, bbox, sfc, i, true, "LINESTRING", max_cols );
 
   } else if (geom_type == "MultiLineString") {
-    // Rcpp::List multi_line = get_multi_line_string( coord_array, bbox );
-    // multi_line.attr("class") = sfg_attributes("MULTILINESTRING");
-    // sfc[i] = multi_line;
     get_multi_line_string( coord_array, bbox, sfc, i, true, "MULTILINESTRING" );
 
   } else if (geom_type == "Polygon") {
-    // Rcpp::List polygon = get_polygon(coord_array, bbox);
-    // polygon.attr("class") = sfg_attributes("POLYGON");
-    // sfc[i] = polygon;
     get_polygon( coord_array, bbox, sfc, i, true, "POLYGON" );
 
   } else if (geom_type == "MultiPolygon") {
-    // Rcpp::List multi_polygon = get_multi_polygon( coord_array, bbox );
-    // multi_polygon.attr("class") = sfg_attributes("MULTIPOLYGON");
-    // sfc[i] = multi_polygon;
     get_multi_polygon( coord_array, bbox, sfc, i, true, "MULTIPOLYGON" );
 
   } else {
@@ -113,18 +91,14 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
     validate_type(gcval, sfg_objects);
     geom_type = gcval["type"].GetString();
 
-    //Rcpp::Rcout << "gc type: " << geom_type << std::endl;
-
     parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
   }
-  //geometry_types.clear();
   geometry_types.insert( "GEOMETRYCOLLECTION" );
 
   if ( !expand_geometries ) {
   	// TODO( dimension )
   	std::string dim = "XY";
   	std::string attribute = "GEOMETRYCOLLECTION";
-  	//Rcpp::Rcout << "assigning geometrycollection attribute" << std::endl;
   	geom_collection.attr("class") = sfg_attributes( dim, attribute );
   } else {
   	sfg_objects+=n;
@@ -153,7 +127,6 @@ void create_null_object(Rcpp::List& sfc,
 	if (geom_type == "POINT" ) {
 
 		Rcpp::NumericVector nullObj(2, NA_REAL);
-		//Rcpp::NumericVector nullObj;
 		nullObj.attr("class") = sfg_attributes(dim, geom_type);
 		sfc[0] = nullObj;
 
@@ -190,8 +163,6 @@ Rcpp::List parse_feature_object(const Value& feature,
 	const Value& geometry = feature["geometry"];
 	Rcpp::List sfc(1);
 	std::string type;
-
-	//Rcpp::Rcout << "geometry.Size() " << geometry.Size() << std::endl;
 
 	if (geometry.Size() > 0) {
 
@@ -522,7 +493,6 @@ Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {
 
   // Attributes to keep track of along the way
   Rcpp::NumericVector bbox = start_bbox();
-  //std::set< std::string > geometry_types = start_geometry_types();
   std::set< std::string > geometry_types;
   std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
   std::unordered_map< std::string, std::string> property_types;
@@ -578,7 +548,6 @@ Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geomet
 
 	// Attributes to keep track of along the way
 	Rcpp::NumericVector bbox = start_bbox();
-	//std::set< std::string > geometry_types = start_geometry_types();
 	std::set< std::string > geometry_types;
 	std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
 	std::unordered_map< std::string, std::string > property_types;

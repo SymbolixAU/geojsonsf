@@ -79,11 +79,11 @@ Rcpp::NumericVector start_bbox() {
   return bbox;
 }
 
-// TODO(what is this doing?)
-std::set< std::string> start_geometry_types() {
-  std::set< std::string> geometry_types;
-  return geometry_types;
-}
+// // TODO(what is this doing?)
+// std::set< std::string> start_geometry_types() {
+//   std::set< std::string> geometry_types;
+//   return geometry_types;
+// }
 
 
 Rcpp::StringVector start_sfc_classes(size_t collectionCount) {

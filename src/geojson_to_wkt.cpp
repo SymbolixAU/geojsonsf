@@ -132,7 +132,6 @@ Rcpp::List parse_feature_object_wkt(const Value& feature,
 
   } else {
   	Rcpp::StringVector wkt = "POINT EMPTY";
-  	// TODO( dimension )
   	std::string dim = "XY";
   	std::string attribute = "POINT";
   	wkt.attr("class") = sfg_attributes( dim, attribute );
