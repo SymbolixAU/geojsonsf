@@ -52,7 +52,7 @@ test_that("sfc objects converted to GeoJSON", {
 
 })
 
-st_that("sf objects converted to GeoJSON", {
+test_that("sf objects converted to GeoJSON", {
 
 	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sf(js)
@@ -222,17 +222,4 @@ test_that("factors are numeric", {
 	sf$prop0 <- as.factor(sf$prop0)
 	geo <- sf_geojson(sf)
 	expect_false(grepl("value0", geo))
-})
-
-test_that("null objects", {
-
-	js <- '{"type":"Feature","geometry":null}'
-	## TODO( this shouldn't work?? as it's not valid GeoJSON )
-	sf <- sf::st_read( js )
-	## TODO( errors )
-	geojson_sf( sf )
-
-	js <- '{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[0.0,0.0]},{"type":"LineString","coordinates":[[1.0,3.0],[2.0,4.0]]},{"geometry":null}]}'
-	geojson_sf( js )
-
 })

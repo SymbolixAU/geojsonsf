@@ -91,6 +91,7 @@ void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector n
                          Rcpp::NumericVector& bbox ) {
 	int i;
 	for ( i = 0; i < n; i++ ) {
+		validate_point(point_array[i]);
 		nv[i] = point_array[i].GetDouble();
 	}
 	calculate_bbox(bbox, nv);
@@ -101,6 +102,7 @@ void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector n
 void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
                 bool requires_attribute, std::string attribute ) {
 	int n = point_array.Size();
+	validate_points(point_array);
 
 	//int r_type;
 
@@ -328,8 +330,8 @@ void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& b
 
 		for ( k = 0; k < np; k++ ) {
 			int max_cols = 2;
-			Rcpp::Rcout << "multi polygon max_cols " << max_cols << std::endl;
-			Rcpp::Rcout << "multi polygon max_dimension " << max_dimension << std::endl;
+			//Rcpp::Rcout << "multi polygon max_cols " << max_cols << std::endl;
+			//Rcpp::Rcout << "multi polygon max_dimension " << max_dimension << std::endl;
 			validate_array( polygon_array[k] );
 			//Rcpp::Rcout << "k: " << k << ", np: " << np <<  std::endl;
 			//const Value& v = polygon_array[k];

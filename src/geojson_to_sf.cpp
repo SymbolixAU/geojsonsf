@@ -112,7 +112,8 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
     const Value& gcval = geometries[i];
     validate_type(gcval, sfg_objects);
     geom_type = gcval["type"].GetString();
-    Rcpp::Rcout << "gc type: " << geom_type << std::endl;
+
+    //Rcpp::Rcout << "gc type: " << geom_type << std::endl;
 
     parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
   }
@@ -123,7 +124,7 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   	// TODO( dimension )
   	std::string dim = "XY";
   	std::string attribute = "GEOMETRYCOLLECTION";
-  	Rcpp::Rcout << "assigning geometrycollection attribute" << std::endl;
+  	//Rcpp::Rcout << "assigning geometrycollection attribute" << std::endl;
   	geom_collection.attr("class") = sfg_attributes( dim, attribute );
   } else {
   	sfg_objects+=n;
@@ -182,11 +183,15 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 int& nempty) {
 
 	validate_geometry(feature, sfg_objects);
-	validate_properties(feature, sfg_objects);
+
+	// TODO( null property ==> NULL geometry)
+	//validate_properties(feature, sfg_objects);
 
 	const Value& geometry = feature["geometry"];
 	Rcpp::List sfc(1);
 	std::string type;
+
+	//Rcpp::Rcout << "geometry.Size() " << geometry.Size() << std::endl;
 
 	if (geometry.Size() > 0) {
 
