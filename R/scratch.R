@@ -22,6 +22,9 @@
 # sf <- rbind(sf1, sf2, sf3, sf4, sf5, sf6, sf7, sf8, sf9, sf10, sf11, sf12, sf13)
 # sf_geojson( sf )
 #
+# sf_geojson( sf, simplify = FALSE )
+# jsonify::validate_json( sf_geojson( sf, simplify = FALSE ) )
+#
 # sf$id <- 1:13
 # sf$val <- letters[1:13]
 # sf_geojson( sf )
@@ -29,6 +32,8 @@
 #
 # cat( sf_geojson( sf13 ) )
 #
+# sf <- sf::st_sf(geometry = sf::st_sfc( sf::st_point()))
+# sf_geojson( sf )
 #
 # js <- '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0,5],[0,1,5],[1,1,5],[1,0,5],[0,0,5]]]}]}'
 #
@@ -80,7 +85,7 @@
 # sf <- geojson_sf( js )
 #
 # sfc_geojson( sf::st_sfc( sf::st_point(x = c(0,1,2), dim = "XYM") ) )
-#
+
 
 # geojsonsf:::sf_to_geojson( sf )
 #

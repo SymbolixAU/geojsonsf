@@ -9,10 +9,6 @@
 #include "jsonify/jsonify.hpp"
 #include "jsonify/to_json/dataframe.hpp"
 
-// TODO
-// - sfc
-// - atomize
-
 template< typename Writer >
 void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 
@@ -20,8 +16,7 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 
 	std::string geom_type;
 	Rcpp::CharacterVector cls = getSfClass(sfg);
-	Rcpp::String g = cls[1];
-	geom_type = g;
+	geom_type = cls[1];
 
 	// need to keep track of GEOMETRYCOLLECTIONs so we can correctly close them
 	bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION") ? true : false;
@@ -46,8 +41,7 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 }
 
 template< typename Writer >
-void write_geojson(Writer& writer, SEXP sfg,
-                          std::string& geom_type, Rcpp::CharacterVector& cls ) {
+void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type, Rcpp::CharacterVector& cls ) {
 
 	if (geom_type == "POINT") {
 		geojsonsf::writers::points_to_geojson( writer, sfg );
@@ -99,8 +93,8 @@ void make_gc_type(Writer& writer, Rcpp::List& sfg,
 
 				SEXP tst = *it;
 				isnull = geojsonsf::utils::is_null_geometry( tst, geom_type );
-				if (isnull ) {
-					writer.Null();
+				if ( isnull ) {
+					//writer.Null();
 				} else {
 					geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
 					write_geojson(writer, tmp, geom_type, cls);
@@ -121,7 +115,7 @@ void make_gc_type(Writer& writer, Rcpp::List& sfg,
 				SEXP tst = *it;
 				isnull = geojsonsf::utils::is_null_geometry( tst, geom_type );
 				if ( isnull ) {
-					writer.Null();
+					//writer.Null();
 				} else {
 					geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
 					write_geojson(writer, tmp, geom_type, cls);
@@ -170,8 +164,6 @@ Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
 
 // [[Rcpp::export]]
 Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
-	// atomise - each row is a separate GeoJSON string
-	Rcpp::Rcout << "atomise" << std::endl;
 
 	std::string geom_column = sf.attr("sf_column");
 
@@ -277,7 +269,6 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 			geojsonsf::writers::start_properties( writer );
 			writer.StartObject();
 		  // properties first, then sfc
-		  Rcpp::Rcout << "n_properties: " << n_properties << std::endl;
 			for( j = 0; j < n_properties; j++ ) {
 				const char *h = property_names[ j ];
 

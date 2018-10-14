@@ -7,7 +7,6 @@ test_that("null geometries parsed correctly", {
 	expect_true(attr(sf$geometry, "n_empty") == 1)
 	expect_true(attributes(sf$geometry)[['class']][1] == "sfc_POINT")
 	js2 <- sf_geojson(sf, atomise = T)
-	## TOD( error )
 	expect_true(gsub(" |\\r|\\n|\\t","",js) == js2)
 	wkt <- geojson_wkt(js)
 	expect_true(wkt[1, 'geometry'] == "POINT EMPTY")
