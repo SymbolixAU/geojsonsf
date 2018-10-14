@@ -1,6 +1,6 @@
 
 
-geo_melbourne <- paste0( googleway::geo_melbourne, collapse = "")
+#geo_melbourne <- paste0( googleway::geo_melbourne, collapse = "")
 # sf <- geojson_sf(geo_melbourne)
 #
 # coords <- as.data.frame(matrix(unlist(st_geometry(sf[22, ])), ncol = 2))
@@ -17,4 +17,5 @@ geo_melbourne <- paste0( googleway::geo_melbourne, collapse = "")
 # geo_melbourne <- paste0('{"type":"Feature",',js, ',',coords,'}')
 # sf <- geojson_sf(geo_melbourne)
 
+attr( geo_melbourne, "class") <- "json"
 usethis::use_data(geo_melbourne, overwrite = T)
