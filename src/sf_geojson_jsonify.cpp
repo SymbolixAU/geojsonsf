@@ -158,7 +158,7 @@ Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
 		//writer.EndObject();
 		geojson[i] = sb.GetString();
 	}
-
+  geojson.attr("class") = "json";
 	return geojson;
 }
 
@@ -228,6 +228,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 		geojson[i] = sb.GetString();
 	}
 
+	geojson.attr("class") = "json";
 	return geojson;
 }
 

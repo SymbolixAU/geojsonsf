@@ -138,5 +138,28 @@ test_that("null objects", {
 	js2 <- sf_geojson( sf, simplify = F )
 	expect_true(js2 == js)
 	expect_true(jsonify::validate_json(js2))
+
+	# sf <- structure(list(structure(c(NA_real_, NA_real_), class = c("XY",
+	# 	"POINT", "sfg"))), class = c("sfc_POINT", "sfc"), precision = 0, bbox = structure(c(xmin = NA_real_,
+	# 	ymin = NA_real_, xmax = NA_real_, ymax = NA_real_), crs = structure(list(
+	# 	epsg = NA_integer_, proj4string = NA_character_), class = "crs"), class = "bbox"), crs = structure(list(
+	# 	epsg = NA_integer_, proj4string = NA_character_), class = "crs"), n_empty = 1L)
+	#
+	# sfc_geojson( sf )
+
+	sf <- structure(list(geometry = structure(list(structure(c(NA_real_,
+		NA_real_), class = c("XY", "POINT", "sfg"))), class = c("sfc_POINT",
+		"sfc"), precision = 0, bbox = structure(c(xmin = NA_real_, ymin = NA_real_,
+		xmax = NA_real_, ymax = NA_real_), crs = structure(list(epsg = NA_integer_,
+		proj4string = NA_character_), class = "crs"), class = "bbox"), crs = structure(list(
+		epsg = NA_integer_, proj4string = NA_character_), class = "crs"), n_empty = 1L)), row.names = 1L, class = c("sf",
+		"data.frame"), sf_column = "geometry", agr = structure(integer(0), class = "factor", .Label = c("constant",
+		"aggregate", "identity"), .Names = character(0)))
+
+	expect_equal( as.character(sf_geojson( sf )), "null")
+	js <- sf_geojson( sf , simplify = FALSE )
+	expect_true( jsonify::validate_json( js ) )
+	expect_true(grepl("null",js))
+
 })
 
