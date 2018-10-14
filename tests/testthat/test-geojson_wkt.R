@@ -33,3 +33,16 @@ test_that("wkt created correctly", {
 	expect_true(class(fc) == "data.frame")
 	expect_true(class(fcgc) == "data.frame")
 })
+
+test_that("WKT with NULL objects", {
+
+	js <- '{"type":"Feature","properties":{"id":1.0},"geometry":null}'
+	#expect_true( geojson_wkt( js )$geometry[[1]] == "POINT EMPTY" )
+
+	js <- '{"type":"FeatureCollection","features":[
+	{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+	{"type":"Feature","properties":{"id":2.0},"geometry":null}]}'
+
+	#geojson_wkt( js )
+
+})

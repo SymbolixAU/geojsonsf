@@ -46,38 +46,28 @@ void parse_geometry_object(Rcpp::List& sfc,
 
   std::string geom_type = geometry["type"].GetString();
   const Value& coord_array = geometry["coordinates"];
-  geometry_types.insert(geom_type);
+  geometry_types.insert( geom_type );
 
 
   if (geom_type == "Point") {
-    Rcpp::NumericVector point = get_point(coord_array, bbox);
-    point.attr("class") = sfg_attributes("POINT");
-    sfc[i] = point;
+    get_points( coord_array, bbox, sfc, i, true, "POINT");
 
   } else if (geom_type == "MultiPoint") {
-    Rcpp::NumericMatrix multi_point = get_multi_point(coord_array, bbox);
-    multi_point.attr("class") = sfg_attributes("MULTIPOINT");
-    sfc[i] = multi_point;
+    int max_cols = 2;
+    get_line_string( coord_array, bbox, sfc, i, true, "MULTIPOINT", max_cols );
 
   } else if (geom_type == "LineString") {
-    Rcpp::NumericMatrix line_string = get_line_string(coord_array, bbox);
-    line_string.attr("class") = sfg_attributes("LINESTRING");
-    sfc[i] = line_string;
+    int max_cols = 2;
+    get_line_string( coord_array, bbox, sfc, i, true, "LINESTRING", max_cols );
 
   } else if (geom_type == "MultiLineString") {
-    Rcpp::List multi_line = get_multi_line_string(coord_array, bbox);
-    multi_line.attr("class") = sfg_attributes("MULTILINESTRING");
-    sfc[i] = multi_line;
+    get_multi_line_string( coord_array, bbox, sfc, i, true, "MULTILINESTRING" );
 
   } else if (geom_type == "Polygon") {
-    Rcpp::List polygon = get_polygon(coord_array, bbox);
-    polygon.attr("class") = sfg_attributes("POLYGON");
-    sfc[i] = polygon;
+    get_polygon( coord_array, bbox, sfc, i, true, "POLYGON" );
 
   } else if (geom_type == "MultiPolygon") {
-    Rcpp::List multi_polygon = get_multi_polygon(coord_array, bbox);
-    multi_polygon.attr("class") = sfg_attributes("MULTIPOLYGON");
-    sfc[i] = multi_polygon;
+    get_multi_polygon( coord_array, bbox, sfc, i, true, "MULTIPOLYGON" );
 
   } else {
     Rcpp::stop("unknown sfg type");
@@ -96,16 +86,20 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   unsigned int i;
   Rcpp::List geom_collection(n);
 
-
   for (i = 0; i < n; i++) {
     const Value& gcval = geometries[i];
     validate_type(gcval, sfg_objects);
     geom_type = gcval["type"].GetString();
+
     parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
   }
+  geometry_types.insert( "GEOMETRYCOLLECTION" );
 
-  if (!expand_geometries) {
-  	geom_collection.attr("class") = sfg_attributes("GEOMETRYCOLLECTION");
+  if ( !expand_geometries ) {
+  	// TODO( dimension )
+  	std::string dim = "XY";
+  	std::string attribute = "GEOMETRYCOLLECTION";
+  	geom_collection.attr("class") = sfg_attributes( dim, attribute );
   } else {
   	sfg_objects+=n;
   }
@@ -116,6 +110,7 @@ void create_null_object(Rcpp::List& sfc,
                         std::set< std::string >& geometry_types,
                         int& nempty) {
 	std::string geom_type;
+	std::string dim = "XY";
 	if (geometry_types.size() == 0) {
 		geom_type = "Point";
 	} else {
@@ -132,20 +127,19 @@ void create_null_object(Rcpp::List& sfc,
 	if (geom_type == "POINT" ) {
 
 		Rcpp::NumericVector nullObj(2, NA_REAL);
-		//Rcpp::NumericVector nullObj;
-		nullObj.attr("class") = sfg_attributes(geom_type);
+		nullObj.attr("class") = sfg_attributes(dim, geom_type);
 		sfc[0] = nullObj;
 
 	} else if (geom_type == "MULTIPOINT" || geom_type == "LINESTRING") {
 
 		Rcpp::NumericMatrix nullObj;
-		nullObj.attr("class") = sfg_attributes(geom_type);
+		nullObj.attr("class") = sfg_attributes(dim, geom_type);
 		sfc[0] = nullObj;
 
 	} else {
 
 		Rcpp::List nullObj;
-		nullObj.attr("class") = sfg_attributes(geom_type);
+		nullObj.attr("class") = sfg_attributes(dim, geom_type);
 		sfc[0] = nullObj;
   }
 	nempty++;
@@ -162,7 +156,9 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 int& nempty) {
 
 	validate_geometry(feature, sfg_objects);
-	validate_properties(feature, sfg_objects);
+
+	// TODO( null property ==> NULL geometry)
+	//validate_properties(feature, sfg_objects);
 
 	const Value& geometry = feature["geometry"];
 	Rcpp::List sfc(1);
@@ -497,7 +493,6 @@ Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {
 
   // Attributes to keep track of along the way
   Rcpp::NumericVector bbox = start_bbox();
-  //std::set< std::string > geometry_types = start_geometry_types();
   std::set< std::string > geometry_types;
   std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
   std::unordered_map< std::string, std::string> property_types;
@@ -553,7 +548,6 @@ Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geomet
 
 	// Attributes to keep track of along the way
 	Rcpp::NumericVector bbox = start_bbox();
-	//std::set< std::string > geometry_types = start_geometry_types();
 	std::set< std::string > geometry_types;
 	std::set< std::string > property_keys;   // storing all the 'key' values from 'properties'
 	std::unordered_map< std::string, std::string > property_types;

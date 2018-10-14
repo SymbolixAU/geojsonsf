@@ -1,10 +1,10 @@
 geojsonsf
 ================
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geojsonsf)](http://cran.r-project.org/package=geojsonsf)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geojsonsf)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](http://cran.r-project.org/web/packages/geojsonsf/index.html)
+downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/geojsonsf.svg?style=social&label=Github)](https://github.com/SymbolixAU/geojsonsf)
 [![Build
@@ -20,13 +20,11 @@ I have found [an
 issue](https://github.com/SymbolixAU/geojsonsf/issues/32) with `Dates`
 and `POSIXct` columns not being handled correctly.
 
-I have made a fix in the development version, but I am not able to
-upload to CRAN until the down-stream `rapidjson` library [fixes
-gcc-compiler](https://github.com/SymbolixAU/geojsonsf/issues/27)
-warnings.
+I have made a fix in the development version and aim to have it on CRAN
+by the end of October 2018.
 
-In order to handle `Dates` and `POSIXct` columns correctly you will need
-to convert them to characters first.
+Before then, to handle `Dates` and `POSIXct` columns correctly you will
+need to convert them to characters first.
 
 -----
 
@@ -54,16 +52,17 @@ members are ignored, and nested objects and arrays inside the
 
 ## Installation
 
-When released on CRAN you install it in the usual way
+Install the CRAN version wth
 
 ``` r
 install.packages("geojsonsf")
 ```
 
-Install the development version from GitHub with
+To install the development version you first need to install `jsonify`
 
 ``` r
 # install.packages("devtools")
+devtools::install_github("SymbolixAU/jsonify")
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
 
@@ -148,14 +147,14 @@ jsonlite::prettify(js)
 #              "type": "Feature",
 #              "properties": {
 #                  "hello": null,
-#                  "id": 1,
+#                  "id": 1.0,
 #                  "val": "1"
 #              },
 #              "geometry": {
 #                  "type": "Point",
 #                  "coordinates": [
-#                      100,
-#                      0
+#                      100.0,
+#                      0.0
 #                  ]
 #              }
 #          },
@@ -163,19 +162,19 @@ jsonlite::prettify(js)
 #              "type": "Feature",
 #              "properties": {
 #                  "hello": null,
-#                  "id": 2,
+#                  "id": 2.0,
 #                  "val": "0"
 #              },
 #              "geometry": {
 #                  "type": "LineString",
 #                  "coordinates": [
 #                      [
-#                          201,
-#                          0
+#                          201.0,
+#                          0.0
 #                      ],
 #                      [
-#                          102,
-#                          1
+#                          102.0,
+#                          1.0
 #                      ]
 #                  ]
 #              }
@@ -184,19 +183,19 @@ jsonlite::prettify(js)
 #              "type": "Feature",
 #              "properties": {
 #                  "hello": null,
-#                  "id": 3,
+#                  "id": 3.0,
 #                  "val": null
 #              },
 #              "geometry": {
 #                  "type": "LineString",
 #                  "coordinates": [
 #                      [
-#                          301,
-#                          0
+#                          301.0,
+#                          0.0
 #                      ],
 #                      [
-#                          102,
-#                          1
+#                          102.0,
+#                          1.0
 #                      ]
 #                  ]
 #              }
@@ -205,14 +204,14 @@ jsonlite::prettify(js)
 #              "type": "Feature",
 #              "properties": {
 #                  "hello": null,
-#                  "id": 1,
+#                  "id": 1.0,
 #                  "val": null
 #              },
 #              "geometry": {
 #                  "type": "Point",
 #                  "coordinates": [
-#                      100,
-#                      0
+#                      100.0,
+#                      0.0
 #                  ]
 #              }
 #          },
@@ -227,12 +226,12 @@ jsonlite::prettify(js)
 #                  "type": "LineString",
 #                  "coordinates": [
 #                      [
-#                          501,
-#                          0
+#                          501.0,
+#                          0.0
 #                      ],
 #                      [
-#                          102,
-#                          1
+#                          102.0,
+#                          1.0
 #                      ]
 #                  ]
 #              }
@@ -248,12 +247,12 @@ jsonlite::prettify(js)
 #                  "type": "LineString",
 #                  "coordinates": [
 #                      [
-#                          601,
-#                          0
+#                          601.0,
+#                          0.0
 #                      ],
 #                      [
-#                          102,
-#                          1
+#                          102.0,
+#                          1.0
 #                      ]
 #                  ]
 #              }
@@ -287,8 +286,8 @@ microbenchmark(
 )
 #  Unit: seconds
 #        expr      min       lq     mean   median      uq     max neval
-#   geojsonsf 1.407215 1.407215 1.431913 1.431913 1.45661 1.45661     2
-#          sf 4.049296 4.049296 4.090843 4.090843 4.13239 4.13239     2
+#   geojsonsf 1.540426 1.540426 1.595153 1.595153 1.64988 1.64988     2
+#          sf 4.422917 4.422917 6.404438 6.404438 8.38596 8.38596     2
 ```
 
 Reading directly from a URL is comparable between the
@@ -309,9 +308,9 @@ microbenchmark(
     times = 2
 )
 #  Unit: seconds
-#        expr       min        lq      mean    median       uq      max neval
-#   geojsonsf  6.285199  6.285199  7.550965  7.550965  8.81673  8.81673     2
-#          sf 13.268988 13.268988 14.462881 14.462881 15.65677 15.65677     2
+#        expr      min       lq      mean    median        uq       max neval
+#   geojsonsf 6.681041 6.681041  7.037247  7.037247  7.393453  7.393453     2
+#          sf 9.524558 9.524558 10.089715 10.089715 10.654873 10.654873     2
 ```
 
     library(rgdal)

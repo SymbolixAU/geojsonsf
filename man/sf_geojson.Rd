@@ -4,12 +4,16 @@
 \alias{sf_geojson}
 \title{sf to GeoJSON}
 \usage{
-sf_geojson(sf, atomise = FALSE)
+sf_geojson(sf, atomise = FALSE, simplify = TRUE)
 }
 \arguments{
 \item{sf}{simple feature object}
 
-\item{atomise}{logical}
+\item{atomise}{logical indicating if the sf object should be converted into a vector
+of GeoJSON objects}
+
+\item{simplify}{logical indicating if sf objects without property columns should simplify
+(\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE})}
 }
 \value{
 vector of GeoJSON
@@ -24,6 +28,14 @@ sf <- sf::st_sf(geometry = sf::st_sfc(list(sf::st_point(c(0,0)), sf::st_point(c(
 sf$id <- 1:2
 sf_geojson(sf)
 sf_geojson(sf, atomise = T)
+
+ls <- st_linestring(rbind(c(0,0),c(1,1),c(2,1)))
+mls <- st_multilinestring(list(rbind(c(2,2),c(1,3)), rbind(c(0,0),c(1,1),c(2,1))))
+sfc <- st_sfc(ls,mls)
+sf <- st_sf(sfc)
+sf_geojson( sf )
+sf_geojson( sf, simplify = FALSE )
+
 }
 
 }

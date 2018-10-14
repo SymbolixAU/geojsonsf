@@ -1,3 +1,12 @@
+## v1.2.0
+
+* `simplify` argument for `geojson_sf()` to keep `FeatureCollection`s when converting `sf` without properties
+* `sf_geojson()` performance improvments using `jsonify`
+
+### Changes
+* factors are now treated as-is (numeric)
+
+
 ## v1.1.0
 
 * fix for GeometryCollection not being [closed correctly](https://github.com/SymbolixAU/geojsonsf/issues/26)

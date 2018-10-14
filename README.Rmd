@@ -26,9 +26,9 @@ knitr::opts_chunk$set(
 
 I have found [an issue](https://github.com/SymbolixAU/geojsonsf/issues/32) with `Dates` and `POSIXct` columns not being handled correctly. 
 
-I have made a fix in the development version, but I am not able to upload to CRAN until the down-stream `rapidjson` library [fixes gcc-compiler](https://github.com/SymbolixAU/geojsonsf/issues/27) warnings. 
+I have made a fix in the development version and aim to have it on CRAN by the end of October 2018.
 
-In order to handle `Dates` and `POSIXct` columns correctly you will need to convert them to characters first. 
+Before then, to handle `Dates` and `POSIXct` columns correctly you will need to convert them to characters first. 
 
 ---
 
@@ -53,7 +53,7 @@ As per GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#pa
 
 ## Installation
 
-When released on CRAN you install it in the usual way
+Install the CRAN version wth
 
 
 ```{r, eval = F}
@@ -61,10 +61,11 @@ install.packages("geojsonsf")
 ```
 
 
-Install the development version from GitHub with
+To install the development version you first need to install `jsonify`
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
+devtools::install_github("SymbolixAU/jsonify")
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
 

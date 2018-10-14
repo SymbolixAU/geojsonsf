@@ -2,8 +2,6 @@
 #include "geojsonsf.h"
 #include "geojson_sfc.h"
 
-using namespace Rcpp;
-
 void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
   //xmin, ymin, xmax, ymax
   bbox[0] = std::min(point[0], bbox[0]);
@@ -81,11 +79,11 @@ Rcpp::NumericVector start_bbox() {
   return bbox;
 }
 
-// TODO(what is this doing?)
-std::set< std::string> start_geometry_types() {
-  std::set< std::string> geometry_types;
-  return geometry_types;
-}
+// // TODO(what is this doing?)
+// std::set< std::string> start_geometry_types() {
+//   std::set< std::string> geometry_types;
+//   return geometry_types;
+// }
 
 
 Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
@@ -102,7 +100,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     switch( TYPEOF(*it) ) {
 
     case VECSXP: {
-      Rcpp::List tmp = as<Rcpp::List>(*it);
+      Rcpp::List tmp = Rcpp::as< Rcpp::List >( *it );
       if(Rf_isNull(tmp.attr("class"))){
         fetch_geometries(tmp, res, sfg_counter);
       } else {
@@ -112,8 +110,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
       break;
     }
     case REALSXP: {
-      Rcpp::NumericVector tmp = as<Rcpp::NumericVector>(*it);
-      if(Rf_isNull(tmp.attr("class"))){
+      Rcpp::NumericVector tmp = Rcpp::as< Rcpp::NumericVector >( *it );
+      if(Rf_isNull(tmp.attr("class"))) {
         Rcpp::stop("Geometry could not be determined");
       } else {
         res[sfg_counter] = tmp;
@@ -122,8 +120,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
       break;
     }
     case INTSXP: {
-      Rcpp::IntegerVector tmp = as<Rcpp::IntegerVector>(*it);
-      if(Rf_isNull(tmp.attr("class"))){
+      Rcpp::IntegerVector tmp = Rcpp::as< Rcpp::IntegerVector >( *it );
+      if(Rf_isNull( tmp.attr( "class" ) ) ){
         Rcpp::stop("Geometry could not be determined");
       } else {
         res[sfg_counter] = tmp;
@@ -132,8 +130,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
       break;
     }
     case STRSXP: {
-    	Rcpp::StringVector tmp = as<Rcpp::StringVector>(*it);
-    	if(Rf_isNull(tmp.attr("class"))){
+    	Rcpp::StringVector tmp = Rcpp::as< Rcpp::StringVector >( *it );
+    	if(Rf_isNull( tmp.attr( "class" ) ) ) {
     		Rcpp::stop("Geometry could not be determined");
     	} else {
     		res[sfg_counter] = tmp;
@@ -155,13 +153,13 @@ Rcpp::List construct_sfc(int& sfg_objects,
                          std::set< std::string >& geometry_types,
                          int& nempty) {
 
-  Rcpp::List sfc_output(sfg_objects);
+  Rcpp::List sfc_output( sfg_objects );
   std::string geom_attr;
 
   int sfg_counter = 0;
 
-  fetch_geometries(sf, sfc_output, sfg_counter);
-  attach_sfc_attributes(sfc_output, geom_attr, bbox, geometry_types, nempty);
+  fetch_geometries( sf, sfc_output, sfg_counter );
+  attach_sfc_attributes( sfc_output, geom_attr, bbox, geometry_types, nempty );
 
   return sfc_output;
 }

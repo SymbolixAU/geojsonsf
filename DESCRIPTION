@@ -13,7 +13,8 @@ LazyData: true
 Depends: R (>= 3.3.0)
 LinkingTo: 
     Rcpp, 
-    rapidjsonr (>= 1.1)
+    rapidjsonr (>= 1.1),
+    jsonify
 Imports: 
     Rcpp, 
     rapidjsonr (>= 1.1),

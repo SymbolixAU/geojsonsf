@@ -19,7 +19,7 @@ void attach_sfc_attributes(Rcpp::List& sfc, std::string& type,
 
 Rcpp::NumericVector start_bbox();
 
-std::set< std::string > start_geometry_types();
+// std::set< std::string > start_geometry_types();
 
 Rcpp::StringVector start_sfc_classes(size_t collectionCount);
 

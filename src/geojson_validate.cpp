@@ -82,7 +82,7 @@ void validate_coordinates(const Value& v, int& sfg_objects) {
 }
 
 void validate_points(const Value& v) {
-	if (v.Size() != 2) {
+	if ( v.Size() < 2 || v.Size() > 4 ) {
 		geojson_object_error("lon/lat");
 	}
 }
