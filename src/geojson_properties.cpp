@@ -54,21 +54,34 @@ void get_property_types(const Value& v, std::unordered_map< std::string, std::st
 
 
 void sort_property_names( Rcpp::List& properties, std::unordered_set< std::string >& property_keys) {
+
 	properties.names() = property_keys;
 	std::vector< std::string > n = properties.names();
 	std::reverse( n.begin(), n.end() );
-
 	std::vector< std::string > sv( n.size() );
+
 	for( int i = 0; i < n.size(); i++ ) {
 		sv[i] = n[i];
 	}
 	properties.names() = sv;
+
 }
 
 void get_property_keys(const Value& v, std::unordered_set< std::string >& property_keys) {
+
+	// Rcpp::Rcout << "filling property_keys" << std::endl;
   for ( Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter ) {
+//
+//   	std::string s = iter->name.GetString();
+//   	Rcpp::Rcout << s << std::endl;
+
     property_keys.insert(iter->name.GetString());
   }
+//
+//   Rcpp::Rcout << "viewing property_keys" << std::endl;
+//   for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
+//   	Rcpp::Rcout << (*it) << std::endl;
+//   }
 }
 
 void update_string_vector(Rcpp::List& sf, std::string& key, const std::string& value, const int& row_index) {

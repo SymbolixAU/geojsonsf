@@ -1,5 +1,9 @@
 ## v1.2.0
 
+* `sf_geojson()` and `sfc_geojson()` output "json" class attribute
+* better handling of `null` objects / geometries [issue 36](https://github.com/SymbolixAU/geojsonsf/issues/36)
+* `Date` and `POSIX` objects handled [issue 32](https://github.com/SymbolixAU/geojsonsf/issues/32)
+* Z (elevation) and M attributes handled [issue 28](https://github.com/SymbolixAU/geojsonsf/issues/28)
 * `simplify` argument for `geojson_sf()` to keep `FeatureCollection`s when converting `sf` without properties
 * `sf_geojson()` performance improvments using `jsonify`
 

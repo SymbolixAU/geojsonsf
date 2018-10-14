@@ -186,12 +186,7 @@ Rcpp::List parse_feature_object(const Value& feature,
 
 	const Value& p = feature["properties"];
 
-	// StringBuffer buffer;
-	// rapidjson::Writer<StringBuffer> writer(buffer);
-	// p.Accept(writer);
-	// const char* json = buffer.GetString();
-	// Rcpp::Rcout << "json : " << json << std::endl;
-
+	//Rcpp::Rcout << "sfg_objects: " << sfg_objects << std::endl;
 	get_property_keys(p, property_keys);
 	get_property_types(p, property_types);
 
@@ -224,6 +219,13 @@ Rcpp::List parse_feature_object(const Value& feature,
   	// Rcpp::Rcout << "json : " << json << std::endl;
 
 	  doc_properties.AddMember( n, properties, doc_properties.GetAllocator() );
+
+	  // StringBuffer buffer;
+	  // rapidjson::Writer<StringBuffer> writer(buffer);
+	  // doc_properties.Accept(writer);
+	  // const char* json = buffer.GetString();
+	  // Rcpp::Rcout << "json : " << json << std::endl;
+
   }
 
 	return sfc;
@@ -253,7 +255,21 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
     	feature, bbox, geometry_types, sfg_objects, property_keys, doc_properties,
     	property_types, expand_geometries, nempty
     	);
+
+    // StringBuffer buffer;
+    // rapidjson::Writer<StringBuffer> writer(buffer);
+    // doc_properties.Accept(writer);
+    // const char* json = buffer.GetString();
+    // Rcpp::Rcout << "json : " << json << std::endl;
+
   }
+
+  // // out of order
+  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
+  // 	//const char s = *it->c_str();
+  // 	std::cout << (*it) << std::endl;
+  // }
+
   return feature_collection;
 }
 
@@ -286,6 +302,12 @@ void parse_geojson(const Value& v,
     res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
     sfc[i] = res;
 
+    // out of order
+    // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
+    // 	//const char s = *it->c_str();
+    // 	std::cout << (*it) << std::endl;
+    // }
+
   } else if (geom_type == "GeometryCollection") {
 
     res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects, expand_geometries);
@@ -317,6 +339,13 @@ void parse_geojson_object(Document& d,
   	v, sfc, properties, 0, bbox, geometry_types, sfg_objects, property_keys,
   	doc_properties, property_types, expand_geometries, nempty
   	);
+
+  // // out of order
+  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
+  // 	//const char s = *it->c_str();
+  // 	std::cout << (*it) << std::endl;
+  // }
+
 }
 
 void parse_geojson_array(Document& d,
@@ -336,6 +365,11 @@ void parse_geojson_array(Document& d,
   	v, sfc, properties, i, bbox, geometry_types, sfg_objects, property_keys,
   	doc_properties, property_types, expand_geometries, nempty
   	);
+
+  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
+  // 	//const char s = *it->c_str();
+  // 	std::cout << (*it) << std::endl;
+  // }
 }
 
 Rcpp::List geojson_to_sf(const char* geojson,
@@ -375,6 +409,13 @@ Rcpp::List geojson_to_sf(const char* geojson,
     }
     sfc[0] = sfgs;
   }
+
+  // out of order
+  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
+  // 	//const char s = *it->c_str();
+  // 	std::cout << (*it) << std::endl;
+  // }
+
   return sfc;
 }
 
@@ -529,6 +570,11 @@ Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {
   	);
   }
 
+  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
+  // 	//const char s = *it->c_str();
+  // 	std::cout << (*it) << std::endl;
+  // }
+
   return construct_sfc(sfg_objects, sfc, bbox, geometry_types, nempty);
 }
 
@@ -543,11 +589,16 @@ Rcpp::List construct_sf( Rcpp::List& lst, std::unordered_set< std::string >& pro
                      int& sfg_objects,
                      int& row_index ) {
 
+	// StringBuffer buffer;
+	// rapidjson::Writer<StringBuffer> writer(buffer);
+	// doc_properties.Accept(writer);
+	// const char* json = buffer.GetString();
+	// Rcpp::Rcout << "json : " << json << std::endl;
+
   Rcpp::List properties( property_keys.size() + 1 );  // expand to include geometry
 
   property_keys.insert("geometry");
   sort_property_names(properties, property_keys);
-
 
   properties["geometry"] = lst;
 
@@ -579,14 +630,20 @@ Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geomet
 	doc_properties.SetObject();
 	Rcpp::List sfc( n );
 
-	for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
+	for ( int geo_ele = 0; geo_ele < n; geo_ele++ ){
 		sfc[geo_ele] = geojson_to_sf(
 			geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys,
 			doc_properties, property_types, expand_geometries, nempty
 		);
 	}
 
-	Rcpp::List res = construct_sfc(sfg_objects, sfc, bbox, geometry_types, nempty);
+	// StringBuffer buffer;
+	// rapidjson::Writer<StringBuffer> writer(buffer);
+	// doc_properties.Accept(writer);
+	// const char* json = buffer.GetString();
+	// Rcpp::Rcout << "json : " << json << std::endl;
+
+	Rcpp::List res = construct_sfc( sfg_objects, sfc, bbox, geometry_types, nempty );
 	return construct_sf( res, property_keys, property_types, doc_properties, sfg_objects, row_index );
 }
 

@@ -1,6 +1,6 @@
 
 
-geo_melbourne <- paste0(googleway::geo_melbourne, collapse = "")
+geo_melbourne <- paste0( googleway::geo_melbourne, collapse = "")
 # sf <- geojson_sf(geo_melbourne)
 #
 # coords <- as.data.frame(matrix(unlist(st_geometry(sf[22, ])), ncol = 2))
