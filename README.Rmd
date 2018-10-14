@@ -61,11 +61,10 @@ install.packages("geojsonsf")
 ```
 
 
-To install the development version you first need to install `jsonify`
+To install the development version
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("SymbolixAU/jsonify")
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
 
@@ -157,46 +156,6 @@ microbenchmark(
     },
     times = 2
 )
-```
-
-Reading directly from a URL is comparable between the two
-
-```{r, warning=FALSE}
-myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
-
-library(microbenchmark)
-
-microbenchmark(
-	geojsonsf = {
-		geojson_sf(myurl)
-	},
-	sf = {
-		sf::st_read(myurl, quiet = T)
-	},
-	times = 2
-)
-
-```
-
-
-
-```
-library(rgdal)
-microbenchmark(
-	gdal = {
-    readOGR(myurl, "OGRGeoJSON")
-	},
-	geojsonsf = {
-		myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
-		geo <- readLines(myurl)
-		geo <- paste0(geo, collapse = "")
-		geojson_sf(geo)
-	},
-	times = 5
-)
-#      expr      min       lq     mean   median       uq      max neval
-#      gdal 58.51037 60.05683 66.33925 65.07506 72.08371 75.97028     5
-# geojsonsf 11.91515 13.37422 14.02232 13.88782 14.61826 16.31612     5
 ```
 
 A visual check to see both objects are the same
