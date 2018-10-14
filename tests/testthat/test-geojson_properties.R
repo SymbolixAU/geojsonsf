@@ -6,8 +6,8 @@ test_that("properties captured correctly", {
 	sf <- geojson_sf(f)
 	wkt <- geojson_wkt(f)
 
-	expect_true(all(names(sf) == c("geometry", "id", "name")))
-	expect_true(all(names(wkt) == c("geometry", "id", "name")))
+	expect_true(all(names(sf) == c("id", "name","geometry")))
+	expect_true(all(names(wkt) == c("id","name","geometry")))
 	expect_true(sf$id == 1)
 	expect_true(wkt$id == 1)
 	expect_true(sf$name == "foo")
@@ -87,13 +87,15 @@ test_that("null geometries are valid for features", {
 	expect_true(nrow(geojson_sf(js)) == 1)
 
 	js <- '{"type":"FeatureCollection","features":[
-	{"type":"Feature","properties":{"id":1},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
-	{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0,0]}},
-	{"type":"Feature","properties":{"id":3},"geometry":null}]}'
+	{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0]]}},
+	{"type":"Feature","properties":{"id":2.0},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+	{"type":"Feature","properties":{"id":3.0},"geometry":null}]}'
 	expect_true(nrow(geojson_sf(js)) == 3)
 	expect_true(all(geojson_sf(js)[['id']] == 1:3))
 	sf <- geojson_sf(js)
-	expect_true(length(sf$geometry[[3]]) == 0)  ## MULTIPOINT is an empty matrix
+
+	expect_true(all( is.na( as.numeric( sf$geometry[[3]] ) ) ) )
+	expect_true( as.character( sf_geojson( sf ) ) == gsub("\\t|\\n|\\r","",js) )
 
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":3},"geometry":{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}},
@@ -110,7 +112,36 @@ test_that("null geometries are valid for features", {
 })
 
 
+test_that("round trip succeeds", {
 
+	js <- '{"type":"FeatureCollection","features":[
+	{"type":"Feature","properties":{"id":3.0},"geometry":{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.1,1.1]]}},
+	{"type":"Feature","properties":{"id":1.0},"geometry":null},
+	{"type":"Feature","properties":{"id":2.0},"geometry":{"type":"Point","coordinates":[0.0,0.0]}}]}'
+
+	sf <- geojson_sf( js )
+	js2 <- sf_geojson( sf )
+	expect_true( as.character( js2 ) == gsub("\\t|\\r|\\n", "", js) )
+	sf2 <- geojson_sf( js2 )
+	expect_equal(sf, sf2)
+
+	s <- geojson_sf( geo_melbourne )
+	g <- sf_geojson( s )
+
+	#identical(as.character( g ), geo_melbourne ) # FALSE
+	s2 <- geojson_sf( g )
+	#identical (s, s2) # FALSE
+
+	expect_true( all( names(s) == names(s2) ) )
+	expect_true( all(s$AREASQKM == s2$AREASQKM) )
+	expect_true( all(s$SA2_NAME == s2$SA2_NAME) )
+	expect_true( all(s$SA3_NAME == s2$SA3_NAME) )
+	expect_true( all(s$fillColor == s2$fillColor) )
+	expect_true( all(s$polygonId == s2$polygonId) )
+	expect_true( all(s$strokeColor == s2$strokeColor) )
+	expect_true( all(s$strokeWeight == s2$strokeWeight) )
+
+})
 
 
 

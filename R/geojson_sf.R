@@ -19,8 +19,14 @@
 #'
 #' ## load 'sf' for print methods
 #' # library(sf)
-#' geojson <- '{ "type" : "Point", "coordinates" : [0, 0] }'
+#' geojson <- '{ "type":"Point","coordinates":[0,0] }'
 #' geojson_sfc(geojson)
+#'
+#' geojson <- '[
+#'   { "type":"Point","coordinates":[0,0]},
+#'   {"type":"LineString","coordinates":[[0,0],[1,1]]}
+#'   ]'
+#' geojson_sfc( geojson )
 #'
 #'\dontrun{
 #' ## GeoJSON at a url

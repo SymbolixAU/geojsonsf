@@ -14,7 +14,7 @@ void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
 
 std::string attach_class(Rcpp::List& sfc,
                          std::string geom_type,
-                         std::set< std::string >& geometry_types) {
+                         std::unordered_set< std::string >& geometry_types) {
 
   std::string geometry_class;
   if (geom_type == "GEOMETRYCOLLECTION") {
@@ -46,7 +46,7 @@ std::string attach_class(Rcpp::List& sfc,
 void attach_sfc_attributes(Rcpp::List& sfc,
                            std::string& type,
                            Rcpp::NumericVector& bbox,
-                           std::set< std::string >& geometry_types,
+                           std::unordered_set< std::string >& geometry_types,
                            int& nempty) {
 
   std::string geometry_class = attach_class(sfc, type, geometry_types);
@@ -150,7 +150,7 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 Rcpp::List construct_sfc(int& sfg_objects,
                          Rcpp::List& sf,
                          Rcpp::NumericVector& bbox,
-                         std::set< std::string >& geometry_types,
+                         std::unordered_set< std::string >& geometry_types,
                          int& nempty) {
 
   Rcpp::List sfc_output( sfg_objects );

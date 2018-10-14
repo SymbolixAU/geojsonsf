@@ -24,7 +24,7 @@ void get_property_types(const Value& v, std::unordered_map< std::string, std::st
 	static const char* ARRAY_TYPES[] =
 		{ "Null", "False", "True", "Object", "Array", "String", "Number" };
 
-  for (Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter){
+  for (Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter) {
     std::string property = iter->name.GetString();
 
     std::string type = ARRAY_TYPES[iter->value.GetType()];
@@ -53,11 +53,21 @@ void get_property_types(const Value& v, std::unordered_map< std::string, std::st
 }
 
 
+void sort_property_names( Rcpp::List& properties, std::unordered_set< std::string >& property_keys) {
+	properties.names() = property_keys;
+	std::vector< std::string > n = properties.names();
+	std::reverse( n.begin(), n.end() );
 
+	std::vector< std::string > sv( n.size() );
+	for( int i = 0; i < n.size(); i++ ) {
+		sv[i] = n[i];
+	}
+	properties.names() = sv;
+}
 
-void get_property_keys(const Value& v, std::set< std::string >& property_keys) {
-  for (Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter){
-  property_keys.insert(iter->name.GetString());
+void get_property_keys(const Value& v, std::unordered_set< std::string >& property_keys) {
+  for ( Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter ) {
+    property_keys.insert(iter->name.GetString());
   }
 }
 
