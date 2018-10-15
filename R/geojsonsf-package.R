@@ -7,3 +7,9 @@ NULL
 #'
 #' GeoJSON data of Melbourne's Inner suburbs.
 "geo_melbourne"
+
+#' @export
+print.geojson <- function( geo ) cat( geo, "\n")
+
+
+
