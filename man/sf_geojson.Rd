@@ -13,7 +13,8 @@ sf_geojson(sf, atomise = FALSE, simplify = TRUE)
 of GeoJSON objects}
 
 \item{simplify}{logical indicating if sf objects without property columns should simplify
-(\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE})}
+(\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE}). If \code{atomise} is TRUE
+this argument is ignored.}
 }
 \value{
 vector of GeoJSON
