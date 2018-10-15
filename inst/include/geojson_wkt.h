@@ -1,6 +1,6 @@
 
-#ifndef GEOJSON_WKT_H
-#define GEOJSON_WKT_H
+#ifndef GEOJSONSF_WKT_H
+#define GEOJSONSF_WKT_H
 
 #include "rapidjson/document.h"
 using namespace rapidjson;

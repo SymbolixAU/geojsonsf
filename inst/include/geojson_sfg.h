@@ -1,5 +1,5 @@
-#ifndef GEOJSON_SFG_H
-#define GEOJSON_SFG_H
+#ifndef GEOJSONSF_SFG_H
+#define GEOJSONSF_SFG_H
 
 #include "rapidjson/document.h"
 

@@ -9,10 +9,10 @@ NULL
 "geo_melbourne"
 
 #' @export
-print.geojson <- function( geo ) {
+print.geojson <- function( x, ... ) {
 
-	if( length(geo) == 1 ) {
-		cat( geo, "\n")
+	if( length(x) == 1 ) {
+		cat( x, "\n")
 	} else { ## vector / atomised, show each individual vector
 		NextMethod()
 	}

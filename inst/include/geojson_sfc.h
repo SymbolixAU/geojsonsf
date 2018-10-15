@@ -1,5 +1,5 @@
-#ifndef GEOJSONSFC_H
-#define GEOJSONSFC_H
+#ifndef GEOJSONSF_SFC_H
+#define GEOJSONSF_SFC_H
 
 
 #include <Rcpp.h>
