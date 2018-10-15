@@ -68,7 +68,7 @@ To install the development version
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
 
-## Motivation
+## Why did you build it?
 
 To quickly parse between GeoJSON and `sf` objects, and to handle cases not supported by `sf`, e.g. arrays of geometries
 
@@ -77,66 +77,79 @@ library(geojsonsf)
 library(sf)        ## Loaded for sf print methods
 ```
 
-### Arrays of GeoJSON
+
+## What do you mean, 'cases not supported'
+
+For example, `sf` can't read an array of GeoJSON objects, so I wanted to make this work
 
 ```{r}
+js <- c(
+	'[
+	  {"type":"Point","coordinates":[0,0]},
+	  {"type":"LineString","coordinates":[[-1,-1],[1,1]]},
+		{
+      "type": "FeatureCollection",
+      "features": [
+      {
+        "type": "Feature",
+        "properties": {"id":1},
+        "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+      }
+    ]
+  }
+	]'
+)
 
-js <- '[
-{
-  "type": "FeatureCollection",
-  "features": [
-  {
-    "type": "Feature",
-    "properties": {"id":1,"val":true},
-    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
-  },
-  {
-    "type": "Feature",
-    "properties": {"id":2,"val":false},
-    "geometry": {"type": "LineString", "coordinates": [[201.0, 0.0], [102.0, 1.0]]}
-  },
-  {
-    "type": "Feature",
-	    "properties": {"id":3},
-	    "geometry": {"type": "LineString", "coordinates": [[301.0, 0.0], [102.0, 1.0]]}
-	}
- ]
-},
-{
-  "type": "FeatureCollection",
-	"features": [
-	{
-	  "type": "Feature",
-	  "properties": {"id":1},
-	  "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
-	},
-	{
-	  "type": "Feature",
-	  "properties": {"val":false},
-	  "geometry": {"type": "LineString", "coordinates": [[501.0, 0.0], [102.0, 1.0]]}
-	},
-	{
-	  "type": "Feature",
-	  "properties": {"hello":"world"},
-	  "geometry": {"type": "LineString", "coordinates": [[601.0, 0.0], [102.0, 1.0]]}
-	}
-  ]
-}
-]'
-
-sf <- geojson_sf(js)
+sf <- geojson_sf( js )
 sf
 ```
 
-And back again to GeoJSON
+
+And going the other way you can also return a vector of GeoJSON
 
 ```{r}
-js <- sf_geojson(sf)
-jsonlite::prettify(js)
+js <- sf_geojson( sf, atomise = T )
+js
+```
+
+### What's the benefit of 'atomising'?
+
+It's useful for when you work with geospatial databsaes and want an individual record for each individual feature. 
+
+### What happens if you don't `atomise`?
+
+You get a single GeoJSON object
+
+```{r}
+sf_geojson( sf )
 ```
 
 
-### Speed
+### Can you remove the properites and just return the geometries
+
+Yes. Call `sfc_geojson()` on the `sfc` object.
+
+```{r}
+sfc_geojson( sf$geometry )
+```
+
+### If I have an `sf` object without any properties, why does it 'atomise' by default?
+
+```{r}
+sf$id <- NULL
+sf_geojson( sf )
+```
+
+The `simplify` argument is `TRUE` by default, and it will try and 'simplify' the GeoJSON. If there are no properties in the `sf` object, then the GeoJSON won't have any properties.
+
+However, if you set `simplify = FALSE` you'll get a FeatureCollection with an empty properties field.
+
+```{r}
+sf_geojson(sf, simplify = F)
+```
+
+
+### How fast is it?
 
 This benchmark shows a comparison with `library(sf)` for converting a string of GeoJSON of 3,221 counties in the US in to an `sf` object
 
@@ -158,7 +171,11 @@ microbenchmark(
 )
 ```
 
-A visual check to see both objects are the same
+### Does it work?
+
+I've written a [lot of tests](https://github.com/SymbolixAU/geojsonsf/tree/master/tests/testthat) to try and capture all eventualities. But if you find a mistake please let me know.
+
+Here's a quick visual check to see the output of the above benchmark data
 
 ```{r, eval = F}
 library(googleway)
