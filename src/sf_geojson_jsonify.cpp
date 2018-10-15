@@ -158,7 +158,7 @@ Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
 		//writer.EndObject();
 		geojson[i] = sb.GetString();
 	}
-  geojson.attr("class") = "json";
+  geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
 	return geojson;
 }
 
@@ -228,7 +228,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 		geojson[i] = sb.GetString();
 	}
 
-	geojson.attr("class") = "json";
+	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
 	return geojson;
 }
 
@@ -299,5 +299,7 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 		writer.EndObject();
 	// }
 
-	return jsonify::utils::finalise_json( sb );
+	Rcpp::StringVector geojson = sb.GetString();
+	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
+	return geojson;
 }
