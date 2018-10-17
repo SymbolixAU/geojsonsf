@@ -14,7 +14,7 @@ namespace writers {
   }
 
   template< typename Writer >
-    inline void start_features( Writer& writer ) {
+  inline void start_features( Writer& writer ) {
     writer.String("type");
     writer.String("Feature");
   }
@@ -210,7 +210,7 @@ namespace writers {
     }
   }
 
-} // namespace togeojson
+} // namespace writers
 } // namespace geojsonsf
 
 #endif

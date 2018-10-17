@@ -53,7 +53,7 @@ As per GeoJSON ([RFC 7946 specification)](https://tools.ietf.org/html/rfc7946#pa
 
 ## Installation
 
-Install the CRAN version wth
+Install the CRAN version with
 
 
 ```{r, eval = F}
@@ -114,7 +114,7 @@ js
 
 ### What's the benefit of 'atomising'?
 
-It's useful for when you work with geospatial databsaes and want an individual record for each individual feature. 
+It's useful for when you work with geospatial databases and want an individual record for each individual feature. 
 
 ### What happens if you don't `atomise`?
 

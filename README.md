@@ -52,7 +52,7 @@ members are ignored, and nested objects and arrays inside the
 
 ## Installation
 
-Install the CRAN version wth
+Install the CRAN version with
 
 ``` r
 install.packages("geojsonsf")
@@ -119,7 +119,7 @@ js
 
 ### What’s the benefit of ‘atomising’?
 
-It’s useful for when you work with geospatial databsaes and want an
+It’s useful for when you work with geospatial databases and want an
 individual record for each individual feature.
 
 ### What happens if you don’t `atomise`?
@@ -188,8 +188,8 @@ microbenchmark(
 )
 #  Unit: milliseconds
 #        expr       min        lq      mean    median        uq       max
-#   geojsonsf  777.2561  777.2561  783.4074  783.4074  789.5587  789.5587
-#          sf 1810.0077 1810.0077 1833.9175 1833.9175 1857.8272 1857.8272
+#   geojsonsf  722.1211  722.1211  742.4202  742.4202  762.7194  762.7194
+#          sf 1798.9366 1798.9366 1871.2442 1871.2442 1943.5517 1943.5517
 #   neval
 #       2
 #       2
