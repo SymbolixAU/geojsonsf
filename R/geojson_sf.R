@@ -184,8 +184,6 @@ handle_dates <- function( x ) {
 	return( x )
 }
 
-return_x <- function( x ) x
-
 is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
 
 read_url <- function(con) {
