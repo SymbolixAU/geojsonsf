@@ -5,7 +5,6 @@
 #include "geojson_sfc.h"
 #include "geojson_validate.h"
 
-using namespace Rcpp;
 using namespace rapidjson;
 
 Rcpp::CharacterVector sfg_attributes( std::string& dimension, std::string& geom_type ) {
@@ -21,27 +20,6 @@ double get_lat(const Value& coord_array) {
 	validate_point(coord_array[1]);
 	return coord_array[1].GetDouble();
 }
-
-// TODO( this will iterate along a long LINESTRING... )
-// int make_type( const Value& coord_array ) {
-// 	int n = coord_array.Size();
-// 	int i;
-//   //const Value& v = coord_array[ elem ];
-//   for ( i = 0; i < n; i++ ) {
-//   	if( coord_array[i].IsDouble() ) {
-//   		return REALSXP;
-//   	}
-//   }
-//   return INTSXP;
-
-	// if( v.IsInt()  || v.IsUint() || v.IsUint64() || v.IsInt64() ) {
-	// 	*r_type = INTSXP;
-	// } else if ( v.IsDouble() ) {
-	// 	*r_type = REALSXP;
-	// } else {
-	// 	Rcpp::stop("Unknown coordinate type");
-	// }
-// }
 
 std::string make_dimension( int n ) {
 	switch( n ) {
@@ -119,23 +97,6 @@ void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List
 	// }
 }
 
-// Rcpp::NumericMatrix parse_line(const Value& coord_array, Rcpp::NumericVector& bbox) {
-//   size_t n = coord_array.Size();
-//   Rcpp::NumericMatrix line_string(n, 2);
-//   unsigned int i;
-//   for (i = 0; i < n; i++) {
-//     validate_array(coord_array[i]);
-//     line_string(i, _) = parse_point(coord_array[i], bbox);
-//   }
-//   return line_string;
-// }
-//
-//
-// Rcpp::NumericMatrix get_multi_point(const Value& multi_point_array, Rcpp::NumericVector& bbox) {
-//   Rcpp::NumericMatrix multi_point = parse_line(multi_point_array, bbox);
-//   return multi_point;
-// }
-
 void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
                       bool requires_attribute, std::string attribute, int& max_cols ) {
 	int n = line_array.Size();
@@ -208,7 +169,6 @@ void get_multi_line_string( const Value& multi_line_array, Rcpp::NumericVector& 
 	for ( j = 0; j < n; j++ ) {
 		int max_cols = 2;
 		validate_array( multi_line_array[j] );
-		//const Value& line_array = multi_line_array[j];
 		get_line_string( multi_line_array[j], bbox, ml, j, false, attribute, max_cols );
 		if( max_cols > max_dimension ) {
 			max_dimension = max_cols;

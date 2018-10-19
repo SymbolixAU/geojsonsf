@@ -145,17 +145,8 @@ Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
 
 		rapidjson::StringBuffer sb;
 		rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
-		//writer.StartObject();
-
-		//geojsonsf::writers::start_features( writer );
-
-		// now geometries
-		//writer.String("geometry");
 
 		write_geometry( writer, sfc, i );
-
-		//writer.EndObject();
-		//writer.EndObject();
 		geojson[i] = sb.GetString();
 	}
   geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
@@ -206,8 +197,6 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 				jsonify::writers::write_value( writer, h );
 				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 			}
-
-		  //writer.EndObject();
 			writer.EndObject();
 		}
 
@@ -222,9 +211,6 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 		if( n_properties > 0 ) {
 			writer.EndObject();
 		}
-
-		//writer.EndObject();
-		//writer.EndObject();
 		geojson[i] = sb.GetString();
 	}
 
@@ -254,15 +240,12 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 		}
 	}
 
-	// if ( n_properties > 0 ) {
-		writer.StartObject();
-		geojsonsf::writers::start_feature_collection( writer );
-	// }
+	writer.StartObject();
+	geojsonsf::writers::start_feature_collection( writer );
 
 	writer.StartArray();
 
 	for( i = 0; i < n_rows; i++ ) {
-		// if( n_properties > 0 ) {
 
 		  writer.StartObject();
 
@@ -279,25 +262,17 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 			}
 		  writer.EndObject();
-		// }
 
-		// now geometries
-		// if( n_properties > 0 ) {
-			writer.String("geometry");
-		// }
+		writer.String("geometry");
 
 		Rcpp::List sfc = sf[ geom_column ];
 		write_geometry( writer, sfc, i );
 
-		// if( n_properties > 0 ) {
-		  writer.EndObject();
-		// }
+		writer.EndObject();
 	}
 
 	writer.EndArray();
-	// if( n_properties > 0 ) {
-		writer.EndObject();
-	// }
+	writer.EndObject();
 
 	Rcpp::StringVector geojson = sb.GetString();
 	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");

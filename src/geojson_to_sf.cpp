@@ -12,10 +12,8 @@
 #include "geojson_validate.h"
 #include "geojson_properties.h"
 
-using namespace Rcpp;
-
 template <int RTYPE>
-Rcpp::CharacterVector sfClass(Vector<RTYPE> v) {
+Rcpp::CharacterVector sfClass(Rcpp::Vector<RTYPE> v) {
 	return v.attr("class");
 }
 
@@ -274,12 +272,6 @@ void parse_geojson(const Value& v,
     res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
     sfc[i] = res;
 
-    // out of order
-    // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
-    // 	//const char s = *it->c_str();
-    // 	std::cout << (*it) << std::endl;
-    // }
-
   } else if (geom_type == "GeometryCollection") {
 
     res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects, expand_geometries);
@@ -337,11 +329,6 @@ void parse_geojson_array(Document& d,
   	v, sfc, properties, i, bbox, geometry_types, sfg_objects, property_keys,
   	doc_properties, property_types, expand_geometries, nempty
   	);
-
-  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
-  // 	//const char s = *it->c_str();
-  // 	std::cout << (*it) << std::endl;
-  // }
 }
 
 Rcpp::List geojson_to_sf(const char* geojson,
@@ -381,13 +368,6 @@ Rcpp::List geojson_to_sf(const char* geojson,
     }
     sfc[0] = sfgs;
   }
-
-  // out of order
-  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
-  // 	//const char s = *it->c_str();
-  // 	std::cout << (*it) << std::endl;
-  // }
-
   return sfc;
 }
 
@@ -536,11 +516,6 @@ Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {
     	doc_properties, property_types, expand_geometries, nempty
   	);
   }
-
-  // for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
-  // 	//const char s = *it->c_str();
-  // 	std::cout << (*it) << std::endl;
-  // }
 
   return construct_sfc(sfg_objects, sfc, bbox, geometry_types, nempty);
 }

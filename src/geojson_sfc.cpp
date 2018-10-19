@@ -55,8 +55,10 @@ void attach_sfc_attributes(Rcpp::List& sfc,
   double prec = 0;
 
   // attribute::crs
-  Rcpp::List crs = Rcpp::List::create(Named("epsg") = geojsonsf::EPSG,
-                                     Named("proj4string") = geojsonsf::PROJ4STRING);
+  Rcpp::List crs = Rcpp::List::create(
+  	Rcpp::Named("epsg") = geojsonsf::EPSG,
+  	Rcpp::Named("proj4string") = geojsonsf::PROJ4STRING
+  	);
 
   crs.attr("class") = Rcpp::CharacterVector::create("crs");
   sfc.attr("crs") = crs;
@@ -78,13 +80,6 @@ Rcpp::NumericVector start_bbox() {
   bbox(0) = bbox(1) = bbox(2) = bbox(3) = NA_REAL;
   return bbox;
 }
-
-// // TODO(what is this doing?)
-// std::set< std::string> start_geometry_types() {
-//   std::set< std::string> geometry_types;
-//   return geometry_types;
-// }
-
 
 Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
   Rcpp::StringVector sfc_classes(collectionCount);

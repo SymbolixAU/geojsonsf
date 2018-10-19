@@ -1,9 +1,7 @@
 #ifndef GEOJSONSF_H
 #define GEOJSONSF_H
 
-
 #include <Rcpp.h>
-using namespace Rcpp;
 
 // [[Rcpp::depends(rapidjsonr)]]
 
@@ -13,7 +11,7 @@ namespace geojsonsf {
 }
 
 template <int RTYPE>
-Rcpp::CharacterVector sfClass(Vector<RTYPE> v);
+Rcpp::CharacterVector sfClass(Rcpp::Vector<RTYPE> v);
 
 Rcpp::CharacterVector getSfClass(SEXP sf);
 
