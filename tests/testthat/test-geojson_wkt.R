@@ -11,6 +11,8 @@ test_that("wkt created correctly", {
 	f <- '{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}}'
 	fc <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}}]}'
 	fcgc <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1},"geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100,0]},{"type":"LineString","coordinates":[[101,0],[102,1]]},{"type":"MultiPoint","coordinates":[[0,0],[1,1],[2,2]]}]}}]}'
+	fc2 <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[0,0]}},{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[1,1]}}]}'
+
 
 	p <- geojson_wkt(p)
 	mp <- geojson_wkt(mp)
@@ -22,6 +24,8 @@ test_that("wkt created correctly", {
 	f <- geojson_wkt(f)
 	fc <- geojson_wkt(fc)
 	fcgc <- geojson_wkt(fcgc)
+	fc2 <- geojson_wkt(fc2)
+	ls2 <- geojson_wkt(ls2)
 
 	expect_true(class(p) == "data.frame")
 	expect_true(class(mp) == "data.frame")
