@@ -70,7 +70,7 @@ devtools::install_github("SymbolixAU/geojsonsf")
 
 ## Why did you build it?
 
-To quickly parse between GeoJSON and `sf` objects, and to handle cases not supported by `sf`, e.g. arrays of geometries
+To quickly parse between GeoJSON and `sf` objects, and to handle cases not supported by `sf`.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(geojsonsf)
@@ -105,7 +105,7 @@ sf
 ```
 
 
-And going the other way you can also return a vector of GeoJSON
+And going the other way you can also return a vector of GeoJSON by using `atomise = TRUE`
 
 ```{r}
 js <- sf_geojson( sf, atomise = T )
@@ -125,9 +125,9 @@ sf_geojson( sf )
 ```
 
 
-### Can you remove the properites and just return the geometries
+### Can you ignore the properites and just return the geometries?
 
-Yes. Call `sfc_geojson()` on the `sfc` object.
+Yes, call `sfc_geojson()` on the `sfc` object.
 
 ```{r}
 sfc_geojson( sf$geometry )

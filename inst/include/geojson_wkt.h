@@ -13,7 +13,7 @@ void object_separator(std::ostringstream& os);
 
 void polygon_separate_wkt(std::ostringstream& os, int i, int n);
 
-void add_lonlat_to_wkt_stream(std::ostringstream& os, float lon, float lat );
+void add_lonlat_to_wkt_stream(std::ostringstream& os, double lon, double lat );
 
 void begin_wkt(std::ostringstream& os, std::string& geom_type);
 

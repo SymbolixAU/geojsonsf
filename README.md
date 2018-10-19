@@ -68,7 +68,7 @@ devtools::install_github("SymbolixAU/geojsonsf")
 ## Why did you build it?
 
 To quickly parse between GeoJSON and `sf` objects, and to handle cases
-not supported by `sf`, e.g. arrays of geometries
+not supported by `sf`.
 
 ## What do you mean, ‘cases not supported’
 
@@ -107,7 +107,8 @@ sf
 #  3  1           POINT (100 0)
 ```
 
-And going the other way you can also return a vector of GeoJSON
+And going the other way you can also return a vector of GeoJSON by using
+`atomise = TRUE`
 
 ``` r
 js <- sf_geojson( sf, atomise = T )
@@ -131,9 +132,9 @@ sf_geojson( sf )
 #  {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":null},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},{"type":"Feature","properties":{"id":null},"geometry":{"type":"LineString","coordinates":[[-1.0,-1.0],[1.0,1.0]]}},{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"Point","coordinates":[100.0,0.0]}}]}
 ```
 
-### Can you remove the properites and just return the geometries
+### Can you ignore the properites and just return the geometries?
 
-Yes. Call `sfc_geojson()` on the `sfc` object.
+Yes, call `sfc_geojson()` on the `sfc` object.
 
 ``` r
 sfc_geojson( sf$geometry )
@@ -188,8 +189,8 @@ microbenchmark(
 )
 #  Unit: milliseconds
 #        expr       min        lq      mean    median        uq       max
-#   geojsonsf  722.1211  722.1211  742.4202  742.4202  762.7194  762.7194
-#          sf 1798.9366 1798.9366 1871.2442 1871.2442 1943.5517 1943.5517
+#   geojsonsf  754.9285  754.9285  770.8269  770.8269  786.7253  786.7253
+#          sf 1865.9533 1865.9533 2052.1470 2052.1470 2238.3407 2238.3407
 #   neval
 #       2
 #       2

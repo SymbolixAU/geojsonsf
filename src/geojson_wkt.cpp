@@ -68,15 +68,33 @@ void polygon_separate_wkt(std::ostringstream& os, int i, int n) {
 }
 
 
-void add_lonlat_to_wkt_stream(std::ostringstream& os, float lon, float lat ) {
+void add_lonlat_to_wkt_stream(std::ostringstream& os, double lon, double lat ) {
   os << lon << " " << lat;
 }
 
+void add_points_to_wkt_stream( std::ostringstream& os, Rcpp::NumericVector& points, unsigned int& n ) {
+	unsigned int i;
+	unsigned int nn = n - 1;
+	for ( i = 0; i < nn; i++ ) {
+		os << points[i] << " ";
+	}
+	os << points[nn];
+}
+
+
 void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
-  Rcpp::NumericVector point(2);
-  point[0] = get_lon(coord_array);
-  point[1] = get_lat(coord_array);
-  add_lonlat_to_wkt_stream(os, point[0], point[1]);
+	unsigned int i;
+	unsigned int n = coord_array.Size();
+	Rcpp::NumericVector points( n );
+	for( i = 0; i < n; i++ ) {
+		points[i] = coord_array[i].GetDouble();
+	}
+	add_points_to_wkt_stream( os, points, n );
+ // Rcpp::NumericVector point(2);
+  //point[0] = get_lon(coord_array);
+  //point[1] = get_lat(coord_array);
+  //add_lonlat_to_wkt_stream(os, point[0], point[1]);
+
 }
 
 

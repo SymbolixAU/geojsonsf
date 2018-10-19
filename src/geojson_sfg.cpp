@@ -12,15 +12,15 @@ Rcpp::CharacterVector sfg_attributes( std::string& dimension, std::string& geom_
   return Rcpp::CharacterVector::create( dimension, geom_type, "sfg" );
 }
 
-double get_lon(const Value& coord_array) {
-	validate_point(coord_array[0]);
-	return coord_array[0].GetDouble();
-}
-
-double get_lat(const Value& coord_array) {
-	validate_point(coord_array[1]);
-	return coord_array[1].GetDouble();
-}
+// double get_lon(const Value& coord_array) {
+// 	validate_point(coord_array[0]);
+// 	return coord_array[0].GetDouble();
+// }
+//
+// double get_lat(const Value& coord_array) {
+// 	validate_point(coord_array[1]);
+// 	return coord_array[1].GetDouble();
+// }
 
 // TODO( this will iterate along a long LINESTRING... )
 // int make_type( const Value& coord_array ) {
