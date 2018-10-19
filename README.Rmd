@@ -22,23 +22,13 @@ knitr::opts_chunk$set(
 
 --
 
-## Warning Note: 2018-09-22
-
-I have found [an issue](https://github.com/SymbolixAU/geojsonsf/issues/32) with `Dates` and `POSIXct` columns not being handled correctly. 
-
-I have made a fix in the development version and aim to have it on CRAN by the end of October 2018.
-
-Before then, to handle `Dates` and `POSIXct` columns correctly you will need to convert them to characters first. 
-
----
-
 ## geojsonsf
 
 A simple, low-dependency and **fast** converter between GeoJSON and Simple Feature objects in R. 
 
 ---
 
-**v1.1** 
+**v1.2** 
 
 Converts
 
