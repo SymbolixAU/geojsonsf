@@ -7,6 +7,6 @@
 * various performance improvements
 
 * Build Note - Fedora clang : installed size is 5.7mb
-  - The builds says the `libs` file is 3.9nb. I can't reduce this file size, all the compiled c++ headers and files are required.
+  - The builds says the `libs` file is 3.9mb. I can't reduce this file size, all the compiled c++ headers and files are required.
   
 
