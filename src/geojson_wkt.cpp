@@ -9,21 +9,38 @@ using namespace Rcpp;
 
 void begin_wkt(std::ostringstream& os, std::string& geom_type) {
 
-  if (geom_type == "Point") {
-    os << "POINT (";
-  } else if (geom_type == "MultiPoint") {
-    os << "MULTIPOINT ((";
-  } else if (geom_type == "LineString") {
-    os << "LINESTRING (";
-  } else if (geom_type == "MultiLineString") {
-    os << "MULTILINESTRING ((";
-  } else if (geom_type == "Polygon") {
-    os << "POLYGON ((";
-  } else if (geom_type == "MultiPolygon") {
-    os << "MULTIPOLYGON (((";
-  } else if (geom_type == "GeometryCollection") {
-    os << "GEOMETRYCOLLECTION (";
-  }
+	if (geom_type == "Point") {
+		os << "POINT (";
+	} else if (geom_type == "MultiPoint") {
+		os << "MULTIPOINT ((";
+	} else if (geom_type == "LineString") {
+		os << "LINESTRING (";
+	} else if (geom_type == "MultiLineString") {
+		os << "MULTILINESTRING ((";
+	} else if (geom_type == "Polygon") {
+		os << "POLYGON ((";
+	} else if (geom_type == "MultiPolygon") {
+		os << "MULTIPOLYGON (((";
+	} else if (geom_type == "GeometryCollection") {
+		os << "GEOMETRYCOLLECTION (";
+	}
+
+	// TODO( keep track of dimension, and add the geom_type after the vector of WKT has been created )
+  // if (geom_type == "Point") {
+  //   os << " (";
+  // } else if (geom_type == "MultiPoint") {
+  //   os << " ((";
+  // } else if (geom_type == "LineString") {
+  //   os << " (";
+  // } else if (geom_type == "MultiLineString") {
+  //   os << " ((";
+  // } else if (geom_type == "Polygon") {
+  //   os << " ((";
+  // } else if (geom_type == "MultiPolygon") {
+  //   os << " (((";
+  // } else if (geom_type == "GeometryCollection") {
+  //   os << " (";
+  // }
 }
 
 void end_wkt(std::ostringstream& os, std::string& geom_type) {
