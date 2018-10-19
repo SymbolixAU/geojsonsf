@@ -6,36 +6,36 @@
 namespace geojsonsf {
 namespace utils {
 
-	template <int RTYPE>
-	inline int sexp_length(Rcpp::Vector<RTYPE> v) {
-		return v.length();
-	}
+  template <int RTYPE>
+  inline int sexp_length(Rcpp::Vector<RTYPE> v) {
+    return v.length();
+  }
 
-	inline int get_sexp_length( SEXP s ) {
-		switch( TYPEOF(s) ) {
-		case REALSXP:
-			return sexp_length< REALSXP >( s );
-		case VECSXP:
-			return sexp_length< VECSXP >( s );
-		case INTSXP:
-			return sexp_length< INTSXP >( s );
-		default: Rcpp::stop("unknown sf type");
-		}
-		return 0;
-	}
+  inline int get_sexp_length( SEXP s ) {
+    switch( TYPEOF(s) ) {
+    case REALSXP:
+      return sexp_length< REALSXP >( s );
+    case VECSXP:
+      return sexp_length< VECSXP >( s );
+    case INTSXP:
+      return sexp_length< INTSXP >( s );
+    default: Rcpp::stop("unknown sf type");
+    }
+    return 0;
+  }
 
-	inline bool is_null_geometry( SEXP& sfg, std::string& geom_type ) {
-		int n = get_sexp_length( sfg );
-		if( geom_type == "POINT" ) {
-			Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
-			if (ISNAN( nv[0] ) ) {
-				return true;
-			}
-		} else if ( n == 0 ) {
-			return true;
-		}
-		return false;
-	}
+  inline bool is_null_geometry( SEXP& sfg, std::string& geom_type ) {
+    int n = get_sexp_length( sfg );
+    if( geom_type == "POINT" ) {
+      Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( sfg );
+      if (ISNAN( nv[0] ) ) {
+        return true;
+      }
+    } else if ( n == 0 ) {
+      return true;
+    }
+    return false;
+  }
 
 
 } // namespace utils

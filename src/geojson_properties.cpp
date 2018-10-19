@@ -59,8 +59,9 @@ void sort_property_names( Rcpp::List& properties, std::unordered_set< std::strin
 	std::vector< std::string > n = properties.names();
 	std::reverse( n.begin(), n.end() );
 	std::vector< std::string > sv( n.size() );
+	unsigned int i;
 
-	for( int i = 0; i < n.size(); i++ ) {
+	for( i = 0; i < n.size(); i++ ) {
 		sv[i] = n[i];
 	}
 	properties.names() = sv;
@@ -69,16 +70,13 @@ void sort_property_names( Rcpp::List& properties, std::unordered_set< std::strin
 
 void get_property_keys(const Value& v, std::unordered_set< std::string >& property_keys) {
 
-	// Rcpp::Rcout << "filling property_keys" << std::endl;
   for ( Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter ) {
-//
+
 //   	std::string s = iter->name.GetString();
 //   	Rcpp::Rcout << s << std::endl;
 
     property_keys.insert(iter->name.GetString());
   }
-//
-//   Rcpp::Rcout << "viewing property_keys" << std::endl;
 //   for ( auto it = property_keys.begin(); it != property_keys.end(); it++ ) {
 //   	Rcpp::Rcout << (*it) << std::endl;
 //   }

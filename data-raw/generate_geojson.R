@@ -17,6 +17,7 @@
 # geo_melbourne <- paste0('{"type":"Feature",',js, ',',coords,'}')
 # sf <- geojson_sf(geo_melbourne)
 
+
 # attr( geo_melbourne, "class") <- "json"
 # usethis::use_data(geo_melbourne, overwrite = T)
 #
@@ -33,3 +34,5 @@
 # format( object.size( geo ), units = "Kb" )
 # # [1] "124.8 Kb"
 
+attr( geo_melbourne, "class") <- c("geojson", "json")
+usethis::use_data(geo_melbourne, overwrite = T)

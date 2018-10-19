@@ -344,21 +344,21 @@ test_that("ZM attributes", {
 	mpt <- '{"type":"MultiPoint","coordinates":[[0.1,0,1,1],[1,1,1]]}'
 	expect_true( length( as.numeric( geojson_sfc( mpt )[[1]] ) )  == 8 )
 
-	# ls <- '{"type":"LineString","coordinates":[[0.1,0],[1,1]]}'
-	# expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 4 )
-	# ls <- '{"type":"LineString","coordinates":[[0.1,0,1],[1,1]]}'
-	# expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 6 )
-	# ls <- '{"type":"LineString","coordinates":[[0.1,0],[1,1,1]]}'
-	# expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 6 )
-	# ls <- '{"type":"LineString","coordinates":[[0.1,0,1],[1,1,1]]}'
-	# expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 6 )
-	# ls <- '{"type":"LineString","coordinates":[[0.1,0,1,1],[1,1,1]]}'
-	# expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 8 )
-	# ls <- '{"type":"LineString","coordinates":[[0.1,0,1],[1,1,1,1]]}'
-	# expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 8 )
-	# ls <- '{"type":"LineString","coordinates":[[0.1,0,1,1],[1,1,1,2]]}'
-	# expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 8 )
-	#
+	ls <- '{"type":"LineString","coordinates":[[0.1,0],[1,1]]}'
+	expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 4 )
+	ls <- '{"type":"LineString","coordinates":[[0.1,0,1],[1,1]]}'
+	expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 6 )
+	ls <- '{"type":"LineString","coordinates":[[0.1,0],[1,1,1]]}'
+	expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 6 )
+	ls <- '{"type":"LineString","coordinates":[[0.1,0,1],[1,1,1]]}'
+	expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 6 )
+	ls <- '{"type":"LineString","coordinates":[[0.1,0,1,1],[1,1,1]]}'
+	expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 8 )
+	ls <- '{"type":"LineString","coordinates":[[0.1,0,1],[1,1,1,1]]}'
+	expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 8 )
+	ls <- '{"type":"LineString","coordinates":[[0.1,0,1,1],[1,1,1,2]]}'
+	expect_true( length( as.numeric( geojson_sfc( ls )[[1]] ) ) == 8 )
+
 	# mls <- '{"type":"MultiLineString","coordinates":[[[0.0,0],[1,1]]]}'
 	# expect_equal( as.matrix( geojson_sfc( mls )[[1]] ), matrix(c(0,0,1,1), ncol = 2, byrow = T) )
 	# mls <- '{"type":"MultiLineString","coordinates":[[[0.0,0,1],[1,1]]]}'
@@ -373,8 +373,8 @@ test_that("ZM attributes", {
 	# expect_equal( as.matrix( geojson_sfc( mls )[[1]] ), matrix(c(0,0,0,0,1,1,2,3), ncol = 4, byrow = T) )
 	# mls <- '{"type":"MultiLineString","coordinates":[[[0.0,0,1,2],[1,1,2,3]]]}'
 	# expect_equal( as.matrix( geojson_sfc( mls )[[1]] ), matrix(c(0,0,1,2,1,1,2,3), ncol = 4, byrow = T) )
-
-
+	#
+	#
 	# ply <- '{"type":"Polygon","coordinates":[[[0,0],[0,1],[1,1],[1,0],[0,0]]]}'
 	# expect_equal( as.matrix( geojson_sfc( ply )[[1]] ), matrix(c(0,0,0,1,1,1,1,0,0,0), ncol = 2, byrow = T) )
 	# ply <- '{"type":"Polygon","coordinates":[[[0,0,1],[0,1],[1,1],[1,0],[0,0]]]}'

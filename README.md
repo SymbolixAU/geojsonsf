@@ -52,217 +52,119 @@ members are ignored, and nested objects and arrays inside the
 
 ## Installation
 
-Install the CRAN version wth
+Install the CRAN version with
 
 ``` r
 install.packages("geojsonsf")
 ```
 
-To install the development version you first need to install `jsonify`
+To install the development version
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("SymbolixAU/jsonify")
 devtools::install_github("SymbolixAU/geojsonsf")
 ```
 
-## Motivation
+## Why did you build it?
 
 To quickly parse between GeoJSON and `sf` objects, and to handle cases
 not supported by `sf`, e.g. arrays of geometries
 
-### Arrays of GeoJSON
+## What do you mean, ‘cases not supported’
+
+For example, `sf` can’t read an array of GeoJSON objects, so I wanted to
+make this work
 
 ``` r
+js <- c(
+    '[
+      {"type":"Point","coordinates":[0,0]},
+      {"type":"LineString","coordinates":[[-1,-1],[1,1]]},
+        {
+      "type": "FeatureCollection",
+      "features": [
+      {
+        "type": "Feature",
+        "properties": {"id":1},
+        "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
+      }
+    ]
+  }
+    ]'
+)
 
-js <- '[
-{
-  "type": "FeatureCollection",
-  "features": [
-  {
-    "type": "Feature",
-    "properties": {"id":1,"val":true},
-    "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
-  },
-  {
-    "type": "Feature",
-    "properties": {"id":2,"val":false},
-    "geometry": {"type": "LineString", "coordinates": [[201.0, 0.0], [102.0, 1.0]]}
-  },
-  {
-    "type": "Feature",
-        "properties": {"id":3},
-        "geometry": {"type": "LineString", "coordinates": [[301.0, 0.0], [102.0, 1.0]]}
-    }
- ]
-},
-{
-  "type": "FeatureCollection",
-    "features": [
-    {
-      "type": "Feature",
-      "properties": {"id":1},
-      "geometry": {"type": "Point", "coordinates": [100.0, 0.0]}
-    },
-    {
-      "type": "Feature",
-      "properties": {"val":false},
-      "geometry": {"type": "LineString", "coordinates": [[501.0, 0.0], [102.0, 1.0]]}
-    },
-    {
-      "type": "Feature",
-      "properties": {"hello":"world"},
-      "geometry": {"type": "LineString", "coordinates": [[601.0, 0.0], [102.0, 1.0]]}
-    }
-  ]
-}
-]'
-
-sf <- geojson_sf(js)
+sf <- geojson_sf( js )
 sf
-#  Simple feature collection with 6 features and 3 fields
+#  Simple feature collection with 3 features and 1 field
 #  geometry type:  GEOMETRY
 #  dimension:      XY
-#  bbox:           xmin: 100 ymin: 0 xmax: 601 ymax: 1
+#  bbox:           xmin: -1 ymin: -1 xmax: 100 ymax: 1
 #  epsg (SRID):    4326
 #  proj4string:    +proj=longlat +datum=WGS84 +no_defs
-#                     geometry hello id  val
-#  1             POINT (100 0)  <NA>  1    1
-#  2 LINESTRING (201 0, 102 1)  <NA>  2    0
-#  3 LINESTRING (301 0, 102 1)  <NA>  3 <NA>
-#  4             POINT (100 0)  <NA>  1 <NA>
-#  5 LINESTRING (501 0, 102 1)  <NA> NA    0
-#  6 LINESTRING (601 0, 102 1) world NA <NA>
+#    id                geometry
+#  1 NA             POINT (0 0)
+#  2 NA LINESTRING (-1 -1, 1 1)
+#  3  1           POINT (100 0)
 ```
 
-And back again to GeoJSON
+And going the other way you can also return a vector of GeoJSON
 
 ``` r
-js <- sf_geojson(sf)
-jsonlite::prettify(js)
-#  {
-#      "type": "FeatureCollection",
-#      "features": [
-#          {
-#              "type": "Feature",
-#              "properties": {
-#                  "hello": null,
-#                  "id": 1.0,
-#                  "val": "1"
-#              },
-#              "geometry": {
-#                  "type": "Point",
-#                  "coordinates": [
-#                      100.0,
-#                      0.0
-#                  ]
-#              }
-#          },
-#          {
-#              "type": "Feature",
-#              "properties": {
-#                  "hello": null,
-#                  "id": 2.0,
-#                  "val": "0"
-#              },
-#              "geometry": {
-#                  "type": "LineString",
-#                  "coordinates": [
-#                      [
-#                          201.0,
-#                          0.0
-#                      ],
-#                      [
-#                          102.0,
-#                          1.0
-#                      ]
-#                  ]
-#              }
-#          },
-#          {
-#              "type": "Feature",
-#              "properties": {
-#                  "hello": null,
-#                  "id": 3.0,
-#                  "val": null
-#              },
-#              "geometry": {
-#                  "type": "LineString",
-#                  "coordinates": [
-#                      [
-#                          301.0,
-#                          0.0
-#                      ],
-#                      [
-#                          102.0,
-#                          1.0
-#                      ]
-#                  ]
-#              }
-#          },
-#          {
-#              "type": "Feature",
-#              "properties": {
-#                  "hello": null,
-#                  "id": 1.0,
-#                  "val": null
-#              },
-#              "geometry": {
-#                  "type": "Point",
-#                  "coordinates": [
-#                      100.0,
-#                      0.0
-#                  ]
-#              }
-#          },
-#          {
-#              "type": "Feature",
-#              "properties": {
-#                  "hello": null,
-#                  "id": null,
-#                  "val": "0"
-#              },
-#              "geometry": {
-#                  "type": "LineString",
-#                  "coordinates": [
-#                      [
-#                          501.0,
-#                          0.0
-#                      ],
-#                      [
-#                          102.0,
-#                          1.0
-#                      ]
-#                  ]
-#              }
-#          },
-#          {
-#              "type": "Feature",
-#              "properties": {
-#                  "hello": "world",
-#                  "id": null,
-#                  "val": null
-#              },
-#              "geometry": {
-#                  "type": "LineString",
-#                  "coordinates": [
-#                      [
-#                          601.0,
-#                          0.0
-#                      ],
-#                      [
-#                          102.0,
-#                          1.0
-#                      ]
-#                  ]
-#              }
-#          }
-#      ]
-#  }
-#  
+js <- sf_geojson( sf, atomise = T )
+js
+#  {"type":"Feature","properties":{"id":null},"geometry":{"type":"Point","coordinates":[0.0,0.0]}} 
+#  {"type":"Feature","properties":{"id":null},"geometry":{"type":"LineString","coordinates":[[-1.0,-1.0],[1.0,1.0]]}} 
+#  {"type":"Feature","properties":{"id":1.0},"geometry":{"type":"Point","coordinates":[100.0,0.0]}}
 ```
 
-### Speed
+### What’s the benefit of ‘atomising’?
+
+It’s useful for when you work with geospatial databases and want an
+individual record for each individual feature.
+
+### What happens if you don’t `atomise`?
+
+You get a single GeoJSON object
+
+``` r
+sf_geojson( sf )
+#  {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":null},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},{"type":"Feature","properties":{"id":null},"geometry":{"type":"LineString","coordinates":[[-1.0,-1.0],[1.0,1.0]]}},{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"Point","coordinates":[100.0,0.0]}}]}
+```
+
+### Can you remove the properites and just return the geometries
+
+Yes. Call `sfc_geojson()` on the `sfc` object.
+
+``` r
+sfc_geojson( sf$geometry )
+#  {"type":"Point","coordinates":[0.0,0.0]} 
+#  {"type":"LineString","coordinates":[[-1.0,-1.0],[1.0,1.0]]} 
+#  {"type":"Point","coordinates":[100.0,0.0]}
+```
+
+### If I have an `sf` object without any properties, why does it ‘atomise’ by default?
+
+``` r
+sf$id <- NULL
+sf_geojson( sf )
+#  {"type":"Point","coordinates":[0.0,0.0]} 
+#  {"type":"LineString","coordinates":[[-1.0,-1.0],[1.0,1.0]]} 
+#  {"type":"Point","coordinates":[100.0,0.0]}
+```
+
+The `simplify` argument is `TRUE` by default, and it will try and
+‘simplify’ the GeoJSON. If there are no properties in the `sf` object,
+then the GeoJSON won’t have any properties.
+
+However, if you set `simplify = FALSE` you’ll get a FeatureCollection
+with an empty properties field.
+
+``` r
+sf_geojson(sf, simplify = F)
+#  {"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},{"type":"Feature","properties":{},"geometry":{"type":"LineString","coordinates":[[-1.0,-1.0],[1.0,1.0]]}},{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[100.0,0.0]}}]}
+```
+
+### How fast is it?
 
 This benchmark shows a comparison with `library(sf)` for converting a
 string of GeoJSON of 3,221 counties in the US in to an `sf`
@@ -284,53 +186,24 @@ microbenchmark(
     },
     times = 2
 )
-#  Unit: seconds
-#        expr      min       lq     mean   median      uq     max neval
-#   geojsonsf 1.540426 1.540426 1.595153 1.595153 1.64988 1.64988     2
-#          sf 4.422917 4.422917 6.404438 6.404438 8.38596 8.38596     2
+#  Unit: milliseconds
+#        expr       min        lq      mean    median        uq       max
+#   geojsonsf  722.1211  722.1211  742.4202  742.4202  762.7194  762.7194
+#          sf 1798.9366 1798.9366 1871.2442 1871.2442 1943.5517 1943.5517
+#   neval
+#       2
+#       2
 ```
 
-Reading directly from a URL is comparable between the
-two
+### Does it work?
 
-``` r
-myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
+I’ve written a [lot of
+tests](https://github.com/SymbolixAU/geojsonsf/tree/master/tests/testthat)
+to try and capture all eventualities. But if you find a mistake please
+let me know.
 
-library(microbenchmark)
-
-microbenchmark(
-    geojsonsf = {
-        geojson_sf(myurl)
-    },
-    sf = {
-        sf::st_read(myurl, quiet = T)
-    },
-    times = 2
-)
-#  Unit: seconds
-#        expr      min       lq      mean    median        uq       max neval
-#   geojsonsf 6.681041 6.681041  7.037247  7.037247  7.393453  7.393453     2
-#          sf 9.524558 9.524558 10.089715 10.089715 10.654873 10.654873     2
-```
-
-    library(rgdal)
-    microbenchmark(
-        gdal = {
-        readOGR(myurl, "OGRGeoJSON")
-        },
-        geojsonsf = {
-            myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
-            geo <- readLines(myurl)
-            geo <- paste0(geo, collapse = "")
-            geojson_sf(geo)
-        },
-        times = 5
-    )
-    #      expr      min       lq     mean   median       uq      max neval
-    #      gdal 58.51037 60.05683 66.33925 65.07506 72.08371 75.97028     5
-    # geojsonsf 11.91515 13.37422 14.02232 13.88782 14.61826 16.31612     5
-
-A visual check to see both objects are the same
+Here’s a quick visual check to see the output of the above benchmark
+data
 
 ``` r
 library(googleway)
@@ -351,4 +224,4 @@ sf <- sf::st_read(geo, quiet = T)
 plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />

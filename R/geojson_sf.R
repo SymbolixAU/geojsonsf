@@ -39,6 +39,9 @@ geojson_sfc <- function(geojson, expand_geometries = FALSE) UseMethod("geojson_s
 
 
 #' @export
+geojson_sfc.geojson <- function( geojson, expand_geometries = FALSE) geojson_sfc.character(geojson, expand_geometries)
+
+#' @export
 geojson_sfc.character <- function(geojson, expand_geometries = FALSE) {
 
 	if(length(geojson) > 1) {
@@ -82,6 +85,8 @@ geojson_sfc.default <- function(geojson, expand_geometries = FALSE) rcpp_geojson
 #' @export
 geojson_sf <- function(geojson, expand_geometries = FALSE) UseMethod("geojson_sf")
 
+#' @export
+geojson_sf.geojson <- function( geojson, expand_geometries = FALSE) geojson_sf.character(geojson, expand_geometries)
 
 #' @export
 geojson_sf.character <- function(geojson, expand_geometries = FALSE) {
@@ -111,7 +116,8 @@ geojson_sf.default <- function(geojson, expand_geometries = F) rcpp_geojson_to_s
 #' @param atomise logical indicating if the sf object should be converted into a vector
 #' of GeoJSON objects
 #' @param simplify logical indicating if sf objects without property columns should simplify
-#' (\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE})
+#' (\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE}). If \code{atomise} is TRUE
+#' this argument is ignored.
 #'
 #' @return vector of GeoJSON
 #'
@@ -177,8 +183,6 @@ handle_dates <- function( x ) {
 	x[dte] <- lapply(as.data.frame(x)[dte], as.character)
 	return( x )
 }
-
-return_x <- function( x ) x
 
 is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
 
