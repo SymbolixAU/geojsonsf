@@ -6,8 +6,8 @@ test_that("properties captured correctly", {
 	sf <- geojson_sf(f)
 	wkt <- geojson_wkt(f)
 
-	expect_true(all(names(sf) == c("id", "name","geometry")))
-	expect_true(all(names(wkt) == c("id","name","geometry")))
+	expect_true(all(names(sf) %in% c("id", "name","geometry")))
+	expect_true(all(names(wkt) %in% c("id","name","geometry")))
 	expect_true(sf$id == 1)
 	expect_true(wkt$id == 1)
 	expect_true(sf$name == "foo")
@@ -132,7 +132,7 @@ test_that("round trip succeeds", {
 	s2 <- geojson_sf( g )
 	#identical (s, s2) # FALSE
 
-	expect_true( all( names(s) == names(s2) ) )
+	expect_true( all( names(s) %in% names(s2) ) )
 	expect_true( all(s$AREASQKM == s2$AREASQKM) )
 	expect_true( all(s$SA2_NAME == s2$SA2_NAME) )
 	expect_true( all(s$SA3_NAME == s2$SA3_NAME) )
