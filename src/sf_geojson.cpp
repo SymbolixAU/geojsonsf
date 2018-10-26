@@ -15,7 +15,7 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 	SEXP sfg = sfc[ i ];
 
 	std::string geom_type;
-	Rcpp::CharacterVector cls = getSfClass(sfg);
+	Rcpp::CharacterVector cls = geojsonsf::getSfClass(sfg);
 	geom_type = cls[1];
 
 	// need to keep track of GEOMETRYCOLLECTIONs so we can correctly close them

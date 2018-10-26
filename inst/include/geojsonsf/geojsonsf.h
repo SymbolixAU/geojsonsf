@@ -8,12 +8,28 @@
 namespace geojsonsf {
   const int EPSG = 4326;
   const std::string PROJ4STRING = "+proj=longlat +datum=WGS84 +no_defs";
+
+
+  template <int RTYPE>
+  inline Rcpp::CharacterVector sfClass(Rcpp::Vector<RTYPE> v) {
+  	return v.attr("class");
+  }
+
+  inline Rcpp::CharacterVector getSfClass(SEXP sf) {
+
+  	switch( TYPEOF(sf) ) {
+  	case REALSXP:
+  		return sfClass<REALSXP>(sf);
+  	case VECSXP:
+  		return sfClass<VECSXP>(sf);
+  	case INTSXP:
+  		return sfClass<INTSXP>(sf);
+  	default: Rcpp::stop("unknown sf type");
+  	}
+  	return "";
+  }
+
 }
-
-template <int RTYPE>
-Rcpp::CharacterVector sfClass(Rcpp::Vector<RTYPE> v);
-
-Rcpp::CharacterVector getSfClass(SEXP sf);
 
 #define UNKNOWN            0
 #define POINT              1

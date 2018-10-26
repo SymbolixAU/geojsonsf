@@ -27,7 +27,7 @@ std::string attach_class(Rcpp::List& sfc,
       Rcpp::StringVector sfc_classes = start_sfc_classes(sfc.size());
       for (int i = 0; i < sfc.size(); i++) {
         SEXP sfci = sfc[i];
-        Rcpp::CharacterVector cls = getSfClass(sfci);
+        Rcpp::CharacterVector cls = geojsonsf::getSfClass(sfci);
         sfc_classes[i] = cls[1];
       }
 
