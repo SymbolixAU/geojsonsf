@@ -1,6 +1,6 @@
 #include <Rcpp.h>
-#include "geojsonsf.h"
-#include "geojson_sfc.h"
+#include "geojsonsf/geojsonsf.h"
+#include "geojsonsf/geojson_sfc.h"
 
 void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
   //xmin, ymin, xmax, ymax

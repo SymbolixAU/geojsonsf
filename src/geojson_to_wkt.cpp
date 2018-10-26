@@ -1,13 +1,13 @@
 
 #include "rapidjson/document.h"
 #include <Rcpp.h>
-#include "geojsonsf.h"
-#include "geojson_sfc.h"
-#include "geojson_sfg.h"
-#include "geojson_to_sf.h"
-#include "geojson_validate.h"
-#include "geojson_properties.h"
-#include "geojson_wkt.h"
+#include "geojsonsf/geojsonsf.h"
+#include "geojsonsf/geojson_sfc.h"
+#include "geojsonsf/geojson_sfg.h"
+#include "geojsonsf/geojson_to_sf.h"
+#include "geojsonsf/geojson_validate.h"
+#include "geojsonsf/geojson_properties.h"
+#include "geojsonsf/geojson_wkt.h"
 
 using namespace rapidjson;
 using namespace Rcpp;

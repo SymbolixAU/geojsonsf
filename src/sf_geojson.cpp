@@ -1,10 +1,10 @@
 
 #include <Rcpp.h>
-#include "geojsonsf.h"
+#include "geojsonsf/geojsonsf.h"
 
-#include "utils/utils.hpp"
-#include "writers/writers.hpp"
-#include "geometrycollection/geometrycollection.hpp"
+#include "geojsonsf/utils/utils.hpp"
+#include "geojsonsf/writers/writers.hpp"
+#include "geojsonsf/geometrycollection/geometrycollection.hpp"
 
 #include "jsonify/jsonify.hpp"
 #include "jsonify/to_json/dataframe.hpp"

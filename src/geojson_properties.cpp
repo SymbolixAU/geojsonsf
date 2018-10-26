@@ -2,7 +2,7 @@
 #include "rapidjson/document.h"
 #include <Rcpp.h>
 #include <sstream>
-#include "geojsonsf.h"
+#include "geojsonsf/geojsonsf.h"
 using namespace rapidjson;
 using namespace Rcpp;
 
