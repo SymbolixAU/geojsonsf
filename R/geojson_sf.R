@@ -178,7 +178,7 @@ sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 
 #' df to GeoJSON
 #'
-#' Converts data.frame objects to GeoJSON
+#' Converts data.frame objects to GeoJSON. Each row is considerd a POINT
 #'
 #' @param df data.frame
 #' @param atomise logical indicating if the data.frame should be converted into a vector

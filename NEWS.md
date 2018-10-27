@@ -1,3 +1,7 @@
+## v1.3.0
+
+* `df_geojson()` converts data.frame to GeoJSON
+
 ## v1.2.0
 
 * `sf_geojson()` and `sfc_geojson()` output "json" class objects

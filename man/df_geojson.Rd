@@ -20,7 +20,7 @@ this argument is ignored.}
 vector of GeoJSON
 }
 \description{
-Converts data.frame objects to GeoJSON
+Converts data.frame objects to GeoJSON. Each row is considerd a POINT
 }
 \examples{
 \dontrun{
