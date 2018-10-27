@@ -24,18 +24,15 @@ Converts data.frame objects to GeoJSON
 }
 \examples{
 \dontrun{
-library(sf)
-sf <- sf::st_sf(geometry = sf::st_sfc(list(sf::st_point(c(0,0)), sf::st_point(c(1,1)))))
-sf$id <- 1:2
-sf_geojson(sf)
-sf_geojson(sf, atomise = T)
 
-ls <- st_linestring(rbind(c(0,0),c(1,1),c(2,1)))
-mls <- st_multilinestring(list(rbind(c(2,2),c(1,3)), rbind(c(0,0),c(1,1),c(2,1))))
-sfc <- st_sfc(ls,mls)
-sf <- st_sf(sfc)
-sf_geojson( sf )
-sf_geojson( sf, simplify = FALSE )
+df <- data.frame(lon = 1:5, lat = 1:5, id = 1:5, val = letters[1:5])
+df_geojson( df, lon = "lon", lat = "lat")
+df_geojson( df, lon = "lon", lat = "lat", atomise = T)
+
+df <- data.frame(lon = 1:5, lat = 1:5)
+df_geojson( df, lon = "lon", lat = "lat")
+df_geojson( df, lon = "lon", lat = "lat", simplify = T)
+
 
 }
 

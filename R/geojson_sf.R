@@ -191,18 +191,15 @@ sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 #'
 #' @examples
 #' \dontrun{
-#' library(sf)
-#' sf <- sf::st_sf(geometry = sf::st_sfc(list(sf::st_point(c(0,0)), sf::st_point(c(1,1)))))
-#' sf$id <- 1:2
-#' sf_geojson(sf)
-#' sf_geojson(sf, atomise = T)
 #'
-#' ls <- st_linestring(rbind(c(0,0),c(1,1),c(2,1)))
-#' mls <- st_multilinestring(list(rbind(c(2,2),c(1,3)), rbind(c(0,0),c(1,1),c(2,1))))
-#' sfc <- st_sfc(ls,mls)
-#' sf <- st_sf(sfc)
-#' sf_geojson( sf )
-#' sf_geojson( sf, simplify = FALSE )
+#' df <- data.frame(lon = 1:5, lat = 1:5, id = 1:5, val = letters[1:5])
+#' df_geojson( df, lon = "lon", lat = "lat")
+#' df_geojson( df, lon = "lon", lat = "lat", atomise = T)
+#'
+#' df <- data.frame(lon = 1:5, lat = 1:5)
+#' df_geojson( df, lon = "lon", lat = "lat")
+#' df_geojson( df, lon = "lon", lat = "lat", simplify = T)
+#'
 #'
 #' }
 #'
@@ -212,7 +209,7 @@ df_geojson <- function(df, lon, lat, atomise = FALSE, simplify = TRUE) UseMethod
 #' @export
 df_geojson.data.frame <- function(df, lon, lat, atomise = FALSE, simplify = TRUE) {
 	df <- handle_dates( df )
-	if( atomise | ( ncol( df ) == 1 & simplify ) ) return( rcpp_df_to_geojson_atomise( df, lon, lat ) )
+	if( atomise | ( ncol( df ) == 2 & simplify ) ) return( rcpp_df_to_geojson_atomise( df, lon, lat ) )
 	return( rcpp_df_to_geojson( df, lon, lat ) )
 }
 
