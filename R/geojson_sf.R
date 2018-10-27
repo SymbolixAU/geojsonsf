@@ -192,11 +192,11 @@ sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 #' @examples
 #' \dontrun{
 #'
-#' df <- data.frame(lon = 1:5, lat = 1:5, id = 1:5, val = letters[1:5])
+#' df <- data.frame(lon = c(1:5, NA), lat = c(1:5, NA), id = 1:6, val = letters[1:6])
 #' df_geojson( df, lon = "lon", lat = "lat")
 #' df_geojson( df, lon = "lon", lat = "lat", atomise = T)
 #'
-#' df <- data.frame(lon = 1:5, lat = 1:5)
+#' df <- data.frame(lon = c(1:5, NA), lat = c(1:5, NA) )
 #' df_geojson( df, lon = "lon", lat = "lat")
 #' df_geojson( df, lon = "lon", lat = "lat", simplify = T)
 #'
