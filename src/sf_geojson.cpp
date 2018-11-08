@@ -25,6 +25,9 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 
 	int sfglength = geojsonsf::utils::get_sexp_length( sfg );
 
+	Rcpp::Rcout << "sfglength: " << sfglength << std::endl;
+	Rcpp::Rcout << "geom_type: " << geom_type << std::endl;
+
 	if (sfglength == 0) {
 		writer.Null();
 	} else {
@@ -41,97 +44,6 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 		}
 	}
 }
-
-// template< typename Writer >
-// void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type, Rcpp::CharacterVector& cls ) {
-//
-// 	if (geom_type == "POINT") {
-// 		geojsonsf::writers::points_to_geojson( writer, sfg );
-//
-// 	} else if (geom_type == "MULTIPOINT") {
-// 		geojsonsf::writers::linestring_to_geojson( writer, sfg );
-//
-// 	} else if (geom_type == "LINESTRING") {
-// 		geojsonsf::writers::linestring_to_geojson( writer, sfg );
-//
-// 	} else if (geom_type == "MULTILINESTRING") {
-// 		Rcpp::List multiline = Rcpp::as< Rcpp::List >( sfg );
-// 		geojsonsf::writers::polygon_to_geojson( writer, multiline );
-//
-// 	} else if (geom_type == "POLYGON") {
-// 		Rcpp::List polygon = Rcpp::as< Rcpp::List >(sfg);
-// 		geojsonsf::writers::polygon_to_geojson( writer, polygon );
-//
-// 	} else if (geom_type == "MULTIPOLYGON") {
-// 		Rcpp::List multipolygon = Rcpp::as< Rcpp::List >( sfg );
-// 		geojsonsf::writers::multi_polygon_to_geojson( writer, multipolygon );
-//
-// 	} else if (geom_type == "GEOMETRYCOLLECTION") {
-// 		Rcpp::List gc = Rcpp::as< Rcpp::List >( sfg );
-// 		Rcpp::List sfgi(1);
-// 		for (int i = 0; i < gc.size(); i++) {
-// 			sfgi[0] = gc[i];
-// 			make_gc_type(writer, sfgi, geom_type, cls);
-// 		}
-// 	}
-// }
-
-// template< typename Writer >
-// void make_gc_type(Writer& writer, Rcpp::List& sfg,
-//                   std::string& geom_type, Rcpp::CharacterVector& cls) {
-//
-// 	bool isnull = false;
-//
-// 	for (Rcpp::List::iterator it = sfg.begin(); it != sfg.end(); it++) {
-//
-// 		switch( TYPEOF( *it ) ) {
-// 		case VECSXP: {
-// 			Rcpp::List tmp = Rcpp::as< Rcpp::List >(*it);
-// 			if (!Rf_isNull(tmp.attr("class"))) {
-//
-// 				cls = tmp.attr("class");
-// 				// TODO: error handle (there should aways be 3 elements as we're workgin wtih sfg objects)
-// 				geom_type = cls[1];
-//
-// 				SEXP tst = *it;
-// 				isnull = geojsonsf::utils::is_null_geometry( tst, geom_type );
-// 				if ( isnull ) {
-// 					//writer.Null();
-// 				} else {
-// 					geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
-// 					write_geojson(writer, tmp, geom_type, cls);
-// 					geojsonsf::writers::end_geojson_geometry(writer, geom_type);
-// 				}
-// 			} else {
-// 				make_gc_type(writer, tmp, geom_type, cls);
-// 			}
-// 			break;
-// 		}
-// 		case REALSXP: {
-// 			Rcpp::NumericVector tmp = Rcpp::as< Rcpp::NumericVector >( *it );
-// 			if (!Rf_isNull(tmp.attr("class"))) {
-//
-// 				cls = tmp.attr("class");
-// 				geom_type = cls[1];
-//
-// 				SEXP tst = *it;
-// 				isnull = geojsonsf::utils::is_null_geometry( tst, geom_type );
-// 				if ( isnull ) {
-// 					//writer.Null();
-// 				} else {
-// 					geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
-// 					write_geojson(writer, tmp, geom_type, cls);
-// 					geojsonsf::writers::end_geojson_geometry(writer, geom_type);
-// 				}
-// 			}
-// 			break;
-// 		}
-// 		default: {
-// 			Rcpp::stop("Coordinates could not be found");
-// 		}
-// 		}
-// 	}
-// }
 
 
 // [[Rcpp::export]]
@@ -176,7 +88,6 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 			property_counter++;
 		}
 	}
-
 
 	for( i = 0; i < n_rows; i++ ) {
 
@@ -251,6 +162,10 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 
 		  writer.StartObject();
 
+		writer.String("geometry");
+		Rcpp::List sfc = sf[ geom_column ];
+		write_geometry( writer, sfc, i );
+
 			geojsonsf::writers::start_features( writer );
 			geojsonsf::writers::start_properties( writer );
 			writer.StartObject();
@@ -265,10 +180,9 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 			}
 		  writer.EndObject();
 
-		writer.String("geometry");
-
-		Rcpp::List sfc = sf[ geom_column ];
-		write_geometry( writer, sfc, i );
+		// writer.String("geometry");
+		// Rcpp::List sfc = sf[ geom_column ];
+		// write_geometry( writer, sfc, i );
 
 		writer.EndObject();
 	}

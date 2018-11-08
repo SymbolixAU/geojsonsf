@@ -117,6 +117,7 @@ namespace writers {
   template< typename Writer >
   inline void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point ) {
     int n = point.size();
+  	Rcpp::Rcout << "points.size() : "<< n << std::endl;
     int i;
     writer.StartArray();
     for ( i = 0; i < n; i++ ) {
