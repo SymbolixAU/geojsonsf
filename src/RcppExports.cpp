@@ -123,6 +123,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_sf_to_geojson_downcast
+Rcpp::StringVector rcpp_sf_to_geojson_downcast(Rcpp::DataFrame& sf);
+RcppExport SEXP _geojsonsf_rcpp_sf_to_geojson_downcast(SEXP sfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type sf(sfSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_geojson_downcast(sf));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_geojsonsf_rcpp_df_to_geojson_atomise", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson_atomise, 3},
@@ -135,6 +146,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_geojsonsf_rcpp_sfc_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_sfc_to_geojson, 1},
     {"_geojsonsf_rcpp_sf_to_geojson_atomise", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson_atomise, 1},
     {"_geojsonsf_rcpp_sf_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson, 1},
+    {"_geojsonsf_rcpp_sf_to_geojson_downcast", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson_downcast, 1},
     {NULL, NULL, 0}
 };
 
