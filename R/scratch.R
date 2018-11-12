@@ -28,11 +28,25 @@
 #
 #
 #
-# nc <- st_read(system.file("shape/nc.shp", package="sf"))
+
+
+
+# nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
 # nc_poly <- sf::st_cast( nc, to = "POLYGON" )
 #
-# geo <- geojsonsf:::rcpp_sf_to_geojson_downcast( nc )
+# nc[4, ]
+# geo <- geojsonsf:::rcpp_sf_to_geojson_downcast( nc[4, ] )
 # sf <- geojsonsf::geojson_sf( geo )
+# sf
+
+
+
+
+
+
+
+
+
 #
 # sf
 # nc_poly
