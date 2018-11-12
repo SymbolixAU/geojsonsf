@@ -4,7 +4,8 @@
 \alias{sf_geojson}
 \title{sf to GeoJSON}
 \usage{
-sf_geojson(sf, atomise = FALSE, simplify = TRUE)
+sf_geojson(sf, atomise = FALSE, simplify = TRUE,
+  reduce_multi = FALSE)
 }
 \arguments{
 \item{sf}{simple feature object}
@@ -13,8 +14,8 @@ sf_geojson(sf, atomise = FALSE, simplify = TRUE)
 of GeoJSON objects}
 
 \item{simplify}{logical indicating if sf objects without property columns should simplify
-(\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE}). If \code{atomise} is TRUE
-this argument is ignored.}
+(\code{TRUE}) into a vector of GeoJSON, or return a Featurecollection with
+empty property fields (\code{FALSE}). If \code{atomise} is TRUE this argument is ignored.}
 }
 \value{
 vector of GeoJSON

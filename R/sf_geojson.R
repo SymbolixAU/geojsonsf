@@ -6,8 +6,8 @@
 #' @param atomise logical indicating if the sf object should be converted into a vector
 #' of GeoJSON objects
 #' @param simplify logical indicating if sf objects without property columns should simplify
-#' (\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE}). If \code{atomise} is TRUE
-#' this argument is ignored.
+#' (\code{TRUE}) into a vector of GeoJSON, or return a Featurecollection with
+#' empty property fields (\code{FALSE}). If \code{atomise} is TRUE this argument is ignored.
 #'
 #' @return vector of GeoJSON
 #'
@@ -29,10 +29,10 @@
 #' }
 #'
 #' @export
-sf_geojson <- function(sf, atomise = FALSE, simplify = TRUE) UseMethod("sf_geojson")
+sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE, reduce_multi = FALSE ) UseMethod("sf_geojson")
 
 #' @export
-sf_geojson.sf <- function(sf, atomise = FALSE, simplify = TRUE) {
+sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, reduce_multi = FALSE ) {
 	sf <- handle_dates( sf )
 	if( atomise | ( ncol( sf ) == 1 & simplify ) ) return( rcpp_sf_to_geojson_atomise( sf ) )
 	return( rcpp_sf_to_geojson( sf ) )
