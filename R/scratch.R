@@ -42,6 +42,9 @@
 #
 # nc <- sf::st_read(system.file("shape/nc.shp", package="sf"))
 #
+# geo_down <- geojsonsf:::rcpp_sf_to_geojson_downcast( nc )
+# sf_down <- geojsonsf::geojson_sf( geo_down )
+#
 # library(microbenchmark)
 #
 # microbenchmark(
