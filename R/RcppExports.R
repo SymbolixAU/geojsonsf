@@ -41,3 +41,7 @@ rcpp_sf_to_geojson <- function(sf) {
     .Call(`_geojsonsf_rcpp_sf_to_geojson`, sf)
 }
 
+rcpp_sf_to_geojson_downcast <- function(sf) {
+    .Call(`_geojsonsf_rcpp_sf_to_geojson_downcast`, sf)
+}
+
