@@ -8,8 +8,22 @@
 #' @param simplify logical indicating if sf objects without property columns should simplify
 #' (\code{TRUE}) into a vector of GeoJSON, or return a Featurecollection with
 #' empty property fields (\code{FALSE}). If \code{atomise} is TRUE this argument is ignored.
+#' @param downcast lotical indicating whether to down-cast MULTI objects to their simpler form.
+#' if \code{atomise} is TRUE this argument is ignored.
 #'
 #' @return vector of GeoJSON
+#'
+#' @details
+#'
+#' specifying \code{downcast = TRUE} will convert
+#' \itemize{
+#'   \item{MULTIPOINT}{ to POINT}
+#'   \item{MULTILINESTRING}{ to LINESTRING}
+#'   \item{MULTIPOLYGON}{ to POLYGON}
+#' }
+#'
+#' All \code{property} values associated with the MULTI geometries will be copied to
+#' the new geometry. See examples. Downcasting is not supported for GEOMETRYCOLLECTIONs
 #'
 #' @examples
 #' \dontrun{
@@ -26,16 +40,23 @@
 #' sf_geojson( sf )
 #' sf_geojson( sf, simplify = FALSE )
 #'
+#' ## down-casting the MULTILINESTRING to two LINESTRINGS
+#' sf <- st_sfc( mls )
+#' sf <- st_sf( sf )
+#' sf$id <- 1
+#' sf_geojson( sf, simplify = FALSE, downcast = TRUE )
+#'
+#'
 #' }
 #'
 #' @export
-sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE, reduce_multi = FALSE ) UseMethod("sf_geojson")
+sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE, downcast = FALSE ) UseMethod("sf_geojson")
 
 #' @export
-sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, reduce_multi = FALSE ) {
+sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, downcast = FALSE ) {
 	sf <- handle_dates( sf )
-	if( atomise | ( ncol( sf ) == 1 & simplify ) ) return( rcpp_sf_to_geojson_atomise( sf ) )
-	return( rcpp_sf_to_geojson( sf ) )
+	if( atomise | ( ncol( sf ) == 1 & simplify ) ) return( rcpp_sf_to_geojson_atomise( sf, downcast ) )
+	return( rcpp_sf_to_geojson( sf, downcast ) )
 }
 
 

@@ -4,8 +4,7 @@
 \alias{sf_geojson}
 \title{sf to GeoJSON}
 \usage{
-sf_geojson(sf, atomise = FALSE, simplify = TRUE,
-  reduce_multi = FALSE)
+sf_geojson(sf, atomise = FALSE, simplify = TRUE, downcast = FALSE)
 }
 \arguments{
 \item{sf}{simple feature object}
@@ -16,12 +15,26 @@ of GeoJSON objects}
 \item{simplify}{logical indicating if sf objects without property columns should simplify
 (\code{TRUE}) into a vector of GeoJSON, or return a Featurecollection with
 empty property fields (\code{FALSE}). If \code{atomise} is TRUE this argument is ignored.}
+
+\item{downcast}{lotical indicating whether to down-cast MULTI objects to their simpler form.
+if \code{atomise} is TRUE this argument is ignored.}
 }
 \value{
 vector of GeoJSON
 }
 \description{
 Converts `sf` objects to GeoJSON
+}
+\details{
+specifying \code{downcast = TRUE} will convert
+\itemize{
+  \item{MULTIPOINT}{ to POINT}
+  \item{MULTILINESTRING}{ to LINESTRING}
+  \item{MULTIPOLYGON}{ to POLYGON}
+}
+
+All \code{property} values associated with the MULTI geometries will be copied to
+the new geometry. See examples. Downcasting is not supported for GEOMETRYCOLLECTIONs
 }
 \examples{
 \dontrun{
@@ -37,6 +50,13 @@ sfc <- st_sfc(ls,mls)
 sf <- st_sf(sfc)
 sf_geojson( sf )
 sf_geojson( sf, simplify = FALSE )
+
+## down-casting the MULTILINESTRING to two LINESTRINGS
+sf <- st_sfc( mls )
+sf <- st_sf( sf )
+sf$id <- 1
+sf_geojson( sf, simplify = FALSE, downcast = TRUE )
+
 
 }
 

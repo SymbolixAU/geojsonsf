@@ -77,13 +77,6 @@ void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type,
 		Rcpp::List mlp = multipolygon[ geometry ];
 		geojsonsf::writers::polygon_to_geojson( writer, mlp );
 
-	} else if (geom_type == "GEOMETRYCOLLECTION") {
-		Rcpp::List gc = Rcpp::as< Rcpp::List >( sfg );
-		Rcpp::List sfgi(1);
-		for (int i = 0; i < gc.size(); i++) {
-			sfgi[0] = gc[i];
-			make_gc_type(writer, sfgi, geom_type, cls);
-		}
 	}
 }
 
