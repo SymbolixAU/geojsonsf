@@ -21,7 +21,7 @@ Simple Feature objects in R.
 
 -----
 
-**v1.2**
+**v1.2.1**
 
 Converts
 
@@ -30,6 +30,7 @@ Converts
   - `sf` –\> GeoJSON
   - `sfc` –\> GeoJSON
   - GeoJSON –\> Well-known text
+  - data.frame –\> GeoJSON (POINT only)
 
 As per GeoJSON ([RFC 7946
 specification)](https://tools.ietf.org/html/rfc7946#page-11), foreign
@@ -172,10 +173,13 @@ microbenchmark(
     },
     times = 2
 )
-#  Unit: seconds
-#        expr      min       lq     mean   median       uq      max neval
-#   geojsonsf 1.513821 1.513821 1.620952 1.620952 1.728084 1.728084     2
-#          sf 4.160896 4.160896 4.368904 4.368904 4.576913 4.576913     2
+#  Unit: milliseconds
+#        expr       min        lq      mean    median        uq       max
+#   geojsonsf  709.2268  709.2268  722.0626  722.0626  734.8984  734.8984
+#          sf 1867.6840 1867.6840 1958.7968 1958.7968 2049.9097 2049.9097
+#   neval
+#       2
+#       2
 ```
 
 ### Does it work?
