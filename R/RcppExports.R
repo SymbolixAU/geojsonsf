@@ -37,7 +37,7 @@ rcpp_sf_to_geojson_atomise <- function(sf) {
     .Call(`_geojsonsf_rcpp_sf_to_geojson_atomise`, sf)
 }
 
-rcpp_sf_to_geojson <- function(sf, reduce_multi = FALSE) {
-    .Call(`_geojsonsf_rcpp_sf_to_geojson`, sf, reduce_multi)
+rcpp_sf_to_geojson <- function(sf) {
+    .Call(`_geojsonsf_rcpp_sf_to_geojson`, sf)
 }
 

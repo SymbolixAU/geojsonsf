@@ -1,4 +1,4 @@
-## v1.3.0
+## v1.2.1
 
 * `df_geojson()` converts data.frame to GeoJSON
 

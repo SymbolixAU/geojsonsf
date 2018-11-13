@@ -9,6 +9,10 @@ df_geojson(df, lon, lat, atomise = FALSE, simplify = TRUE)
 \arguments{
 \item{df}{data.frame}
 
+\item{lon}{column of \code{df} containing the longitude data}
+
+\item{lat}{column of \code{df} containing the latitude data}
+
 \item{atomise}{logical indicating if the data.frame should be converted into a vector
 of GeoJSON objects}
 
@@ -23,7 +27,6 @@ vector of GeoJSON
 Converts data.frame objects to GeoJSON. Each row is considerd a POINT
 }
 \examples{
-\dontrun{
 
 df <- data.frame(lon = c(1:5, NA), lat = c(1:5, NA), id = 1:6, val = letters[1:6])
 df_geojson( df, lon = "lon", lat = "lat")
@@ -33,7 +36,5 @@ df <- data.frame(lon = c(1:5, NA), lat = c(1:5, NA) )
 df_geojson( df, lon = "lon", lat = "lat")
 df_geojson( df, lon = "lon", lat = "lat", simplify = T)
 
-
-}
 
 }

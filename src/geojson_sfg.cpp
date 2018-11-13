@@ -52,6 +52,9 @@ void get_integer_points( const Value& point_array, int& n, Rcpp::IntegerVector i
 void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector nv,
                          Rcpp::NumericVector& bbox ) {
 	int i;
+	if (point_array.Size() == 0 ) {
+		Rcpp::stop("mis-specified geometry");
+	}
 	for ( i = 0; i < n; i++ ) {
 		validate_point(point_array[i]);
 		nv[i] = point_array[i].GetDouble();
@@ -211,6 +214,7 @@ void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& b
 	Rcpp::List mp( n );
 	int j, k;
 	int max_dimension = 2;
+
 	for ( j = 0; j < n; j++ ) {
 		const Value& polygon_array = multi_polygon_array[j];
 		validate_array( polygon_array );

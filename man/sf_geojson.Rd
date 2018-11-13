@@ -4,8 +4,7 @@
 \alias{sf_geojson}
 \title{sf to GeoJSON}
 \usage{
-sf_geojson(sf, atomise = FALSE, simplify = TRUE,
-  reduce_multi = FALSE)
+sf_geojson(sf, atomise = FALSE, simplify = TRUE)
 }
 \arguments{
 \item{sf}{simple feature object}

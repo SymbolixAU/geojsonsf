@@ -29,10 +29,10 @@
 #' }
 #'
 #' @export
-sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE, reduce_multi = FALSE ) UseMethod("sf_geojson")
+sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE ) UseMethod("sf_geojson")
 
 #' @export
-sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, reduce_multi = FALSE ) {
+sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE ) {
 	sf <- handle_dates( sf )
 	if( atomise | ( ncol( sf ) == 1 & simplify ) ) return( rcpp_sf_to_geojson_atomise( sf ) )
 	return( rcpp_sf_to_geojson( sf ) )
@@ -71,6 +71,8 @@ sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 #' Converts data.frame objects to GeoJSON. Each row is considerd a POINT
 #'
 #' @param df data.frame
+#' @param lon column of \code{df} containing the longitude data
+#' @param lat column of \code{df} containing the latitude data
 #' @param atomise logical indicating if the data.frame should be converted into a vector
 #' of GeoJSON objects
 #' @param simplify logical indicating if data.frame without property columns should simplify
@@ -80,7 +82,6 @@ sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 #' @return vector of GeoJSON
 #'
 #' @examples
-#' \dontrun{
 #'
 #' df <- data.frame(lon = c(1:5, NA), lat = c(1:5, NA), id = 1:6, val = letters[1:6])
 #' df_geojson( df, lon = "lon", lat = "lat")
@@ -91,14 +92,14 @@ sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 #' df_geojson( df, lon = "lon", lat = "lat", simplify = T)
 #'
 #'
-#' }
-#'
 #' @export
 df_geojson <- function(df, lon, lat, atomise = FALSE, simplify = TRUE) UseMethod("df_geojson")
 
 #' @export
 df_geojson.data.frame <- function(df, lon, lat, atomise = FALSE, simplify = TRUE) {
 	df <- handle_dates( df )
+	lon <- force( lon )
+	lat <- force( lat )
 	if( atomise | ( ncol( df ) == 2 & simplify ) ) return( rcpp_df_to_geojson_atomise( df, lon, lat ) )
 	return( rcpp_df_to_geojson( df, lon, lat ) )
 }
