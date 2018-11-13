@@ -4,6 +4,8 @@
 #include "geojsonsf/geojson_sfg.h"
 #include "geojsonsf/geojson_sfc.h"
 #include "geojsonsf/geojson_validate.h"
+#include "geojsonsf/utils/utils.hpp"
+#include "geojsonsf/utils/where/where.hpp"
 
 using namespace rapidjson;
 
@@ -21,26 +23,26 @@ double get_lat(const Value& coord_array) {
 	return coord_array[1].GetDouble();
 }
 
-std::string make_dimension( int n ) {
-	switch( n ) {
-	case 2: {
-	return "XY";
-	break;
-}
-	case 3: {
-		return "XYZ";
-		break;
-	}
-	case 4: {
-		return "XYZM";
-		break;
-	}
-	default: {
-		Rcpp::stop("unknown dimension attribute");
-	}
-	}
-	return "XY"; // never reached
-}
+// std::string make_dimension( int n ) {
+// 	switch( n ) {
+// 	case 2: {
+// 	return "XY";
+// 	break;
+// }
+// 	case 3: {
+// 		return "XYZ";
+// 		break;
+// 	}
+// 	case 4: {
+// 		return "XYZM";
+// 		break;
+// 	}
+// 	default: {
+// 		Rcpp::stop("unknown dimension attribute");
+// 	}
+// 	}
+// 	return "XY"; // never reached
+// }
 
 void get_integer_points( const Value& point_array, int& n, Rcpp::IntegerVector iv ) {
 	int i;
@@ -88,7 +90,7 @@ void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List
 		get_numeric_points( point_array, n, nv, bbox );
 
 		if ( requires_attribute ) {
-		  std::string dim = make_dimension( n );
+		  std::string dim = geojsonsf::utils::make_dimension( n );
 			nv.attr("class") = sfg_attributes( dim, attribute );
 		}
 		sfc[i] = nv;
@@ -149,7 +151,7 @@ void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::
     nm = nm( Rcpp::_, Rcpp::Range(0, ( max_cols - 1 ) ) );
 
 		if ( requires_attribute ) {
-		  std::string dim = make_dimension( max_cols );
+		  std::string dim = geojsonsf::utils::make_dimension( max_cols );
 			nm.attr("class") = sfg_attributes( dim, attribute );
 		}
 	 	sfc[i] = nm;
@@ -178,7 +180,7 @@ void get_multi_line_string( const Value& multi_line_array, Rcpp::NumericVector& 
 		}
 	}
 	if( requires_attribute ) {
-		std::string dim = make_dimension( max_dimension );
+		std::string dim = geojsonsf::utils::make_dimension( max_dimension );
 	  ml.attr("class") = sfg_attributes( dim, attribute );
 	}
 	sfc[i] = ml;
@@ -202,7 +204,7 @@ void get_polygon( const Value& polygon_array, Rcpp::NumericVector& bbox, Rcpp::L
 
 
 	if( requires_attribute ) {
-		std::string dim = make_dimension( max_dimension );
+		std::string dim = geojsonsf::utils::make_dimension( max_dimension );
 		pl.attr("class") = sfg_attributes( dim, attribute );
 	}
 	sfc[i] = pl;
@@ -233,7 +235,7 @@ void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& b
 	}
 
 	if( requires_attribute ) {
-		std::string dim = make_dimension( max_dimension );
+		std::string dim = geojsonsf::utils::make_dimension( max_dimension );
 		mp.attr("class") = sfg_attributes( dim, attribute );
 	}
 	sfc[i] = mp;
