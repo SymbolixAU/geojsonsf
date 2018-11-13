@@ -101,5 +101,5 @@ df_geojson.data.frame <- function(df, lon, lat, atomise = FALSE, simplify = TRUE
 	lon <- force( lon )
 	lat <- force( lat )
 	if( atomise | ( ncol( df ) == 2 & simplify ) ) return( rcpp_df_to_geojson_atomise( df, lon, lat ) )
-	return( rcpp_df_to_geojson( df, lon, lat ) )
+	return( rcpp_df_to_geojson( df, c(lon, lat) ) )
 }

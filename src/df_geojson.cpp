@@ -3,6 +3,7 @@
 #include "geojsonsf/geojsonsf.h"
 
 #include "geojsonsf/utils/utils.hpp"
+#include "geojsonsf/utils/where/where.hpp"
 #include "geojsonsf/writers/writers.hpp"
 #include "geojsonsf/geometrycollection/geometrycollection.hpp"
 
@@ -44,7 +45,10 @@ void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type, Rcpp::Chara
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_df_to_geojson_atomise( Rcpp::DataFrame& df, const char* lon, const char* lat ) {
+Rcpp::StringVector rcpp_df_to_geojson_atomise(
+		Rcpp::DataFrame& df,
+		const char* lon,
+		const char* lat ) {
 
 	size_t n_cols = df.ncol();
 	size_t n_properties = n_cols - 2; // LON & LAT columns
@@ -113,29 +117,57 @@ Rcpp::StringVector rcpp_df_to_geojson_atomise( Rcpp::DataFrame& df, const char* 
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_df_to_geojson( Rcpp::DataFrame& sf, const char* lon, const char* lat ) {
+Rcpp::StringVector rcpp_df_to_geojson(
+		Rcpp::DataFrame& sf,
+		Rcpp::StringVector& geometry_columns ) {
+
+	// TODO change the lon & lat to be character / string vector specifying the columns to use
+	// so we can dynmically use Z&M attributes where appropriate.
+	// and change the cls accordingly
+
 	rapidjson::StringBuffer sb;
 	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
 
 	//std::string geom_column = sf.attr("sf_column");
 
 	size_t n_cols = sf.ncol();
-	size_t n_properties = n_cols - 2;  // LON & LAT columns
+	//size_t n_properties = n_cols - 2;  // LON & LAT columns
 	size_t n_rows = sf.nrows();
 	size_t i, j;
 	Rcpp::StringVector column_names = sf.names();
-	Rcpp::StringVector property_names(sf.size() - 1);
 
 	// the sfc_POINT
-	Rcpp::NumericVector nv_lon = sf[lon];
-	Rcpp::NumericVector nv_lat = sf[lat];
+	size_t n_geometry_columns = geometry_columns.size();
+	Rcpp::List geometry_vectors( n_geometry_columns );
 
-	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create("XY", "POINT", "sfg");
+	size_t n_properties = n_cols - n_geometry_columns;
+	Rcpp::StringVector property_names( n_properties );
+
+	// Rcpp::Rcout << "n_geometry_columns: " << n_geometry_columns << std::endl;
+
+	for ( i = 0; i < n_geometry_columns; i++ ) {
+		Rcpp::String this_geometry = geometry_columns[i];
+		geometry_vectors[i] = sf[ this_geometry ];
+	}
+	// Rcpp::NumericVector nv_lon = sf[lon];
+	// Rcpp::NumericVector nv_lat = sf[lat];
+
+	std::string dim = geojsonsf::utils::make_dimension( n_geometry_columns );
+	// Rcpp::Rcout << "dim: " << dim << std::endl;
+	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
 	int property_counter = 0;
 
 	for ( int i = 0; i < sf.length(); i++ ) {
-		if ( column_names[i] != lon && column_names[i] != lat ) {
+
+		Rcpp::String this_column = column_names[i];
+		int idx = geojsonsf::utils::where::where_is( this_column, geometry_columns );
+
+		// Rcpp::Rcout << "this_column: " << this_column.get_cstring() << std::endl;
+		// Rcpp::Rcout << "idx: " << idx << std::endl;
+
+		//if ( column_names[i] != lon && column_names[i] != lat ) {
+		if ( idx == -1 ) {  // i.e. it's not in the vector
 			property_names[property_counter] = column_names[i];
 			property_counter++;
 		}
@@ -166,7 +198,14 @@ Rcpp::StringVector rcpp_df_to_geojson( Rcpp::DataFrame& sf, const char* lon, con
 
 		writer.String("geometry");
 
-		SEXP sfg = Rcpp::NumericVector::create(nv_lon[i], nv_lat[i]);
+		//SEXP sfg = Rcpp::NumericVector::create(nv_lon[i], nv_lat[i]);
+
+		Rcpp::NumericVector geom( n_geometry_columns );
+		for ( j = 0; j < n_geometry_columns; j++ ) {
+			Rcpp::NumericVector this_geometry_vector = geometry_vectors[j];
+			geom[j] = this_geometry_vector[i];
+		}
+		SEXP sfg = geom;
 		write_geometry( writer, sfg, cls );
 
 		writer.EndObject();

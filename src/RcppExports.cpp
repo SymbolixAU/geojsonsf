@@ -19,15 +19,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_df_to_geojson
-Rcpp::StringVector rcpp_df_to_geojson(Rcpp::DataFrame& sf, const char* lon, const char* lat);
-RcppExport SEXP _geojsonsf_rcpp_df_to_geojson(SEXP sfSEXP, SEXP lonSEXP, SEXP latSEXP) {
+Rcpp::StringVector rcpp_df_to_geojson(Rcpp::DataFrame& sf, Rcpp::StringVector& geometry_columns);
+RcppExport SEXP _geojsonsf_rcpp_df_to_geojson(SEXP sfSEXP, SEXP geometry_columnsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type sf(sfSEXP);
-    Rcpp::traits::input_parameter< const char* >::type lon(lonSEXP);
-    Rcpp::traits::input_parameter< const char* >::type lat(latSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_df_to_geojson(sf, lon, lat));
+    Rcpp::traits::input_parameter< Rcpp::StringVector& >::type geometry_columns(geometry_columnsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_df_to_geojson(sf, geometry_columns));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -126,7 +125,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_geojsonsf_rcpp_df_to_geojson_atomise", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson_atomise, 3},
-    {"_geojsonsf_rcpp_df_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson, 3},
+    {"_geojsonsf_rcpp_df_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson, 2},
     {"_geojsonsf_rcpp_geojson_to_sfc", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sfc, 2},
     {"_geojsonsf_rcpp_geojson_to_sf", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sf, 2},
     {"_geojsonsf_rcpp_geojson_to_wkt", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_wkt, 1},

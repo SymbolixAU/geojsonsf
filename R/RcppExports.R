@@ -5,8 +5,8 @@ rcpp_df_to_geojson_atomise <- function(df, lon, lat) {
     .Call(`_geojsonsf_rcpp_df_to_geojson_atomise`, df, lon, lat)
 }
 
-rcpp_df_to_geojson <- function(sf, lon, lat) {
-    .Call(`_geojsonsf_rcpp_df_to_geojson`, sf, lon, lat)
+rcpp_df_to_geojson <- function(sf, geometry_columns) {
+    .Call(`_geojsonsf_rcpp_df_to_geojson`, sf, geometry_columns)
 }
 
 rcpp_geojson_to_sfc <- function(geojson, expand_geometries) {
