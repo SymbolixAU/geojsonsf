@@ -50,3 +50,15 @@ test_that("ints vs numerics read correctly", {
 
 })
 
+test_that("the geoms I test in mapdeck work", {
+
+	expect_silent( geojsonsf::geojson_sf('{"type":"Point","coordinates":[0,0]}') )
+	expect_silent( geojsonsf::geojson_sf('{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}') )
+	expect_silent( geojsonsf::geojson_sf('{"type":"LineString","coordinates":[[0,0],[1,1]]}') )
+	expect_silent( geojsonsf::geojson_sf('{"type":"MultiLineString","coordinates":[[[0,0],[1,1]],[[0,0]]]}') )
+	expect_silent( geojsonsf::geojson_sf('{"type":"Polygon","coordinates":[[[0,0],[0,1],[1,1],[1,0],[0,0]]]}') )
+	expect_silent( geojsonsf::geojson_sf('{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[2,2],[2,3],[3,3],[3,2],[2,2]]]]}') )
+	expect_silent( geojsonsf::geojson_sf('{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[0,0],[0,-1],[-1,-1],[1,0],[0,0]]]]}') )
+
+})
+

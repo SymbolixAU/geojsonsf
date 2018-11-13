@@ -54,11 +54,21 @@ void get_integer_points( const Value& point_array, int& n, Rcpp::IntegerVector i
 void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector nv,
                          Rcpp::NumericVector& bbox ) {
 	int i;
-	if (point_array.Size() == 0 ) {
-		Rcpp::stop("mis-specified geometry");
-	}
+	// if (point_array.Size() < 0 ) {
+	// 	Rcpp::stop("mis-specified geometry");
+	// }
+
+	// if ( n < 0 || point_array.Size() == 0 ) {
+	// 	Rcpp::stop("mis-specified geometry");
+	// }
+
+	// Rcpp::Rcout << "n: " << n << std::endl;
+	// Rcpp::Rcout << "points_size: " << point_array.Size() << std::endl;
+	// const Value& v = point_array[0];
+	// Rcpp::Rcout << "v.type: " << v.GetType() << std::endl;
+
 	for ( i = 0; i < n; i++ ) {
-		validate_point(point_array[i]);
+	  validate_point(point_array[i]);
 		nv[i] = point_array[i].GetDouble();
 	}
 	calculate_bbox(bbox, nv);
@@ -140,9 +150,16 @@ void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::
  		for( row = 0; row < n; row++ ) {
  			const Value& coord_array = line_array[ row ];
  			int n_points = coord_array.Size();
+
+ 			if( n_points <= 1 ) {
+ 				Rcpp::stop("mis-specified geometry");
+ 			}
+
 			if( n_points > max_cols ) {
 				max_cols = n_points;
 			}
+			//Rcpp::Rcout << "n_points: " << n_points << std::endl;
+
  			Rcpp::NumericVector nv( 4 );  // initialise with ZM , we remove later
  			get_numeric_points( coord_array, n_points, nv, bbox );
  			nm( row, Rcpp::_ ) = nv;
