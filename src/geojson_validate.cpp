@@ -89,6 +89,12 @@ void validate_points(const Value& v) {
 
 void validate_point(const Value& v) {
 	// TODO(move to header):
+	// Rcpp::Rcout << "v.size: " << v.Size() << std::endl;
+	// Rcpp::Rcout << "v.type: " << v.GetType() << std::endl;
+	// if ( v.Size() < 2 ) {
+	// 	Rcpp::stop("mis-specified geometry");
+	// }
+
 	static const char* ARRAY_TYPES[] =
 		{ "Null", "False", "True", "Object", "Array", "String", "Number" };
 	if( strncmp(ARRAY_TYPES[v.GetType()], "Num", 3) != 0) {
