@@ -1,6 +1,5 @@
 #' @useDynLib geojsonsf, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
-#' @import rapidjsonr
 NULL
 
 #' geo_melbourne
