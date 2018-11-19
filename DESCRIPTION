@@ -12,16 +12,17 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 LinkingTo: 
-    Rcpp, 
+    jsonify (>= 0.1.1),
     rapidjsonr (>= 1.1),
-    jsonify (>= 0.1.1)
+    Rcpp 
 Imports: 
-    Rcpp, 
-    curl
+    curl,
+    Rcpp
 RoxygenNote: 6.1.0
 Suggests: 
     covr,
-    testthat,
+    jsonify,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
