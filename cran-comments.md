@@ -1,12 +1,10 @@
 ## Release Summary
 
-* Updates v1.1 to v1.2
-* fixes a bug in handling `Date` and `Posix` clases
-* fixes gcc compiler warning : https://www.stats.ox.ac.uk/pub/bdr/gcc8/geojsonsf.out 
- - fixed in `rapidjsonr` v1.1, accepted on CRAN 22nd September 2018
-* various performance improvements
+* Updates v1.2 to v1.2.1
+* removed unused Imports as per CRAN package checks - https://cran.r-project.org/web/checks/check_results_geojsonsf.html
+* one bug fix and one new function
 
-* Build Note - Fedora clang : installed size is 5.7mb
-  - The builds says the `libs` file is 3.9mb. I can't reduce this file size, all the compiled c++ headers and files are required.
+* Build Note - Fedora clang : installed size is 6.3mb
+  - The builds says the `libs` file is 4.3mb. I can't reduce this file size, all the compiled c++ headers and files are required.
   
 

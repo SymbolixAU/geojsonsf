@@ -17,8 +17,6 @@ LinkingTo:
     jsonify (>= 0.1.1)
 Imports: 
     Rcpp, 
-    rapidjsonr (>= 1.1),
-    jsonify (>= 0.1.1),
     curl
 RoxygenNote: 6.1.0
 Suggests: 
