@@ -1,7 +1,7 @@
 ## Release Summary
 
 * Updates v1.2 to v1.2.1
-* removed unused Imports as per CRAN package checks - https://cran.r-project.org/web/checks/check_results_geojsonsf.html
+* fixed CRAN checks - https://cran.r-project.org/web/checks/check_results_geojsonsf.html (removed unused imports)
 * one bug fix and one new function
 
 * Build Note - Fedora clang : installed size is 6.3mb

@@ -134,13 +134,16 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 bool& expand_geometries,
                                 int& nempty) {
 
+	// Rcpp::Rcout << "parsing faeture object " << std::endl;
+
 	validate_geometry(feature, sfg_objects);
 
 	// TODO( null property ==> NULL geometry)
 	//validate_properties(feature, sfg_objects);
 
-	const Value& geometry = feature["geometry"];
 	Rcpp::List sfc(1);
+
+	const Value& geometry = feature["geometry"];
 	std::string type;
 
 	if (geometry.Size() > 0) {
@@ -205,16 +208,29 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
                                            std::unordered_map< std::string, std::string>& property_types,
                                            bool& expand_geometries,
                                            int& nempty) {
+
+	// Rcpp::Rcout << "parsing feature collection " << std::endl;
+
+
   // a FeatureCollection MUST have members (array) called features,
   validate_features(fc, sfg_objects);
+
 
   auto features = fc["features"].GetArray();
 
   unsigned int n = features.Size(); // number of features
   unsigned int i;
-  Rcpp::List feature_collection(n);
 
-  for (i = 0; i < n; i++) {
+  //Rcpp::List feature_collection(n);
+
+  // HERE is the bug; if n == 0, it doesn't enter the 'parse feature objets' loop
+  // and so features aren't parsed
+  unsigned int temp = n == 0 ? 1 : n;
+  // Rcpp::Rcout << "n features: " << n << std::endl;
+  // Rcpp::Rcout << "temp: " << temp << std::endl;
+  Rcpp::List feature_collection(temp);
+
+  for ( i = 0; i < n; i++ ) {
     const Value& feature = features[i];
     feature_collection[i] = parse_feature_object(
     	feature, bbox, geometry_types, sfg_objects, property_keys, doc_properties,
@@ -250,6 +266,7 @@ void parse_geojson(const Value& v,
 
   } else if (geom_type == "FeatureCollection") {
 
+  	// Rcpp::Rcout << "featurecollection " << std::endl;
     res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
     sfc[i] = res;
 
@@ -384,7 +401,7 @@ void nested_json_to_string(rapidjson::Value& v,
 
   if (type != "String") {
     std::string value = any_to_string(this_value);
-    update_string_vector(properties, key, value, row_index-1);
+    update_string_vector(properties, key, value, row_index -1);
   } else {
     std::string value = this_value;
     update_string_vector(properties, key, value, row_index -1);

@@ -24,20 +24,20 @@ void safe_parse(Document& d, const char* geojson) {
 }
 
 void validate_array(const Value& v) {
-  if ( v.IsArray() == FALSE) {
+  if ( v.IsArray() == false) {
     geojson_object_error("array");
   }
 }
 
 void validate_array(const Value& v, int& sfg_objects) {
-  if ( v.IsArray() == FALSE) {
+  if ( v.IsArray() == false) {
     geojson_object_error("array", sfg_objects);
   }
 }
 
 
 void validate_type(const Value& v, int& sfg_objects) {
-  if (v.HasMember("type") == FALSE ) {
+  if (v.HasMember("type") == false ) {
     geojson_object_error("type", sfg_objects);
   }
   if (v["type"].IsNull()) {
@@ -46,37 +46,37 @@ void validate_type(const Value& v, int& sfg_objects) {
 }
 
 void validate_features(const Value& v, int& sfg_objects) {
-  if (v.HasMember("features") == FALSE) {
+  if (v.HasMember("features") == false) {
     geojson_object_error("features", sfg_objects);
   }
 }
 
 void validate_feature(const Value& v, int& sfg_objects) {
-  if (v.HasMember("feature") == FALSE) {
+  if (v.HasMember("feature") == false) {
     geojson_object_error("feature", sfg_objects);
   }
 }
 
 void validate_properties(const Value& v, int& sfg_objects) {
-  if (v.HasMember("properties") == FALSE) {
+  if (v.HasMember("properties") == false) {
     geojson_object_error("properties", sfg_objects);
   }
 }
 
 void validate_geometry(const Value& v, int& sfg_objects) {
-  if (v.HasMember("geometry") == FALSE) {
+  if (v.HasMember("geometry") == false) {
     geojson_object_error("geometry", sfg_objects);
   }
 }
 
 void validate_geometries(const Value& v, int& sfg_objects) {
-  if (v.HasMember("geometries") == FALSE) {
+  if (v.HasMember("geometries") == false) {
     geojson_object_error("geometries", sfg_objects);
   }
 }
 
 void validate_coordinates(const Value& v, int& sfg_objects) {
-  if (v.HasMember("coordinates") == FALSE) {
+  if (v.HasMember("coordinates") == false) {
     geojson_object_error("coordinates", sfg_objects);
   }
 }
@@ -96,7 +96,7 @@ void validate_point(const Value& v) {
 	// }
 
 	static const char* ARRAY_TYPES[] =
-		{ "Null", "False", "True", "Object", "Array", "String", "Number" };
+		{ "Null", "false", "True", "Object", "Array", "String", "Number" };
 	if( strncmp(ARRAY_TYPES[v.GetType()], "Num", 3) != 0) {
 		geojson_object_error("lon/lat");
 	}
