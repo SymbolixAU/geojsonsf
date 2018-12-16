@@ -197,25 +197,6 @@ Rcpp::List parse_feature_object(const Value& feature,
 	return sfc;
 }
 
-/*
- * create null features
- *
- * case '{"type":"FeatureCollection","features":[]}'
- */
-Rcpp::List create_null_features(  ) {
-	// TODO
-	// - return an empty list, with the sfc attributes
-
-
-
-	// Rcpp::List empty_features(0);
-	//
-	// std::string type == "GEOMETRY";
-	// attach_sfc_attributes(empty_features, type, bbox, geometry_types, nempty)
-	//
-	// return empty_features;
-}
-
 Rcpp::List parse_feature_collection_object(const Value& fc,
                                            Rcpp::NumericVector& bbox,
                                            std::unordered_set< std::string >& geometry_types,

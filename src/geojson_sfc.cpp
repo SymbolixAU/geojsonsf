@@ -106,7 +106,6 @@ Rcpp::List create_null_sfc() {
 
 void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
-	//Rcpp::Rcout << "fetching geometries" << std::endl;
   std::string geom_attr;
 
   for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
@@ -115,11 +114,9 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
     case VECSXP: {
       Rcpp::List tmp = Rcpp::as< Rcpp::List >( *it );
-      if(Rf_isNull(tmp.attr("class"))){
-      	//Rcpp::Rcout << "list" << std::endl;
+      if(Rf_isNull(tmp.attr("class"))) {
         fetch_geometries(tmp, res, sfg_counter);
       } else {
-      	//Rcpp::Rcout << "setting list: " << std::endl;
         res[sfg_counter] = tmp;
         sfg_counter++;
       }
@@ -128,10 +125,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case REALSXP: {
       Rcpp::NumericVector tmp = Rcpp::as< Rcpp::NumericVector >( *it );
       if(Rf_isNull(tmp.attr("class"))) {
-      	//Rcpp::Rcout << "numeric " << std::endl;
         Rcpp::stop("Geometry could not be determined");
       } else {
-      	//Rcpp::Rcout << "setting numeric vector: " << std::endl;
         res[sfg_counter] = tmp;
         sfg_counter++;
       }
@@ -140,10 +135,8 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case INTSXP: {
       Rcpp::IntegerVector tmp = Rcpp::as< Rcpp::IntegerVector >( *it );
       if(Rf_isNull( tmp.attr( "class" ) ) ){
-      	//Rcpp::Rcout << "integer " << std::endl;
         Rcpp::stop("Geometry could not be determined");
       } else {
-      	//Rcpp::Rcout << "setting integer: " << std::endl;
         res[sfg_counter] = tmp;
         sfg_counter++;
       }
@@ -152,17 +145,14 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case STRSXP: {
     	Rcpp::StringVector tmp = Rcpp::as< Rcpp::StringVector >( *it );
     	if(Rf_isNull( tmp.attr( "class" ) ) ) {
-    		//Rcpp::Rcout << "string " << std::endl;
     		Rcpp::stop("Geometry could not be determined");
     	} else {
-    		//Rcpp::Rcout << "setting string: " << std::endl;
     		res[sfg_counter] = tmp;
     		sfg_counter++;
     	}
     	break;
     }
     default: {
-    	//Rcpp::List nullObj = create_null_sfc();
     	res[0] = create_null_sfc();
       //Rcpp::stop("Geometry could not be determined");
     }
