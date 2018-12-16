@@ -106,6 +106,9 @@ geojson_sf.character <- function(geojson, expand_geometries = FALSE) {
 geojson_sf.connection <- function(geojson, expand_geometries = F) geojson_sf(read_url(geojson), expand_geometries)
 
 #' @export
+geojson_sf.numeric <- function(geojson, ... ) stop("Numeric vectors are not valid GeoJSON")
+
+#' @export
 geojson_sf.default <- function(geojson, expand_geometries = F) rcpp_geojson_to_sf(geojson, expand_geometries)
 
 

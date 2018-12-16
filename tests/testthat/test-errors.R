@@ -1,7 +1,7 @@
 context("errors")
 
 test_that("errors are handled", {
-	expect_error(geojson_sf(1:5), "Geometry could not be determined")
+	expect_error(geojson_sf(1:5), "Numeric vectors are not valid GeoJSON")
 	expect_error(geojson_sf("a"), "Invalid JSON")
 	expect_error(geojson_sf())
   expect_error(geojson_sf(NULL))

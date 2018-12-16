@@ -1,3 +1,8 @@
+
+## v1.2.2
+
+* fix `'{"type":"FeatureCollection","features":[]}'` example [Issue 58](https://github.com/SymbolixAU/geojsonsf/issues/58)
+
 ## v1.2.1
 
 * fixed crash when mis-specified MultiPolygon [issue 51](https://github.com/SymbolixAU/geojsonsf/issues/51)
