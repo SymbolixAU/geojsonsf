@@ -85,7 +85,7 @@ Rcpp::List parse_geometry_collection_object(const Value& val,
   return geom_collection;
 }
 
-void create_null_object(Rcpp::List& sfc,
+void create_null_sfg(Rcpp::List& sfc,
                         std::unordered_set< std::string >& geometry_types,
                         int& nempty) {
 	std::string geom_type;
@@ -134,8 +134,6 @@ Rcpp::List parse_feature_object(const Value& feature,
                                 bool& expand_geometries,
                                 int& nempty) {
 
-	// Rcpp::Rcout << "parsing faeture object " << std::endl;
-
 	validate_geometry(feature, sfg_objects);
 
 	// TODO( null property ==> NULL geometry)
@@ -157,7 +155,7 @@ Rcpp::List parse_feature_object(const Value& feature,
 			parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
 		}
 	} else {
-		create_null_object(sfc, geometry_types, nempty);
+		create_null_sfg(sfc, geometry_types, nempty);
 	}
 
 	if (type != "GeometryCollection") {
@@ -199,6 +197,25 @@ Rcpp::List parse_feature_object(const Value& feature,
 	return sfc;
 }
 
+/*
+ * create null features
+ *
+ * case '{"type":"FeatureCollection","features":[]}'
+ */
+Rcpp::List create_null_features(  ) {
+	// TODO
+	// - return an empty list, with the sfc attributes
+
+
+
+	// Rcpp::List empty_features(0);
+	//
+	// std::string type == "GEOMETRY";
+	// attach_sfc_attributes(empty_features, type, bbox, geometry_types, nempty)
+	//
+	// return empty_features;
+}
+
 Rcpp::List parse_feature_collection_object(const Value& fc,
                                            Rcpp::NumericVector& bbox,
                                            std::unordered_set< std::string >& geometry_types,
@@ -209,9 +226,6 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
                                            bool& expand_geometries,
                                            int& nempty) {
 
-	// Rcpp::Rcout << "parsing feature collection " << std::endl;
-
-
   // a FeatureCollection MUST have members (array) called features,
   validate_features(fc, sfg_objects);
 
@@ -220,22 +234,8 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
 
   unsigned int n = features.Size(); // number of features
   unsigned int i;
-  Rcpp::Rcout << "features.size: " << n << std::endl;
 
-  //Rcpp::List feature_collection(n);
-
-  // If features.Size == 0, teh feature is empty.
-  // so there are no sfg objects
-  // but it needs to return an empty geometry
-
-
-  // HERE is the bug; if n == 0, it doesn't enter the 'parse feature objets' loop
-  // and so features aren't parsed
-  unsigned int temp = n == 0 ? 1 : n;
-
-  // Rcpp::Rcout << "n features: " << n << std::endl;
-  // Rcpp::Rcout << "temp: " << temp << std::endl;
-  Rcpp::List feature_collection(temp);
+  Rcpp::List feature_collection(n);
 
   for ( i = 0; i < n; i++ ) {
     const Value& feature = features[i];
@@ -273,7 +273,6 @@ void parse_geojson(const Value& v,
 
   } else if (geom_type == "FeatureCollection") {
 
-  	// Rcpp::Rcout << "featurecollection " << std::endl;
     res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
     sfc[i] = res;
 
@@ -536,9 +535,14 @@ Rcpp::List construct_sf( Rcpp::List& lst, std::unordered_set< std::string >& pro
                      int& sfg_objects,
                      int& row_index ) {
 
-  Rcpp::List properties( property_keys.size() + 1 );  // expand to include geometry
+	int n_cols = property_keys.size();
+	if ( sfg_objects > 0 ) {
+		property_keys.insert("geometry");
+		n_cols++;  // expand to include geometry
+	}
 
-  property_keys.insert("geometry");
+  Rcpp::List properties( n_cols );
+
   sort_property_names(properties, property_keys);
 
   properties["geometry"] = lst;
@@ -546,10 +550,14 @@ Rcpp::List construct_sf( Rcpp::List& lst, std::unordered_set< std::string >& pro
   setup_property_vectors( property_types, properties, sfg_objects );
   fill_property_vectors( doc_properties, property_types, properties, row_index );
 
-  Rcpp::IntegerVector nv = seq( 1, sfg_objects );
+  if (sfg_objects > 0 ) {
+    Rcpp::IntegerVector nv = seq( 1, sfg_objects );
+    properties.attr("row.names") = nv;
+  } else {
+  	properties.attr("row.names") = Rcpp::IntegerVector(0);
+  }
   properties.attr("class") = Rcpp::CharacterVector::create("sf", "data.frame");
   properties.attr("sf_column") = "geometry";
-  properties.attr("row.names") = nv;
 
   return properties;
 }

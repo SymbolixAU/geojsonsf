@@ -17,6 +17,13 @@ std::string attach_class(Rcpp::List& sfc,
                          std::unordered_set< std::string >& geometry_types) {
 
   std::string geometry_class;
+
+	// handle no features
+	// '{"type":"FeatureCollection","features":[]}'
+	if (geometry_types.size() == 0 ) {
+		return "GEOMETRY";
+	}
+
   if (geom_type == "GEOMETRYCOLLECTION") {
     geometry_class = "GEOMETRYCOLLECTION";
   } else {
@@ -86,8 +93,20 @@ Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
   return sfc_classes;
 }
 
+Rcpp::List create_null_sfc() {
+	Rcpp::List empty_sfc(0);
+
+  std::string type = "GEOMETRY";
+  Rcpp::NumericVector bbox = start_bbox();
+  int n_empty = 0;
+  std::unordered_set< std::string > geometry_types{"GEOMETRY"};
+	attach_sfc_attributes(empty_sfc, type, bbox, geometry_types, n_empty);
+  return empty_sfc;
+}
+
 void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
 
+	//Rcpp::Rcout << "fetching geometries" << std::endl;
   std::string geom_attr;
 
   for (Rcpp::List::iterator it = sf.begin(); it != sf.end(); it++) {
@@ -97,8 +116,10 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case VECSXP: {
       Rcpp::List tmp = Rcpp::as< Rcpp::List >( *it );
       if(Rf_isNull(tmp.attr("class"))){
+      	//Rcpp::Rcout << "list" << std::endl;
         fetch_geometries(tmp, res, sfg_counter);
       } else {
+      	//Rcpp::Rcout << "setting list: " << std::endl;
         res[sfg_counter] = tmp;
         sfg_counter++;
       }
@@ -107,9 +128,10 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case REALSXP: {
       Rcpp::NumericVector tmp = Rcpp::as< Rcpp::NumericVector >( *it );
       if(Rf_isNull(tmp.attr("class"))) {
-      	Rcpp::Rcout << "numeric " << std::endl;
+      	//Rcpp::Rcout << "numeric " << std::endl;
         Rcpp::stop("Geometry could not be determined");
       } else {
+      	//Rcpp::Rcout << "setting numeric vector: " << std::endl;
         res[sfg_counter] = tmp;
         sfg_counter++;
       }
@@ -118,9 +140,10 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case INTSXP: {
       Rcpp::IntegerVector tmp = Rcpp::as< Rcpp::IntegerVector >( *it );
       if(Rf_isNull( tmp.attr( "class" ) ) ){
-      	Rcpp::Rcout << "integer " << std::endl;
+      	//Rcpp::Rcout << "integer " << std::endl;
         Rcpp::stop("Geometry could not be determined");
       } else {
+      	//Rcpp::Rcout << "setting integer: " << std::endl;
         res[sfg_counter] = tmp;
         sfg_counter++;
       }
@@ -129,21 +152,18 @@ void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
     case STRSXP: {
     	Rcpp::StringVector tmp = Rcpp::as< Rcpp::StringVector >( *it );
     	if(Rf_isNull( tmp.attr( "class" ) ) ) {
-    		Rcpp::Rcout << "string " << std::endl;
+    		//Rcpp::Rcout << "string " << std::endl;
     		Rcpp::stop("Geometry could not be determined");
     	} else {
+    		//Rcpp::Rcout << "setting string: " << std::endl;
     		res[sfg_counter] = tmp;
     		sfg_counter++;
     	}
     	break;
     }
     default: {
-    	Rcpp::Rcout << "default " << std::endl;
-    	Rcpp::Rcout << "sfg_counter " << sfg_counter << std::endl;
-    	Rcpp::Rcout << "res size: " << res.size() << std::endl;
-    	Rcpp::List empty(1);
-    	res[sfg_counter] = empty;
-    	sfg_counter++;
+    	//Rcpp::List nullObj = create_null_sfc();
+    	res[0] = create_null_sfc();
       //Rcpp::stop("Geometry could not be determined");
     }
     }
@@ -157,18 +177,15 @@ Rcpp::List construct_sfc(int& sfg_objects,
                          std::unordered_set< std::string >& geometry_types,
                          int& nempty) {
 
-	Rcpp::Rcout << "construct_sfc" << std::endl;
-	Rcpp::Rcout << "sfg_objects: " << sfg_objects << std::endl;
   Rcpp::List sfc_output( sfg_objects );
   std::string geom_attr;
 
   int sfg_counter = 0;
 
   fetch_geometries( sf, sfc_output, sfg_counter );
-  Rcpp::Rcout << "attaching attributes " << std::endl;
+
   attach_sfc_attributes( sfc_output, geom_attr, bbox, geometry_types, nempty );
 
-  Rcpp::Rcout << "constructed sfc" << std::endl;
   return sfc_output;
 }
 
