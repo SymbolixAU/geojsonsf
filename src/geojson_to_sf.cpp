@@ -220,12 +220,19 @@ Rcpp::List parse_feature_collection_object(const Value& fc,
 
   unsigned int n = features.Size(); // number of features
   unsigned int i;
+  Rcpp::Rcout << "features.size: " << n << std::endl;
 
   //Rcpp::List feature_collection(n);
+
+  // If features.Size == 0, teh feature is empty.
+  // so there are no sfg objects
+  // but it needs to return an empty geometry
+
 
   // HERE is the bug; if n == 0, it doesn't enter the 'parse feature objets' loop
   // and so features aren't parsed
   unsigned int temp = n == 0 ? 1 : n;
+
   // Rcpp::Rcout << "n features: " << n << std::endl;
   // Rcpp::Rcout << "temp: " << temp << std::endl;
   Rcpp::List feature_collection(temp);
