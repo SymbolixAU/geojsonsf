@@ -25,6 +25,9 @@ of GeoJSON objects}
 \item{simplify}{logical indicating if data.frame without property columns should simplify
 (\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE}). If \code{atomise} is TRUE
 this argument is ignored.}
+
+\item{digits}{integer specifying the number of of digits to round coordinates.
+Defulat is \code{NULL} - no rounding}
 }
 \value{
 vector of GeoJSON

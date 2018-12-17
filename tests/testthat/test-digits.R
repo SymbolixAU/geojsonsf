@@ -17,7 +17,9 @@ test_that("digits are rounded", {
 
   js <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":0},"geometry":{"type":"Point","coordinates":[0.123456789,9.87654321]}}]}'
   sf <- geojsonsf::geojson_sf( js )
-  res <- geojsonsf::sf_geojson( sf, digits = 0 )
+  res <- geojsonsf::sf_geojson( sf, digits = 2 )
+  expected <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":0.0},"geometry":{"type":"Point","coordinates":[0.12,9.88]}}]}'
+  expect_equal( as.character( res), expected )
 
 })
 

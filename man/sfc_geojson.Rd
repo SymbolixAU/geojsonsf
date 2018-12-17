@@ -8,6 +8,9 @@ sfc_geojson(sfc, digits = NULL)
 }
 \arguments{
 \item{sfc}{simple feature collection object}
+
+\item{digits}{integer specifying the number of of digits to round coordinates.
+Defulat is \code{NULL} - no rounding}
 }
 \value{
 vector of GeoJSON

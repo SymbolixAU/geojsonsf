@@ -1,6 +1,7 @@
 
 ## v1.2.2
 
+* `digits` argument for rounding coordinates
 * fix `'{"type":"FeatureCollection","features":[]}'` example [Issue 58](https://github.com/SymbolixAU/geojsonsf/issues/58)
 
 ## v1.2.1
