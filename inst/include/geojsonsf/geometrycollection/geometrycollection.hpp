@@ -8,13 +8,13 @@
 
 
 template< typename Writer >
-inline void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type, Rcpp::CharacterVector& cls );
+inline void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type, Rcpp::CharacterVector& cls, int& digits );
 
 #include "geojsonsf/geometrycollection/geometrycollection.hpp"
 
 template< typename Writer >
 inline void make_gc_type(Writer& writer, Rcpp::List& sfg,
-                         std::string& geom_type, Rcpp::CharacterVector& cls) {
+                         std::string& geom_type, Rcpp::CharacterVector& cls, int& digits) {
 
 	bool isnull = false;
 
@@ -35,11 +35,11 @@ inline void make_gc_type(Writer& writer, Rcpp::List& sfg,
 					//writer.Null();
 				} else {
 					geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
-					write_geojson(writer, tmp, geom_type, cls);
+					write_geojson(writer, tmp, geom_type, cls, digits);
 					geojsonsf::writers::end_geojson_geometry(writer, geom_type);
 				}
 			} else {
-				make_gc_type(writer, tmp, geom_type, cls);
+				make_gc_type(writer, tmp, geom_type, cls, digits);
 			}
 			break;
 		}
@@ -56,7 +56,7 @@ inline void make_gc_type(Writer& writer, Rcpp::List& sfg,
 					//writer.Null();
 				} else {
 					geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
-					write_geojson(writer, tmp, geom_type, cls);
+					write_geojson(writer, tmp, geom_type, cls, digits);
 					geojsonsf::writers::end_geojson_geometry(writer, geom_type);
 				}
 			}

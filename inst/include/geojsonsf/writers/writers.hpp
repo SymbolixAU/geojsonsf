@@ -115,7 +115,7 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point ) {
+  inline void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point, int& digits ) {
     int n = point.size();
     int i;
     writer.StartArray();
@@ -126,86 +126,93 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void points_to_geojson( Writer& writer, Rcpp::NumericVector& point ) {
+  inline void points_to_geojson( Writer& writer, Rcpp::NumericVector& point, int& digits ) {
     int n = point.size();
     int i;
+    double value;
     writer.StartArray();
     for ( i = 0; i < n; i++ ) {
-      writer.Double( point[i] );
+    value = point[i];
+
+    	if ( digits >= 0 ) {
+    		double e = std::pow( 10.0, digits );
+    		value = round( value * e ) / e;
+    	}
+    	writer.Double( value );
     }
     writer.EndArray();
   }
 
   template< typename Writer >
-  inline void points_to_geojson( Writer& writer, SEXP& point ) {
+  inline void points_to_geojson( Writer& writer, SEXP& point, int& digits ) {
     switch( TYPEOF( point ) ) {
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( point );
-      points_to_geojson( writer, iv );
+      points_to_geojson( writer, iv, digits );
       break;
     }
     case REALSXP: {
       Rcpp::NumericVector nv = Rcpp::as< Rcpp::NumericVector >( point );
-      points_to_geojson( writer, nv );
+      points_to_geojson( writer, nv, digits );
     break;
     }
     }
   }
 
   template< typename Writer >
-  inline void linestring_to_geojson( Writer& writer, Rcpp::IntegerMatrix& line ) {
+  inline void linestring_to_geojson( Writer& writer, Rcpp::IntegerMatrix& line, int& digits ) {
     int i;
     int nrow = line.nrow();
     for ( i = 0; i < nrow; i++ ) {
       Rcpp::IntegerVector this_row = line(i, Rcpp::_ );
-      points_to_geojson( writer, this_row );
+      points_to_geojson( writer, this_row, digits );
     }
   }
 
   template< typename Writer >
-  inline void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line ) {
+  inline void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line, int& digits ) {
     int i;
     int nrow = line.nrow();
     for ( i = 0; i < nrow; i++ ) {
       Rcpp::NumericVector this_row = line(i, Rcpp::_ );
-      points_to_geojson( writer, this_row );
+      points_to_geojson( writer, this_row, digits );
     }
   }
 
   template< typename Writer >
-  inline void linestring_to_geojson( Writer& writer, SEXP& line ) {
+  inline void linestring_to_geojson( Writer& writer, SEXP& line, int& digits ) {
     switch( TYPEOF( line ) ) {
     case INTSXP: {
       Rcpp::IntegerMatrix iv = Rcpp::as< Rcpp::IntegerMatrix >( line );
-      linestring_to_geojson( writer, iv );
+      linestring_to_geojson( writer, iv, digits );
       break;
     }
     case REALSXP: {
       Rcpp::NumericMatrix nv = Rcpp::as< Rcpp::NumericMatrix >( line );
-      linestring_to_geojson( writer, nv );
+      linestring_to_geojson( writer, nv, digits );
       break;
     }
     }
   }
 
   template< typename Writer >
-  inline void polygon_to_geojson( Writer& writer, Rcpp::List& sfg ) {
+  inline void polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int& digits ) {
     int i;
     int n = sfg.size();
     for ( i = 0; i < n; i++ ) {
       Rcpp::NumericMatrix sfgi = sfg[i];
-      linestring_to_geojson( writer, sfgi );
+      linestring_to_geojson( writer, sfgi, digits );
       line_separator( writer, i, n );
     }
   }
 
   template< typename Writer >
-  inline void multi_polygon_to_geojson( Writer& writer, Rcpp::List& sfg ) {
+  inline void multi_polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int& digits ) {
     int i;
     int n = sfg.size();
     for ( i = 0; i < n; i++ ) {
       Rcpp::List sfgi = sfg[i];
-      polygon_to_geojson( writer, sfgi );
+      polygon_to_geojson( writer, sfgi, digits );
       polygon_separator( writer, i, n );
     }
   }

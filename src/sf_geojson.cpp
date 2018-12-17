@@ -14,7 +14,7 @@
 #include "jsonify/to_json/dataframe.hpp"
 
 template< typename Writer >
-void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
+void write_geometry(Writer& writer, Rcpp::List& sfc, int i, int& digits ) {
 
 	SEXP sfg = sfc[ i ];
 
@@ -37,7 +37,7 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 		} else {
 
 			geojsonsf::writers::begin_geojson_geometry( writer, geom_type );
-			write_geojson( writer, sfg, geom_type, cls );
+			write_geojson( writer, sfg, geom_type, cls, digits );
 
 			geom_type = (isGeometryCollection) ? "GEOMETRYCOLLECTION" : geom_type;
 			geojsonsf::writers::end_geojson_geometry( writer, geom_type );
@@ -46,7 +46,7 @@ void write_geometry(Writer& writer, Rcpp::List& sfc, int i) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
+Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc, int& digits ) {
 	// atomise - each row is a separate GeoJSON string
 
 	size_t n_rows = sfc.size();
@@ -59,7 +59,7 @@ Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
 		rapidjson::StringBuffer sb;
 		rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
 
-		write_geometry( writer, sfc, i );
+		write_geometry( writer, sfc, i, digits );
 		geojson[i] = sb.GetString();
 	}
   geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
@@ -67,7 +67,9 @@ Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
+Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf, int& digits ) {
+
+	// Rcpp::Rcout << "atomise digits : " << digits << std::endl;
 
 	std::string geom_column = sf.attr("sf_column");
 
@@ -107,7 +109,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 				SEXP this_vec = sf[ h ];
 
 				jsonify::writers::write_value( writer, h );
-				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
+				jsonify::dataframe::dataframe_cell( writer, this_vec, i, -1 );
 			}
 			writer.EndObject();
 		}
@@ -118,7 +120,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 		}
 
 		Rcpp::List sfc = sf[ geom_column ];
-		write_geometry( writer, sfc, i );
+		write_geometry( writer, sfc, i, digits );
 
 		if( n_properties > 0 ) {
 			writer.EndObject();
@@ -131,9 +133,11 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
+Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf, int& digits ) {
 	rapidjson::StringBuffer sb;
 	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
+
+	//Rcpp::Rcout << "digits: " << digits << std::endl;
 
 	std::string geom_column = sf.attr("sf_column");
 
@@ -170,14 +174,14 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf ) {
 			SEXP this_vec = sf[ h ];
 
 			jsonify::writers::write_value( writer, h );
-			jsonify::dataframe::dataframe_cell( writer, this_vec, i );
+			jsonify::dataframe::dataframe_cell( writer, this_vec, i, -1 );
 		}
 		writer.EndObject();
 
 		writer.String("geometry");
 
 		Rcpp::List sfc = sf[ geom_column ];
-		write_geometry( writer, sfc, i );
+		write_geometry( writer, sfc, i, digits );
 
 		writer.EndObject();
 	}

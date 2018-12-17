@@ -5,7 +5,7 @@
 \title{df to GeoJSON}
 \usage{
 df_geojson(df, lon, lat, z = NULL, m = NULL, atomise = FALSE,
-  simplify = TRUE)
+  simplify = TRUE, digits = NULL)
 }
 \arguments{
 \item{df}{data.frame}

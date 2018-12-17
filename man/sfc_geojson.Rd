@@ -4,7 +4,7 @@
 \alias{sfc_geojson}
 \title{sfc to GeoJSON}
 \usage{
-sfc_geojson(sfc)
+sfc_geojson(sfc, digits = NULL)
 }
 \arguments{
 \item{sfc}{simple feature collection object}

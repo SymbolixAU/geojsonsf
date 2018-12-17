@@ -29,13 +29,14 @@
 #' }
 #'
 #' @export
-sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE ) UseMethod("sf_geojson")
+sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL ) UseMethod("sf_geojson")
 
 #' @export
-sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE ) {
+sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL ) {
 	sf <- handle_dates( sf )
-	if( atomise | ( ncol( sf ) == 1 & simplify ) ) return( rcpp_sf_to_geojson_atomise( sf ) )
-	return( rcpp_sf_to_geojson( sf ) )
+	digits <- handle_digits( digits )
+	if( atomise | ( ncol( sf ) == 1 & simplify ) ) return( rcpp_sf_to_geojson_atomise( sf, digits ) )
+	return( rcpp_sf_to_geojson( sf, digits ) )
 }
 
 
@@ -54,16 +55,19 @@ sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE ) {
 #' sfc_geojson(sf)
 #' }
 #' @export
-sfc_geojson <- function( sfc ) UseMethod("sfc_geojson")
+sfc_geojson <- function( sfc, digits = NULL )	UseMethod("sfc_geojson")
 
 #' @export
-sfc_geojson.sfc <- function(sfc) rcpp_sfc_to_geojson(sfc)
+sfc_geojson.sfc <- function( sfc, digits = NULL ) {
+	digits <- handle_digits( digits )
+	rcpp_sfc_to_geojson( sfc, digits )
+}
 
 #' @export
-sf_geojson.default <- function(sf, atomise = FALSE, simplify = TRUE) stop("Expected an sf object")
+sf_geojson.default <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL ) stop("Expected an sf object")
 
 #' @export
-sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
+sfc_geojson.default <- function( sfc, digits = NULL ) stop("Expected an sfc object")
 
 
 #' df to GeoJSON
@@ -108,10 +112,20 @@ sfc_geojson.default <- function(sfc) stop("Expected an sfc object")
 #' sf <- geojson_sf( geo )
 #'
 #' @export
-df_geojson <- function(df, lon, lat, z = NULL, m = NULL, atomise = FALSE, simplify = TRUE) UseMethod("df_geojson")
+df_geojson <- function(
+	df, lon, lat, z = NULL, m = NULL,
+	atomise = FALSE, simplify = TRUE, digits = NULL
+	) {
+	UseMethod("df_geojson")
+}
 
 #' @export
-df_geojson.data.frame <- function(df, lon, lat, z = NULL, m = NULL, atomise = FALSE, simplify = TRUE) {
+df_geojson.data.frame <- function(
+	df, lon, lat, z = NULL, m = NULL,
+	atomise = FALSE, simplify = TRUE, digits = NULL
+	) {
+
+	digits <- handle_digits( digits )
 	df <- handle_dates( df )
 	lon <- force( lon )
 	lat <- force( lat )
@@ -119,6 +133,9 @@ df_geojson.data.frame <- function(df, lon, lat, z = NULL, m = NULL, atomise = FA
 	m <- force( m )
 	if( is.null(z) && !is.null(m)) stop("z must be supplied when using m")
 	geometries <- c(lon, lat, z, m)
-	if( atomise | ( ncol( df ) == length( geometries ) & simplify ) ) return( rcpp_df_to_geojson_atomise( df, geometries ) )
-	return( rcpp_df_to_geojson( df, geometries ) )
+
+	if( atomise | ( ncol( df ) == length( geometries ) & simplify ) ){
+		return( rcpp_df_to_geojson_atomise( df, geometries, digits ) )
+	}
+	return( rcpp_df_to_geojson( df, geometries, digits ) )
 }
