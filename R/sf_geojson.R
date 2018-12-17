@@ -8,8 +8,9 @@
 #' @param simplify logical indicating if sf objects without property columns should simplify
 #' (\code{TRUE}) into a vector of GeoJSON, or return a Featurecollection with
 #' empty property fields (\code{FALSE}). If \code{atomise} is TRUE this argument is ignored.
-#' @param digits integer specifying the number of of digits to round coordinates.
-#' Defulat is \code{NULL} - no rounding
+#' @param digits integer specifying the number of decimal places to round numerics.
+#' numeric values are coorced using \code{as.integer}, which may round-down the value you supply.
+#' Default is \code{NULL} - no rounding
 #'
 #' @return vector of GeoJSON
 #'
@@ -47,8 +48,9 @@ sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL )
 #' Converts `sfc` objects to GeoJSON
 #'
 #' @param sfc simple feature collection object
-#' @param digits integer specifying the number of of digits to round coordinates.
-#' Defulat is \code{NULL} - no rounding
+#' @param digits integer specifying the number of decimal places to round numerics.
+#' numeric values are coorced using \code{as.integer}, which may round-down the value you supply.
+#' Default is \code{NULL} - no rounding
 #'
 #' @return vector of GeoJSON
 #'
@@ -89,8 +91,9 @@ sfc_geojson.default <- function( sfc, digits = NULL ) stop("Expected an sfc obje
 #' @param simplify logical indicating if data.frame without property columns should simplify
 #' (\code{TRUE}) into a vector of GeoJSON, or (\code{FALSE}). If \code{atomise} is TRUE
 #' this argument is ignored.
-#' @param digits integer specifying the number of of digits to round coordinates.
-#' Defulat is \code{NULL} - no rounding
+#' @param digits integer specifying the number of decimal places to round numerics.
+#' numeric values are coorced using \code{as.integer}, which may round-down the value you supply.
+#' Default is \code{NULL} - no rounding
 #'
 #' @return vector of GeoJSON
 #'
