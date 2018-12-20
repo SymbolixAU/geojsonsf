@@ -109,7 +109,7 @@ Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf, int& digits 
 				SEXP this_vec = sf[ h ];
 
 				jsonify::writers::write_value( writer, h );
-				jsonify::dataframe::dataframe_cell( writer, this_vec, i, -1 );
+				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 			}
 			writer.EndObject();
 		}
@@ -174,7 +174,7 @@ Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf, int& digits ) {
 			SEXP this_vec = sf[ h ];
 
 			jsonify::writers::write_value( writer, h );
-			jsonify::dataframe::dataframe_cell( writer, this_vec, i, -1 );
+			jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 		}
 		writer.EndObject();
 

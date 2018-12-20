@@ -115,7 +115,7 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point, int& digits ) {
+  inline void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point, int digits ) {
     int n = point.size();
     int i;
     writer.StartArray();
@@ -126,7 +126,12 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void points_to_geojson( Writer& writer, Rcpp::NumericVector& point, int& digits ) {
+  inline void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point ) {
+  	points_to_geojson( writer, point, -1 );
+  }
+
+  template< typename Writer >
+  inline void points_to_geojson( Writer& writer, Rcpp::NumericVector& point, int digits ) {
     int n = point.size();
     int i;
     double value;
@@ -144,7 +149,12 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void points_to_geojson( Writer& writer, SEXP& point, int& digits ) {
+  inline void points_to_geojson( Writer& writer, Rcpp::NumericVector& point ) {
+  	points_to_geojson( writer, point, -1 );
+  }
+
+  template< typename Writer >
+  inline void points_to_geojson( Writer& writer, SEXP& point, int digits ) {
     switch( TYPEOF( point ) ) {
     case INTSXP: {
       Rcpp::IntegerVector iv = Rcpp::as< Rcpp::IntegerVector >( point );
@@ -160,7 +170,12 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void linestring_to_geojson( Writer& writer, Rcpp::IntegerMatrix& line, int& digits ) {
+  inline void points_to_geojson( Writer& writer, SEXP& point ) {
+  	points_to_geojson( writer, point, -1);
+  }
+
+  template< typename Writer >
+  inline void linestring_to_geojson( Writer& writer, Rcpp::IntegerMatrix& line, int digits ) {
     int i;
     int nrow = line.nrow();
     for ( i = 0; i < nrow; i++ ) {
@@ -170,7 +185,12 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line, int& digits ) {
+  inline void linestring_to_geojson( Writer& writer, Rcpp::IntegerMatrix& line ) {
+  	linestring_to_geojson( writer, line, -1);
+  }
+
+  template< typename Writer >
+  inline void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line, int digits ) {
     int i;
     int nrow = line.nrow();
     for ( i = 0; i < nrow; i++ ) {
@@ -180,7 +200,12 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void linestring_to_geojson( Writer& writer, SEXP& line, int& digits ) {
+  inline void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line ) {
+  	linestring_to_geojson( writer, line, -1 );
+  }
+
+  template< typename Writer >
+  inline void linestring_to_geojson( Writer& writer, SEXP& line, int digits ) {
     switch( TYPEOF( line ) ) {
     case INTSXP: {
       Rcpp::IntegerMatrix iv = Rcpp::as< Rcpp::IntegerMatrix >( line );
@@ -196,7 +221,12 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int& digits ) {
+  inline void linestring_to_geojson( Writer& writer, SEXP& line ) {
+  	linestring_to_geojson( writer, line, -1 );
+  }
+
+  template< typename Writer >
+  inline void polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int digits ) {
     int i;
     int n = sfg.size();
     for ( i = 0; i < n; i++ ) {
@@ -207,7 +237,12 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void multi_polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int& digits ) {
+  inline void polygon_to_geojson( Writer& writer, Rcpp::List& sfg ) {
+  	polygon_to_geojson( writer, sfg, -1);
+  }
+
+  template< typename Writer >
+  inline void multi_polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int digits ) {
     int i;
     int n = sfg.size();
     for ( i = 0; i < n; i++ ) {
@@ -215,6 +250,11 @@ namespace writers {
       polygon_to_geojson( writer, sfgi, digits );
       polygon_separator( writer, i, n );
     }
+  }
+
+  template< typename Writer >
+  inline void multi_polygon_to_geojson( Writer& writer, Rcpp::List& sfg ) {
+  	multi_polygon_to_geojson( writer, sfg, -1);
   }
 
 } // namespace writers

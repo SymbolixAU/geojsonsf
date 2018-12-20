@@ -105,7 +105,7 @@ Rcpp::StringVector rcpp_df_to_geojson_atomise(
 				SEXP this_vec = df[ h ];
 
 				jsonify::writers::write_value( writer, h );
-				jsonify::dataframe::dataframe_cell( writer, this_vec, i, -1);
+				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 			}
 			writer.EndObject();
 		}
@@ -194,7 +194,7 @@ Rcpp::StringVector rcpp_df_to_geojson(
 			SEXP this_vec = df[ h ];
 
 			jsonify::writers::write_value( writer, h );
-			jsonify::dataframe::dataframe_cell( writer, this_vec, i, -1 );
+			jsonify::dataframe::dataframe_cell( writer, this_vec, i );
 		}
 		writer.EndObject();
 
