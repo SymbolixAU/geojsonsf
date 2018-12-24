@@ -1,8 +1,8 @@
 Package: geojsonsf
 Type: Package
 Title: GeoJSON to Simple Feature Converter
-Version: 1.2.1
-Date: 2018-11-19
+Version: 1.2.2
+Date: 2019-01-02
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )

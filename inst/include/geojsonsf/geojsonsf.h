@@ -29,6 +29,9 @@ namespace geojsonsf {
   	return "";
   }
 
+  inline void attach_class( Rcpp::StringVector& geojson ) {
+  	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
+  }
 }
 
 #define UNKNOWN            0
