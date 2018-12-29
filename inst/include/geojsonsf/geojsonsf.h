@@ -9,6 +9,9 @@ namespace geojsonsf {
   const int EPSG = 4326;
   const std::string PROJ4STRING = "+proj=longlat +datum=WGS84 +no_defs";
 
+  inline void attach_class( Rcpp::StringVector& geojson ) {
+  	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
+  }
 
   template <int RTYPE>
   inline Rcpp::CharacterVector sfClass(Rcpp::Vector<RTYPE> v) {
@@ -27,10 +30,6 @@ namespace geojsonsf {
   	default: Rcpp::stop("unknown sf type");
   	}
   	return "";
-  }
-
-  inline void attach_class( Rcpp::StringVector& geojson ) {
-  	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
   }
 }
 

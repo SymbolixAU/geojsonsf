@@ -2,7 +2,7 @@
 #define GEOJSONSF_WRITE_GEOJSON_H
 
 #include <Rcpp.h>
-#include "geojsonsf/writers/writers.hpp"
+#include "geojsonsf/geojson/writers/writers.hpp"
 #include "geojsonsf/geometrycollection/geometrycollection.hpp"
 
 namespace geojsonsf {

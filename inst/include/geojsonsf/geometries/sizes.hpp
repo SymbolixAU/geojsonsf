@@ -6,7 +6,7 @@
 namespace geojsonsf {
 namespace sizes {
 
-  // determines the size of teh geometry for MULTI objects
+  // determines the size of the geometry for MULTI objects
   // MULTIPOINT - number of points (vector size)
   // MULTILINESTRING - number of lines ( matrix rows )
   // MULTIPOLYGON - number of polygons ( list size? )
@@ -28,7 +28,7 @@ namespace sizes {
   }
 
 } // namespace sizes
-} //namespace geojsonsf
+} // namespace geojsonsf
 
 
 #endif

@@ -1,7 +1,8 @@
 #ifndef GEOJSONSF_GEOJSON_H
 #define GEOJSONSF_GEOJSON_H
 
-#include "geojsonsf/writers/writers.hpp"
+#include "geojsonsf/geojsonsf.h"
+#include "geojsonsf/geojson/writers/writers.hpp"
 #include "geojsonsf/write_geojson.hpp"
 #include "geojsonsf/utils/utils.hpp"
 

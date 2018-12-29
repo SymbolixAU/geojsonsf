@@ -2,8 +2,9 @@
 #include "rapidjson/document.h"
 #include <Rcpp.h>
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/geojson_sfg.h"
-#include "geojsonsf/geojson_validate.h"
+#include "geojsonsf/sf/sfg/geojson_sfg.h"
+#include "geojsonsf/geojson/geojson_validate.hpp"
+
 using namespace rapidjson;
 using namespace Rcpp;
 
@@ -74,8 +75,8 @@ void add_lonlat_to_wkt_stream(std::ostringstream& os, float lon, float lat ) {
 
 void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
   Rcpp::NumericVector point(2);
-  point[0] = get_lon(coord_array);
-  point[1] = get_lat(coord_array);
+  point[0] = geojsonsf::sfg::get_lon(coord_array);
+  point[1] = geojsonsf::sfg::get_lat(coord_array);
   add_lonlat_to_wkt_stream(os, point[0], point[1]);
 }
 
@@ -84,7 +85,7 @@ void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
-    validate_array(coord_array[i]);
+    geojsonsf::validate::validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i]);
     coord_separator(os, i, n);
   }
@@ -94,7 +95,7 @@ void line_string_to_wkt(std::ostringstream& os, const Value& coord_array) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
-    validate_array(coord_array[i]);
+  	geojsonsf::validate::validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i]);
     coord_separator(os, i, n);
   }
@@ -104,7 +105,7 @@ void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array) 
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
-    validate_array(coord_array[i]);
+  	geojsonsf::validate::validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i]);
     line_separator_wkt(os, i, n);
   }
@@ -114,7 +115,7 @@ void polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
-    validate_array(coord_array[i]);
+  	geojsonsf::validate::validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i]);
     line_separator_wkt(os, i, n);
   }
@@ -124,7 +125,7 @@ void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
-    validate_array(coord_array[i]);
+  	geojsonsf::validate::validate_array(coord_array[i]);
     polygon_to_wkt(os, coord_array[i]);
     polygon_separate_wkt(os, i, n);
   }

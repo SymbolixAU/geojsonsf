@@ -1,7 +1,7 @@
 Package: geojsonsf
 Type: Package
 Title: GeoJSON to Simple Feature Converter
-Version: 1.2.2
+Version: 1.2.2001
 Date: 2019-01-02
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
@@ -12,7 +12,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 LinkingTo: 
-    jsonify (>= 0.1.2002),
+    jsonify (>= 0.1.2003),
     rapidjsonr (>= 1.1),
     Rcpp 
 Imports: 
