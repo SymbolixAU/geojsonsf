@@ -1,13 +1,12 @@
-#ifndef GEOJSONSF_WRITE_GEOJSON_H
-#define GEOJSONSF_WRITE_GEOJSON_H
+#ifndef GEOJSONSF_GEOJSON_WRITE_GEOJSON_H
+#define GEOJSONSF_GEOJSON_WRITE_GEOJSON_H
 
 #include <Rcpp.h>
 #include "geojsonsf/geojson/writers/writers.hpp"
 #include "geojsonsf/geometrycollection/geometrycollection.hpp"
 
-// TODO( deprecate this in favour of geojsonsf/geojson/writers/write_geojson)
-
 namespace geojsonsf {
+namespace geojson {
 namespace write_geojson {
 
 	template< typename Writer >
@@ -58,7 +57,7 @@ namespace write_geojson {
 	 */
 	template< typename Writer >
 	inline void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type,
-	                   Rcpp::CharacterVector& cls, int geometry_index, int& digits ) {
+	                          Rcpp::CharacterVector& cls, int geometry_index, int& digits ) {
 
 		if (geom_type == "POINT") {
 			geojsonsf::writers::points_to_geojson( writer, sfg, digits );
@@ -106,6 +105,7 @@ namespace write_geojson {
 	}
 
 } // namespace geojsonsf
+} // namespace geojson
 } // namespace write_geojson
 
 #endif

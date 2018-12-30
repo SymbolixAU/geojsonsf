@@ -1,4 +1,9 @@
 
+## v1.3
+
+* restructured C++ src code for easier navigation and linking
+
+
 ## v1.2.2
 
 * `digits` argument for rounding coordinates
