@@ -1,5 +1,5 @@
 
-#include "geojsonsf/geojson_to_sf.h"
+#include "geojsonsf/geojson/geojson_to_sf.hpp"
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_geojson_to_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {

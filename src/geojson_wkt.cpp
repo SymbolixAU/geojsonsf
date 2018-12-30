@@ -2,11 +2,10 @@
 #include "rapidjson/document.h"
 #include <Rcpp.h>
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/sf/sfg/geojson_sfg.h"
+#include "geojsonsf/sf/sfg/geojson_sfg.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
 
 using namespace rapidjson;
-using namespace Rcpp;
 
 void begin_wkt(std::ostringstream& os, std::string& geom_type) {
 

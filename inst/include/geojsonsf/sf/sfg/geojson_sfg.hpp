@@ -4,7 +4,7 @@
 
 #include <Rcpp.h>
 #include "rapidjson/document.h"
-#include "geojsonsf/sf/sfc/geojson_sfc.h"
+#include "geojsonsf/sf/sfc/geojson_sfc.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
 #include "geojsonsf/utils/utils.hpp"
 #include "geojsonsf/utils/where/where.hpp"

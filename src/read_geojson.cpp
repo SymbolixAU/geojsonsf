@@ -3,13 +3,12 @@
 #include <rapidjson/istreamwrapper.h>
 
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/geojson_to_sf.h"
-#include "geojsonsf/sf/sfc/geojson_sfc.h"
-#include "geojsonsf/sf/sfg/geojson_sfg.h"
+#include "geojsonsf/geojson/geojson_to_sf.hpp"
+#include "geojsonsf/sf/sfc/geojson_sfc.hpp"
+#include "geojsonsf/sf/sfg/geojson_sfg.hpp"
 #include "geojsonsf/geojson/geojson_properties.hpp"
 #include <fstream>
 
-using namespace Rcpp;
 using namespace rapidjson;
 
 Rcpp::StringVector buffer_string(std::string file) {

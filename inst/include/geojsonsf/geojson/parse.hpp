@@ -2,7 +2,7 @@
 #define GEOJSONSF_GEOJSON_PARSE_H
 
 #include <Rcpp.h>
-#include "geojsonsf/sf/sfg/geojson_sfg.h"
+#include "geojsonsf/sf/sfg/geojson_sfg.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
 
 namespace geojsonsf {

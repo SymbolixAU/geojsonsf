@@ -4,7 +4,6 @@
 // #include <sstream>
 // #include "geojsonsf/geojsonsf.h"
 // using namespace rapidjson;
-// using namespace Rcpp;
 //
 //
 //

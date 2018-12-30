@@ -9,10 +9,10 @@
 #include "rapidjson/writer.h"
 
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/geojson_to_sf.h"
+#include "geojsonsf/geojson/geojson_to_sf.hpp"
 #include "geojsonsf/sf/sf/construct.hpp"
-#include "geojsonsf/sf/sfc/geojson_sfc.h"
-#include "geojsonsf/sf/sfg/geojson_sfg.h"
+#include "geojsonsf/sf/sfc/geojson_sfc.hpp"
+#include "geojsonsf/sf/sfg/geojson_sfg.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
 #include "geojsonsf/geojson/geojson_properties.hpp"
 #include "geojsonsf/geojson/parse.hpp"

@@ -3,6 +3,7 @@
 
 #include "rapidjson/document.h"
 #include <Rcpp.h>
+
 using namespace rapidjson;
 
 namespace geojsonsf {

@@ -2,15 +2,14 @@
 #include "rapidjson/document.h"
 #include <Rcpp.h>
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/sf/sfc/geojson_sfc.h"
-#include "geojsonsf/sf/sfg/geojson_sfg.h"
-#include "geojsonsf/geojson_to_sf.h"
+#include "geojsonsf/sf/sfc/geojson_sfc.hpp"
+#include "geojsonsf/sf/sfg/geojson_sfg.hpp"
+#include "geojsonsf/geojson/geojson_to_sf.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
 #include "geojsonsf/geojson/geojson_properties.hpp"
-#include "geojsonsf/geojson_wkt.h"
+#include "geojsonsf/wkt/geojson_wkt.hpp"
 
 using namespace rapidjson;
-using namespace Rcpp;
 
 void parse_geometry_object_wkt(Rcpp::List& sfc,
                            int i,
@@ -310,7 +309,7 @@ Rcpp::List construct_wkt_df(Rcpp::List& lst, std::unordered_set< std::string >& 
   geojsonsf::geojson_properties::setup_property_vectors(property_types, properties, wkt_objects);
   geojsonsf::geojson_properties::fill_property_vectors(doc_properties, property_types, properties, row_index);
 
-  Rcpp::IntegerVector nv = seq(1, wkt_objects);
+  Rcpp::IntegerVector nv = Rcpp::seq(1, wkt_objects);
   properties.attr("class") = Rcpp::CharacterVector::create("data.frame");
   properties.attr("wkt_column") = "geometry";
   properties.attr("row.names") = nv;
