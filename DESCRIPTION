@@ -12,7 +12,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 LinkingTo: 
-    jsonify (>= 0.1.2003),
+    jsonify (>= 0.2.0),
     rapidjsonr (>= 1.1),
     Rcpp 
 Imports: 
