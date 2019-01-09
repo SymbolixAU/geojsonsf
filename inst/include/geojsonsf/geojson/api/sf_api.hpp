@@ -2,7 +2,7 @@
 #define GEOJSONSF_GEOJSON_SF_API_H
 
 #include "jsonify/jsonify.hpp"
-#include "jsonify/to_json/dataframe.hpp"
+#include "jsonify/to_json/writers/simple.hpp"
 
 #include "geojsonsf/geojsonsf.h"
 #include "geojsonsf/geojson/write_geometry.hpp"
@@ -73,8 +73,8 @@ namespace api {
 
   			SEXP this_vec = sf[ h ];
 
-  			jsonify::writers::write_value( writer, h );
-  			jsonify::dataframe::dataframe_cell( writer, this_vec, i );
+  			writer.String( h );
+  			jsonify::writers::simple::write_value( writer, this_vec, i, true, -1, false, true  );
   		}
   		writer.EndObject();
 
@@ -141,8 +141,8 @@ namespace api {
 
   				SEXP this_vec = sf[ h ];
 
-  				jsonify::writers::write_value( writer, h );
-  				jsonify::dataframe::dataframe_cell( writer, this_vec, i );
+  				writer.String( h );
+  				jsonify::writers::simple::write_value( writer, this_vec, i, true, -1, false, true  );
   			}
   			writer.EndObject();
   		}
