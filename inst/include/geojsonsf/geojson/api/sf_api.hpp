@@ -14,7 +14,7 @@ namespace api {
   	// atomise - each row is a separate GeoJSON string
 
   	size_t n_rows = sfc.size();
-  	size_t i;
+  	int i;
 
   	Rcpp::StringVector geojson( n_rows );
 
@@ -44,12 +44,12 @@ namespace api {
   	size_t n_cols = sf.ncol();
   	size_t n_properties = n_cols - 1;
   	size_t n_rows = sf.nrows();
-  	size_t i, j;
+  	int i, j;
   	Rcpp::StringVector column_names = sf.names();
   	Rcpp::StringVector property_names(sf.size() - 1);
 
   	int property_counter = 0;
-  	for (int i = 0; i < sf.length(); i++) {
+  	for ( i = 0; i < sf.length(); i++) {
   		if (column_names[i] != geom_column) {
   			property_names[property_counter] = column_names[i];
   			property_counter++;
@@ -74,7 +74,7 @@ namespace api {
   			SEXP this_vec = sf[ h ];
 
   			writer.String( h );
-  			jsonify::writers::simple::write_value( writer, this_vec, i, true, -1, false, true  );
+  			jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true  );
   		}
   		writer.EndObject();
 
@@ -109,7 +109,7 @@ namespace api {
   	size_t n_cols = sf.ncol();
   	size_t n_properties = n_cols - 1;
   	size_t n_rows = sf.nrows();
-  	size_t i, j;
+  	int i, j;
   	Rcpp::StringVector column_names = sf.names();
   	Rcpp::StringVector property_names(sf.size() - 1);
 
@@ -142,7 +142,7 @@ namespace api {
   				SEXP this_vec = sf[ h ];
 
   				writer.String( h );
-  				jsonify::writers::simple::write_value( writer, this_vec, i, true, -1, false, true  );
+  				jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true  );
   			}
   			writer.EndObject();
   		}

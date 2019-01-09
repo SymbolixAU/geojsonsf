@@ -21,7 +21,7 @@ namespace api {
 
   	size_t n_cols = df.ncol();
   	size_t n_rows = df.nrows();
-  	size_t i, j;
+  	int i, j;
   	Rcpp::StringVector column_names = df.names();
 
   	// the sfc_POINT
@@ -41,7 +41,7 @@ namespace api {
 
   	int property_counter = 0;
 
-  	for ( int i = 0; i < df.length(); i++ ) {
+  	for ( i = 0; i < df.length(); i++ ) {
 
   		Rcpp::String this_column = column_names[i];
   		int idx = geojsonsf::utils::where::where_is( this_column, geometry_columns );
@@ -71,7 +71,7 @@ namespace api {
   			SEXP this_vec = df[ h ];
 
   			writer.String( h );
-  			jsonify::writers::simple::write_value( writer, this_vec, i, true, -1, false, true );
+  			jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true );
   		}
   		writer.EndObject();
 
@@ -103,7 +103,7 @@ namespace api {
 
   	size_t n_cols = df.ncol();
   	size_t n_rows = df.nrows();
-  	size_t i, j;
+  	int i, j;
   	Rcpp::StringVector column_names = df.names();
 
   	Rcpp::StringVector geojson( n_rows );
@@ -124,7 +124,7 @@ namespace api {
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
   	int property_counter = 0;
-  	for (int i = 0; i < df.length(); i++) {
+  	for ( i = 0; i < df.length(); i++) {
 
   		Rcpp::String this_column = column_names[i];
   		int idx = geojsonsf::utils::where::where_is( this_column, geometry_columns );
@@ -156,7 +156,7 @@ namespace api {
   				SEXP this_vec = df[ h ];
 
   				writer.String( h );
-  				jsonify::writers::simple::write_value( writer, this_vec, i, true, -1, false, true  );
+  				jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true  );
   			}
   			writer.EndObject();
   		}
