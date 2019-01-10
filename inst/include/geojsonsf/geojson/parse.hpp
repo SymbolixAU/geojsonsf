@@ -72,7 +72,6 @@ namespace parse {
 		geometry_types.insert( "GEOMETRYCOLLECTION" );
 
 		if ( !expand_geometries ) {
-			// TODO( dimension )
 			std::string dim = "XY";
 			std::string attribute = "GEOMETRYCOLLECTION";
 			geom_collection.attr("class") = geojsonsf::sfg::sfg_attributes( dim, attribute );
@@ -93,9 +92,6 @@ namespace parse {
 	                                       int& nempty) {
 
 		geojsonsf::validate::validate_geometry(feature, sfg_objects);
-
-		// TODO( null property ==> NULL geometry)
-		//validate_properties(feature, sfg_objects);
 
 		Rcpp::List sfc(1);
 

@@ -1,12 +1,11 @@
-#ifndef GEOJSONSF_GEOJSON_WRITE_GEOJSON_H
-#define GEOJSONSF_GEOJSON_WRITE_GEOJSON_H
+#ifndef GEOJSONSF_GEOJSON_WRITERS_WRITE_GEOJSON_H
+#define GEOJSONSF_GEOJSON_WRITERS_WRITE_GEOJSON_H
 
 #include <Rcpp.h>
 #include "geojsonsf/geojson/writers/writers.hpp"
 #include "geojsonsf/geometrycollection/geometrycollection.hpp"
 
 namespace geojsonsf {
-namespace geojson {
 namespace write_geojson {
 
 	template< typename Writer >
@@ -105,7 +104,6 @@ namespace write_geojson {
 	}
 
 } // namespace geojsonsf
-} // namespace geojson
 } // namespace write_geojson
 
 #endif

@@ -13,7 +13,7 @@ namespace api {
   inline Rcpp::StringVector sfc_to_geojson( Rcpp::List& sfc, int& digits ) {
   	// atomise - each row is a separate GeoJSON string
 
-  	size_t n_rows = sfc.size();
+  	int n_rows = sfc.size();
   	int i;
 
   	Rcpp::StringVector geojson( n_rows );
@@ -41,9 +41,9 @@ namespace api {
 
   	std::string geom_column = sf.attr("sf_column");
 
-  	size_t n_cols = sf.ncol();
-  	size_t n_properties = n_cols - 1;
-  	size_t n_rows = sf.nrows();
+  	int n_cols = sf.ncol();
+  	int n_properties = n_cols - 1;
+  	int n_rows = sf.nrows();
   	int i, j;
   	Rcpp::StringVector column_names = sf.names();
   	Rcpp::StringVector property_names(sf.size() - 1);
@@ -106,9 +106,9 @@ namespace api {
 
   	std::string geom_column = sf.attr("sf_column");
 
-  	size_t n_cols = sf.ncol();
-  	size_t n_properties = n_cols - 1;
-  	size_t n_rows = sf.nrows();
+  	int n_cols = sf.ncol();
+  	int n_properties = n_cols - 1;
+  	int n_rows = sf.nrows();
   	int i, j;
   	Rcpp::StringVector column_names = sf.names();
   	Rcpp::StringVector property_names(sf.size() - 1);

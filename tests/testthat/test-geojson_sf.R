@@ -3,6 +3,7 @@ context("geojsonsf")
 
 test_that("ints vs numerics read correctly", {
 
+	## TODO Integers
 	# geo <- '{"type":"Point","coordinates":[0,0]}'
 	# expect_equal(geojson_sf( geo )[[1]], geojson_sfc( geo ) )
 	# expect_true(is.integer( geojson_sfc( geo )[[1]] ) )
@@ -11,6 +12,7 @@ test_that("ints vs numerics read correctly", {
 	expect_equal(geojson_sf( pt )[[1]], geojson_sfc( pt ) )
 	expect_false(is.integer( geojson_sfc( pt )[[1]] ) )
 
+	## TODO Integers
 	# geo <- '{"type":"MultiPoint","coordinates":[[0,0],[1,1]]}'
 	# expect_equal( geojson_sf( geo )[[1]], geojson_sfc( geo ) )
 	# expect_true( is.integer( geojson_sfc( geo )[[1]] ) )
@@ -19,6 +21,7 @@ test_that("ints vs numerics read correctly", {
 	expect_equal( geojson_sf( mpt )[[1]], geojson_sfc( mpt ) )
 	expect_false( is.integer( geojson_sfc( mpt )[[1]] ) )
 
+	## TODO Integers
 	# geo <- '{"type":"LineString","coordinates":[[0,0],[1,1]]}'
 	# expect_equal( geojson_sf( geo )[[1]], geojson_sfc( geo ) )
 	# expect_true( is.integer( geojson_sfc( geo )[[1]] ) )
@@ -27,11 +30,11 @@ test_that("ints vs numerics read correctly", {
 	expect_equal( geojson_sf( ls )[[1]], geojson_sfc( ls ) )
 	expect_false( is.integer( geojson_sfc( ls )[[1]] ) )
 
-	# ## TODO( if the 2nd element is a double and the first isn't? )
-	# geo <- '{"type":"LineString","coordinates":[[0,0.1],[1,1]]}'
-	# expect_equal( geojson_sf( geo )[[1]], geojson_sfc( geo ) )
-	# expect_false( is.integer( geojson_sfc( geo )[[1]] ) )
+	geo <- '{"type":"LineString","coordinates":[[0,0.1],[1,1]]}'
+	expect_equal( geojson_sf( geo )[[1]], geojson_sfc( geo ) )
+	expect_false( is.integer( geojson_sfc( geo )[[1]] ) )
 
+	## TODO integers
 	# geo <- '{"type":"MultiLineString","coordinates":[[[0,0],[1,1]]]}'
 	# expect_equal( geojson_sf( geo )[[1]], geojson_sfc( geo ) )
 	# expect_true( is.integer( geojson_sfc( geo )[[1]] ) )

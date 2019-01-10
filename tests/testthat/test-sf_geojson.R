@@ -217,8 +217,6 @@ test_that("errors are handled", {
 
 test_that("factors are numeric", {
 
-	## TODO( this should fail - factors_as_string )
-
 	fgc <- '{"type":"Feature","geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100.0,0.0]},{"type":"LineString","coordinates":[[101.0,0.0],[102.0,1.0]]}]},"properties":{"prop0":"value0","prop1":"value1"}}'
 	sf <- geojson_sf(fgc)
 	sf$prop0 <- as.factor(sf$prop0)

@@ -20,19 +20,19 @@ namespace api {
   	rapidjson::StringBuffer sb;
   	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
 
-  	size_t n_cols = df.ncol();
-  	size_t n_rows = df.nrows();
+  	int n_cols = df.ncol();
+  	int n_rows = df.nrows();
   	int i, j;
   	Rcpp::StringVector column_names = df.names();
 
   	// the sfc_POINT
-  	size_t n_geometry_columns = geometry_columns.size();
+  	int n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
-  	size_t n_properties = n_cols - n_geometry_columns;
+  	int n_properties = n_cols - n_geometry_columns;
   	Rcpp::StringVector property_names( n_properties );
 
-  	for ( i = 0; i < n_geometry_columns; i++ ) {
+  	for( i = 0; i < n_geometry_columns; i++ ) {
   		Rcpp::String this_geometry = geometry_columns[i];
   		geometry_vectors[i] = df[ this_geometry ];
   	}
@@ -103,18 +103,18 @@ namespace api {
   		int& digits,
   		bool& factors_as_string ) {
 
-  	size_t n_cols = df.ncol();
-  	size_t n_rows = df.nrows();
+  	int n_cols = df.ncol();
+  	int n_rows = df.nrows();
   	int i, j;
   	Rcpp::StringVector column_names = df.names();
 
   	Rcpp::StringVector geojson( n_rows );
 
 
-  	size_t n_geometry_columns = geometry_columns.size();
+  	int n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
-  	size_t n_properties = n_cols - n_geometry_columns;
+  	int n_properties = n_cols - n_geometry_columns;
   	Rcpp::StringVector property_names( n_properties );
 
   	for ( i = 0; i < n_geometry_columns; i++ ) {
