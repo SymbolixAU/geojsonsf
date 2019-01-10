@@ -45,6 +45,10 @@ sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL, 
 	return( rcpp_sf_to_geojson( sf, digits, factors_as_string ) )
 }
 
+#' @export
+sf_geojson.default <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL, factors_as_string = TRUE ) {
+	stop("Expected an sf object")
+}
 
 #' sfc to GeoJSON
 #'
@@ -71,9 +75,6 @@ sfc_geojson.sfc <- function( sfc, digits = NULL ) {
 	digits <- handle_digits( digits )
 	rcpp_sfc_to_geojson( sfc, digits )
 }
-
-#' @export
-sf_geojson.default <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL ) stop("Expected an sf object")
 
 #' @export
 sfc_geojson.default <- function( sfc, digits = NULL ) stop("Expected an sfc object")
