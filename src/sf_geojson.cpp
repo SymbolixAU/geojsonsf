@@ -8,11 +8,11 @@ Rcpp::StringVector rcpp_sfc_to_geojson( Rcpp::List& sfc, int& digits ) {
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf, int& digits ) {
-	return geojsonsf::api::sf_to_geojson_atomise( sf, digits );
+Rcpp::StringVector rcpp_sf_to_geojson_atomise( Rcpp::DataFrame& sf, int& digits, bool& factors_as_string ) {
+	return geojsonsf::api::sf_to_geojson_atomise( sf, digits, factors_as_string );
 }
 
 // [[Rcpp::export]]
-Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf, int& digits ) {
-	return geojsonsf::api::sf_to_geojson( sf, digits );
+Rcpp::StringVector rcpp_sf_to_geojson( Rcpp::DataFrame& sf, int& digits, bool& factors_as_string ) {
+	return geojsonsf::api::sf_to_geojson( sf, digits, factors_as_string );
 }

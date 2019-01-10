@@ -41,3 +41,14 @@ test_that("z and m handled", {
 		, "z must be supplied when using m"
 	)
 })
+
+test_that("Factors are handled", {
+
+	df <- data.frame(id = letters[1:2], lat = c(0,1), lon = c(1,0))
+	geo <- df_geojson(df, lat = "lat", lon = "lon")
+	expect_equal(as.character(geo), '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"a"},"geometry":{"type":"Point","coordinates":[1.0,0.0]}},{"type":"Feature","properties":{"id":"b"},"geometry":{"type":"Point","coordinates":[0.0,1.0]}}]}')
+
+	geo <- df_geojson(df, lat = "lat", lon = "lon", factors_as_string = FALSE)
+	expect_equal(as.character(geo), '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[1.0,0.0]}},{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0.0,1.0]}}]}')
+
+})

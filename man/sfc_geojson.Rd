@@ -9,7 +9,7 @@ sfc_geojson(sfc, digits = NULL)
 \arguments{
 \item{sfc}{simple feature collection object}
 
-\item{digits}{integer specifying the number of decimal places to round numerics.
+\item{digits}{integer specifying the number of decimal places to round numeric coordinates.
 numeric values are coorced using \code{as.integer}, which may round-down the value you supply.
 Default is \code{NULL} - no rounding}
 }

@@ -35,7 +35,7 @@ namespace api {
    *
    * Converts sf object to GeoJSON
    */
-  inline Rcpp::StringVector sf_to_geojson( Rcpp::DataFrame& sf, int& digits ) {
+  inline Rcpp::StringVector sf_to_geojson( Rcpp::DataFrame& sf, int& digits, bool& factors_as_string ) {
   	rapidjson::StringBuffer sb;
   	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
 
@@ -74,7 +74,7 @@ namespace api {
   			SEXP this_vec = sf[ h ];
 
   			writer.String( h );
-  			jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true  );
+  			jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, factors_as_string  );
   		}
   		writer.EndObject();
 
@@ -101,7 +101,7 @@ namespace api {
    * Takes an sf object, converts to atomised GeoJSON
    * Where every geometry is turned into an individual array
    */
-  inline Rcpp::StringVector sf_to_geojson_atomise( Rcpp::DataFrame& sf, int& digits ) {
+  inline Rcpp::StringVector sf_to_geojson_atomise( Rcpp::DataFrame& sf, int& digits, bool& factors_as_string ) {
   	// atomise - each row is a separate GeoJSON string
 
   	std::string geom_column = sf.attr("sf_column");
@@ -142,7 +142,7 @@ namespace api {
   				SEXP this_vec = sf[ h ];
 
   				writer.String( h );
-  				jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true  );
+  				jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, factors_as_string  );
   			}
   			writer.EndObject();
   		}

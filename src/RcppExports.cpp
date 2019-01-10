@@ -6,28 +6,30 @@
 using namespace Rcpp;
 
 // rcpp_df_to_geojson_atomise
-Rcpp::StringVector rcpp_df_to_geojson_atomise(Rcpp::DataFrame& df, Rcpp::StringVector& geometry_columns, int& digits);
-RcppExport SEXP _geojsonsf_rcpp_df_to_geojson_atomise(SEXP dfSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
+Rcpp::StringVector rcpp_df_to_geojson_atomise(Rcpp::DataFrame& df, Rcpp::StringVector& geometry_columns, int& digits, bool& factors_as_string);
+RcppExport SEXP _geojsonsf_rcpp_df_to_geojson_atomise(SEXP dfSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP factors_as_stringSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type df(dfSEXP);
     Rcpp::traits::input_parameter< Rcpp::StringVector& >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int& >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_df_to_geojson_atomise(df, geometry_columns, digits));
+    Rcpp::traits::input_parameter< bool& >::type factors_as_string(factors_as_stringSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_df_to_geojson_atomise(df, geometry_columns, digits, factors_as_string));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_df_to_geojson
-Rcpp::StringVector rcpp_df_to_geojson(Rcpp::DataFrame& df, Rcpp::StringVector& geometry_columns, int& digits);
-RcppExport SEXP _geojsonsf_rcpp_df_to_geojson(SEXP dfSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP) {
+Rcpp::StringVector rcpp_df_to_geojson(Rcpp::DataFrame& df, Rcpp::StringVector& geometry_columns, int& digits, bool& factors_as_string);
+RcppExport SEXP _geojsonsf_rcpp_df_to_geojson(SEXP dfSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP factors_as_stringSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type df(dfSEXP);
     Rcpp::traits::input_parameter< Rcpp::StringVector& >::type geometry_columns(geometry_columnsSEXP);
     Rcpp::traits::input_parameter< int& >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_df_to_geojson(df, geometry_columns, digits));
+    Rcpp::traits::input_parameter< bool& >::type factors_as_string(factors_as_stringSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_df_to_geojson(df, geometry_columns, digits, factors_as_string));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -103,41 +105,43 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sf_to_geojson_atomise
-Rcpp::StringVector rcpp_sf_to_geojson_atomise(Rcpp::DataFrame& sf, int& digits);
-RcppExport SEXP _geojsonsf_rcpp_sf_to_geojson_atomise(SEXP sfSEXP, SEXP digitsSEXP) {
+Rcpp::StringVector rcpp_sf_to_geojson_atomise(Rcpp::DataFrame& sf, int& digits, bool& factors_as_string);
+RcppExport SEXP _geojsonsf_rcpp_sf_to_geojson_atomise(SEXP sfSEXP, SEXP digitsSEXP, SEXP factors_as_stringSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type sf(sfSEXP);
     Rcpp::traits::input_parameter< int& >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_geojson_atomise(sf, digits));
+    Rcpp::traits::input_parameter< bool& >::type factors_as_string(factors_as_stringSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_geojson_atomise(sf, digits, factors_as_string));
     return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_sf_to_geojson
-Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::DataFrame& sf, int& digits);
-RcppExport SEXP _geojsonsf_rcpp_sf_to_geojson(SEXP sfSEXP, SEXP digitsSEXP) {
+Rcpp::StringVector rcpp_sf_to_geojson(Rcpp::DataFrame& sf, int& digits, bool& factors_as_string);
+RcppExport SEXP _geojsonsf_rcpp_sf_to_geojson(SEXP sfSEXP, SEXP digitsSEXP, SEXP factors_as_stringSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::DataFrame& >::type sf(sfSEXP);
     Rcpp::traits::input_parameter< int& >::type digits(digitsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_geojson(sf, digits));
+    Rcpp::traits::input_parameter< bool& >::type factors_as_string(factors_as_stringSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_sf_to_geojson(sf, digits, factors_as_string));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_geojsonsf_rcpp_df_to_geojson_atomise", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson_atomise, 3},
-    {"_geojsonsf_rcpp_df_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson, 3},
+    {"_geojsonsf_rcpp_df_to_geojson_atomise", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson_atomise, 4},
+    {"_geojsonsf_rcpp_df_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_df_to_geojson, 4},
     {"_geojsonsf_rcpp_geojson_to_sfc", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sfc, 2},
     {"_geojsonsf_rcpp_geojson_to_sf", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_sf, 2},
     {"_geojsonsf_rcpp_geojson_to_wkt", (DL_FUNC) &_geojsonsf_rcpp_geojson_to_wkt, 1},
     {"_geojsonsf_rcpp_read_sfc_file", (DL_FUNC) &_geojsonsf_rcpp_read_sfc_file, 2},
     {"_geojsonsf_rcpp_read_sf_file", (DL_FUNC) &_geojsonsf_rcpp_read_sf_file, 2},
     {"_geojsonsf_rcpp_sfc_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_sfc_to_geojson, 2},
-    {"_geojsonsf_rcpp_sf_to_geojson_atomise", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson_atomise, 2},
-    {"_geojsonsf_rcpp_sf_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson, 2},
+    {"_geojsonsf_rcpp_sf_to_geojson_atomise", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson_atomise, 3},
+    {"_geojsonsf_rcpp_sf_to_geojson", (DL_FUNC) &_geojsonsf_rcpp_sf_to_geojson, 3},
     {NULL, NULL, 0}
 };
 

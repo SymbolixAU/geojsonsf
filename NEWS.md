@@ -2,7 +2,8 @@
 ## v1.3
 
 * restructured C++ src code for easier navigation and linking
-
+* added dependency on jsonify v0.2
+* Factors now default to strings
 
 ## v1.2.2
 

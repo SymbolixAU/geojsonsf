@@ -14,7 +14,8 @@ namespace api {
   inline Rcpp::StringVector df_to_geojson(
   		Rcpp::DataFrame& df,
   		Rcpp::StringVector& geometry_columns,
-  		int& digits ) {
+  		int& digits,
+  		bool& factors_as_string ) {
 
   	rapidjson::StringBuffer sb;
   	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
@@ -71,7 +72,7 @@ namespace api {
   			SEXP this_vec = df[ h ];
 
   			writer.String( h );
-  			jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true );
+  			jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, factors_as_string );
   		}
   		writer.EndObject();
 
@@ -99,7 +100,8 @@ namespace api {
   inline Rcpp::StringVector df_to_geojson_atomise(
   		Rcpp::DataFrame& df,
   		Rcpp::StringVector& geometry_columns,
-  		int& digits) {
+  		int& digits,
+  		bool& factors_as_string ) {
 
   	size_t n_cols = df.ncol();
   	size_t n_rows = df.nrows();
@@ -156,7 +158,7 @@ namespace api {
   				SEXP this_vec = df[ h ];
 
   				writer.String( h );
-  				jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, true  );
+  				jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, factors_as_string  );
   			}
   			writer.EndObject();
   		}

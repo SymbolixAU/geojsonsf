@@ -222,6 +222,9 @@ test_that("factors are numeric", {
 	fgc <- '{"type":"Feature","geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100.0,0.0]},{"type":"LineString","coordinates":[[101.0,0.0],[102.0,1.0]]}]},"properties":{"prop0":"value0","prop1":"value1"}}'
 	sf <- geojson_sf(fgc)
 	sf$prop0 <- as.factor(sf$prop0)
-	geo <- sf_geojson(sf)
+	geo <- sf_geojson(sf, factors_as_string = FALSE )
 	expect_false(grepl("value0", geo))
+
+	geo <- sf_geojson(sf, factors_as_string = TRUE )
+	expect_true(grepl("value0", geo))
 })

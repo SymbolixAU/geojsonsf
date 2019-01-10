@@ -4,7 +4,8 @@
 \alias{sf_geojson}
 \title{sf to GeoJSON}
 \usage{
-sf_geojson(sf, atomise = FALSE, simplify = TRUE, digits = NULL)
+sf_geojson(sf, atomise = FALSE, simplify = TRUE, digits = NULL,
+  factors_as_string = TRUE)
 }
 \arguments{
 \item{sf}{simple feature object}
@@ -19,6 +20,8 @@ empty property fields (\code{FALSE}). If \code{atomise} is TRUE this argument is
 \item{digits}{integer specifying the number of decimal places to round numerics.
 numeric values are coorced using \code{as.integer}, which may round-down the value you supply.
 Default is \code{NULL} - no rounding}
+
+\item{factors_as_string}{logical indicating if factors should be treated as strings. Defaults to TRUE.}
 }
 \value{
 vector of GeoJSON
