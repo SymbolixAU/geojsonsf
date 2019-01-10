@@ -61,19 +61,6 @@ namespace sfg {
 	inline void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector nv,
 	                         Rcpp::NumericVector& bbox ) {
 		int i;
-		// if (point_array.Size() < 0 ) {
-		// 	Rcpp::stop("mis-specified geometry");
-		// }
-
-		// if ( n < 0 || point_array.Size() == 0 ) {
-		// 	Rcpp::stop("mis-specified geometry");
-		// }
-
-		// Rcpp::Rcout << "n: " << n << std::endl;
-		// Rcpp::Rcout << "points_size: " << point_array.Size() << std::endl;
-		// const Value& v = point_array[0];
-		// Rcpp::Rcout << "v.type: " << v.GetType() << std::endl;
-
 		for ( i = 0; i < n; i++ ) {
 			geojsonsf::validate::validate_point(point_array[i]);
 			nv[i] = point_array[i].GetDouble();
