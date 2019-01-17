@@ -1,4 +1,8 @@
 
+## v1.4
+
+* fix crash due to factor levels [issue 62](https://github.com/SymbolixAU/geojsonsf/issues/62)
+
 ## v1.3
 
 * restructured C++ src code for easier navigation and linking

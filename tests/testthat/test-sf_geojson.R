@@ -226,3 +226,15 @@ test_that("factors are numeric", {
 	geo <- sf_geojson(sf, factors_as_string = TRUE )
 	expect_true(grepl("value0", geo))
 })
+
+
+test_that("factor levels handled", {
+
+	geo <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"1"},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},{"type":"Feature","properties":{"id":"1"},"geometry":{"type":"Point","coordinates":[1.0,1.0]}}]}'
+	sf <- geojson_sf( geo )
+	sf$id <- as.factor( sf$id )
+
+	expect_true( sf_geojson( sf ) == geo )
+
+
+})

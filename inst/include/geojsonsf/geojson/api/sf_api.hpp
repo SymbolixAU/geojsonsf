@@ -73,7 +73,12 @@ namespace api {
 
   			SEXP this_vec = sf[ h ];
 
+  			//Rcpp::IntegerVector temp = Rcpp::as< Rcpp::IntegerVector >( this_vec );
+  			// Rcpp::Rcout << "iv: " << temp << std::endl;
+
   			writer.String( h );
+  			// int xyz;
+  			// Rcpp::Rcout << "factors_as_string " << factors_as_string << std::endl;
   			jsonify::writers::simple::write_value( writer, this_vec, i, -1, false, factors_as_string  );
   		}
   		writer.EndObject();
