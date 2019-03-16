@@ -118,9 +118,15 @@ namespace writers {
   inline void points_to_geojson( Writer& writer, Rcpp::IntegerVector& point, int digits ) {
     int n = point.size();
     int i;
+    int value;
     writer.StartArray();
     for ( i = 0; i < n; i++ ) {
-      writer.Int( point[i] );
+    	value = point[i];
+    	if( R_IsNA( value ) ) {
+    		writer.Null();
+    	} else {
+        writer.Int( point[i] );
+    	}
     }
     writer.EndArray();
   }
@@ -137,13 +143,18 @@ namespace writers {
     double value;
     writer.StartArray();
     for ( i = 0; i < n; i++ ) {
-    value = point[i];
+      value = point[i];
 
-    	if ( digits >= 0 ) {
-    		double e = std::pow( 10.0, digits );
-    		value = round( value * e ) / e;
+    	if( R_IsNA( value ) ) {
+    		writer.Null();
+    	} else {
+
+	    	if ( digits >= 0 ) {
+	    		double e = std::pow( 10.0, digits );
+	    		value = round( value * e ) / e;
+	    	}
+	    	writer.Double( value );
     	}
-    	writer.Double( value );
     }
     writer.EndArray();
   }

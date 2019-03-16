@@ -2,6 +2,8 @@
 ## v1.4
 
 * fix crash due to factor levels [issue 62](https://github.com/SymbolixAU/geojsonsf/issues/62)
+* fix invalid GeoJSON when NA elements [issue 63](https://github.com/SymbolixAU/geojsonsf/issues/63)
+
 
 ## v1.3
 

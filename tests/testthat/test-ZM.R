@@ -397,7 +397,22 @@ test_that("ZM attributes", {
 
 })
 
+test_that("NA values handled", {
 
+
+	sf <- structure(list(geometry = structure(list(structure(c(0, 1, 0,
+			  NA, 0, NA, 0, 1), .Dim = c(2L, 4L), class = c("XYZM", "LINESTRING",
+				"sfg"))), class = c("sfc_LINESTRING", "sfc"), precision = 0, bbox = structure(c(xmin = 0,
+				ymin = NA, xmax = 1, ymax = NA), class = "bbox"), crs = structure(list(
+				epsg = NA_integer_, proj4string = NA_character_), class = "crs"), n_empty = 0L)), row.names = 1L, class = c("sf",
+				"data.frame"), sf_column = "geometry", agr = structure(integer(0), class = "factor", .Label = c("constant",
+				"aggregate", "identity"), .Names = character(0)))
+
+	geo <- geojsonsf::sf_geojson( sf )
+	expect_true( jsonify::validate_json( geo ) )
+	expect_equal( as.character( geo ), '{"type":"LineString","coordinates":[[0.0,0.0,0.0,0.0],[1.0,null,null,1.0]]}' )
+
+})
 
 
 
