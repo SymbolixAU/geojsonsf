@@ -9,12 +9,14 @@ namespace geojsonsf {
 namespace geojson {
 namespace parse {
 
-	inline void parse_geometry_object(Rcpp::List& sfc,
-	                                  int i,
-	                                  const Value& geometry,
-	                                  Rcpp::NumericVector& bbox,
-	                                  std::unordered_set< std::string >& geometry_types,
-	                                  int& sfg_objects) {
+	inline void parse_geometry_object(
+			Rcpp::List& sfc,
+	    int i,
+	    const Value& geometry,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects
+  ) {
 
 		geojsonsf::validate::validate_type(geometry, sfg_objects);
 		geojsonsf::validate::validate_coordinates(geometry, sfg_objects);
@@ -50,11 +52,14 @@ namespace parse {
 		}
 	}
 
-	inline Rcpp::List parse_geometry_collection_object(const Value& val,
-	                                                   Rcpp::NumericVector& bbox,
-	                                                   std::unordered_set< std::string >& geometry_types,
-	                                                   int& sfg_objects,
-	                                                   bool& expand_geometries) {
+	inline Rcpp::List parse_geometry_collection_object(
+			const Value& val,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    bool& expand_geometries
+  ) {
+
 		std::string geom_type;
 		geojsonsf::validate::validate_geometries(val, sfg_objects);
 		auto geometries = val["geometries"].GetArray();
@@ -81,15 +86,17 @@ namespace parse {
 		return geom_collection;
 	}
 
-	inline Rcpp::List parse_feature_object(const Value& feature,
-	                                       Rcpp::NumericVector& bbox,
-	                                       std::unordered_set< std::string >& geometry_types,
-	                                       int& sfg_objects,
-	                                       std::unordered_set< std::string >& property_keys,
-	                                       Document& doc_properties,
-	                                       std::unordered_map< std::string, std::string>& property_types,
-	                                       bool& expand_geometries,
-	                                       int& nempty) {
+	inline Rcpp::List parse_feature_object(
+			const Value& feature,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    std::unordered_set< std::string >& property_keys,
+	    Document& doc_properties,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    bool& expand_geometries,
+	    int& nempty
+  ) {
 
 		geojsonsf::validate::validate_geometry(feature, sfg_objects);
 
@@ -151,15 +158,17 @@ namespace parse {
 		return sfc;
 	}
 
-	inline Rcpp::List parse_feature_collection_object(const Value& fc,
-	                                                  Rcpp::NumericVector& bbox,
-	                                                  std::unordered_set< std::string >& geometry_types,
-	                                                  int& sfg_objects,
-	                                                  std::unordered_set< std::string >& property_keys,
-	                                                  Document& doc_properties,
-	                                                  std::unordered_map< std::string, std::string>& property_types,
-	                                                  bool& expand_geometries,
-	                                                  int& nempty) {
+	inline Rcpp::List parse_feature_collection_object(
+			const Value& fc,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    std::unordered_set< std::string >& property_keys,
+	    Document& doc_properties,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    bool& expand_geometries,
+	    int& nempty
+  ) {
 
 		// a FeatureCollection MUST have members (array) called features,
 		geojsonsf::validate::validate_features(fc, sfg_objects);
@@ -182,18 +191,20 @@ namespace parse {
 		return feature_collection;
 	}
 
-	inline void parse_geojson(const Value& v,
-	                          Rcpp::List& sfc,
-	                          Rcpp::List& properties,
-	                          int i,
-	                          Rcpp::NumericVector& bbox,
-	                          std::unordered_set< std::string >& geometry_types,
-	                          int& sfg_objects,
-	                          std::unordered_set< std::string >& property_keys,
-	                          Document& doc_properties,
-	                          std::unordered_map< std::string, std::string>& property_types,
-	                          bool& expand_geometries,
-	                          int& nempty) {
+	inline void parse_geojson(
+			const Value& v,
+	    Rcpp::List& sfc,
+	    Rcpp::List& properties,
+	    int i,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    std::unordered_set< std::string >& property_keys,
+	    Document& doc_properties,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    bool& expand_geometries,
+	    int& nempty
+  ) {
 
 		Rcpp::List res(1);
 		geojsonsf::validate::validate_type(v, sfg_objects);
@@ -224,17 +235,19 @@ namespace parse {
 		}
 	}
 
-	inline void parse_geojson_object(Document& d,
-	                                 Rcpp::List& sfc,
-	                                 Rcpp::List& properties,
-	                                 Rcpp::NumericVector& bbox,
-	                                 std::unordered_set< std::string >& geometry_types,
-	                                 int& sfg_objects,
-	                                 std::unordered_set< std::string >& property_keys,
-	                                 Document& doc_properties,
-	                                 std::unordered_map< std::string, std::string>& property_types,
-	                                 bool& expand_geometries,
-	                                 int& nempty) {
+	inline void parse_geojson_object(
+			Document& d,
+	    Rcpp::List& sfc,
+	    Rcpp::List& properties,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    std::unordered_set< std::string >& property_keys,
+	    Document& doc_properties,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    bool& expand_geometries,
+	    int& nempty
+  ) {
 		const Value& v = d;
 		parse_geojson(
 			v, sfc, properties, 0, bbox, geometry_types, sfg_objects, property_keys,
@@ -249,18 +262,20 @@ namespace parse {
 
 	}
 
-	inline void parse_geojson_array(Document& d,
-	                                Rcpp::List& sfc,
-	                                Rcpp::List& properties,
-	                                int i,
-	                                Rcpp::NumericVector& bbox,
-	                                std::unordered_set< std::string >& geometry_types,
-	                                int& sfg_objects,
-	                                std::unordered_set< std::string >& property_keys,
-	                                Document& doc_properties,
-	                                std::unordered_map< std::string, std::string>& property_types,
-	                                bool& expand_geometries,
-	                                int& nempty) {
+	inline void parse_geojson_array(
+			Document& d,
+	    Rcpp::List& sfc,
+	    Rcpp::List& properties,
+	    int i,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    std::unordered_set< std::string >& property_keys,
+	    Document& doc_properties,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    bool& expand_geometries,
+	    int& nempty
+  ) {
 		const Value& v = d[i];
 		parse_geojson(
 			v, sfc, properties, i, bbox, geometry_types, sfg_objects, property_keys,

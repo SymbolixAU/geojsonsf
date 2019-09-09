@@ -28,9 +28,11 @@ namespace utils {
 	}
 
 
-	inline std::string attach_class(Rcpp::List& sfc,
-	                                std::string geom_type,
-	                                std::unordered_set< std::string >& geometry_types) {
+	inline std::string attach_class(
+			Rcpp::List& sfc,
+	    std::string geom_type,
+	    std::unordered_set< std::string >& geometry_types
+  ) {
 
 		std::string geometry_class;
 
@@ -66,11 +68,13 @@ namespace utils {
 		return geometry_class;
 	}
 
-	inline void attach_sfc_attributes(Rcpp::List& sfc,
-	                                  std::string& type,
-	                                  Rcpp::NumericVector& bbox,
-	                                  std::unordered_set< std::string >& geometry_types,
-	                                  int& nempty) {
+	inline void attach_sfc_attributes(
+			Rcpp::List& sfc,
+	    std::string& type,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& nempty
+  ) {
 
 		std::string geometry_class = attach_class(sfc, type, geometry_types);
 		sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");

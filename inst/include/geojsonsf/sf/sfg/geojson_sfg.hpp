@@ -9,6 +9,9 @@
 #include "geojsonsf/utils/utils.hpp"
 #include "geojsonsf/utils/where/where.hpp"
 
+#include "sfheaders/sfc/bbox.hpp"
+#include "sfheaders/sfg/sfg_dimension.hpp"
+
 using namespace rapidjson;
 
 namespace geojsonsf {
@@ -51,27 +54,40 @@ namespace sfg {
 	// 	return "XY"; // never reached
 	// }
 
-	inline void get_integer_points( const Value& point_array, int& n, Rcpp::IntegerVector iv ) {
+	inline void get_integer_points(
+			const Value& point_array, int& n,
+			Rcpp::IntegerVector iv
+      ) {
 		int i;
 		for ( i = 0; i < n; i++ ) {
 			iv[i] = point_array[i].GetDouble();
 		}
 	}
 
-	inline void get_numeric_points( const Value& point_array, int& n, Rcpp::NumericVector nv,
-	                         Rcpp::NumericVector& bbox ) {
+	inline void get_numeric_points(
+			const Value& point_array, int& n,
+			Rcpp::NumericVector nv,
+	    Rcpp::NumericVector& bbox
+  ) {
 		int i;
 		for ( i = 0; i < n; i++ ) {
 			geojsonsf::validate::validate_point(point_array[i]);
 			nv[i] = point_array[i].GetDouble();
 		}
-		geojsonsf::sfc::utils::calculate_bbox(bbox, nv);
+		sfheaders::bbox::calculate_bbox( bbox, nv );
+		//geojsonsf::sfc::utils::calculate_bbox(bbox, nv);
 	}
 
 
 
-	inline void get_points( const Value& point_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
-	                 bool requires_attribute, std::string attribute ) {
+	inline void get_points(
+			const Value& point_array,
+			Rcpp::NumericVector& bbox,
+			Rcpp::List& sfc,
+			int& i,
+			bool requires_attribute,
+			std::string attribute
+  ) {
 		int n = point_array.Size();
 		geojsonsf::validate::validate_points(point_array);
 
@@ -94,7 +110,8 @@ namespace sfg {
 		get_numeric_points( point_array, n, nv, bbox );
 
 		if ( requires_attribute ) {
-			std::string dim = geojsonsf::utils::make_dimension( n );
+			//std::string dim = geojsonsf::utils::make_dimension( n );
+			std::string dim = sfheaders::sfg::sfg_dimension( n );
 			nv.attr("class") = sfg_attributes( dim, attribute );
 		}
 		sfc[i] = nv;
@@ -106,8 +123,16 @@ namespace sfg {
 		// }
 	}
 
-	inline void get_line_string( const Value& line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
-	                      bool requires_attribute, std::string attribute, int& max_cols ) {
+	inline void get_line_string(
+			const Value& line_array,
+			Rcpp::NumericVector& bbox,
+			Rcpp::List& sfc,
+			int& i,
+			bool requires_attribute,
+			std::string attribute,
+			int& max_cols
+  ) {
+
 		int n = line_array.Size();
 		//int max_cols = 2;
 		int row;
@@ -162,7 +187,7 @@ namespace sfg {
 		nm = nm( Rcpp::_, Rcpp::Range(0, ( max_cols - 1 ) ) );
 
 		if ( requires_attribute ) {
-			std::string dim = geojsonsf::utils::make_dimension( max_cols );
+			std::string dim = sfheaders::sfg::sfg_dimension( max_cols );
 			nm.attr("class") = sfg_attributes( dim, attribute );
 		}
 		sfc[i] = nm;
@@ -176,8 +201,15 @@ namespace sfg {
 
 	}
 
-	inline void get_multi_line_string( const Value& multi_line_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
-	                            bool requires_attribute, std::string attribute ) {
+	inline void get_multi_line_string(
+			const Value& multi_line_array,
+			Rcpp::NumericVector& bbox,
+			Rcpp::List& sfc,
+			int& i,
+			bool requires_attribute,
+			std::string attribute
+  ) {
+
 		int n = multi_line_array.Size();
 		Rcpp::List ml( n );
 		int j;
@@ -191,14 +223,20 @@ namespace sfg {
 			}
 		}
 		if( requires_attribute ) {
-			std::string dim = geojsonsf::utils::make_dimension( max_dimension );
+			std::string dim = sfheaders::sfg::sfg_dimension( max_dimension );
 			ml.attr("class") = sfg_attributes( dim, attribute );
 		}
 		sfc[i] = ml;
 	}
 
-	inline void get_polygon( const Value& polygon_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
-	                  bool requires_attribute, std::string attribute ) {
+	inline void get_polygon(
+			const Value& polygon_array,
+			Rcpp::NumericVector& bbox,
+			Rcpp::List& sfc,
+			int& i,
+			bool requires_attribute,
+			std::string attribute
+  ) {
 
 		int n = polygon_array.Size();
 		Rcpp::List pl( n );
@@ -215,14 +253,21 @@ namespace sfg {
 
 
 		if( requires_attribute ) {
-			std::string dim = geojsonsf::utils::make_dimension( max_dimension );
+			std::string dim = sfheaders::sfg::sfg_dimension( max_dimension );
 			pl.attr("class") = sfg_attributes( dim, attribute );
 		}
 		sfc[i] = pl;
 	}
 
-	inline void get_multi_polygon( const Value& multi_polygon_array, Rcpp::NumericVector& bbox, Rcpp::List& sfc, int& i,
-	                        bool requires_attribute, std::string attribute ) {
+	inline void get_multi_polygon(
+			const Value& multi_polygon_array,
+			Rcpp::NumericVector& bbox,
+			Rcpp::List& sfc,
+			int& i,
+			bool requires_attribute,
+			std::string attribute
+  ) {
+
 		int n = multi_polygon_array.Size();
 		Rcpp::List mp( n );
 		int j, k;
@@ -246,15 +291,17 @@ namespace sfg {
 		}
 
 		if( requires_attribute ) {
-			std::string dim = geojsonsf::utils::make_dimension( max_dimension );
+			std::string dim = sfheaders::sfg::sfg_dimension( max_dimension );
 			mp.attr("class") = sfg_attributes( dim, attribute );
 		}
 		sfc[i] = mp;
 	}
 
-	inline void create_null_sfg(Rcpp::List& sfc,
-	                            std::unordered_set< std::string >& geometry_types,
-	                            int& nempty) {
+	inline void create_null_sfg(
+			Rcpp::List& sfc,
+			std::unordered_set< std::string >& geometry_types,
+			int& nempty
+  ) {
 		std::string geom_type;
 		std::string dim = "XY";
 		if (geometry_types.size() == 0) {

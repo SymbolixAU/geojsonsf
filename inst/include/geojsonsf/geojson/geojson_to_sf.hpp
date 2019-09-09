@@ -17,20 +17,25 @@
 #include "geojsonsf/geojson/geojson_properties.hpp"
 #include "geojsonsf/geojson/parse.hpp"
 
+#include "sfheaders/sfc/bbox.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
+
 using namespace rapidjson;
 
 namespace geojsonsf {
 namespace sf {
 
-  inline Rcpp::List geojson_to_sf(const char* geojson,
-	                         Rcpp::NumericVector& bbox,
-	                         std::unordered_set< std::string >& geometry_types,
-	                         int& sfg_objects,
-	                         std::unordered_set< std::string >& property_keys,
-	                         Document& doc_properties,
-	                         std::unordered_map< std::string, std::string>& property_types,
-	                         bool& expand_geometries,
-	                         int& nempty) {
+  inline Rcpp::List geojson_to_sf(
+  		const char* geojson,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    std::unordered_set< std::string >& property_keys,
+	    Document& doc_properties,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    bool& expand_geometries,
+	    int& nempty
+  ) {
 
 		Document d;
 		geojsonsf::validate::safe_parse(d, geojson);
@@ -70,7 +75,11 @@ namespace sf {
 		//int row_index;
 
 		// Attributes to keep track of along the way
-		Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();
+		//Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();
+		Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+		Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+		Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
 		std::unordered_set< std::string > geometry_types;
 		std::unordered_set< std::string > property_keys;   // storing all the 'key' values from 'properties'
 		std::unordered_map< std::string, std::string> property_types;
@@ -97,7 +106,11 @@ namespace sf {
 		int nempty = 0;
 
 		// Attributes to keep track of along the way
-		Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();
+		//Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();
+		Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+		Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+		Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
 		std::unordered_set< std::string > geometry_types;
 		std::unordered_set< std::string > property_keys;   // storing all the 'key' values from 'properties'
 		std::unordered_map< std::string, std::string > property_types;

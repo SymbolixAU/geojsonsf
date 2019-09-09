@@ -8,6 +8,8 @@
 #include "geojsonsf/utils/where/where.hpp"
 #include "geojsonsf/geojson/write_geometry.hpp"
 
+#include "sfheaders/sfg/sfg_dimension.hpp"
+
 namespace geojsonsf {
 namespace api {
 
@@ -37,7 +39,7 @@ namespace api {
   		geometry_vectors[i] = df[ this_geometry ];
   	}
 
-  	std::string dim = geojsonsf::utils::make_dimension( n_geometry_columns );
+  	std::string dim = sfheaders::sfg::sfg_dimension( n_geometry_columns );
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
   	int property_counter = 0;
@@ -122,7 +124,7 @@ namespace api {
   		geometry_vectors[i] = df[ this_geometry ];
   	}
 
-  	std::string dim = geojsonsf::utils::make_dimension( n_geometry_columns );
+  	std::string dim = sfheaders::sfg::sfg_dimension( n_geometry_columns );
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
   	int property_counter = 0;
