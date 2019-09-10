@@ -54,16 +54,6 @@ geojson_sfc <- function(geojson, expand_geometries = FALSE, crs = NULL, proj4str
 	return( sfc )
 }
 
-set_crs <- function(sfc, crs, proj4string ) {
-	crs <- list(
-		epsg = ifelse(is.null(crs),NA_integer_,crs)
-		, proj4string = ifelse(is.null(proj4string),"",proj4string)
-	)
-	attr( crs, "class" ) <- "crs"
-	attr( sfc, "crs" ) <- crs
-	return( sfc )
-}
-
 geojson_to_sfc <- function( geojson, expand_geometries ) UseMethod("geojson_to_sfc")
 
 #' @export
@@ -160,6 +150,17 @@ geojson_to_sf.default <- function(geojson, expand_geometries = F) {
 
 
 date_columns <- function( sf ) names(which(vapply(sf , function(x) { inherits(x, "Date") | inherits(x, "POSIXct") }, T)))
+
+set_crs <- function(sfc, crs, proj4string ) {
+	crs <- list(
+		epsg = ifelse(is.null(crs),NA_integer_,crs)
+		, proj4string = ifelse(is.null(proj4string),"",proj4string)
+	)
+	attr( crs, "class" ) <- "crs"
+	attr( sfc, "crs" ) <- crs
+	return( sfc )
+}
+
 
 handle_dates <- function( x ) {
 	dte <- date_columns( x )
