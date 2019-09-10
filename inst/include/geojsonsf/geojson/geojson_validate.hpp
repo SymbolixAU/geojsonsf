@@ -26,13 +26,6 @@ namespace validate {
 		}
 	}
 
-  inline void validate_crs(const Value& v) {
-  	Rcpp::Rcout << "checking crs" << std::endl;
-  	if( v.HasMember("crs") ) {
-  		Rcpp::warning("found crs");
-  	}
-  }
-
 	inline void validate_array(const Value& v) {
 		if ( v.IsArray() == false) {
 			geojson_object_error("array");
