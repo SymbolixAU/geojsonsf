@@ -16,6 +16,7 @@ namespace parse {
 	                                  std::unordered_set< std::string >& geometry_types,
 	                                  int& sfg_objects) {
 
+		//geojsonsf::validate::validate_crs(geometry);
 		geojsonsf::validate::validate_type(geometry, sfg_objects);
 		geojsonsf::validate::validate_coordinates(geometry, sfg_objects);
 		geojsonsf::validate::validate_array(geometry["coordinates"], sfg_objects);
