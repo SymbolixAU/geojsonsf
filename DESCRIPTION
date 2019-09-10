@@ -8,6 +8,8 @@ Authors@R: c(
     )
 Description: Converts Between GeoJSON and simple feature objects. 
 License: GPL-3
+URL: https://github.com/SymbolixAU/geojsonsf
+BugReports: https://github.com/SymbolixAU/geojsonsf/issues
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
