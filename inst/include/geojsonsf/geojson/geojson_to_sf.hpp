@@ -28,6 +28,8 @@ namespace sf {
   inline Rcpp::List geojson_to_sf(
   		const char* geojson,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
@@ -47,7 +49,7 @@ namespace sf {
 		if (d.IsObject()) {
 			Rcpp::List sfg(1);
 			geojsonsf::geojson::parse::parse_geojson_object(
-				d, sfg, properties, bbox, geometry_types, sfg_objects, property_keys,
+				d, sfg, properties, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys,
 				doc_properties, property_types, expand_geometries, nempty
 			);
 			sfc[0] = sfg;
@@ -58,7 +60,7 @@ namespace sf {
 
 			for (doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
 				geojsonsf::geojson::parse::parse_geojson_array(
-					d, sfgs, properties, doc_ele, bbox, geometry_types, sfg_objects,
+					d, sfgs, properties, doc_ele, bbox, z_range, m_range, geometry_types, sfg_objects,
 					property_keys, doc_properties, property_types, expand_geometries, nempty
 				);
 			}
@@ -90,12 +92,12 @@ namespace sf {
 
 		for (int geo_ele = 0; geo_ele < n; geo_ele++ ){
 			sfc[geo_ele] = geojson_to_sf(
-				geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys,
+				geojson[geo_ele], bbox, z_range, m_range, geometry_types, sfg_objects, property_keys,
 				doc_properties, property_types, expand_geometries, nempty
 			);
 		}
 
-		return geojsonsf::sfc::construct_sfc(sfg_objects, sfc, bbox, geometry_types, nempty);
+		return geojsonsf::sfc::construct_sfc(sfg_objects, sfc, bbox, z_range, m_range, geometry_types, nempty);
 	}
 
   inline Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries) {
@@ -121,12 +123,12 @@ namespace sf {
 
 		for ( int geo_ele = 0; geo_ele < n; geo_ele++ ){
 			sfc[geo_ele] = geojson_to_sf(
-				geojson[geo_ele], bbox, geometry_types, sfg_objects, property_keys,
+				geojson[geo_ele], bbox, z_range, m_range, geometry_types, sfg_objects, property_keys,
 				doc_properties, property_types, expand_geometries, nempty
 			);
 		}
 
-		Rcpp::List res = geojsonsf::sfc::construct_sfc( sfg_objects, sfc, bbox, geometry_types, nempty );
+		Rcpp::List res = geojsonsf::sfc::construct_sfc( sfg_objects, sfc, bbox, z_range, m_range, geometry_types, nempty );
 		return geojsonsf::sf::construct_sf( res, property_keys, property_types, doc_properties, sfg_objects, row_index );
 	}
 

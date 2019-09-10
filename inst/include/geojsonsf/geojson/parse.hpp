@@ -14,6 +14,8 @@ namespace parse {
 	    int i,
 	    const Value& geometry,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects
   ) {
@@ -28,24 +30,24 @@ namespace parse {
 
 
 		if (geom_type == "Point") {
-			geojsonsf::sfg::get_points( coord_array, bbox, sfc, i, true, "POINT");
+			geojsonsf::sfg::get_points( coord_array, bbox, z_range, m_range, sfc, i, true, "POINT");
 
 		} else if (geom_type == "MultiPoint") {
 			int max_cols = 2;
-			geojsonsf::sfg::get_line_string( coord_array, bbox, sfc, i, true, "MULTIPOINT", max_cols );
+			geojsonsf::sfg::get_line_string( coord_array, bbox, z_range, m_range, sfc, i, true, "MULTIPOINT", max_cols );
 
 		} else if (geom_type == "LineString") {
 			int max_cols = 2;
-			geojsonsf::sfg::get_line_string( coord_array, bbox, sfc, i, true, "LINESTRING", max_cols );
+			geojsonsf::sfg::get_line_string( coord_array, bbox, z_range, m_range, sfc, i, true, "LINESTRING", max_cols );
 
 		} else if (geom_type == "MultiLineString") {
-			geojsonsf::sfg::get_multi_line_string( coord_array, bbox, sfc, i, true, "MULTILINESTRING" );
+			geojsonsf::sfg::get_multi_line_string( coord_array, bbox, z_range, m_range, sfc, i, true, "MULTILINESTRING" );
 
 		} else if (geom_type == "Polygon") {
-			geojsonsf::sfg::get_polygon( coord_array, bbox, sfc, i, true, "POLYGON" );
+			geojsonsf::sfg::get_polygon( coord_array, bbox, z_range, m_range, sfc, i, true, "POLYGON" );
 
 		} else if (geom_type == "MultiPolygon") {
-			geojsonsf::sfg::get_multi_polygon( coord_array, bbox, sfc, i, true, "MULTIPOLYGON" );
+			geojsonsf::sfg::get_multi_polygon( coord_array, bbox, z_range, m_range, sfc, i, true, "MULTIPOLYGON" );
 
 		} else {
 			Rcpp::stop("unknown sfg type");
@@ -55,6 +57,8 @@ namespace parse {
 	inline Rcpp::List parse_geometry_collection_object(
 			const Value& val,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects,
 	    bool& expand_geometries
@@ -72,14 +76,14 @@ namespace parse {
 			geojsonsf::validate::validate_type(gcval, sfg_objects);
 			geom_type = gcval["type"].GetString();
 
-			parse_geometry_object(geom_collection, i, gcval, bbox, geometry_types, sfg_objects);
+			parse_geometry_object(geom_collection, i, gcval, bbox, z_range, m_range, geometry_types, sfg_objects);
 		}
 		geometry_types.insert( "GEOMETRYCOLLECTION" );
 
 		if ( !expand_geometries ) {
 			std::string dim = "XY";
 			std::string attribute = "GEOMETRYCOLLECTION";
-			geom_collection.attr("class") = geojsonsf::sfg::sfg_attributes( dim, attribute );
+			geom_collection.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
 		} else {
 			sfg_objects+=n;
 		}
@@ -89,6 +93,8 @@ namespace parse {
 	inline Rcpp::List parse_feature_object(
 			const Value& feature,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
@@ -111,9 +117,9 @@ namespace parse {
 			type = geometry["type"].GetString();
 
 			if (type == "GeometryCollection") {
-				sfc[0] = geojsonsf::geojson::parse::parse_geometry_collection_object(geometry, bbox, geometry_types, sfg_objects, expand_geometries);
+				sfc[0] = geojsonsf::geojson::parse::parse_geometry_collection_object(geometry, bbox, z_range, m_range, geometry_types, sfg_objects, expand_geometries);
 			} else {
-				geojsonsf::geojson::parse::parse_geometry_object(sfc, 0, geometry, bbox, geometry_types, sfg_objects);
+				geojsonsf::geojson::parse::parse_geometry_object(sfc, 0, geometry, bbox, z_range, m_range, geometry_types, sfg_objects);
 			}
 		} else {
 			geojsonsf::sfg::create_null_sfg(sfc, geometry_types, nempty);
@@ -161,6 +167,8 @@ namespace parse {
 	inline Rcpp::List parse_feature_collection_object(
 			const Value& fc,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
@@ -184,7 +192,7 @@ namespace parse {
 		for ( i = 0; i < n; i++ ) {
 			const Value& feature = features[i];
 			feature_collection[i] = parse_feature_object(
-				feature, bbox, geometry_types, sfg_objects, property_keys, doc_properties,
+				feature, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties,
 				property_types, expand_geometries, nempty
 			);
 		}
@@ -197,6 +205,8 @@ namespace parse {
 	    Rcpp::List& properties,
 	    int i,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
@@ -212,17 +222,17 @@ namespace parse {
 		std::string geom_type = v["type"].GetString();
 
 		if (geom_type == "Feature") {
-			res = parse_feature_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
+			res = parse_feature_object(v, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
 			sfc[i] = res;
 
 		} else if (geom_type == "FeatureCollection") {
 
-			res = parse_feature_collection_object(v, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
+			res = parse_feature_collection_object(v, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties, property_types, expand_geometries, nempty);
 			sfc[i] = res;
 
 		} else if (geom_type == "GeometryCollection") {
 
-			res = parse_geometry_collection_object(v, bbox, geometry_types, sfg_objects, expand_geometries);
+			res = parse_geometry_collection_object(v, bbox, z_range, m_range, geometry_types, sfg_objects, expand_geometries);
 			if (!expand_geometries) {
 				sfg_objects++;
 			}
@@ -230,7 +240,7 @@ namespace parse {
 
 		} else {
 
-			parse_geometry_object(sfc, i, v, bbox, geometry_types, sfg_objects);
+			parse_geometry_object(sfc, i, v, bbox, z_range, m_range, geometry_types, sfg_objects);
 			sfg_objects++;
 		}
 	}
@@ -240,6 +250,8 @@ namespace parse {
 	    Rcpp::List& sfc,
 	    Rcpp::List& properties,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
@@ -250,7 +262,7 @@ namespace parse {
   ) {
 		const Value& v = d;
 		parse_geojson(
-			v, sfc, properties, 0, bbox, geometry_types, sfg_objects, property_keys,
+			v, sfc, properties, 0, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys,
 			doc_properties, property_types, expand_geometries, nempty
 		);
 
@@ -268,6 +280,8 @@ namespace parse {
 	    Rcpp::List& properties,
 	    int i,
 	    Rcpp::NumericVector& bbox,
+	    Rcpp::NumericVector& z_range,
+	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
 	    int& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
@@ -278,7 +292,7 @@ namespace parse {
   ) {
 		const Value& v = d[i];
 		parse_geojson(
-			v, sfc, properties, i, bbox, geometry_types, sfg_objects, property_keys,
+			v, sfc, properties, i, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys,
 			doc_properties, property_types, expand_geometries, nempty
 		);
 	}

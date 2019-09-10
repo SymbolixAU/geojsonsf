@@ -3,29 +3,33 @@
 
 #include "geojsonsf/geojsonsf.h"
 
+#include "sfheaders/sfc/sfc_attributes.hpp"
+#include "sfheaders/sfc/bbox.hpp"
+#include "sfheaders/sfc/zm_range.hpp"
+
 namespace geojsonsf {
 namespace sfc {
 namespace utils {
 
-	inline Rcpp::NumericVector start_bbox() {
-		Rcpp::NumericVector bbox(4);  // xmin, ymin, xmax, ymax
-		bbox(0) = bbox(1) = bbox(2) = bbox(3) = NA_REAL;
-		return bbox;
-	}
+	// inline Rcpp::NumericVector start_bbox() {
+	// 	Rcpp::NumericVector bbox(4);  // xmin, ymin, xmax, ymax
+	// 	bbox(0) = bbox(1) = bbox(2) = bbox(3) = NA_REAL;
+	// 	return bbox;
+	// }
 
-	inline Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
-		Rcpp::StringVector sfc_classes(collectionCount);
-		return sfc_classes;
-	}
+	// inline Rcpp::StringVector start_sfc_classes(size_t collectionCount) {
+	// 	Rcpp::StringVector sfc_classes(collectionCount);
+	// 	return sfc_classes;
+	// }
 
-	inline void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
-		//xmin, ymin, xmax, ymax
-		bbox[0] = std::min(point[0], bbox[0]);
-		bbox[2] = std::max(point[0], bbox[2]);
-
-		bbox[1] = std::min(point[1], bbox[1]);
-		bbox[3] = std::max(point[1], bbox[3]);
-	}
+	// inline void calculate_bbox(Rcpp::NumericVector& bbox, Rcpp::NumericVector& point) {
+	// 	//xmin, ymin, xmax, ymax
+	// 	bbox[0] = std::min(point[0], bbox[0]);
+	// 	bbox[2] = std::max(point[0], bbox[2]);
+	//
+	// 	bbox[1] = std::min(point[1], bbox[1]);
+	// 	bbox[3] = std::max(point[1], bbox[3]);
+	// }
 
 
 	inline std::string attach_class(
@@ -49,7 +53,7 @@ namespace utils {
 			if (geometry_types.size() > 1) {
 				geometry_class = "GEOMETRY";
 
-				Rcpp::StringVector sfc_classes = start_sfc_classes(sfc.size());
+				Rcpp::StringVector sfc_classes = sfheaders::sfc::start_sfc_classes( sfc.size() );
 				for (int i = 0; i < sfc.size(); i++) {
 					SEXP sfci = sfc[i];
 					Rcpp::CharacterVector cls = geojsonsf::getSfClass(sfci);
@@ -68,48 +72,51 @@ namespace utils {
 		return geometry_class;
 	}
 
-	inline void attach_sfc_attributes(
-			Rcpp::List& sfc,
-	    std::string& type,
-	    Rcpp::NumericVector& bbox,
-	    std::unordered_set< std::string >& geometry_types,
-	    int& nempty
-  ) {
-
-		std::string geometry_class = attach_class(sfc, type, geometry_types);
-		sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
-
-		double prec = 0;
-
-		// attribute::crs
-		Rcpp::List crs = Rcpp::List::create(
-			Rcpp::Named("epsg") = geojsonsf::EPSG,
-			Rcpp::Named("proj4string") = geojsonsf::PROJ4STRING
-		);
-
-		crs.attr("class") = Rcpp::CharacterVector::create("crs");
-		sfc.attr("crs") = crs;
-
-		// attribute::precision
-		sfc.attr("precision") = prec;
-
-		// attribute::n_empty
-		sfc.attr("n_empty") = nempty;
-
-		// attribute::bbox
-		bbox.attr("class") = Rcpp::CharacterVector::create("bbox");
-		bbox.attr("names") = Rcpp::CharacterVector::create("xmin", "ymin", "xmax", "ymax");
-		sfc.attr("bbox") = bbox;
-	}
+// 	inline void attach_sfc_attributes(
+// 			Rcpp::List& sfc,
+// 	    std::string& type,
+// 	    Rcpp::NumericVector& bbox,
+// 	    std::unordered_set< std::string >& geometry_types,
+// 	    int& nempty
+//   ) {
+//
+// 		std::string geometry_class = attach_class(sfc, type, geometry_types);
+// 		sfc.attr("class") = Rcpp::CharacterVector::create("sfc_" + geometry_class, "sfc");
+//
+// 		double prec = 0;
+//
+// 		// attribute::crs
+// 		Rcpp::List crs = Rcpp::List::create(
+// 			Rcpp::Named("epsg") = geojsonsf::EPSG,
+// 			Rcpp::Named("proj4string") = geojsonsf::PROJ4STRING
+// 		);
+//
+// 		crs.attr("class") = Rcpp::CharacterVector::create("crs");
+// 		sfc.attr("crs") = crs;
+//
+// 		// attribute::precision
+// 		sfc.attr("precision") = prec;
+//
+// 		// attribute::n_empty
+// 		sfc.attr("n_empty") = nempty;
+//
+// 		// attribute::bbox
+// 		bbox.attr("class") = Rcpp::CharacterVector::create("bbox");
+// 		bbox.attr("names") = Rcpp::CharacterVector::create("xmin", "ymin", "xmax", "ymax");
+// 		sfc.attr("bbox") = bbox;
+// 	}
 
 	inline Rcpp::List create_null_sfc() {
 		Rcpp::List empty_sfc(0);
 
 		std::string type = "GEOMETRY";
-		Rcpp::NumericVector bbox = start_bbox();
+		Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+		Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+		Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
 		int n_empty = 0;
 		std::unordered_set< std::string > geometry_types{"GEOMETRY"};
-		attach_sfc_attributes(empty_sfc, type, bbox, geometry_types, n_empty);
+		//attach_sfc_attributes(empty_sfc, type, bbox, z_range, m_range, geometry_types, n_empty);
+		sfheaders::sfc::attach_sfc_attributes( empty_sfc, type, geometry_types, bbox, z_range, m_range, geojsonsf::EPSG, geojsonsf::PROJ4STRING, n_empty );
 		return empty_sfc;
 	}
 
