@@ -22,44 +22,64 @@ using namespace rapidjson;
 namespace geojsonsf {
 namespace sf {
 
-  inline Rcpp::List geojson_to_sf(const char* geojson,
-	                         Rcpp::NumericVector& bbox,
-	                         std::unordered_set< std::string >& geometry_types,
-	                         int& sfg_objects,
-	                         std::unordered_set< std::string >& property_keys,
-	                         Document& doc_properties,
-	                         std::unordered_map< std::string, std::string>& property_types,
-	                         bool& expand_geometries,
-	                         int& nempty) {
+  inline Rcpp::List geojson_to_sf(
+  	Document& d,
+  	Rcpp::NumericVector& bbox,
+  	std::unordered_set< std::string >& geometry_types,
+  	int& sfg_objects,
+  	std::unordered_set< std::string >& property_keys,
+  	Document& doc_properties,
+  	std::unordered_map< std::string, std::string>& property_types,
+  	bool& expand_geometries,
+  	int& nempty
+  ) {
+  	Rcpp::List sf(1);
+  	Rcpp::List sfc(1);
+  	Rcpp::List properties(1);
+  	unsigned int doc_ele;
+
+  	if (d.IsObject()) {
+  		Rcpp::List sfg(1);
+  		geojsonsf::geojson::parse::parse_geojson_object(
+  			d, sfg, properties, bbox, geometry_types, sfg_objects, property_keys,
+  			doc_properties, property_types, expand_geometries, nempty
+  		);
+  		sfc[0] = sfg;
+
+  	} else if (d.IsArray()) {
+
+  		Rcpp::List sfgs(d.Size());
+
+  		for (doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
+  			geojsonsf::geojson::parse::parse_geojson_array(
+  				d, sfgs, properties, doc_ele, bbox, geometry_types, sfg_objects,
+  				property_keys, doc_properties, property_types, expand_geometries, nempty
+  			);
+  		}
+  		sfc[0] = sfgs;
+  	}
+  	return sfc;
+  }
+
+  inline Rcpp::List geojson_to_sf(
+  		const char* geojson,
+	    Rcpp::NumericVector& bbox,
+	    std::unordered_set< std::string >& geometry_types,
+	    int& sfg_objects,
+	    std::unordered_set< std::string >& property_keys,
+	    Document& doc_properties,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    bool& expand_geometries,
+	    int& nempty
+  ) {
 
 		Document d;
 		geojsonsf::validate::safe_parse(d, geojson);
-		Rcpp::List sf(1);
-		Rcpp::List sfc(1);
-		Rcpp::List properties(1);
-		unsigned int doc_ele;
 
-		if (d.IsObject()) {
-			Rcpp::List sfg(1);
-			geojsonsf::geojson::parse::parse_geojson_object(
-				d, sfg, properties, bbox, geometry_types, sfg_objects, property_keys,
-				doc_properties, property_types, expand_geometries, nempty
-			);
-			sfc[0] = sfg;
-
-		} else if (d.IsArray()) {
-
-			Rcpp::List sfgs(d.Size());
-
-			for (doc_ele = 0; doc_ele < d.Size(); doc_ele++) {
-				geojsonsf::geojson::parse::parse_geojson_array(
-					d, sfgs, properties, doc_ele, bbox, geometry_types, sfg_objects,
-					property_keys, doc_properties, property_types, expand_geometries, nempty
-				);
-			}
-			sfc[0] = sfgs;
-		}
-		return sfc;
+		return geojson_to_sf(
+			d, bbox, geometry_types, sfg_objects, property_keys, doc_properties, property_types,
+			expand_geometries, nempty
+		);
 	}
 
   inline Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {

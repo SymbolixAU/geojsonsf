@@ -3,6 +3,7 @@
 #define GEOJSONSF_VALIDATE_H
 
 #include "rapidjson/document.h"
+#include "rapidjson/filereadstream.h"
 
 using namespace rapidjson;
 
@@ -18,6 +19,13 @@ namespace validate {
 		std::string err = "No '" + key + "' member at object index " + std::to_string(sfg_number) + " - invalid GeoJSON";
 		Rcpp::stop(err);
 	}
+
+  inline void safe_parse_stream(Document& d, FileReadStream is ) {
+  	d.ParseStream( is );
+  	if( d.ParseStream( is ).HasParseError() ) {
+  		Rcpp::stop("invalid JSON");
+  	}
+  }
 
 	inline void safe_parse(Document& d, const char* geojson) {
 		d.Parse(geojson);
