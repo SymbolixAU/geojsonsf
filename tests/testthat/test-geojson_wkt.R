@@ -37,12 +37,26 @@ test_that("wkt created correctly", {
 test_that("WKT with NULL objects", {
 
 	js <- '{"type":"Feature","properties":{"id":1.0},"geometry":null}'
-	#expect_true( geojson_wkt( js )$geometry[[1]] == "POINT EMPTY" )
+	expect_true( geojson_wkt( js )$geometry[[1]] == "POINT EMPTY" )
 
 	js <- '{"type":"FeatureCollection","features":[
-	{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
-	{"type":"Feature","properties":{"id":2.0},"geometry":null}]}'
+	{"type":"Feature","properties":{"id":1.0, "val":"a"},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+	{"type":"Feature","properties":{"id":2.0, "val":"b"},"geometry":null}]}'
 
 	#geojson_wkt( js )
+
+})
+
+test_that("WKT with Z and M dimensions handled",{
+
+	p <- '{"type":"Point", "coordinates":[0,0,0]}'
+	mp <- '{"type":"MultiPoint", "coordinates":[[0,0,0],[2.324,2,1,1]]}'
+	ls <- '{"type":"LineString", "coordinates":[[0,0],[1,1,1,1]]}'
+
+	p <- geojson_wkt( p )
+	mp <- geojson_wkt( mp )
+	ls <- geojson_wkt( ls )
+
+	expect_equal( attr(p$geometry[[1]], "class")[[1]], "XYZ" )
 
 })

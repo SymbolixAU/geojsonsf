@@ -31,33 +31,37 @@ void parse_geometry_object_wkt(
 
 	std::ostringstream os;
 	Rcpp::StringVector wkt;
+	int coord_dim = 0;
 	//begin_wkt(os, geom_type);
 
   if (geom_type == "Point") {
-    point_to_wkt(os, coord_array);
+    point_to_wkt(os, coord_array, coord_dim );
 
   } else if (geom_type == "MultiPoint") {
-    multi_point_to_wkt(os, coord_array);
+    multi_point_to_wkt(os, coord_array, coord_dim);
 
   } else if (geom_type == "LineString") {
-    line_string_to_wkt(os, coord_array);
+    line_string_to_wkt(os, coord_array, coord_dim);
 
   } else if (geom_type == "MultiLineString") {
-    multi_line_string_to_wkt(os, coord_array);
+    multi_line_string_to_wkt(os, coord_array, coord_dim);
 
   } else if (geom_type == "Polygon") {
-    polygon_to_wkt(os, coord_array);
+    polygon_to_wkt(os, coord_array, coord_dim);
 
   } else if (geom_type == "MultiPolygon") {
-    multi_polygon_to_wkt(os, coord_array);
+    multi_polygon_to_wkt(os, coord_array, coord_dim);
 
   } else {
     Rcpp::stop("unknown sfg type");
   }
 
-	end_wkt(os, geom_type);
+  std::ostringstream os_begin; // call AFTER we know the XYZM dimension
+  begin_wkt( os_begin, geom_type, coord_dim );
+  os_begin << os.str();
+	end_wkt(os_begin, geom_type);
 
-  wkt = os.str();
+  wkt = os_begin.str();
   transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
 
   // TODO( dimension )
