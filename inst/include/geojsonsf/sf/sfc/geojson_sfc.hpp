@@ -25,7 +25,10 @@ namespace sfc {
 		int sfg_counter = 0;
 
 		geojsonsf::sfc::utils::fetch_geometries( sf, sfc_output, sfg_counter );
-		sfheaders::sfc::attach_sfc_attributes( sfc_output, geom_attr, geometry_types, bbox, z_range, m_range, geojsonsf::EPSG, geojsonsf::PROJ4STRING, nempty );
+		sfheaders::sfc::attach_sfc_attributes(
+			sfc_output, geom_attr, geometry_types, bbox, z_range, m_range,
+			geojsonsf::EPSG, geojsonsf::PROJ4STRING, nempty
+			);
 
 		return sfc_output;
 	}

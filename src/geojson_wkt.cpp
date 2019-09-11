@@ -7,22 +7,38 @@
 
 using namespace rapidjson;
 
-void begin_wkt(std::ostringstream& os, std::string& geom_type) {
+std::string wkt_dim( int n ) {
+	switch( n ) {
+	case 3: {
+		return " Z";
+	}
+	case 4: {
+			return " ZM";
+		}
+	default: {
+		return "";
+	}
+	}
+}
+
+void begin_wkt(std::ostringstream& os, std::string& geom_type, int& coord_dim ) {
+	std::string dim = wkt_dim( coord_dim );
+	//std::string dim = wkt_dim(0);
 
   if (geom_type == "Point") {
-    os << "POINT (";
+    os << "POINT" << dim << " (";
   } else if (geom_type == "MultiPoint") {
-    os << "MULTIPOINT ((";
+    os << "MULTIPOINT" << dim << " ((";
   } else if (geom_type == "LineString") {
-    os << "LINESTRING (";
+    os << "LINESTRING" << dim << " (";
   } else if (geom_type == "MultiLineString") {
-    os << "MULTILINESTRING ((";
+    os << "MULTILINESTRING" << dim << " ((";
   } else if (geom_type == "Polygon") {
-    os << "POLYGON ((";
+    os << "POLYGON" << dim << " ((";
   } else if (geom_type == "MultiPolygon") {
-    os << "MULTIPOLYGON (((";
+    os << "MULTIPOLYGON" << dim << " (((";
   } else if (geom_type == "GeometryCollection") {
-    os << "GEOMETRYCOLLECTION (";
+    os << "GEOMETRYCOLLECTION" << dim << " (";
   }
 }
 
@@ -67,65 +83,78 @@ void polygon_separate_wkt(std::ostringstream& os, int i, int n) {
 	}
 }
 
+void add_coordinate_to_wkt_stream(std::ostringstream& os, double coord ) {
+	os << coord;
+}
 
-void add_lonlat_to_wkt_stream(std::ostringstream& os, float lon, float lat ) {
+void add_lonlat_to_wkt_stream(std::ostringstream& os, double lon, double lat ) {
   os << lon << " " << lat;
 }
 
-void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
-  Rcpp::NumericVector point(2);
-  point[0] = geojsonsf::sfg::get_lon(coord_array);
-  point[1] = geojsonsf::sfg::get_lat(coord_array);
-  add_lonlat_to_wkt_stream(os, point[0], point[1]);
+void point_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim ) {
+	int n = coord_array.Size();
+	coord_dim = std::max( coord_dim, n );
+	//Rcpp::Rcout << "max coord dim: " << coord_dim << std::endl;
+	int i;
+	for( i = 0; i < n; i++ ) {
+		if( i > 0 ) {
+			os << " ";
+		}
+		add_coordinate_to_wkt_stream( os, coord_array[i].GetDouble() );
+	}
+  // Rcpp::NumericVector point(2);
+  // point[0] = geojsonsf::sfg::get_lon(coord_array);
+  // point[1] = geojsonsf::sfg::get_lat(coord_array);
+  // add_lonlat_to_wkt_stream(os, point[0], point[1]);
 }
 
 
-void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array) {
+void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim ) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
     geojsonsf::validate::validate_array(coord_array[i]);
-    point_to_wkt(os, coord_array[i]);
+    point_to_wkt(os, coord_array[i], coord_dim );
     coord_separator(os, i, n);
   }
 }
 
-void line_string_to_wkt(std::ostringstream& os, const Value& coord_array) {
+void line_string_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
   	geojsonsf::validate::validate_array(coord_array[i]);
-    point_to_wkt(os, coord_array[i]);
+    point_to_wkt(os, coord_array[i], coord_dim );
     coord_separator(os, i, n);
   }
 }
 
-void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array) {
+void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
   	geojsonsf::validate::validate_array(coord_array[i]);
-    line_string_to_wkt(os, coord_array[i]);
+    line_string_to_wkt(os, coord_array[i], coord_dim );
     line_separator_wkt(os, i, n);
   }
 }
 
-void polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
+void polygon_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
   	geojsonsf::validate::validate_array(coord_array[i]);
-    line_string_to_wkt(os, coord_array[i]);
+    line_string_to_wkt(os, coord_array[i], coord_dim );
     line_separator_wkt(os, i, n);
   }
 }
 
-void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array) {
+void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim) {
   size_t n = coord_array.Size();
 	unsigned int i;
   for (i = 0; i < n; i++) {
   	geojsonsf::validate::validate_array(coord_array[i]);
-    polygon_to_wkt(os, coord_array[i]);
+    polygon_to_wkt(os, coord_array[i], coord_dim);
     polygon_separate_wkt(os, i, n);
   }
 }

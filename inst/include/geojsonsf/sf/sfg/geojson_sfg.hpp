@@ -6,8 +6,6 @@
 #include "rapidjson/document.h"
 #include "geojsonsf/sf/sfc/geojson_sfc.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
-#include "geojsonsf/utils/utils.hpp"
-#include "geojsonsf/utils/where/where.hpp"
 
 #include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
@@ -18,12 +16,6 @@ using namespace rapidjson;
 
 namespace geojsonsf {
 namespace sfg {
-
-
-
-	// inline Rcpp::CharacterVector sfg_attributes( std::string& dimension, std::string& geom_type ) {
-	// 	return Rcpp::CharacterVector::create( dimension, geom_type, "sfg" );
-	// }
 
 	inline double get_lon(const Value& coord_array) {
 		geojsonsf::validate::validate_point(coord_array[0]);

@@ -7,11 +7,13 @@
 namespace geojsonsf {
 namespace sf {
 
-	inline Rcpp::List construct_sf( Rcpp::List& lst, std::unordered_set< std::string >& property_keys,
-	                                std::unordered_map< std::string, std::string>& property_types,
-	                                Document& doc_properties,
-	                                int& sfg_objects,
-	                                int& row_index ) {
+	inline Rcpp::List construct_sf(
+			Rcpp::List& lst, std::unordered_set< std::string >& property_keys,
+	    std::unordered_map< std::string, std::string>& property_types,
+	    Document& doc_properties,
+	    int& sfg_objects,
+	    int& row_index
+  ) {
 
 		int n_cols = property_keys.size();
 		if ( sfg_objects > 0 ) {
