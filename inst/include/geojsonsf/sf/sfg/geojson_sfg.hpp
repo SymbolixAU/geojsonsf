@@ -17,12 +17,6 @@ using namespace rapidjson;
 namespace geojsonsf {
 namespace sfg {
 
-
-
-	// inline Rcpp::CharacterVector sfg_attributes( std::string& dimension, std::string& geom_type ) {
-	// 	return Rcpp::CharacterVector::create( dimension, geom_type, "sfg" );
-	// }
-
 	inline double get_lon(const Value& coord_array) {
 		geojsonsf::validate::validate_point(coord_array[0]);
 		return coord_array[0].GetDouble();

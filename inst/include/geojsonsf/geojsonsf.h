@@ -4,6 +4,7 @@
 #include <Rcpp.h>
 
 // [[Rcpp::depends(rapidjsonr)]]
+// [[Rcpp::depends(sfheaders)]]
 
 namespace geojsonsf {
   const int EPSG = 4326;
@@ -12,25 +13,6 @@ namespace geojsonsf {
   inline void attach_class( Rcpp::StringVector& geojson ) {
   	geojson.attr("class") = Rcpp::CharacterVector::create("geojson","json");
   }
-
-  // template <int RTYPE>
-  // inline Rcpp::CharacterVector sfClass(Rcpp::Vector<RTYPE> v) {
-  // 	return v.attr("class");
-  // }
-  //
-  // inline Rcpp::CharacterVector getSfClass(SEXP sf) {
-  //
-  // 	switch( TYPEOF(sf) ) {
-  // 	case REALSXP:
-  // 		return sfClass<REALSXP>(sf);
-  // 	case VECSXP:
-  // 		return sfClass<VECSXP>(sf);
-  // 	case INTSXP:
-  // 		return sfClass<INTSXP>(sf);
-  // 	default: Rcpp::stop("unknown sf type");
-  // 	}
-  // 	return "";
-  // }
 }
 
 #define UNKNOWN            0

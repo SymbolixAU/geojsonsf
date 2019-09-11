@@ -50,12 +50,4 @@ namespace geometrycollection {
 } // namespace geometrycollection
 } // namespace geojsonsf
 
-
-// for backwards compability until spatialwidget v0.2 is on CRAN
-template< typename Writer >
-inline void make_gc_type(Writer& writer, Rcpp::List& sfg,
-                         std::string& geom_type, Rcpp::CharacterVector& cls){
-  Rcpp::stop("");
-};
-
 #endif
