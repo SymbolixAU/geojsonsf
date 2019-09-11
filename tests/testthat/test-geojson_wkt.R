@@ -52,11 +52,18 @@ test_that("WKT with Z and M dimensions handled",{
 	p <- '{"type":"Point", "coordinates":[0,0,0]}'
 	mp <- '{"type":"MultiPoint", "coordinates":[[0,0,0],[2.324,2,1,1]]}'
 	ls <- '{"type":"LineString", "coordinates":[[0,0],[1,1,1,1]]}'
+	fcgc <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1},"geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100,0,0]},{"type":"LineString","coordinates":[[101,0],[102,1]]},{"type":"MultiPoint","coordinates":[[0,0],[1,1],[2,2]]}]}}]}'
 
 	p <- geojson_wkt( p )
 	mp <- geojson_wkt( mp )
 	ls <- geojson_wkt( ls )
+	fcgc <- geojson_wkt( fcgc )
 
 	expect_equal( attr(p$geometry[[1]], "class")[[1]], "XYZ" )
+	expect_equal( attr(mp$geometry[[1]], "class")[[1]], "XYZM" )
+	expect_equal( attr(ls$geometry[[1]], "class")[[1]], "XYZM" )
+	expect_equal( attr(fcgc$geometry[[1]], "class")[[1]], "XYZ" )
+
+	fcgc[1, "geometry"]
 
 })

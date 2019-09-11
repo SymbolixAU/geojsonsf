@@ -81,6 +81,7 @@ namespace parse {
 		geometry_types.insert( "GEOMETRYCOLLECTION" );
 
 		if ( !expand_geometries ) {
+			// TODO: check this dim; should it be set as XY?
 			std::string dim = "XY";
 			std::string attribute = "GEOMETRYCOLLECTION";
 			geom_collection.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
