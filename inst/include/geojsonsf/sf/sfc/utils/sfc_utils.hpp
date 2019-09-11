@@ -3,6 +3,7 @@
 
 #include "geojsonsf/geojsonsf.h"
 
+#include "sfheaders/sfheaders.hpp"
 #include "sfheaders/sfc/sfc_attributes.hpp"
 #include "sfheaders/sfc/bbox.hpp"
 #include "sfheaders/sfc/zm_range.hpp"
@@ -56,7 +57,7 @@ namespace utils {
 				Rcpp::StringVector sfc_classes = sfheaders::sfc::start_sfc_classes( sfc.size() );
 				for (int i = 0; i < sfc.size(); i++) {
 					SEXP sfci = sfc[i];
-					Rcpp::CharacterVector cls = geojsonsf::getSfClass(sfci);
+					Rcpp::CharacterVector cls = sfheaders::getSfClass(sfci);
 					sfc_classes[i] = cls[1];
 				}
 

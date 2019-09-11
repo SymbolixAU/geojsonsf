@@ -5,10 +5,10 @@
 #include "jsonify/to_json/writers/simple.hpp"
 
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/utils/where/where.hpp"
 #include "geojsonsf/geojson/write_geometry.hpp"
 
 #include "sfheaders/sfg/sfg_dimension.hpp"
+#include "sfheaders/utils/vectors/vectors.hpp"
 
 namespace geojsonsf {
 namespace api {
@@ -17,7 +17,8 @@ namespace api {
   		Rcpp::DataFrame& df,
   		Rcpp::StringVector& geometry_columns,
   		int& digits,
-  		bool& factors_as_string ) {
+  		bool& factors_as_string
+  ) {
 
   	rapidjson::StringBuffer sb;
   	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
@@ -47,7 +48,7 @@ namespace api {
   	for ( i = 0; i < df.length(); i++ ) {
 
   		Rcpp::String this_column = column_names[i];
-  		int idx = geojsonsf::utils::where::where_is( this_column, geometry_columns );
+  		int idx = sfheaders::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
   			property_names[property_counter] = column_names[i];
@@ -131,7 +132,7 @@ namespace api {
   	for ( i = 0; i < df.length(); i++) {
 
   		Rcpp::String this_column = column_names[i];
-  		int idx = geojsonsf::utils::where::where_is( this_column, geometry_columns );
+  		int idx = sfheaders::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
 
