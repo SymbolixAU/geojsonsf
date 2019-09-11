@@ -31,7 +31,7 @@ void parse_geometry_object_wkt(
 
 	std::ostringstream os;
 	Rcpp::StringVector wkt;
-	begin_wkt(os, geom_type);
+	//begin_wkt(os, geom_type);
 
   if (geom_type == "Point") {
     point_to_wkt(os, coord_array);

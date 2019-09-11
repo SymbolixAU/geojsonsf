@@ -59,7 +59,7 @@ namespace write_geometry {
 		SEXP sfg = sfc[ sfg_index ];
 
 		std::string geom_type;
-		Rcpp::CharacterVector cls = sfheaders::getSfClass(sfg);
+		Rcpp::CharacterVector cls = sfheaders::sfc::getSfClass(sfg);
 		cls_check( cls );
 		geom_type = cls[1];
 

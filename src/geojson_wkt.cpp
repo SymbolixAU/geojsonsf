@@ -7,22 +7,38 @@
 
 using namespace rapidjson;
 
+std::string wkt_dim( int n ) {
+	switch( n ) {
+	case 3: {
+		return " Z";
+	}
+	case 4: {
+			return " ZM";
+		}
+	default: {
+		return "";
+	}
+	}
+}
+
 void begin_wkt(std::ostringstream& os, std::string& geom_type) {
+	//std::string dim = wkt_dim( n_coords );
+	std::string dim = wkt_dim(0);
 
   if (geom_type == "Point") {
-    os << "POINT (";
+    os << "POINT" << dim << " (";
   } else if (geom_type == "MultiPoint") {
-    os << "MULTIPOINT ((";
+    os << "MULTIPOINT" << dim << " ((";
   } else if (geom_type == "LineString") {
-    os << "LINESTRING (";
+    os << "LINESTRING" << dim << " (";
   } else if (geom_type == "MultiLineString") {
-    os << "MULTILINESTRING ((";
+    os << "MULTILINESTRING" << dim << " ((";
   } else if (geom_type == "Polygon") {
-    os << "POLYGON ((";
+    os << "POLYGON" << dim << " ((";
   } else if (geom_type == "MultiPolygon") {
-    os << "MULTIPOLYGON (((";
+    os << "MULTIPOLYGON" << dim << " (((";
   } else if (geom_type == "GeometryCollection") {
-    os << "GEOMETRYCOLLECTION (";
+    os << "GEOMETRYCOLLECTION" << dim << " (";
   }
 }
 
@@ -67,16 +83,27 @@ void polygon_separate_wkt(std::ostringstream& os, int i, int n) {
 	}
 }
 
+void add_coordinate_to_wkt_stream(std::ostringstream& os, double coord ) {
+	os << coord;
+}
 
-void add_lonlat_to_wkt_stream(std::ostringstream& os, float lon, float lat ) {
+void add_lonlat_to_wkt_stream(std::ostringstream& os, double lon, double lat ) {
   os << lon << " " << lat;
 }
 
 void point_to_wkt(std::ostringstream& os, const Value& coord_array) {
-  Rcpp::NumericVector point(2);
-  point[0] = geojsonsf::sfg::get_lon(coord_array);
-  point[1] = geojsonsf::sfg::get_lat(coord_array);
-  add_lonlat_to_wkt_stream(os, point[0], point[1]);
+	int n = coord_array.Size();
+	int i;
+	for( i = 0; i < n; i++ ) {
+		if( i > 0 ) {
+			os << " ";
+		}
+		add_coordinate_to_wkt_stream( os, coord_array[i].GetDouble() );
+	}
+  // Rcpp::NumericVector point(2);
+  // point[0] = geojsonsf::sfg::get_lon(coord_array);
+  // point[1] = geojsonsf::sfg::get_lat(coord_array);
+  // add_lonlat_to_wkt_stream(os, point[0], point[1]);
 }
 
 
