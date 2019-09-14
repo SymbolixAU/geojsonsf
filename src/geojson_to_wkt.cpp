@@ -65,10 +65,10 @@ void parse_geometry_object_wkt(
   wkt = os_begin.str();
   transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
 
-  // TODO( dimension )
   std::string dim = sfheaders::sfg::sfg_dimension( coord_dim );
+  //wkt.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
+  wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, geom_type);
 
-  wkt.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
   sfc[i] = wkt;
 }
 
@@ -107,11 +107,18 @@ Rcpp::List parse_geometry_collection_object_wkt(
   }
   os << ")";
 
-  geom_collection_wkt = os.str();
-  // TODO( dimension );
+  Rcpp::StringVector wkt = os.str();
+
+  //geom_collection_wkt = os.str();
+
   std::string dim = sfheaders::sfg::sfg_dimension( coord_dim );
   std::string attribute = "GEOMETRYCOLLECTION";
-  geom_collection_wkt.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+  // //geom_collection_wkt.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+  //geom_collection_wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, attribute );
+
+  wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, attribute);
+
+  geom_collection_wkt[0] = wkt;
   return geom_collection_wkt;
 }
 
@@ -139,6 +146,8 @@ Rcpp::List parse_feature_object_wkt(
 
   	if (geom_type == "GeometryCollection") {
   		Rcpp::List gc = parse_geometry_collection_object_wkt(geometry, geometry_types, wkt_objects, coord_dim);
+  		//Rcpp::Rcout << "gc: " << gc << std::endl;
+
   		sfc[0] = gc;
   	} else {
   		parse_geometry_object_wkt(sfc, 0, geometry, geometry_types, wkt_objects, coord_dim);
@@ -146,9 +155,11 @@ Rcpp::List parse_feature_object_wkt(
 
   } else {
   	Rcpp::StringVector wkt = "POINT EMPTY";
+  	coord_dim = 2; // so it pasess sfheaders::sfg::sfg_dimension() checks
   	std::string dim = sfheaders::sfg::sfg_dimension( coord_dim );
   	std::string attribute = "POINT";
-  	wkt.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+  	//wkt.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+  	wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, attribute );
   	sfc[0] = wkt;
   }
 
@@ -235,6 +246,8 @@ void parse_geojson_wkt(
   } else if (geom_type == "GeometryCollection") {
 
     res = parse_geometry_collection_object_wkt(v, geometry_types, wkt_objects, coord_dim);
+  	//Rcpp::StringVector gc = parse_geometry_collection_object_wkt(v, geometry_types, wkt_objects, coord_dim);
+  	//Rcpp::Rcout << "gc: " << gc << std::endl;
     wkt_objects++;
     sfc[i] = res;
 
