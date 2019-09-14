@@ -49,23 +49,25 @@ namespace sfg {
 	// }
 
 	inline void get_integer_points(
-			const Value& point_array, int& n,
+			const Value& point_array,
+			R_xlen_t& n,
 			Rcpp::IntegerVector iv
       ) {
-		int i;
+		R_xlen_t i;
 		for ( i = 0; i < n; i++ ) {
 			iv[i] = point_array[i].GetDouble();
 		}
 	}
 
 	inline void get_numeric_points(
-			const Value& point_array, int& n,
+			const Value& point_array,
+			R_xlen_t& n,
 			Rcpp::NumericVector nv,
 	    Rcpp::NumericVector& bbox,
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range
   ) {
-		int i;
+		R_xlen_t i;
 		for ( i = 0; i < n; i++ ) {
 			geojsonsf::validate::validate_point(point_array[i]);
 			nv[i] = point_array[i].GetDouble();
@@ -86,11 +88,11 @@ namespace sfg {
 			Rcpp::NumericVector& z_range,
 			Rcpp::NumericVector& m_range,
 			Rcpp::List& sfc,
-			int& i,
+			R_xlen_t& i,
 			bool requires_attribute,
 			std::string attribute
   ) {
-		int n = point_array.Size();
+		R_xlen_t n = point_array.Size();
 		geojsonsf::validate::validate_points(point_array);
 
 		//int r_type;
@@ -131,15 +133,15 @@ namespace sfg {
 			Rcpp::NumericVector& z_range,
 			Rcpp::NumericVector& m_range,
 			Rcpp::List& sfc,
-			int& i,
+			R_xlen_t& i,
 			bool requires_attribute,
 			std::string attribute,
-			int& max_cols
+			R_xlen_t& max_cols
   ) {
 
-		int n = line_array.Size();
+		R_xlen_t n = line_array.Size();
 		//int max_cols = 2;
-		int row;
+		R_xlen_t row;
 
 		//int r_type;
 		// // TODO( does this take up too much time )?
@@ -172,7 +174,7 @@ namespace sfg {
 
 		for( row = 0; row < n; row++ ) {
 			const Value& coord_array = line_array[ row ];
-			int n_points = coord_array.Size();
+			R_xlen_t n_points = coord_array.Size();
 
 			if( n_points <= 1 ) {
 				Rcpp::stop("mis-specified geometry");
@@ -211,17 +213,17 @@ namespace sfg {
 			Rcpp::NumericVector& z_range,
 			Rcpp::NumericVector& m_range,
 			Rcpp::List& sfc,
-			int& i,
+			R_xlen_t& i,
 			bool requires_attribute,
 			std::string attribute
   ) {
 
-		int n = multi_line_array.Size();
+		R_xlen_t n = multi_line_array.Size();
 		Rcpp::List ml( n );
-		int j;
-		int max_dimension = 2;
+		R_xlen_t j;
+		R_xlen_t max_dimension = 2;
 		for ( j = 0; j < n; j++ ) {
-			int max_cols = 2;
+			R_xlen_t max_cols = 2;
 			geojsonsf::validate::validate_array( multi_line_array[j] );
 			get_line_string( multi_line_array[j], bbox, z_range, m_range, ml, j, false, attribute, max_cols );
 			if( max_cols > max_dimension ) {
@@ -241,17 +243,17 @@ namespace sfg {
 			Rcpp::NumericVector& z_range,
 			Rcpp::NumericVector& m_range,
 			Rcpp::List& sfc,
-			int& i,
+			R_xlen_t& i,
 			bool requires_attribute,
 			std::string attribute
   ) {
 
-		int n = polygon_array.Size();
+		R_xlen_t n = polygon_array.Size();
 		Rcpp::List pl( n );
-		int j;
-		int max_dimension = 2;
+		R_xlen_t j;
+		R_xlen_t max_dimension = 2;
 		for ( j = 0; j < n; j++ ) {
-			int max_cols = 2;
+			R_xlen_t max_cols = 2;
 			geojsonsf::validate::validate_array( polygon_array[j] );
 			get_line_string( polygon_array[j], bbox, z_range, m_range, pl, j, false, "", max_cols );
 			if ( max_cols > max_dimension ) {
@@ -273,24 +275,24 @@ namespace sfg {
 			Rcpp::NumericVector& z_range,
 			Rcpp::NumericVector& m_range,
 			Rcpp::List& sfc,
-			int& i,
+			R_xlen_t& i,
 			bool requires_attribute,
 			std::string attribute
   ) {
 
-		int n = multi_polygon_array.Size();
+		R_xlen_t n = multi_polygon_array.Size();
 		Rcpp::List mp( n );
-		int j, k;
-		int max_dimension = 2;
+		R_xlen_t j, k;
+		R_xlen_t max_dimension = 2;
 
 		for ( j = 0; j < n; j++ ) {
 			const Value& polygon_array = multi_polygon_array[j];
 			geojsonsf::validate::validate_array( polygon_array );
-			int np = polygon_array.Size();
+			R_xlen_t np = polygon_array.Size();
 			Rcpp::List p( np );
 
 			for ( k = 0; k < np; k++ ) {
-				int max_cols = 2;
+				R_xlen_t max_cols = 2;
 				geojsonsf::validate::validate_array( polygon_array[k] );
 				get_line_string( polygon_array[k], bbox, z_range, m_range, p, k, false, "", max_cols );
 				if( max_cols > max_dimension ) {
@@ -310,7 +312,7 @@ namespace sfg {
 	inline void create_null_sfg(
 			Rcpp::List& sfc,
 			std::unordered_set< std::string >& geometry_types,
-			int& nempty
+			R_xlen_t& nempty
   ) {
 		std::string geom_type;
 		std::string dim = "XY";

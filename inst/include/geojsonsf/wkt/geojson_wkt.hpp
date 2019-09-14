@@ -7,21 +7,21 @@ using namespace rapidjson;
 
 void coord_separator(std::ostringstream& os, int i, int n);
 
-void begin_wkt(std::ostringstream& os, std::string& geom_type, int& coord_dim );
+void begin_wkt(std::ostringstream& os, std::string& geom_type, R_xlen_t& coord_dim );
 
 void end_wkt(std::ostringstream& os, std::string& geom_type);
 
-void point_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim);
+void point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim);
 
-void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim);
+void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim);
 
-void line_string_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim);
+void line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim);
 
-void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim);
+void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim);
 
-void polygon_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim);
+void polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim);
 
-void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array, int& coord_dim);
+void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim);
 
 #endif
 

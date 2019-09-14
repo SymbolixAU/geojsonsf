@@ -10,19 +10,19 @@ namespace geojsonsf {
 namespace sfc {
 
 	inline Rcpp::List construct_sfc(
-			int& sfg_objects,
+			R_xlen_t& sfg_objects,
 	    Rcpp::List& sf,
 	    Rcpp::NumericVector& bbox,
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& nempty
+	    R_xlen_t& nempty
   ) {
 
 		Rcpp::List sfc_output( sfg_objects );
 		std::string geom_attr;
 
-		int sfg_counter = 0;
+		R_xlen_t sfg_counter = 0;
 
 		geojsonsf::sfc::utils::fetch_geometries( sf, sfc_output, sfg_counter );
 		sfheaders::sfc::attach_sfc_attributes(

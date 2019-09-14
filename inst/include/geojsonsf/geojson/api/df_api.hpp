@@ -29,7 +29,7 @@ namespace api {
   	Rcpp::StringVector column_names = df.names();
 
   	// the sfc_POINT
-  	int n_geometry_columns = geometry_columns.size();
+  	R_xlen_t n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
   	int n_properties = n_cols - n_geometry_columns;
@@ -114,7 +114,7 @@ namespace api {
   	Rcpp::StringVector geojson( n_rows );
 
 
-  	int n_geometry_columns = geometry_columns.size();
+  	R_xlen_t n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
   	int n_properties = n_cols - n_geometry_columns;

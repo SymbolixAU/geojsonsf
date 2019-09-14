@@ -11,13 +11,13 @@ namespace parse {
 
 	inline void parse_geometry_object(
 			Rcpp::List& sfc,
-	    int i,
+			R_xlen_t i,
 	    const Value& geometry,
 	    Rcpp::NumericVector& bbox,
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects
+	    R_xlen_t& sfg_objects
   ) {
 
 		geojsonsf::validate::validate_type(geometry, sfg_objects);
@@ -33,11 +33,11 @@ namespace parse {
 			geojsonsf::sfg::get_points( coord_array, bbox, z_range, m_range, sfc, i, true, "POINT");
 
 		} else if (geom_type == "MultiPoint") {
-			int max_cols = 2;
+			R_xlen_t max_cols = 2;
 			geojsonsf::sfg::get_line_string( coord_array, bbox, z_range, m_range, sfc, i, true, "MULTIPOINT", max_cols );
 
 		} else if (geom_type == "LineString") {
-			int max_cols = 2;
+			R_xlen_t max_cols = 2;
 			geojsonsf::sfg::get_line_string( coord_array, bbox, z_range, m_range, sfc, i, true, "LINESTRING", max_cols );
 
 		} else if (geom_type == "MultiLineString") {
@@ -60,7 +60,7 @@ namespace parse {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects,
+	    R_xlen_t& sfg_objects,
 	    bool& expand_geometries
   ) {
 
@@ -97,12 +97,12 @@ namespace parse {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects,
+	    R_xlen_t& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
 	    Document& doc_properties,
 	    std::unordered_map< std::string, std::string>& property_types,
 	    bool& expand_geometries,
-	    int& nempty
+	    R_xlen_t& nempty
   ) {
 
 		geojsonsf::validate::validate_geometry(feature, sfg_objects);
@@ -171,12 +171,12 @@ namespace parse {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects,
+	    R_xlen_t& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
 	    Document& doc_properties,
 	    std::unordered_map< std::string, std::string>& property_types,
 	    bool& expand_geometries,
-	    int& nempty
+	    R_xlen_t& nempty
   ) {
 
 		// a FeatureCollection MUST have members (array) called features,
@@ -209,12 +209,12 @@ namespace parse {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects,
+	    R_xlen_t& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
 	    Document& doc_properties,
 	    std::unordered_map< std::string, std::string>& property_types,
 	    bool& expand_geometries,
-	    int& nempty
+	    R_xlen_t& nempty
   ) {
 
 		Rcpp::List res(1);
@@ -254,12 +254,12 @@ namespace parse {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects,
+	    R_xlen_t& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
 	    Document& doc_properties,
 	    std::unordered_map< std::string, std::string>& property_types,
 	    bool& expand_geometries,
-	    int& nempty
+	    R_xlen_t& nempty
   ) {
 		const Value& v = d;
 		parse_geojson(
@@ -284,12 +284,12 @@ namespace parse {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects,
+	    R_xlen_t& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
 	    Document& doc_properties,
 	    std::unordered_map< std::string, std::string>& property_types,
 	    bool& expand_geometries,
-	    int& nempty
+	    R_xlen_t& nempty
   ) {
 		const Value& v = d[i];
 		parse_geojson(

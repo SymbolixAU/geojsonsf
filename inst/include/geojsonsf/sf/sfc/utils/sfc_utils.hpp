@@ -29,7 +29,11 @@ namespace utils {
 		return empty_sfc;
 	}
 
-	inline void fetch_geometries(Rcpp::List& sf, Rcpp::List& res, int& sfg_counter) {
+	inline void fetch_geometries(
+			Rcpp::List& sf,
+			Rcpp::List& res,
+			R_xlen_t& sfg_counter
+  ) {
 
 		std::string geom_attr;
 
