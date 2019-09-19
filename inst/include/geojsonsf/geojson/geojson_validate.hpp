@@ -32,14 +32,14 @@ namespace validate {
 		}
 	}
 
-	inline void validate_array(const Value& v, int& sfg_objects) {
+	inline void validate_array(const Value& v, R_xlen_t& sfg_objects) {
 		if ( v.IsArray() == false) {
 			geojson_object_error("array", sfg_objects);
 		}
 	}
 
 
-	inline void validate_type(const Value& v, int& sfg_objects) {
+	inline void validate_type(const Value& v, R_xlen_t& sfg_objects) {
 		if (v.HasMember("type") == false ) {
 			geojson_object_error("type", sfg_objects);
 		}
@@ -48,37 +48,37 @@ namespace validate {
 		}
 	}
 
-	inline void validate_features(const Value& v, int& sfg_objects) {
+	inline void validate_features(const Value& v, R_xlen_t& sfg_objects) {
 		if (v.HasMember("features") == false) {
 			geojson_object_error("features", sfg_objects);
 		}
 	}
 
-	inline void validate_feature(const Value& v, int& sfg_objects) {
+	inline void validate_feature(const Value& v, R_xlen_t& sfg_objects) {
 		if (v.HasMember("feature") == false) {
 			geojson_object_error("feature", sfg_objects);
 		}
 	}
 
-	inline void validate_properties(const Value& v, int& sfg_objects) {
+	inline void validate_properties(const Value& v, R_xlen_t& sfg_objects) {
 		if (v.HasMember("properties") == false) {
 			geojson_object_error("properties", sfg_objects);
 		}
 	}
 
-	inline void validate_geometry(const Value& v, int& sfg_objects) {
+	inline void validate_geometry(const Value& v, R_xlen_t& sfg_objects) {
 		if (v.HasMember("geometry") == false) {
 			geojson_object_error("geometry", sfg_objects);
 		}
 	}
 
-	inline void validate_geometries(const Value& v, int& sfg_objects) {
+	inline void validate_geometries(const Value& v, R_xlen_t& sfg_objects) {
 		if (v.HasMember("geometries") == false) {
 			geojson_object_error("geometries", sfg_objects);
 		}
 	}
 
-	inline void validate_coordinates(const Value& v, int& sfg_objects) {
+	inline void validate_coordinates(const Value& v, R_xlen_t& sfg_objects) {
 		if (v.HasMember("coordinates") == false) {
 			geojson_object_error("coordinates", sfg_objects);
 		}

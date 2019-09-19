@@ -5,8 +5,10 @@
 #include "jsonify/to_json/writers/simple.hpp"
 
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/utils/where/where.hpp"
 #include "geojsonsf/geojson/write_geometry.hpp"
+
+#include "sfheaders/sfg/sfg_dimension.hpp"
+#include "sfheaders/utils/vectors/vectors.hpp"
 
 namespace geojsonsf {
 namespace api {
@@ -15,7 +17,8 @@ namespace api {
   		Rcpp::DataFrame& df,
   		Rcpp::StringVector& geometry_columns,
   		int& digits,
-  		bool& factors_as_string ) {
+  		bool& factors_as_string
+  ) {
 
   	rapidjson::StringBuffer sb;
   	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
@@ -26,7 +29,7 @@ namespace api {
   	Rcpp::StringVector column_names = df.names();
 
   	// the sfc_POINT
-  	int n_geometry_columns = geometry_columns.size();
+  	R_xlen_t n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
   	int n_properties = n_cols - n_geometry_columns;
@@ -37,7 +40,7 @@ namespace api {
   		geometry_vectors[i] = df[ this_geometry ];
   	}
 
-  	std::string dim = geojsonsf::utils::make_dimension( n_geometry_columns );
+  	std::string dim = sfheaders::sfg::sfg_dimension( n_geometry_columns );
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
   	int property_counter = 0;
@@ -45,7 +48,7 @@ namespace api {
   	for ( i = 0; i < df.length(); i++ ) {
 
   		Rcpp::String this_column = column_names[i];
-  		int idx = geojsonsf::utils::where::where_is( this_column, geometry_columns );
+  		int idx = sfheaders::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
   			property_names[property_counter] = column_names[i];
@@ -111,7 +114,7 @@ namespace api {
   	Rcpp::StringVector geojson( n_rows );
 
 
-  	int n_geometry_columns = geometry_columns.size();
+  	R_xlen_t n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
   	int n_properties = n_cols - n_geometry_columns;
@@ -122,14 +125,14 @@ namespace api {
   		geometry_vectors[i] = df[ this_geometry ];
   	}
 
-  	std::string dim = geojsonsf::utils::make_dimension( n_geometry_columns );
+  	std::string dim = sfheaders::sfg::sfg_dimension( n_geometry_columns );
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
   	int property_counter = 0;
   	for ( i = 0; i < df.length(); i++) {
 
   		Rcpp::String this_column = column_names[i];
-  		int idx = geojsonsf::utils::where::where_is( this_column, geometry_columns );
+  		int idx = sfheaders::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
 
