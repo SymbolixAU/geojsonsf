@@ -11,8 +11,8 @@ namespace sf {
 			Rcpp::List& lst, std::unordered_set< std::string >& property_keys,
 	    std::unordered_map< std::string, std::string>& property_types,
 	    Document& doc_properties,
-	    int& sfg_objects,
-	    int& row_index
+	    R_xlen_t& sfg_objects,
+	    R_xlen_t& row_index
   ) {
 
 		int n_cols = property_keys.size();

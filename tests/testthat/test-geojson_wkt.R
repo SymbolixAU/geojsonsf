@@ -97,25 +97,25 @@ test_that("WKT with Z and M dimensions handled",{
 	expect_true( attr( fc[1, "geometry"][[1]], "class" )[[1]] == "wkt" )
 	expect_true( attr( fcgc[1, "geometry"][[1]], "class" )[[1]] == "wkt" )
 
-	## TODO
-	## sf::st_as_sf( data.frame( geom = p[1, "geometry"] ), wkt = "geom" )
-	make_df <- function( x ) {
-		df <- data.frame(
-			geom = as.character( x[1, "geometry"][[1]] )
-		)
-		return(df)
-	}
-
-	sf::st_as_sf( make_df( p ), wkt = "geom" )
-	sf::st_as_sf( make_df( mp ), wkt = "geom" )
-	sf::st_as_sf( make_df( ls ), wkt = "geom" )
-	sf::st_as_sf( make_df( ml ), wkt = "geom" )
-	sf::st_as_sf( make_df( poly ), wkt = "geom" )
-	sf::st_as_sf( make_df( mpoly ), wkt = "geom" )
-	sf::st_as_sf( make_df( gc ), wkt = "geom" )
-	sf::st_as_sf( make_df( f ), wkt = "geom" )
-	sf::st_as_sf( make_df( fc ), wkt = "geom" )
-	sf::st_as_sf( make_df( fcgc ), wkt = "geom" )
+	# ## TODO
+	# ## sf::st_as_sf( data.frame( geom = p[1, "geometry"] ), wkt = "geom" )
+	# make_df <- function( x ) {
+	# 	df <- data.frame(
+	# 		geom = as.character( x[1, "geometry"][[1]] )
+	# 	)
+	# 	return(df)
+	# }
+	#
+	# sf::st_as_sf( make_df( p ), wkt = "geom" )
+	# sf::st_as_sf( make_df( mp ), wkt = "geom" )
+	# sf::st_as_sf( make_df( ls ), wkt = "geom" )
+	# sf::st_as_sf( make_df( ml ), wkt = "geom" )
+	# sf::st_as_sf( make_df( poly ), wkt = "geom" )
+	# sf::st_as_sf( make_df( mpoly ), wkt = "geom" )
+	# sf::st_as_sf( make_df( gc ), wkt = "geom" )
+	# sf::st_as_sf( make_df( f ), wkt = "geom" )
+	# sf::st_as_sf( make_df( fc ), wkt = "geom" )
+	# sf::st_as_sf( make_df( fcgc ), wkt = "geom" )
 
 
 })

@@ -31,12 +31,12 @@ namespace sf {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
 	    std::unordered_set< std::string >& geometry_types,
-	    int& sfg_objects,
+	    R_xlen_t& sfg_objects,
 	    std::unordered_set< std::string >& property_keys,
 	    Document& doc_properties,
 	    std::unordered_map< std::string, std::string>& property_types,
 	    bool& expand_geometries,
-	    int& nempty
+	    R_xlen_t& nempty
   ) {
 
 		Document d;
@@ -72,8 +72,8 @@ namespace sf {
   inline Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {
 		// iterate over the geojson
 		int n = geojson.size();
-		int sfg_objects = 0;  // keep track of number of objects
-		int nempty = 0;
+  	R_xlen_t sfg_objects = 0;  // keep track of number of objects
+		R_xlen_t nempty = 0;
 		//int row_index;
 
 		// Attributes to keep track of along the way
@@ -103,9 +103,9 @@ namespace sf {
   inline Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries) {
 		// iterate over the geojson
 		int n = geojson.size();
-		int sfg_objects = 0;  // keep track of number of objects
-		int row_index = 0;
-		int nempty = 0;
+  	R_xlen_t sfg_objects = 0;  // keep track of number of objects
+  	R_xlen_t row_index = 0;
+		R_xlen_t nempty = 0;
 
 		// Attributes to keep track of along the way
 		//Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();
