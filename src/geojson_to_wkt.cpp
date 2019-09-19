@@ -146,8 +146,6 @@ Rcpp::List parse_feature_object_wkt(
 
   	if (geom_type == "GeometryCollection") {
   		Rcpp::List gc = parse_geometry_collection_object_wkt(geometry, geometry_types, wkt_objects, coord_dim);
-  		//Rcpp::Rcout << "gc: " << gc << std::endl;
-
   		sfc[0] = gc;
   	} else {
   		parse_geometry_object_wkt(sfc, 0, geometry, geometry_types, wkt_objects, coord_dim);
@@ -246,8 +244,6 @@ void parse_geojson_wkt(
   } else if (geom_type == "GeometryCollection") {
 
     res = parse_geometry_collection_object_wkt(v, geometry_types, wkt_objects, coord_dim);
-  	//Rcpp::StringVector gc = parse_geometry_collection_object_wkt(v, geometry_types, wkt_objects, coord_dim);
-  	//Rcpp::Rcout << "gc: " << gc << std::endl;
     wkt_objects++;
     sfc[i] = res;
 

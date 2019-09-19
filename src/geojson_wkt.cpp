@@ -23,7 +23,6 @@ std::string wkt_dim( int n ) {
 
 void begin_wkt(std::ostringstream& os, std::string& geom_type, R_xlen_t& coord_dim ) {
 	std::string dim = wkt_dim( coord_dim );
-	//std::string dim = wkt_dim(0);
 
   if (geom_type == "Point") {
     os << "POINT" << dim << " (";
@@ -111,7 +110,6 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& co
 	} else if ( coord_dim != n ) {
 		Rcpp::stop("geojsonsf - different coordinate dimensions found");
 	}
-	//Rcpp::Rcout << "max coord dim: " << coord_dim << std::endl;
 	R_xlen_t i;
 	for( i = 0; i < n; i++ ) {
 		if( i > 0 ) {
@@ -119,10 +117,6 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& co
 		}
 		add_coordinate_to_wkt_stream( os, coord_array[i].GetDouble() );
 	}
-  // Rcpp::NumericVector point(2);
-  // point[0] = geojsonsf::sfg::get_lon(coord_array);
-  // point[1] = geojsonsf::sfg::get_lat(coord_array);
-  // add_lonlat_to_wkt_stream(os, point[0], point[1]);
 }
 
 

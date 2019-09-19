@@ -183,7 +183,6 @@ namespace sfg {
 			if( n_points > max_cols ) {
 				max_cols = n_points;
 			}
-			//Rcpp::Rcout << "n_points: " << n_points << std::endl;
 
 			Rcpp::NumericVector nv( 4 );  // initialise with ZM , we remove later
 			get_numeric_points( coord_array, n_points, nv, bbox, z_range, m_range );
