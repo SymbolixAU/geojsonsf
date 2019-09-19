@@ -1,7 +1,7 @@
 
 ## v1.3.2
 
-* `crs` and `proj4string` arguments to `geojson_sf` and `geojson_sfc` 
+* `crs` and `proj4string` arguments added to `geojson_sf` and `geojson_sfc` 
 * dependency on `sfheaders`
 * fix crash due to factor levels [issue 62](https://github.com/SymbolixAU/geojsonsf/issues/62)
 * fix invalid GeoJSON when NA elements [issue 63](https://github.com/SymbolixAU/geojsonsf/issues/63)
