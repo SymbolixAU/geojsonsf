@@ -20,18 +20,22 @@ Rcpp::StringVector buffer_string(std::string file) {
   return buffer.str();
 }
 
-// Rcpp::List rcpp_read_sf_file_stream( std::string file, bool flatten_geometries ) {
-//
-//   FILE* fp = fopen(file, "rb"); // TODO - windows uses "r"
-//   char readBuffer[65536];
-//   FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-//
-//   Document d;
-//   d.ParseStream(is);
-//
-//   fclose(fp);
-//   return geojsonsf::sf::generic_geojson_to_sf( d, flatten_geometries );
-// }
+Rcpp::List rcpp_read_sf_file_stream( const char* file, bool flatten_geometries ) {
+
+  FILE* fp = fopen(file, "rb"); // TODO - windows uses "r"
+  char readBuffer[65536];
+  FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+  Document d;
+  d.ParseStream(is);
+
+  fclose(fp);
+
+
+
+  return Rcpp::List::create();
+//  return geojsonsf::sf::generic_geojson_to_sf( d, flatten_geometries );
+}
 
 // [[Rcpp::export]]
 Rcpp::List rcpp_read_sfc_file(std::string file, bool flatten_geometries) {

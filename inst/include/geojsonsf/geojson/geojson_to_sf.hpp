@@ -120,6 +120,13 @@ namespace sf {
 		return geojsonsf::sfc::construct_sfc(sfg_objects, sfc, bbox, z_range, m_range, geometry_types, nempty);
 	}
 
+  inline Rcpp::List generic_geojson_to_sf(
+  		Document& d,
+  		bool& expand_geometries
+  ) {
+
+  }
+
   inline Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries) {
 		// iterate over the geojson
 		int n = geojson.size();
