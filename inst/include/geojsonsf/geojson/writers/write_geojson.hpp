@@ -9,7 +9,12 @@ namespace geojsonsf {
 namespace write_geojson {
 
 	template< typename Writer >
-	inline void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type, Rcpp::CharacterVector& cls, int& digits ) {
+	inline void write_geojson(
+			Writer& writer,
+			SEXP sfg,
+			std::string& geom_type,
+			Rcpp::CharacterVector& cls, int& digits
+		) {
 
 		if (geom_type == "POINT") {
 			geojsonsf::writers::points_to_geojson( writer, sfg, digits );
@@ -55,8 +60,13 @@ namespace write_geojson {
 	 * used for down-casting MULTI objects
 	 */
 	template< typename Writer >
-	inline void write_geojson(Writer& writer, SEXP sfg, std::string& geom_type,
-	                          Rcpp::CharacterVector& cls, int geometry_index, int& digits ) {
+	inline void write_geojson(
+			Writer& writer,
+			SEXP sfg,
+			std::string& geom_type,
+			Rcpp::CharacterVector& cls,
+			int geometry_index, int& digits
+		) {
 
 		if (geom_type == "POINT") {
 			geojsonsf::writers::points_to_geojson( writer, sfg, digits );
