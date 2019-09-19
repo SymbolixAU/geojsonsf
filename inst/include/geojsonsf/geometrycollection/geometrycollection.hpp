@@ -2,8 +2,8 @@
 #define GEOJSONSF_GEOMETRYCOLLECTION_H
 
 #include <Rcpp.h>
-#include "geojsonsf/utils/utils.hpp"
 
+#include "sfheaders/utils/utils.hpp"
 
 namespace geojsonsf {
 namespace geometrycollection {
@@ -22,7 +22,7 @@ namespace geometrycollection {
 					gc_geom_type = cls[1];
 
 					SEXP tst = *it;
-					isnull = geojsonsf::utils::is_null_geometry( tst, gc_geom_type );
+					isnull = sfheaders::utils::is_null_geometry( tst, gc_geom_type );
 				} else {
 					gc_type(tmp, gc_geom_type, isnull, cls);
 				}
@@ -36,7 +36,7 @@ namespace geometrycollection {
 					gc_geom_type = cls[1];
 
 					SEXP tst = *it;
-					isnull = geojsonsf::utils::is_null_geometry( tst, gc_geom_type );
+					isnull = sfheaders::utils::is_null_geometry( tst, gc_geom_type );
 				}
 				break;
 			}
@@ -49,13 +49,5 @@ namespace geometrycollection {
 
 } // namespace geometrycollection
 } // namespace geojsonsf
-
-
-// for backwards compability until spatialwidget v0.2 is on CRAN
-template< typename Writer >
-inline void make_gc_type(Writer& writer, Rcpp::List& sfg,
-                         std::string& geom_type, Rcpp::CharacterVector& cls){
-  Rcpp::stop("");
-};
 
 #endif

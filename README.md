@@ -21,7 +21,7 @@ Simple Feature objects in R.
 
 -----
 
-**v1.2.1**
+**v1.3.2**
 
 Converts
 
@@ -36,6 +36,19 @@ As per GeoJSON ([RFC 7946
 specification)](https://tools.ietf.org/html/rfc7946#page-11), foreign
 members are ignored, and nested objects and arrays inside the
 `properties` object are converted to string/characters.
+
+Also, as per the specification, **CRS**
+
+> The coordinate reference system for all GeoJSON coordinates is a
+> geographic coordinate reference system, using the World Geodetic
+> System 1984 (WGS 84) \[WGS84\] datum, with longitude and latitude
+> units of decimal degrees. This is equivalent to the coordinate
+> reference system identified by the Open Geospatial Consortium (OGC)
+> URN <urn:ogc:def:crs:OGC>::CRS84
+
+From **v1.3.2**, if your coordinates are in a different CRS you can
+specify the CRS & proj4string values in the `geojson_sf()` and
+`geojson_sfc()` functions.
 
 ## Installation
 
@@ -154,8 +167,7 @@ sf_geojson(sf, simplify = F)
 ### How fast is it?
 
 This benchmark shows a comparison with `library(sf)` for converting a
-string of GeoJSON of 3,221 counties in the US in to an `sf`
-object
+string of GeoJSON of 3,221 counties in the US in to an `sf` object
 
 ``` r
 myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
@@ -173,13 +185,11 @@ microbenchmark(
     },
     times = 2
 )
-#  Unit: milliseconds
-#        expr       min        lq      mean    median        uq       max
-#   geojsonsf  709.2268  709.2268  722.0626  722.0626  734.8984  734.8984
-#          sf 1867.6840 1867.6840 1958.7968 1958.7968 2049.9097 2049.9097
-#   neval
-#       2
-#       2
+
+#Unit: milliseconds
+#      expr       min        lq      mean    median        uq       max  neval
+# geojsonsf  709.2268  709.2268  722.0626  722.0626  734.8984  734.8984      2
+#        sf 1867.6840 1867.6840 1958.7968 1958.7968 2049.9097 2049.9097      2
 ```
 
 ### Does it work?
@@ -205,10 +215,3 @@ google_map() %>%
 ```
 
 <img src="./man/figures/GeoJSONSF.png" width="100%" />
-
-``` r
-sf <- sf::st_read(geo, quiet = T)
-plot(st_geometry(sf[!sf$STATE %in% c("02", "15", "72"), ]))
-```
-
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
