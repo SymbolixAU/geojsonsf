@@ -22,9 +22,12 @@ namespace utils {
 		int n_empty = 0;
 		std::unordered_set< std::string > geometry_types{"GEOMETRY"};
 
+		int epsg = geojsonsf::EPSG;
+		std::string proj = geojsonsf::PROJ4STRING;
+
 		sfheaders::sfc::attach_sfc_attributes(
 			empty_sfc, type, geometry_types, bbox, z_range, m_range,
-			geojsonsf::EPSG, geojsonsf::PROJ4STRING, n_empty
+			epsg, proj, n_empty
 			);
 		return empty_sfc;
 	}

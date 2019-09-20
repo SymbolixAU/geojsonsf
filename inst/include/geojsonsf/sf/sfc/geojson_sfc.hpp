@@ -24,10 +24,13 @@ namespace sfc {
 
 		R_xlen_t sfg_counter = 0;
 
+		int epsg = geojsonsf::EPSG;
+		std::string proj = geojsonsf::PROJ4STRING;
+
 		geojsonsf::sfc::utils::fetch_geometries( sf, sfc_output, sfg_counter );
 		sfheaders::sfc::attach_sfc_attributes(
 			sfc_output, geom_attr, geometry_types, bbox, z_range, m_range,
-			geojsonsf::EPSG, geojsonsf::PROJ4STRING, nempty
+			epsg, proj, nempty
 			);
 
 		return sfc_output;
