@@ -95,7 +95,40 @@ namespace sf {
 		);
 	}
 
-  inline Rcpp::List create_sfc(Rcpp::StringVector geojson, bool& expand_geometries) {
+	inline Rcpp::List create_sfc(
+			Document& d,
+			bool& expand_geometries
+	) {
+		// iterate over the geojson
+
+		R_xlen_t sfg_objects = 0;  // keep track of number of objects
+		R_xlen_t nempty = 0;
+		//int row_index;
+
+		// Attributes to keep track of along the way
+		//Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();
+		Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+		Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+		Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+		std::unordered_set< std::string > geometry_types;
+		std::unordered_set< std::string > property_keys;   // storing all the 'key' values from 'properties'
+		std::unordered_map< std::string, std::string> property_types;
+
+		Document doc_properties;    // Document to store the 'properties'
+		doc_properties.SetObject();
+
+		Rcpp::List sfc = geojson_to_sf(
+			  d, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys,
+				doc_properties, property_types, expand_geometries, nempty
+			);
+
+		return geojsonsf::sfc::construct_sfc(sfg_objects, sfc, bbox, z_range, m_range, geometry_types, nempty);
+	}
+
+  inline Rcpp::List create_sfc(
+  		Rcpp::StringVector geojson, bool& expand_geometries
+  ) {
 		// iterate over the geojson
 		int n = geojson.size();
   	R_xlen_t sfg_objects = 0;  // keep track of number of objects

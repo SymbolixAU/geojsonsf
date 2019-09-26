@@ -46,7 +46,12 @@
 #' }
 #'
 #' @export
-geojson_sfc <- function(geojson, expand_geometries = FALSE, crs = NULL, proj4string = NULL) {
+geojson_sfc <- function(
+	geojson,
+	expand_geometries = FALSE,
+	crs = NULL,
+	proj4string = NULL
+	) {
 	sfc <- geojson_to_sfc( geojson, expand_geometries )
 	if( !is.null( crs ) | !is.null( proj4string ) ) {
 		sfc <- set_crs( sfc, crs, proj4string )
@@ -57,12 +62,22 @@ geojson_sfc <- function(geojson, expand_geometries = FALSE, crs = NULL, proj4str
 geojson_to_sfc <- function( geojson, expand_geometries ) UseMethod("geojson_to_sfc")
 
 #' @export
-geojson_to_sfc.geojson <- function( geojson, expand_geometries = FALSE, crs = NULL, proj4string = NULL) {
+geojson_to_sfc.geojson <- function(
+	geojson,
+	expand_geometries = FALSE,
+	crs = NULL,
+	proj4string = NULL
+	) {
 	geojson_to_sfc.character(geojson, expand_geometries)
 }
 
 #' @export
-geojson_to_sfc.character <- function(geojson, expand_geometries = FALSE, crs = NULL, proj4string = NULL) {
+geojson_to_sfc.character <- function(
+	geojson,
+	expand_geometries = FALSE,
+	crs = NULL,
+	proj4string = NULL
+	) {
 
 	if(length(geojson) > 1) {
 		return(rcpp_geojson_to_sfc(geojson, expand_geometries))
@@ -76,10 +91,24 @@ geojson_to_sfc.character <- function(geojson, expand_geometries = FALSE, crs = N
 }
 
 #' @export
-geojson_to_sfc.connection <- function(geojson, expand_geometries = FALSE, crs = NULL, proj4string = NULL) geojson_sfc(read_url(geojson), expand_geometries)
+geojson_to_sfc.connection <- function(
+	geojson,
+	expand_geometries = FALSE,
+	crs = NULL,
+	proj4string = NULL
+	) {
+	geojson_sfc(read_url(geojson), expand_geometries)
+}
 
 #' @export
-geojson_to_sfc.default <- function(geojson, expand_geometries = FALSE, crs = NULL, proj4string = NULL) rcpp_geojson_to_sfc(geojson, expand_geometries)
+geojson_to_sfc.default <- function(
+	geojson,
+	expand_geometries = FALSE,
+	crs = NULL,
+	proj4string = NULL
+	) {
+	rcpp_geojson_to_sfc(geojson, expand_geometries)
+}
 
 #' Geojson to sf
 #'
@@ -149,7 +178,9 @@ geojson_to_sf.default <- function(geojson, expand_geometries = F) {
 
 
 
-date_columns <- function( sf ) names(which(vapply(sf , function(x) { inherits(x, "Date") | inherits(x, "POSIXct") }, T)))
+date_columns <- function( sf ) {
+	names(which(vapply(sf , function(x) { inherits(x, "Date") | inherits(x, "POSIXct") }, T)))
+}
 
 set_crs <- function(sfc, crs, proj4string ) {
 	crs <- list(

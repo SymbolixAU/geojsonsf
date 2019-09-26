@@ -33,20 +33,40 @@
 #' }
 #'
 #' @export
-sf_geojson <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL, factors_as_string = TRUE ) {
+sf_geojson <- function(
+	sf,
+	atomise = FALSE,
+	simplify = TRUE,
+	digits = NULL,
+	factors_as_string = TRUE
+	) {
 	UseMethod("sf_geojson")
 }
 
 #' @export
-sf_geojson.sf <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL, factors_as_string = TRUE ) {
+sf_geojson.sf <- function(
+	sf,
+	atomise = FALSE,
+	simplify = TRUE,
+	digits = NULL,
+	factors_as_string = TRUE
+	) {
 	sf <- handle_dates( sf )
 	digits <- handle_digits( digits )
-	if( atomise | ( ncol( sf ) == 1 & simplify ) ) return( rcpp_sf_to_geojson_atomise( sf, digits, factors_as_string ) )
+	if( atomise | ( ncol( sf ) == 1 & simplify ) ) {
+		return( rcpp_sf_to_geojson_atomise( sf, digits, factors_as_string ) )
+	}
 	return( rcpp_sf_to_geojson( sf, digits, factors_as_string ) )
 }
 
 #' @export
-sf_geojson.default <- function( sf, atomise = FALSE, simplify = TRUE, digits = NULL, factors_as_string = TRUE ) {
+sf_geojson.default <- function(
+	sf,
+	atomise = FALSE,
+	simplify = TRUE,
+	digits = NULL,
+	factors_as_string = TRUE
+	) {
 	stop("Expected an sf object")
 }
 

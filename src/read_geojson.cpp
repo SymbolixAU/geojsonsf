@@ -11,8 +11,6 @@
 #include "geojsonsf/geojson/geojson_properties.hpp"
 #include <fstream>
 
-using namespace rapidjson;
-
 Rcpp::StringVector buffer_string(std::string file) {
   std::ifstream ifs(file);
   std::stringstream buffer;
@@ -20,38 +18,51 @@ Rcpp::StringVector buffer_string(std::string file) {
   return buffer.str();
 }
 
-// [[Rcpp::export]]
-Rcpp::List rcpp_read_sf_file_stream( const char* file, bool flatten_geometries ) {
 
-  FILE* fp = fopen(file, "rb"); // TODO - windows uses "r"
-  char readBuffer[1024];
-  size_t buffer_size = sizeof(readBuffer);
-  //Rcpp::Rcout << "buffer_size: " << buffer_size << std::endl;
-  rapidjson::FileReadStream is(fp, readBuffer, buffer_size );
+rapidjson::Document buffer_string( const char* file ) {
 
-  //std::ifstream ifs( file );
-  //rapidjson::IStreamWrapper isw( ifs );
+	FILE* fp = fopen(file, "rb"); // TODO - windows uses "r"
+	char readBuffer[1024];
+	size_t buffer_size = sizeof( readBuffer );
+	//Rcpp::Rcout << "buffer_size: " << buffer_size << std::endl;
+	rapidjson::FileReadStream is(fp, readBuffer, buffer_size );
 
-  Document d;
-  d.ParseStream( is );
+	//std::ifstream ifs( file );
+	//rapidjson::IStreamWrapper isw( ifs );
 
-  size_t s = d.Size();
-  Rcpp::Rcout << "(rcpp_read_sf_file_stream) doc size: " << s << std::endl;
+	Document d;
+	d.ParseStream( is );
 
-  //fclose(fp);
+	size_t s = d.Size();
+	//Rcpp::Rcout << "(rcpp_read_sf_file_stream) doc size: " << s << std::endl;
 
-  //return Rcpp::List::create();
-  return geojsonsf::sf::generic_geojson_to_sf( d, flatten_geometries );
+	fclose(fp);
+
+	return d;
 }
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_read_sfc_file(std::string file, bool flatten_geometries) {
-  return geojsonsf::sf::create_sfc(buffer_string(file), flatten_geometries);
-}
+Rcpp::List rcpp_read_sf_file( const char* file, bool flatten_geometries ) {
 
+	rapidjson::Document d = buffer_string( file );
+  return geojsonsf::sf::generic_geojson_to_sf( d , flatten_geometries );
+}
 
 // [[Rcpp::export]]
-Rcpp::List rcpp_read_sf_file(std::string file, bool flatten_geometries) {
-  return geojsonsf::sf::generic_geojson_to_sf(buffer_string(file), flatten_geometries);
+Rcpp::List rcpp_read_sfc_file( const char* file, bool flatten_geometries) {
+	rapidjson::Document d = buffer_string( file );
+	return geojsonsf::sf::create_sfc( d, flatten_geometries);
 }
+
+
+// // [[Rcpp::export]]
+// Rcpp::List rcpp_read_sfc_file(std::string file, bool flatten_geometries) {
+//   return geojsonsf::sf::create_sfc( buffer_string( file ), flatten_geometries);
+// }
+
+
+// // [[Rcpp::export]]
+// Rcpp::List rcpp_read_sf_file(std::string file, bool flatten_geometries) {
+//   return geojsonsf::sf::generic_geojson_to_sf(buffer_string(file), flatten_geometries);
+// }
 
