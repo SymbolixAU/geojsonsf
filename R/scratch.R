@@ -152,10 +152,9 @@
 
 
 
-# sf <- geojsonsf:::rcpp_read_sf_file_stream("~/Downloads/Texas.geojson", FALSE)
+# sf <- geojsonsf:::rcpp_read_sf_file_stream(normalizePath("~/Downloads/Texas.geojson"), FALSE)
 
-# geo <- '{"type":"Point","coordinates":[0,0]}'
-# writeLines(geo, "~/Desktop/geo_melbourne.json")
-#
-#
-#sf <- geojsonsf:::rcpp_read_sf_file_stream( file = "~/Desktop/geo_melbourne.json", FALSE )
+# writeLines(mapdeck::geojson, "~/Desktop/geo_melbourne.json")
+
+#s
+#sf <- geojsonsf:::rcpp_read_sf_file_stream( file = normalizePath("~/Desktop/geo_melbourne.json"), FALSE )

@@ -26,16 +26,19 @@ Rcpp::List rcpp_read_sf_file_stream( const char* file, bool flatten_geometries )
   FILE* fp = fopen(file, "rb"); // TODO - windows uses "r"
   char readBuffer[1024];
   size_t buffer_size = sizeof(readBuffer);
-  Rcpp::Rcout << "buffer_size: " << buffer_size << std::endl;
-  //rapidjson::FileReadStream is(fp, readBuffer, buffer_size );
+  //Rcpp::Rcout << "buffer_size: " << buffer_size << std::endl;
+  rapidjson::FileReadStream is(fp, readBuffer, buffer_size );
 
-  std::ifstream ifs( file );
-  rapidjson::IStreamWrapper isw(ifs);
+  //std::ifstream ifs( file );
+  //rapidjson::IStreamWrapper isw( ifs );
 
   Document d;
-  d.ParseStream(isw);
+  d.ParseStream( is );
 
-  fclose(fp);
+  size_t s = d.Size();
+  Rcpp::Rcout << "doc size: " << s << std::endl;
+
+  //fclose(fp);
 
   //return Rcpp::List::create();
   return geojsonsf::sf::generic_geojson_to_sf( d, flatten_geometries );
