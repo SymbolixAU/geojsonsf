@@ -21,6 +21,10 @@ rcpp_geojson_to_wkt <- function(geojson) {
     .Call(`_geojsonsf_rcpp_geojson_to_wkt`, geojson)
 }
 
+rcpp_read_sf_file_stream <- function(file, flatten_geometries) {
+    .Call(`_geojsonsf_rcpp_read_sf_file_stream`, file, flatten_geometries)
+}
+
 rcpp_read_sfc_file <- function(file, flatten_geometries) {
     .Call(`_geojsonsf_rcpp_read_sfc_file`, file, flatten_geometries)
 }

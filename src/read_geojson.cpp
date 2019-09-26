@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include <rapidjson/document.h>
-#include <rapidjson/istreamwrapper.h>
 
+#include <rapidjson/istreamwrapper.h>
 #include <rapidjson/filereadstream.h>
 
 #include "geojsonsf/geojsonsf.h"
@@ -20,21 +20,25 @@ Rcpp::StringVector buffer_string(std::string file) {
   return buffer.str();
 }
 
+// [[Rcpp::export]]
 Rcpp::List rcpp_read_sf_file_stream( const char* file, bool flatten_geometries ) {
 
   FILE* fp = fopen(file, "rb"); // TODO - windows uses "r"
-  char readBuffer[65536];
-  FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+  char readBuffer[1024];
+  size_t buffer_size = sizeof(readBuffer);
+  Rcpp::Rcout << "buffer_size: " << buffer_size << std::endl;
+  //rapidjson::FileReadStream is(fp, readBuffer, buffer_size );
+
+  std::ifstream ifs( file );
+  rapidjson::IStreamWrapper isw(ifs);
 
   Document d;
-  d.ParseStream(is);
+  d.ParseStream(isw);
 
   fclose(fp);
 
-
-
-  return Rcpp::List::create();
-//  return geojsonsf::sf::generic_geojson_to_sf( d, flatten_geometries );
+  //return Rcpp::List::create();
+  return geojsonsf::sf::generic_geojson_to_sf( d, flatten_geometries );
 }
 
 // [[Rcpp::export]]

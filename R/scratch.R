@@ -149,3 +149,13 @@
 # mpoly_multiplier( nc[4, ]$geometry )
 #
 # sf_geojson(sf[9,])
+
+
+
+# sf <- geojsonsf:::rcpp_read_sf_file_stream("~/Downloads/Texas.geojson", FALSE)
+
+# geo <- '{"type":"Point","coordinates":[0,0]}'
+# writeLines(geo, "~/Desktop/geo_melbourne.json")
+#
+#
+#sf <- geojsonsf:::rcpp_read_sf_file_stream( file = "~/Desktop/geo_melbourne.json", FALSE )

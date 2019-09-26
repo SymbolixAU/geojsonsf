@@ -125,6 +125,7 @@ namespace sf {
   		bool& expand_geometries
   ) {
 
+  	return Rcpp::List::create();
   }
 
   inline Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries) {
