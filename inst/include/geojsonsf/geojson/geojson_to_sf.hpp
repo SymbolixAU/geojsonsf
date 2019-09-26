@@ -43,9 +43,6 @@ namespace sf {
   	Rcpp::List properties(1);
   	unsigned int doc_ele;
 
-  	size_t doc_size = d.Size();
-  	Rcpp::Rcout << "(geojson_to_sf) doc size: " << doc_size << std::endl;
-
   	if (d.IsObject()) {
   		Rcpp::List sfg(1);
   		geojsonsf::geojson::parse::parse_geojson_object(
@@ -85,9 +82,6 @@ namespace sf {
 
 		Document d;
 		geojsonsf::validate::safe_parse(d, geojson);
-
-		size_t doc_size = d.Size();
-		Rcpp::Rcout << "(geojson_to_sf) doc size: " << doc_size << std::endl;
 
 		return geojson_to_sf(
 			d, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties, property_types,
@@ -197,8 +191,6 @@ namespace sf {
   	R_xlen_t sfg_objects = 0;  // keep track of number of objects
   	R_xlen_t row_index = 0;
 		R_xlen_t nempty = 0;
-
-		Rcpp::Rcout << "(generic_geojosn_to_sf) geojson_size: " << n << std::endl;
 
 		// Attributes to keep track of along the way
 		//Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();

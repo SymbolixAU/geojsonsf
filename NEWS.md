@@ -1,6 +1,7 @@
 
 ## v1.3.2
 
+* using `rapidjson::FileReadStream` to read large files from disk [issue 64](https://github.com/SymbolixAU/geojsonsf/issues/64)
 * `crs` and `proj4string` arguments added to `geojson_sf` and `geojson_sfc` 
 * dependency on `sfheaders`
 * fix crash due to factor levels [issue 62](https://github.com/SymbolixAU/geojsonsf/issues/62)

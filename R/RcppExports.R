@@ -21,12 +21,12 @@ rcpp_geojson_to_wkt <- function(geojson) {
     .Call(`_geojsonsf_rcpp_geojson_to_wkt`, geojson)
 }
 
-rcpp_read_sf_file <- function(file, flatten_geometries) {
-    .Call(`_geojsonsf_rcpp_read_sf_file`, file, flatten_geometries)
+rcpp_read_sf_file <- function(file, mode, flatten_geometries, buffer_size = 1024L) {
+    .Call(`_geojsonsf_rcpp_read_sf_file`, file, mode, flatten_geometries, buffer_size)
 }
 
-rcpp_read_sfc_file <- function(file, flatten_geometries) {
-    .Call(`_geojsonsf_rcpp_read_sfc_file`, file, flatten_geometries)
+rcpp_read_sfc_file <- function(file, mode, flatten_geometries, buffer_size = 1024L) {
+    .Call(`_geojsonsf_rcpp_read_sfc_file`, file, mode, flatten_geometries, buffer_size)
 }
 
 rcpp_sfc_to_geojson <- function(sfc, digits) {
