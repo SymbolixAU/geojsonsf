@@ -36,7 +36,7 @@ Rcpp::List rcpp_read_sf_file_stream( const char* file, bool flatten_geometries )
   d.ParseStream( is );
 
   size_t s = d.Size();
-  Rcpp::Rcout << "doc size: " << s << std::endl;
+  Rcpp::Rcout << "(rcpp_read_sf_file_stream) doc size: " << s << std::endl;
 
   //fclose(fp);
 

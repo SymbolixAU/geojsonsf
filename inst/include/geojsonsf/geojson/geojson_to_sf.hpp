@@ -43,6 +43,9 @@ namespace sf {
   	Rcpp::List properties(1);
   	unsigned int doc_ele;
 
+  	size_t doc_size = d.Size();
+  	Rcpp::Rcout << "(geojson_to_sf) doc size: " << doc_size << std::endl;
+
   	if (d.IsObject()) {
   		Rcpp::List sfg(1);
   		geojsonsf::geojson::parse::parse_geojson_object(
@@ -82,6 +85,9 @@ namespace sf {
 
 		Document d;
 		geojsonsf::validate::safe_parse(d, geojson);
+
+		size_t doc_size = d.Size();
+		Rcpp::Rcout << "(geojson_to_sf) doc size: " << doc_size << std::endl;
 
 		return geojson_to_sf(
 			d, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties, property_types,
@@ -125,7 +131,31 @@ namespace sf {
   		bool& expand_geometries
   ) {
 
-  	return Rcpp::List::create();
+  	R_xlen_t sfg_objects = 0;  // keep track of number of objects
+  	R_xlen_t row_index = 0;
+  	R_xlen_t nempty = 0;
+
+  	Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
+  	Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
+  	Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+
+  	std::unordered_set< std::string > geometry_types;
+  	std::unordered_set< std::string > property_keys;   // storing all the 'key' values from 'properties'
+  	std::unordered_map< std::string, std::string > property_types;
+
+  	Document doc_properties;    // Document to store the 'properties'
+  	doc_properties.SetObject();
+  	// Rcpp::List sfc( 1 );
+
+  	Rcpp::List sfc = geojson_to_sf(
+  		d, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties,
+  		property_types, expand_geometries, nempty
+  	);
+
+  	Rcpp::List res = geojsonsf::sfc::construct_sfc( sfg_objects, sfc, bbox, z_range, m_range, geometry_types, nempty );
+  	return geojsonsf::sf::construct_sf( res, property_keys, property_types, doc_properties, sfg_objects, row_index );
+
+  	//return Rcpp::List::create();
   }
 
   inline Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries) {
@@ -134,6 +164,8 @@ namespace sf {
   	R_xlen_t sfg_objects = 0;  // keep track of number of objects
   	R_xlen_t row_index = 0;
 		R_xlen_t nempty = 0;
+
+		Rcpp::Rcout << "(generic_geojosn_to_sf) geojson_size: " << n << std::endl;
 
 		// Attributes to keep track of along the way
 		//Rcpp::NumericVector bbox = geojsonsf::sfc::utils::start_bbox();

@@ -158,3 +158,4 @@
 
 #s
 #sf <- geojsonsf:::rcpp_read_sf_file_stream( file = normalizePath("~/Desktop/geo_melbourne.json"), FALSE )
+#sf <- geojsonsf::geojson_sf( "~/Desktop/geo_melbourne.json" )
