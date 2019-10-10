@@ -23,7 +23,8 @@ namespace utils {
 		std::unordered_set< std::string > geometry_types{"GEOMETRY"};
 
 		int epsg = geojsonsf::EPSG;
-		std::string proj = geojsonsf::PROJ4STRING;
+		//std::string proj = geojsonsf::PROJ4STRING;
+		Rcpp::String proj = geojsonsf::PROJ4STRING;
 
 		sfheaders::sfc::attach_sfc_attributes(
 			empty_sfc, type, geometry_types, bbox, z_range, m_range,
