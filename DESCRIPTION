@@ -18,7 +18,7 @@ LinkingTo:
     jsonify (>= 0.2.1),
     rapidjsonr (>= 1.1),
     Rcpp,
-    sfheaders
+    sfheaders (>= 0.1.0)
 Imports: 
     curl,
     Rcpp
@@ -29,4 +29,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
+Remotes:
+    github::dcooley/sfheaders
 VignetteBuilder: knitr
