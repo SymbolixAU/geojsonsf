@@ -4,8 +4,13 @@
 \alias{geojson_sfc}
 \title{Geojson to sfc}
 \usage{
-geojson_sfc(geojson, expand_geometries = FALSE, crs = NULL,
-  proj4string = NULL, buffer_size = 1024)
+geojson_sfc(
+  geojson,
+  expand_geometries = FALSE,
+  crs = NULL,
+  proj4string = NULL,
+  buffer_size = 1024
+)
 }
 \arguments{
 \item{geojson}{string or vector of GeoJSON, or a URL or file pointing to a geojson file}
