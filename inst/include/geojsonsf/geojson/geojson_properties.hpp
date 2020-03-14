@@ -127,17 +127,17 @@ namespace geojson_properties {
 		sf[key] = nv;
 	}
 
-	inline Rcpp::NumericVector na_numeric_vector(const size_t& n_elements) {
+	inline Rcpp::NumericVector na_numeric_vector(const R_xlen_t& n_elements) {
 		Rcpp::NumericVector nv(n_elements, NA_REAL);
 		return nv;
 	}
 
-	inline Rcpp::StringVector na_string_vector(const size_t& n_elements) {
+	inline Rcpp::StringVector na_string_vector(const R_xlen_t& n_elements) {
 		Rcpp::StringVector sv(n_elements, Rcpp::StringVector::get_na());
 		return sv;
 	}
 
-	inline Rcpp::LogicalVector na_logical_vector(const size_t& n_elements) {
+	inline Rcpp::LogicalVector na_logical_vector(const R_xlen_t& n_elements) {
 		Rcpp::LogicalVector lv(n_elements, NA_LOGICAL);
 		return lv;
 	}

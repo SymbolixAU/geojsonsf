@@ -121,8 +121,8 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& co
 
 
 void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim ) {
-  size_t n = coord_array.Size();
-	unsigned int i;
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
   for (i = 0; i < n; ++i) {
     geojsonsf::validate::validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i], coord_dim );
@@ -131,8 +131,8 @@ void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen
 }
 
 void line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
   for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i], coord_dim );
@@ -141,8 +141,8 @@ void line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen
 }
 
 void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
   for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i], coord_dim );
@@ -151,8 +151,8 @@ void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array, 
 }
 
 void polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
   for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i], coord_dim );
@@ -161,8 +161,8 @@ void polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& 
 }
 
 void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
   for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     polygon_to_wkt(os, coord_array[i], coord_dim);
