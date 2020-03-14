@@ -23,19 +23,19 @@ namespace api {
   	rapidjson::StringBuffer sb;
   	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
 
-  	int n_cols = df.ncol();
-  	int n_rows = df.nrows();
-  	int i, j;
+  	R_xlen_t n_cols = df.ncol();
+  	R_xlen_t n_rows = df.nrows();
+  	R_xlen_t i, j;
   	Rcpp::StringVector column_names = df.names();
 
   	// the sfc_POINT
   	R_xlen_t n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
-  	int n_properties = n_cols - n_geometry_columns;
+  	R_xlen_t n_properties = n_cols - n_geometry_columns;
   	Rcpp::StringVector property_names( n_properties );
 
-  	for( i = 0; i < n_geometry_columns; i++ ) {
+  	for( i = 0; i < n_geometry_columns; ++i ) {
   		Rcpp::String this_geometry = geometry_columns[i];
   		geometry_vectors[i] = df[ this_geometry ];
   	}
@@ -43,12 +43,12 @@ namespace api {
   	std::string dim = sfheaders::sfg::sfg_dimension( n_geometry_columns );
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
-  	int property_counter = 0;
+  	R_xlen_t property_counter = 0;
 
-  	for ( i = 0; i < df.length(); i++ ) {
+  	for ( i = 0; i < df.length(); ++i ) {
 
   		Rcpp::String this_column = column_names[i];
-  		int idx = sfheaders::utils::where_is( this_column, geometry_columns );
+  	  R_xlen_t idx = sfheaders::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
   			property_names[property_counter] = column_names[i];
@@ -61,7 +61,7 @@ namespace api {
 
   	writer.StartArray();
 
-  	for( i = 0; i < n_rows; i++ ) {
+  	for( i = 0; i < n_rows; ++i ) {
 
   		writer.StartObject();
 
@@ -70,7 +70,7 @@ namespace api {
   		writer.StartObject();
   		// properties first, then sfc
 
-  		for( j = 0; j < n_properties; j++ ) {
+  		for( j = 0; j < n_properties; ++j ) {
   			const char *h = property_names[ j ];
   			SEXP this_vec = df[ h ];
 
@@ -82,7 +82,7 @@ namespace api {
   		writer.String("geometry");
 
   		Rcpp::NumericVector geom( n_geometry_columns );
-  		for ( j = 0; j < n_geometry_columns; j++ ) {
+  		for ( j = 0; j < n_geometry_columns; ++j ) {
   			Rcpp::NumericVector this_geometry_vector = geometry_vectors[j];
   			geom[j] = this_geometry_vector[i];
   		}
@@ -106,9 +106,9 @@ namespace api {
   		int& digits,
   		bool& factors_as_string ) {
 
-  	int n_cols = df.ncol();
-  	int n_rows = df.nrows();
-  	int i, j;
+    R_xlen_t n_cols = df.ncol();
+    R_xlen_t n_rows = df.nrows();
+    R_xlen_t i, j;
   	Rcpp::StringVector column_names = df.names();
 
   	Rcpp::StringVector geojson( n_rows );
@@ -117,10 +117,10 @@ namespace api {
   	R_xlen_t n_geometry_columns = geometry_columns.size();
   	Rcpp::List geometry_vectors( n_geometry_columns );
 
-  	int n_properties = n_cols - n_geometry_columns;
+  	R_xlen_t n_properties = n_cols - n_geometry_columns;
   	Rcpp::StringVector property_names( n_properties );
 
-  	for ( i = 0; i < n_geometry_columns; i++ ) {
+  	for ( i = 0; i < n_geometry_columns; ++i ) {
   		Rcpp::String this_geometry = geometry_columns[i];
   		geometry_vectors[i] = df[ this_geometry ];
   	}
@@ -128,8 +128,8 @@ namespace api {
   	std::string dim = sfheaders::sfg::sfg_dimension( n_geometry_columns );
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 
-  	int property_counter = 0;
-  	for ( i = 0; i < df.length(); i++) {
+  	R_xlen_t property_counter = 0;
+  	for ( i = 0; i < df.length(); ++i) {
 
   		Rcpp::String this_column = column_names[i];
   		int idx = sfheaders::utils::where_is( this_column, geometry_columns );
@@ -142,7 +142,7 @@ namespace api {
   	}
 
 
-  	for( i = 0; i < n_rows; i++ ) {
+  	for( i = 0; i < n_rows; ++i ) {
 
   		rapidjson::StringBuffer sb;
   		rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
@@ -155,7 +155,7 @@ namespace api {
   			writer.StartObject();
 
   			// properties first, then sfc
-  			for( j = 0; j < n_properties; j++ ) {
+  			for( j = 0; j < n_properties; ++j ) {
   				const char *h = property_names[ j ];
 
   				SEXP this_vec = df[ h ];
@@ -172,7 +172,7 @@ namespace api {
   		}
 
   		Rcpp::NumericVector geom( n_geometry_columns );
-  		for ( j = 0; j < n_geometry_columns; j++ ) {
+  		for ( j = 0; j < n_geometry_columns; ++j ) {
   			Rcpp::NumericVector this_geometry_vector = geometry_vectors[j];
   			geom[j] = this_geometry_vector[i];
   		}

@@ -71,7 +71,7 @@ namespace parse {
 		unsigned int i;
 		Rcpp::List geom_collection(n);
 
-		for (i = 0; i < n; i++) {
+		for (i = 0; i < n; ++i) {
 			const Value& gcval = geometries[i];
 			geojsonsf::validate::validate_type(gcval, sfg_objects);
 			geom_type = gcval["type"].GetString();
@@ -147,7 +147,7 @@ namespace parse {
 		}
 
 		std::string s;
-		for ( i = 0; i < geomsize; i++ ) {
+		for ( i = 0; i < geomsize; ++i ) {
 			//https://stackoverflow.com/a/33473321/5977215
 			if ( expand_geometries ) {
 				s = std::to_string( sfg_objects - i );
@@ -190,7 +190,7 @@ namespace parse {
 
 		Rcpp::List feature_collection(n);
 
-		for ( i = 0; i < n; i++ ) {
+		for ( i = 0; i < n; ++i ) {
 			const Value& feature = features[i];
 			feature_collection[i] = parse_feature_object(
 				feature, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties,

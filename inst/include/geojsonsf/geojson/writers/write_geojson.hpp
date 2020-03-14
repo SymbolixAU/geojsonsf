@@ -40,7 +40,9 @@ namespace write_geojson {
 		} else if (geom_type == "GEOMETRYCOLLECTION") {
 			Rcpp::List gc = Rcpp::as< Rcpp::List >( sfg );
 			Rcpp::List sfgi(1);
-			for (int i = 0; i < gc.size(); i++) {
+			R_xlen_t i;
+			R_xlen_t gc_n = gc.size();
+			for ( i = 0; i < gc_n; ++i) {
 				sfgi[0] = gc[i];
 				std::string gc_geom_type;
 				bool isnull = false;
@@ -96,7 +98,9 @@ namespace write_geojson {
 		} else if (geom_type == "GEOMETRYCOLLECTION") {
 			Rcpp::List gc = Rcpp::as< Rcpp::List >( sfg );
 			Rcpp::List sfgi(1);
-			for (int i = 0; i < gc.size(); i++) {
+			R_xlen_t i;
+			R_xlen_t gc_n = gc.size();
+			for ( i = 0; i < gc_n; ++i ) {
 				sfgi[0] = gc[i];
 
 				std::string gc_geom_type;

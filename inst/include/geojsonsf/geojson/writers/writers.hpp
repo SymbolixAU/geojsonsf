@@ -120,7 +120,7 @@ namespace writers {
     int i;
     int value;
     writer.StartArray();
-    for ( i = 0; i < n; i++ ) {
+    for ( i = 0; i < n; ++i ) {
     	value = point[i];
     	if( R_IsNA( value ) ) {
     		writer.Null();
@@ -142,7 +142,7 @@ namespace writers {
     int i;
     double value;
     writer.StartArray();
-    for ( i = 0; i < n; i++ ) {
+    for ( i = 0; i < n; ++i ) {
       value = point[i];
 
     	if( R_IsNA( value ) ) {
@@ -189,7 +189,7 @@ namespace writers {
   inline void linestring_to_geojson( Writer& writer, Rcpp::IntegerMatrix& line, int digits ) {
     int i;
     int nrow = line.nrow();
-    for ( i = 0; i < nrow; i++ ) {
+    for ( i = 0; i < nrow; ++i ) {
       Rcpp::IntegerVector this_row = line(i, Rcpp::_ );
       points_to_geojson( writer, this_row, digits );
     }
@@ -204,7 +204,7 @@ namespace writers {
   inline void linestring_to_geojson( Writer& writer, Rcpp::NumericMatrix& line, int digits ) {
     int i;
     int nrow = line.nrow();
-    for ( i = 0; i < nrow; i++ ) {
+    for ( i = 0; i < nrow; ++i ) {
       Rcpp::NumericVector this_row = line(i, Rcpp::_ );
       points_to_geojson( writer, this_row, digits );
     }
@@ -240,7 +240,7 @@ namespace writers {
   inline void polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int digits ) {
     int i;
     int n = sfg.size();
-    for ( i = 0; i < n; i++ ) {
+    for ( i = 0; i < n; ++i ) {
       Rcpp::NumericMatrix sfgi = sfg[i];
       linestring_to_geojson( writer, sfgi, digits );
       line_separator( writer, i, n );
@@ -256,7 +256,7 @@ namespace writers {
   inline void multi_polygon_to_geojson( Writer& writer, Rcpp::List& sfg, int digits ) {
     int i;
     int n = sfg.size();
-    for ( i = 0; i < n; i++ ) {
+    for ( i = 0; i < n; ++i ) {
       Rcpp::List sfgi = sfg[i];
       polygon_to_geojson( writer, sfgi, digits );
       polygon_separator( writer, i, n );

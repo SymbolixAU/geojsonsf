@@ -21,7 +21,7 @@ LinkingTo:
 Imports: 
     curl,
     Rcpp
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: 
     covr,
     jsonify,
