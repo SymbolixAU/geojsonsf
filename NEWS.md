@@ -1,4 +1,9 @@
 
+## v1.3.3
+
+* removed Boost links
+
+
 ## v1.3.2
 
 * using `rapidjson::FileReadStream` to read large files from disk [issue 64](https://github.com/SymbolixAU/geojsonsf/issues/64)
