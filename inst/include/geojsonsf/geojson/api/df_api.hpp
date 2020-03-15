@@ -132,7 +132,7 @@ namespace api {
   	for ( i = 0; i < df.length(); ++i) {
 
   		Rcpp::String this_column = column_names[i];
-  		int idx = sfheaders::utils::where_is( this_column, geometry_columns );
+  	  R_xlen_t idx = sfheaders::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
 

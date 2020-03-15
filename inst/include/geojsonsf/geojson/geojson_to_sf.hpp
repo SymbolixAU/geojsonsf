@@ -41,7 +41,7 @@ namespace sf {
   	Rcpp::List sf(1);
   	Rcpp::List sfc(1);
   	Rcpp::List properties(1);
-  	unsigned int doc_ele;
+  	R_xlen_t doc_ele;
 
   	if (d.IsObject()) {
   		Rcpp::List sfg(1);
