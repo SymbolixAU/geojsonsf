@@ -67,8 +67,8 @@ namespace parse {
 		std::string geom_type;
 		geojsonsf::validate::validate_geometries(val, sfg_objects);
 		auto geometries = val["geometries"].GetArray();
-		unsigned int n = geometries.Size();
-		unsigned int i;
+		R_xlen_t n = geometries.Size();
+		R_xlen_t i;
 		Rcpp::List geom_collection(n);
 
 		for (i = 0; i < n; ++i) {
@@ -137,8 +137,8 @@ namespace parse {
 		geojsonsf::geojson_properties::get_property_keys(p, property_keys);
 		geojsonsf::geojson_properties::get_property_types(p, property_types);
 
-		unsigned int geomsize = 1;
-		unsigned int i;
+		R_xlen_t geomsize = 1;
+		R_xlen_t i;
 
 		if (expand_geometries && type == "GeometryCollection") {
 			geojsonsf::validate::validate_geometries( geometry, sfg_objects );
@@ -185,8 +185,8 @@ namespace parse {
 
 		auto features = fc["features"].GetArray();
 
-		unsigned int n = features.Size(); // number of features
-		unsigned int i;
+		R_xlen_t n = features.Size(); // number of features
+		R_xlen_t i;
 
 		Rcpp::List feature_collection(n);
 
