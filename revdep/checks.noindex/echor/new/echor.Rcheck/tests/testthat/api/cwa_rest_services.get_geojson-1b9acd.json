@@ -1,0 +1,42 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -86.643041,
+                    34.630123
+                ]
+            },
+            "properties": {
+                "CWPName": "REDSTONE ARSENAL",
+                "SourceID": "ALR040033",
+                "CWPStreet": "BUILDING 3240 AREA",
+                "CWPCity": "REDSTONE ARSENAL",
+                "CWPState": "AL",
+                "CWPStateDistrict": null,
+                "CWPZip": "35898",
+                "MasterExternalPermitNmbr": "ALR040000",
+                "RegistryID": "110020837601",
+                "CWPCounty": "Madison",
+                "CWPEPARegion": "04",
+                "FacDerivedHuc": "06030002",
+                "CWPTotalDesignFlowNmbr": null,
+                "CWPActualAverageFlowNmbr": null,
+                "DschToMs4": null,
+                "ExposedActivity": null,
+                "Subsector": null,
+                "CWPVersionNmbr": 0,
+                "SubmittedDate": null,
+                "CWPPermitTypeDesc": "General Permit Covered Facility",
+                "CWPIssueDate": "2016-09-06T00:00:00.00+00:00",
+                "CWPTerminationDate": null,
+                "CWPSNCStatus": null,
+                "CWPCsoOutfalls": null,
+                "CWPSNCEventDesc": null
+            }
+        }
+    ]
+}

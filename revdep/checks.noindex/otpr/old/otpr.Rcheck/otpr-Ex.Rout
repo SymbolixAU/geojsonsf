@@ -1,0 +1,133 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "otpr"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('otpr')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("otp_connect")
+> ### * otp_connect
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: otp_connect
+> ### Title: Set up and confirm a connection to an OTP instance.
+> ### Aliases: otp_connect
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D otpcon <- otpr_connect()
+> ##D otpcon <- otpr_connect(router = "UK2018",
+> ##D                       ssl = TRUE)
+> ##D otpcon <- otpr_connect(hostname = "ec2.us-west-2.compute.amazonaws.com",
+> ##D                       router = "UK2018",
+> ##D                       port = 8888,
+> ##D                       ssl = TRUE)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("otp_get_distance")
+> ### * otp_get_distance
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: otp_get_distance
+> ### Title: Finds the distance in metres between supplied origin and
+> ###   destination
+> ### Aliases: otp_get_distance
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D otp_get_distance(otpcon, fromPlace = c(53.48805, -2.24258), toPlace = c(53.36484, -2.27108))
+> ##D 
+> ##D otp_get_distance(otpcon, fromPlace = c(53.48805, -2.24258), toPlace = c(53.36484, -2.27108),
+> ##D mode = "WALK")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("otp_get_isochrone")
+> ### * otp_get_isochrone
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: otp_get_isochrone
+> ### Title: Returns one or more travel time isochrones
+> ### Aliases: otp_get_isochrone
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D otp_get_isochrone(otpcon, location = c(53.48805, -2.24258), cutoffs = c(900, 1800, 2700))
+> ##D 
+> ##D otp_get_isochrone(otpcon, location = c(53.48805, -2.24258), fromLocation = FALSE,
+> ##D cutoffs = c(900, 1800, 2700), mode = "BUS")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("otp_get_times")
+> ### * otp_get_times
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: otp_get_times
+> ### Title: Finds the time in minutes between supplied origin and
+> ###   destination
+> ### Aliases: otp_get_times
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D otp_get_times(otpcon, fromPlace = c(53.48805, -2.24258), toPlace = c(53.36484, -2.27108))
+> ##D 
+> ##D otp_get_times(otpcon, fromPlace = c(53.48805, -2.24258), toPlace = c(53.36484, -2.27108),
+> ##D mode = "BUS", date = "03-26-2019", time = "08:00:00")
+> ##D 
+> ##D otp_get_times(otpcon, fromPlace = c(53.48805, -2.24258), toPlace = c(53.36484, -2.27108),
+> ##D mode = "BUS", date = "03-26-2019", time = "08:00:00", detail = TRUE)
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.136 0.014 0.157 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

@@ -1,0 +1,35 @@
+* installing *source* package ‘spatialwidget’ ...
+** package ‘spatialwidget’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/new/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c RcppExports.cpp -o RcppExports.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/new/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c data_construction.cpp -o data_construction.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/new/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c geojson.cpp -o geojson.o
+In file included from geojson.cpp:2:
+In file included from ../inst/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/spatialwidget/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+In file included from geojson.cpp:2:
+In file included from ../inst/include/spatialwidget/spatialwidget.hpp:14:
+In file included from ../inst/include/spatialwidget/geojson/geojson.hpp:8:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/new/geojsonsf/include/geojsonsf/write_geojson.hpp:6:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/new/geojsonsf/include/geojsonsf/geojson/writers/write_geojson.hpp:6:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/new/geojsonsf/include/geojsonsf/geometrycollection/geometrycollection.hpp:6:10: fatal error: 'sfheaders/utils/utils.hpp' file not found
+#include "sfheaders/utils/utils.hpp"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning and 1 error generated.
+make: *** [geojson.o] Error 1
+ERROR: compilation failed for package ‘spatialwidget’
+* removing ‘/Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/spatialwidget/new/spatialwidget.Rcheck/spatialwidget’

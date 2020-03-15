@@ -1,0 +1,25 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.985226,
+                    34.283317
+                ]
+            },
+            "properties": {
+                "AIRName": "DUKE ENERGY PROGRESS, LLC - L.V. SUTTON ELECTRIC PLANT",
+                "SourceID": "NC0000003706500036",
+                "AIRStreet": "801 SUTTON STEAM PLANT ROAD",
+                "AIRCity": "WILMINGTON",
+                "AIRState": "NC",
+                "RegistryID": "110000350174",
+                "AIRLastStckDateState": "2017-07-01T00:00:00.00+00:00",
+                "ReferencePoint": "CENTER OF A FACILITY OR STATION"
+            }
+        }
+    ]
+}

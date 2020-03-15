@@ -1,0 +1,77 @@
+* installing *source* package ‘vapour’ ...
+** package ‘vapour’ successfully unpacked and MD5 sums checked
+** using staged installation
+configure: CC: ccache /usr/local/clang8/bin/clang
+configure: CXX: ccache /usr/local/clang8/bin/clang++ -std=gnu++11
+checking for gdal-config... /usr/local/bin/gdal-config
+checking gdal-config usability... yes
+configure: GDAL: 3.0.2
+checking GDAL version >= 2.0.1... yes
+checking for gcc... ccache /usr/local/clang8/bin/clang
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether ccache /usr/local/clang8/bin/clang accepts -g... yes
+checking for ccache /usr/local/clang8/bin/clang option to accept ISO C89... none needed
+checking how to run the C preprocessor... ccache /usr/local/clang8/bin/clang -E
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for ANSI C header files... rm: conftest.dSYM: is a directory
+rm: conftest.dSYM: is a directory
+yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking gdal.h usability... yes
+checking gdal.h presence... yes
+checking for gdal.h... yes
+checking GDAL: linking with --libs only... yes
+checking GDAL: /usr/local/Cellar/osgeo-gdal/3.0.2/share/gdal/pcs.csv readable... no
+configure: Package CPP flags:  -I/usr/local/Cellar/osgeo-gdal/3.0.2/include
+configure: Package LIBS:  -L/usr/local/Cellar/osgeo-gdal/3.0.2/lib -lgdal
+configure: creating ./config.status
+config.status: creating src/Makevars
+** libs
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c RcppExports.cpp -o RcppExports.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c VSIReadDirEx.cpp -o VSIReadDirEx.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c binary-geom.cpp -o binary-geom.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c contourize.cpp -o contourize.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c gdal_utils.cpp -o gdal_utils.o
+ccache /usr/local/clang8/bin/clang -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c init.c -o init.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c raster_warp.cpp -o raster_warp.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c rasterio.cpp -o rasterio.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c sds_io.cpp -o sds_io.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c srs.cpp -o srs.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -I/usr/local/Cellar/osgeo-gdal/3.0.2/include -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/vapour/Rcpp/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include  -fPIC  -Wall -g -O2  -c vapour.cpp -o vapour.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/clang8/lib -o vapour.so RcppExports.o VSIReadDirEx.o binary-geom.o contourize.o gdal_utils.o init.o raster_warp.o rasterio.o sds_io.o srs.o vapour.o -L/usr/local/Cellar/osgeo-gdal/3.0.2/lib -lgdal -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+ld: warning: text-based stub file /System/Library/Frameworks//CoreFoundation.framework/CoreFoundation.tbd and library file /System/Library/Frameworks//CoreFoundation.framework/CoreFoundation are out of sync. Falling back to library file for linking.
+installing to /Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/vapour/new/vapour.Rcheck/00LOCK-vapour/00new/vapour/libs
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+Error: package or namespace load failed for ‘vapour’ in dyn.load(file, DLLpath = DLLpath, ...):
+ unable to load shared object '/Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/vapour/new/vapour.Rcheck/00LOCK-vapour/00new/vapour/libs/vapour.so':
+  dlopen(/Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/vapour/new/vapour.Rcheck/00LOCK-vapour/00new/vapour/libs/vapour.so, 6): Library not loaded: /usr/local/opt/giflib/lib/libgif.7.dylib
+  Referenced from: /usr/local/opt/osgeo-gdal/lib/libgdal.26.dylib
+  Reason: Incompatible library version: libgdal.26.dylib requires version 8.0.0 or later, but libgif.7.dylib provides version 0.0.0
+Error: loading failed
+Execution halted
+ERROR: loading failed
+* removing ‘/Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/vapour/new/vapour.Rcheck/vapour’

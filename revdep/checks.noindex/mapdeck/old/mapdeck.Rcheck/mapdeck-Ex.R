@@ -1,0 +1,282 @@
+pkgname <- "mapdeck"
+source(file.path(R.home("share"), "R", "examples-header.R"))
+options(warn = 1)
+library('mapdeck')
+
+base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+cleanEx()
+nameEx("add_arc")
+### * add_arc
+
+flush(stderr()); flush(stdout())
+
+### Name: add_arc
+### Title: Add arc
+### Aliases: add_arc
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("add_geojson")
+### * add_geojson
+
+flush(stderr()); flush(stdout())
+
+### Name: add_geojson
+### Title: Add Geojson
+### Aliases: add_geojson
+
+### ** Examples
+
+
+
+
+
+
+cleanEx()
+nameEx("add_grid")
+### * add_grid
+
+flush(stderr()); flush(stdout())
+
+### Name: add_grid
+### Title: Add Grid
+### Aliases: add_grid
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("add_hexagon")
+### * add_hexagon
+
+flush(stderr()); flush(stdout())
+
+### Name: add_hexagon
+### Title: Add hexagon
+### Aliases: add_hexagon
+
+### ** Examples
+
+## Not run: 
+##D 
+##D ## You need a valid access token from Mapbox
+##D key <- 'abc'
+##D 
+##D df <- read.csv(paste0(
+##D 'https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/'
+##D , '3d-heatmap/heatmap-data.csv'
+##D ))
+##D 
+##D df <- df[!is.na(df$lng), ]
+##D 
+##D mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45) %>%
+##D add_hexagon(
+##D   data = df
+##D   , lat = "lat"
+##D   , lon = "lng"
+##D   , layer_id = "hex_layer"
+##D   , elevation_scale = 100
+##D )
+##D 
+##D library( sf )
+##D sf <- sf::st_as_sf( df, coords = c("lng", "lat"))
+##D mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+##D add_hexagon(
+##D   data = sf
+##D   , layer_id = "hex_layer"
+##D   , elevation_scale = 100
+##D )
+##D 
+## End(Not run)
+
+
+
+
+cleanEx()
+nameEx("add_line")
+### * add_line
+
+flush(stderr()); flush(stdout())
+
+### Name: add_line
+### Title: Add line
+### Aliases: add_line
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("add_path")
+### * add_path
+
+flush(stderr()); flush(stdout())
+
+### Name: add_path
+### Title: Add Path
+### Aliases: add_path
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("add_pointcloud")
+### * add_pointcloud
+
+flush(stderr()); flush(stdout())
+
+### Name: add_pointcloud
+### Title: Add Pointcloud
+### Aliases: add_pointcloud
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("add_polygon")
+### * add_polygon
+
+flush(stderr()); flush(stdout())
+
+### Name: add_polygon
+### Title: Add Polygon
+### Aliases: add_polygon
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("add_scatterplot")
+### * add_scatterplot
+
+flush(stderr()); flush(stdout())
+
+### Name: add_scatterplot
+### Title: Add Scatterplot
+### Aliases: add_scatterplot
+
+### ** Examples
+
+
+
+
+
+
+cleanEx()
+nameEx("add_screengrid")
+### * add_screengrid
+
+flush(stderr()); flush(stdout())
+
+### Name: add_screengrid
+### Title: Add Screengrid
+### Aliases: add_screengrid
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("add_text")
+### * add_text
+
+flush(stderr()); flush(stdout())
+
+### Name: add_text
+### Title: Add Text
+### Aliases: add_text
+
+### ** Examples
+
+
+
+
+
+
+cleanEx()
+nameEx("light_settings")
+### * light_settings
+
+flush(stderr()); flush(stdout())
+
+### Name: light_settings
+### Title: Light Settings
+### Aliases: light_settings
+
+### ** Examples
+
+
+light <- list(
+  lightsPosition = c(-150, 75, 0)
+  , numberOfLights = 1
+  , ambientRatio = 0.2
+)
+
+
+
+
+cleanEx()
+nameEx("mapdeck_style")
+### * mapdeck_style
+
+flush(stderr()); flush(stdout())
+
+### Name: mapdeck_style
+### Title: Mapdeck Style
+### Aliases: mapdeck_style
+
+### ** Examples
+
+
+
+
+
+cleanEx()
+nameEx("pipe")
+### * pipe
+
+flush(stderr()); flush(stdout())
+
+### Name: %>%
+### Title: Pipe
+### Aliases: %>%
+
+### ** Examples
+
+
+
+
+### * <FOOTER>
+###
+cleanEx()
+options(digits = 7L)
+base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+grDevices::dev.off()
+###
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "\\(> \\)?### [*]+" ***
+### End: ***
+quit('no')

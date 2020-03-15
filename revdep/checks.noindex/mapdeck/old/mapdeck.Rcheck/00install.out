@@ -1,0 +1,220 @@
+* installing *source* package ‘mapdeck’ ...
+** package ‘mapdeck’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c RcppExports.cpp -o RcppExports.o
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c arc.cpp -o arc.o
+In file included from arc.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c geojson.cpp -o geojson.o
+In file included from geojson.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c grid.cpp -o grid.o
+In file included from grid.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c hexagon.cpp -o hexagon.o
+In file included from hexagon.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c line.cpp -o line.o
+In file included from line.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c path.cpp -o path.o
+In file included from path.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c pointcloud.cpp -o pointcloud.o
+In file included from pointcloud.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c polygon.cpp -o polygon.o
+In file included from polygon.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c scatterplot.cpp -o scatterplot.o
+In file included from scatterplot.cpp:6:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c screengrid.cpp -o screengrid.o
+In file included from screengrid.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG -DSTRICT_R_HEADERS -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/geojsonsf/old/geojsonsf/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/jsonify/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/rapidjsonr/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/Rcpp/include" -I"/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include" -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include -I../inst/include -fPIC  -Wall -g -O2  -c text.cpp -o text.o
+In file included from text.cpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/spatialwidget/include/spatialwidget/spatialwidget.hpp:7:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours/colours_hex.hpp:5:
+In file included from /Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/colourvalues/include/colourvalues/colours.hpp:10:
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/math/interpolators/cubic_b_spline.hpp:28:1: warning: This header is deprecated. Use <boost/math/interpolators/cardinal_cubic_b_spline.hpp> instead. [-W#pragma-messages]
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/header_deprecated.hpp:23:37: note: expanded from macro 'BOOST_HEADER_DEPRECATED'
+# define BOOST_HEADER_DEPRECATED(a) BOOST_PRAGMA_MESSAGE("This header is deprecated. Use " a " instead.")
+                                    ^
+/Users/dave/Documents/github/geojsonsf/revdep/library.noindex/mapdeck/BH/include/boost/config/pragma_message.hpp:24:34: note: expanded from macro 'BOOST_PRAGMA_MESSAGE'
+# define BOOST_PRAGMA_MESSAGE(x) _Pragma(BOOST_STRINGIZE(message(x)))
+                                 ^
+<scratch space>:14:2: note: expanded from here
+ message("This header is deprecated. Use " "<boost/math/interpolators/cardinal_cubic_b_spline.hpp>" " instead.")
+ ^
+1 warning generated.
+ccache /usr/local/clang8/bin/clang++ -std=gnu++11 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup -single_module -multiply_defined suppress -L/Library/Frameworks/R.framework/Resources/lib -L/usr/local/clang8/lib -o mapdeck.so RcppExports.o arc.o geojson.o grid.o hexagon.o line.o path.o pointcloud.o polygon.o scatterplot.o screengrid.o text.o -F/Library/Frameworks/R.framework/.. -framework R -Wl,-framework -Wl,CoreFoundation
+ld: warning: text-based stub file /System/Library/Frameworks//CoreFoundation.framework/CoreFoundation.tbd and library file /System/Library/Frameworks//CoreFoundation.framework/CoreFoundation are out of sync. Falling back to library file for linking.
+installing to /Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/mapdeck/old/mapdeck.Rcheck/00LOCK-mapdeck/00new/mapdeck/libs
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (mapdeck)

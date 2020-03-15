@@ -1,0 +1,115 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "spatialwidget"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('spatialwidget')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("widget_line")
+> ### * widget_line
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: widget_line
+> ### Title: Widget Line
+> ### Aliases: widget_line
+> 
+> ### ** Examples
+> 
+> 
+> ## use default stroke options
+> l <- widget_line( widget_roads, legend = TRUE )
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("widget_od")
+> ### * widget_od
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: widget_od
+> ### Title: Widget OD
+> ### Aliases: widget_od
+> 
+> ### ** Examples
+> 
+> 
+> l <- widget_od( data = widget_arcs, origin = "origin", destination = "destination", legend = FALSE )
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("widget_point")
+> ### * widget_point
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: widget_point
+> ### Title: Widget Point
+> ### Aliases: widget_point
+> 
+> ### ** Examples
+> 
+> 
+> l <- widget_point( data = widget_capitals, legend = FALSE )
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("widget_polygon")
+> ### * widget_polygon
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: widget_polygon
+> ### Title: Widget Polygon
+> ### Aliases: widget_polygon
+> 
+> ### ** Examples
+> 
+> 
+> l <- widget_polygon( widget_melbourne, legend = FALSE )
+> l <- widget_polygon( widget_melbourne, fill_colour = "AREASQKM16", legend = TRUE )
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.306 0.023 0.337 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

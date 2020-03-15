@@ -1,0 +1,11 @@
+{
+    "Results": {
+        "Message": "Success",
+        "LuValues": [
+            {
+                "ValueCode": "00300",
+                "ValueDescription": "Oxygen, dissolved [DO]"
+            }
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+> print.tgm_capabilities(caps)
+Targomo Config Version: targomo-config 36814b7
+
+Transit capabilities:
+=========================================
+                        property    value
+1                     min-time-s        0
+2              min-transfer-time      180
+3  changing-transit-penalty-time      180
+4                       min-date 20190320
+5  entering-transit-penalty-time       90
+6                      available        1
+7   leaving-transit-penalty-time       90
+8                     max-time-s 10000000
+9         default-frame-duration    10800
+10                      max-date 20190905
+11         default-transfer-time      180
+=========================================
+
+Default speeds:
+=========================================
+                       property value
+1 default-bike-downhill-penalty   -10
+2            default-bike-speed    15
+3   default-bike-uphill-penalty    20
+4 default-walk-downhill-penalty     0
+5            default-walk-speed     5
+6   default-walk-uphill-penalty    10
+=========================================
+

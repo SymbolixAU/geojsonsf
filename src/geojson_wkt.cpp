@@ -64,19 +64,19 @@ void object_separator(std::ostringstream& os) {
 	os << ",";
 }
 
-void coord_separator(std::ostringstream& os, int i, int n) {
+void coord_separator(std::ostringstream& os, R_xlen_t i, R_xlen_t n) {
   if (i < (n - 1) ) {
     os << ",";
   }
 }
 
-void line_separator_wkt(std::ostringstream& os, int i, int n) {
+void line_separator_wkt(std::ostringstream& os, R_xlen_t i, R_xlen_t n) {
   if (i < (n - 1) ) {
     os << "),(";
   }
 }
 
-void polygon_separate_wkt(std::ostringstream& os, int i, int n) {
+void polygon_separate_wkt(std::ostringstream& os, R_xlen_t i, R_xlen_t n) {
 	if (i < (n - 1) ) {
     os << ")),((";
 	}

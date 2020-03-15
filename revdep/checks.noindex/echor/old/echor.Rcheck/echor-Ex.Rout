@@ -1,0 +1,193 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "echor"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('echor')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("downloadDMRs")
+> ### * downloadDMRs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: downloadDMRs
+> ### Title: Download Multiple DMRs
+> ### Aliases: downloadDMRs
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoAirGetFacilityInfo")
+> ### * echoAirGetFacilityInfo
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoAirGetFacilityInfo
+> ### Title: Downloads EPA ECHO permitted air emitter information
+> ### Aliases: echoAirGetFacilityInfo
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoAirGetMeta")
+> ### * echoAirGetMeta
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoAirGetMeta
+> ### Title: Downloads EPA ECHO Air Facility Metadata
+> ### Aliases: echoAirGetMeta
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoGetCAAPR")
+> ### * echoGetCAAPR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoGetCAAPR
+> ### Title: Download EPA ECHO emissions inventory report data
+> ### Aliases: echoGetCAAPR
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoGetEffluent")
+> ### * echoGetEffluent
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoGetEffluent
+> ### Title: Downloads EPA ECHO DMR records of dischargers with NPDES permits
+> ### Aliases: echoGetEffluent
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoSDWGetMeta")
+> ### * echoSDWGetMeta
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoSDWGetMeta
+> ### Title: Downloads EPA ECHO Safe Drinking Water Facilities Metadata
+> ### Aliases: echoSDWGetMeta
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoSDWGetSystems")
+> ### * echoSDWGetSystems
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoSDWGetSystems
+> ### Title: Downloads public water system information
+> ### Aliases: echoSDWGetSystems
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoWaterGetFacilityInfo")
+> ### * echoWaterGetFacilityInfo
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoWaterGetFacilityInfo
+> ### Title: Downloads EPA ECHO water facility information
+> ### Aliases: echoWaterGetFacilityInfo
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoWaterGetMeta")
+> ### * echoWaterGetMeta
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoWaterGetMeta
+> ### Title: Downloads EPA ECHO Water Facility Metadata
+> ### Aliases: echoWaterGetMeta
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("echoWaterGetParams")
+> ### * echoWaterGetParams
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: echoWaterGetParams
+> ### Title: Search parameter codes for Clean Water Act permits on EPA ECHO
+> ### Aliases: echoWaterGetParams
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.848 0.053 1.234 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

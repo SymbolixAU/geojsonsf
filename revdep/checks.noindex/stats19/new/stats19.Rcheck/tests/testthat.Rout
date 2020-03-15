@@ -1,0 +1,94 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(stats19)
+Data provided under OGL v3.0. Cite the source and link to:
+www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+> 
+> test_check("stats19")
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Vehicles_2016.zip'
+Content type 'application/x-zip-compressed' length 2713982 bytes (2.6 MB)
+==================================================
+downloaded 2.6 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Casualties_2016.zip'
+Content type 'application/x-zip-compressed' length 1236846 bytes (1.2 MB)
+==================================================
+downloaded 1.2 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/DfTRoadSafety_Vehicles_2009.zip'
+Content type 'application/x-zip-compressed' length 3000828 bytes (2.9 MB)
+==================================================
+downloaded 2.9 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/DfTRoadSafety_Casualties_2009.zip'
+Content type 'application/x-zip-compressed' length 1182062 bytes (1.1 MB)
+==================================================
+downloaded 1.1 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/DfTRoadSafety_Accidents_2009.zip'
+Content type 'application/x-zip-compressed' length 5024433 bytes (4.8 MB)
+==================================================
+downloaded 4.8 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Vehicles_2017.zip'
+Content type 'application/x-zip-compressed' length 2584589 bytes (2.5 MB)
+==================================================
+downloaded 2.5 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/DfTRoadSafety_Casualties_2010.zip'
+Content type 'application/x-zip-compressed' length 1114063 bytes (1.1 MB)
+==================================================
+downloaded 1.1 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/RoadSafetyData_Accidents_2015.zip'
+Content type 'application/x-zip-compressed' length 4123639 bytes (3.9 MB)
+==================================================
+downloaded 3.9 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafety_Accidents_2016.zip'
+Content type 'application/x-zip-compressed' length 4748166 bytes (4.5 MB)
+==================================================
+downloaded 4.5 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Vehicles_2016.zip'
+Content type 'application/x-zip-compressed' length 2713982 bytes (2.6 MB)
+==================================================
+downloaded 2.6 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Accidents_2017.zip'
+Content type 'application/x-zip-compressed' length 3997883 bytes (3.8 MB)
+==================================================
+downloaded 3.8 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Casualties_2016.zip'
+Content type 'application/x-zip-compressed' length 1236846 bytes (1.2 MB)
+==================================================
+downloaded 1.2 MB
+
+trying URL 'http://data.dft.gov.uk.s3.amazonaws.com/road-accidents-safety-data/dftRoadSafetyData_Casualties_2017.zip'
+Content type 'application/x-zip-compressed' length 1169376 bytes (1.1 MB)
+==================================================
+downloaded 1.1 MB
+
+══ testthat results  ════════════════════════════════════════════════════════════════════════════════════
+[ OK: 72 | SKIPPED: 4 | WARNINGS: 12 | FAILED: 0 ]
+> 
+> proc.time()
+   user  system elapsed 
+212.908  13.567 399.960 

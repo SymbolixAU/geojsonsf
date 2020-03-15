@@ -1,0 +1,1071 @@
+{
+    "Results": {
+        "Message": "Success",
+        "ResultColumns": [
+            {
+                "ColumnName": "AIR_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "200",
+                "ColumnID": "1",
+                "ObjectName": "AIRName",
+                "Description": "The name of the AIR Facility."
+            },
+            {
+                "ColumnName": "SOURCE_ID",
+                "DataType": "VARCHAR2",
+                "DataLength": "30",
+                "ColumnID": "2",
+                "ObjectName": "SourceID",
+                "Description": "Unique Identifier assigned by EPA."
+            },
+            {
+                "ColumnName": "AIR_STREET",
+                "DataType": "VARCHAR2",
+                "DataLength": "200",
+                "ColumnID": "3",
+                "ObjectName": "AIRStreet",
+                "Description": "The street address of the AIR facility location."
+            },
+            {
+                "ColumnName": "AIR_CITY",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "4",
+                "ObjectName": "AIRCity",
+                "Description": "The city where the AIR facility is located."
+            },
+            {
+                "ColumnName": "AIR_STATE",
+                "DataType": "CHAR",
+                "DataLength": "2",
+                "ColumnID": "5",
+                "ObjectName": "AIRState",
+                "Description": "The state where the AIR facility is located."
+            },
+            {
+                "ColumnName": "LOCAL_CONTROL_REGION_CODE",
+                "DataType": "CHAR",
+                "DataLength": "3",
+                "ColumnID": "6",
+                "ObjectName": "LocalControlRegionCode",
+                "Description": "Code for regions within a state. Search criteria for DFR in OTIS."
+            },
+            {
+                "ColumnName": "AIR_ZIP",
+                "DataType": "VARCHAR2",
+                "DataLength": "10",
+                "ColumnID": "7",
+                "ObjectName": "AIRZip",
+                "Description": "The five-digit zip code of the AIR facility."
+            },
+            {
+                "ColumnName": "REGISTRY_ID",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "8",
+                "ObjectName": "RegistryID",
+                "Description": "An internal 12-digit Facility Registry Service (FRS) tracking number used to tie all facility data together in EPA regulatory program databases."
+            },
+            {
+                "ColumnName": "AIR_COUNTY",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "9",
+                "ObjectName": "AIRCounty",
+                "Description": "The name of the county where the AIR facility is located."
+            },
+            {
+                "ColumnName": "AIR_EPA_REGION",
+                "DataType": "CHAR",
+                "DataLength": "2",
+                "ColumnID": "10",
+                "ObjectName": "AIREPARegion",
+                "Description": "The EPA region where the AIR facility is located."
+            },
+            {
+                "ColumnName": "FAC_FEDERAL_AGENCY_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "15",
+                "ColumnID": "11",
+                "ObjectName": "FacFederalAgencyCode",
+                "Description": "Indicates the federal agency, as classified in FRS. Federal agencies are installations that are owned and operated by the U.S. government. The five-character code consists of a letter followed by four numbers. There are four possible letters that can occupy the first character position: C = Civilian Federal Agency; D = Department of Defense; E = Department of Energy; X = Unknown. The second and third characters represent the agency code, while the fourth and fifth characters represent the bureau code."
+            },
+            {
+                "ColumnName": "FAC_FEDERAL_AGENCY_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "150",
+                "ColumnID": "12",
+                "ObjectName": "FacFederalAgencyName",
+                "Description": "Indicates the name of the federal agency, as classified in FRS. Federal agencies are installations that are owned and operated by the U.S. government."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_HUC",
+                "DataType": "VARCHAR2",
+                "DataLength": "8",
+                "ColumnID": "13",
+                "ObjectName": "FacDerivedHuc",
+                "Description": "The 8-digit Hydrologic Unit Code (HUC) of the watershed in which the facility resides. A HUC number is assigned to every watershed in the nation and uniquely identifies the watershed."
+            },
+            {
+                "ColumnName": "FAC_FIPS_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "15",
+                "ColumnID": "14",
+                "ObjectName": "FacFIPSCode",
+                "Description": "The 2-digit Federal Information Processing Standards (FIPS) code to identify the county that a facility is located in."
+            },
+            {
+                "ColumnName": "FAC_INDIAN_CNTRY_FLG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "15",
+                "ObjectName": "FacIndianCntryFlg",
+                "Description": "Flag showing Y/N whether the facility is located in Indian Country."
+            },
+            {
+                "ColumnName": "AIR_INDIAN_CNTRY_FLG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "16",
+                "ObjectName": "AIRIndianCntryFlg",
+                "Description": "Flag indicating whether the AIR facility is located in Indian country."
+            },
+            {
+                "ColumnName": "FAC_INDIAN_SPATIAL_FLG",
+                "DataType": "VARCHAR2",
+                "DataLength": "1",
+                "ColumnID": "17",
+                "ObjectName": "FacIndianSpatialFlg",
+                "Description": "Returns &#8220;Y&#8221; if a facility is located within a tribal spatial boundary as defined by the U.S. Census Bureau 2010 tribal boundary layer data for tribes in the lower 48 states and Bureau of Land Management Alaska State Office data for native villages in Alaska. Returns &#8220;N&#8221; if a facility is not located within a tribal or native Alaskan village area."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_TRIBES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "18",
+                "ObjectName": "FacDerivedTRIbes",
+                "Description": "The tribes or tribal territories located within 25 miles of the facility's location."
+            },
+            {
+                "ColumnName": "FAC_US_MEX_BORDER_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "19",
+                "ObjectName": "FacUsMexBorderFlg",
+                "Description": "A Y/N flag indicating that the facility is within 100KM of the US-Mexico Border."
+            },
+            {
+                "ColumnName": "FAC_SIC_CODES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "20",
+                "ObjectName": "FacSICCodes",
+                "Description": "Indicates the facility&#8217;s or permit's primary Standard Industrial Classification (SIC) Code. The SIC code describes the primary activity of the facility."
+            },
+            {
+                "ColumnName": "AIR_NAICS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "21",
+                "ObjectName": "AIRNAICS",
+                "Description": "The facility&#8217;s or permit's primary North American Industry Classification System (NAICS) Code."
+            },
+            {
+                "ColumnName": "FAC_LAT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "22",
+                "ObjectName": "FacLat",
+                "Description": "The latitude of the facility in decimal degrees expressed using the NAD83 horizontal datum. The coordinate comes from the FRS EPA Locational Reference Tables (LRT) file which represents the most accurate value for the facility based on the available spatial metadata."
+            },
+            {
+                "ColumnName": "FAC_LONG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "23",
+                "ObjectName": "FacLong",
+                "Description": "The longitude of the facility in decimal degrees expressed using the NAD83 horizontal datum. The coordinate comes from the FRS EPA Locational Reference Tables (LRT) file which represents the most accurate value for the facility based on the available spatial metadata."
+            },
+            {
+                "ColumnName": "AIR_PROGRAMS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "24",
+                "ObjectName": "AIRPrograms",
+                "Description": "Comma-delimited list of AIR programs."
+            },
+            {
+                "ColumnName": "AIR_MACTS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "25",
+                "ObjectName": "AIRMacts",
+                "Description": "The Maximum Achievable Control Technology (MACT) Subpart associated with the facility."
+            },
+            {
+                "ColumnName": "AIR_STATUS",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "26",
+                "ObjectName": "AIRStatus",
+                "Description": "The status of the AIR facility location."
+            },
+            {
+                "ColumnName": "AIR_UNIVERSE",
+                "DataType": "VARCHAR2",
+                "DataLength": "150",
+                "ColumnID": "27",
+                "ObjectName": "AIRUniverse",
+                "Description": "The program office defines each CAA Source ID and the associated permits as being Federally Reportable or Non-Federally Reportable. Under the CAA, federally reportable source include majors, synthetic minors, NESHAP Part 61 minors, minors with an unresolved High Priority Violation (HPV), with recent enforcement action, or included on a Compliance Monitoring Strategy plan."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_WBD",
+                "DataType": "VARCHAR2",
+                "DataLength": "14",
+                "ColumnID": "28",
+                "ObjectName": "FacDerivedWBD",
+                "Description": "The Hydrologic Unit Code (HUC-12) of the waterbody in which the facility resides, derived based on location data in FRS."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_WBD_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "80",
+                "ColumnID": "29",
+                "ObjectName": "FacDerivedWBDName",
+                "Description": "The 12 digit Watershed Boundary Dataset Name derived from the FRS Best Pick Coordinate"
+            },
+            {
+                "ColumnName": "CHESAPEAKE_BAY_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "30",
+                "ObjectName": "ChesapeakeBayFlag",
+                "Description": "Displays  Y  if the facility is located within the Chesapeake Bay watershed."
+            },
+            {
+                "ColumnName": "AIR_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "31",
+                "ObjectName": "AIRIDs",
+                "Description": "Air Facility System (AFS) ID."
+            },
+            {
+                "ColumnName": "CWA_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "32",
+                "ObjectName": "CWAIDs",
+                "Description": "A unique  ID assigned for each record/permit/site/facility within ICIS-NPDES. These identifiers are for used tracking purposes in the individual data systems."
+            },
+            {
+                "ColumnName": "RCRA_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "33",
+                "ObjectName": "RCRAIDs",
+                "Description": "A unique 12-character ID assigned for each record/permit/site/facility within the RCRAInfo database."
+            },
+            {
+                "ColumnName": "RMP_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "34",
+                "ObjectName": "RmpIDs",
+                "Description": "A unique ID assigned to each facility submitting a Risk Management Plan to EPA under the Risk Management Plan Rule."
+            },
+            {
+                "ColumnName": "SDWA_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "35",
+                "ObjectName": "SDWAIDs",
+                "Description": "A unique 9-character ID assigned for each public water system within the Safe Drinking Water Information System (SDWIS)."
+            },
+            {
+                "ColumnName": "TRI_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "36",
+                "ObjectName": "TRIIDs",
+                "Description": "A unique 15-character ID assigned for each facility within the Toxics Release Inventory (TRI) program. The format is ZZZZZNNNNNSSSSS, where ZZZZZ = ZIP code, NNNNN = the first 5 consonants of the name, and SSSSS = the first 5 non-blank non-special characters in the street address."
+            },
+            {
+                "ColumnName": "GHG_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "37",
+                "ObjectName": "GHGIDs",
+                "Description": "A unique ID assigned for each facility within EPA&#8217;s Greenhouse Gas Reporting Program (GHGRP) Emissions Data Sets."
+            },
+            {
+                "ColumnName": "EIS_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "38",
+                "ObjectName": "EisIDs",
+                "Description": "A unique ID assigned for each facility within EPA&#8217;s Emissions Inventory System (EIS) Database."
+            },
+            {
+                "ColumnName": "CAMD_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "39",
+                "ObjectName": "CamdIDs",
+                "Description": "Facility identifiers for the Clean Air Markets Division database."
+            },
+            {
+                "ColumnName": "AIR_COMPL_STATUS",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "40",
+                "ObjectName": "AIRComplStatus",
+                "Description": "The facility's recent violation status under the Clean Air Act."
+            },
+            {
+                "ColumnName": "AIR_HPV_STATUS",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "41",
+                "ObjectName": "AIRHpvStatus",
+                "Description": "Indicates whether the facility currently has an unresolved High Priority Violation (HPV) under the Clean Air Act."
+            },
+            {
+                "ColumnName": "AIR_MNTHS_WITH_HPV",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "42",
+                "ObjectName": "AIRMnthsWithHpv",
+                "Description": "The number of months in the last three years in which the permit or site is considered in High Priority Violation (HPV) status"
+            },
+            {
+                "ColumnName": "AIR_QTRS_WITH_HPV",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "43",
+                "ObjectName": "AIRQtrsWithHpv",
+                "Description": "The number of quarters in the last three years in which the permit or site is considered in High Priority Violation (HPV) status."
+            },
+            {
+                "ColumnName": "AIR_QTRS_WITH_VIOL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "44",
+                "ObjectName": "AIRQtrsWithViol",
+                "Description": "The number of quarters in the last three years in which the permit or site has had unresolved violation(s) reported."
+            },
+            {
+                "ColumnName": "AIR_POLL_RECENT_VIOL",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "45",
+                "ObjectName": "AIRPollRecentViol",
+                "Description": "The names of pollutants or pollutant categories with violations reported in the last year."
+            },
+            {
+                "ColumnName": "AIR_RECENT_VIOL_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "46",
+                "ObjectName": "AIRRecentViolCnt",
+                "Description": "The number of violations reported in the last year."
+            },
+            {
+                "ColumnName": "AIR_LAST_VIOL_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "47",
+                "ObjectName": "AIRLastViolDate",
+                "Description": "The date on which the most recent violation was reported."
+            },
+            {
+                "ColumnName": "AIR_EVAL_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "48",
+                "ObjectName": "AIREvalCnt",
+                "Description": "The number of compliance evaluations, under the Clean Air Act, occurring at the facility within the last five years."
+            },
+            {
+                "ColumnName": "AIR_DAYS_LAST_EVAL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "49",
+                "ObjectName": "AIRDaysLastEval",
+                "Description": "The number of days since the most recent compliance evaluation of the facility."
+            },
+            {
+                "ColumnName": "AIR_LAST_EVAL_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "50",
+                "ObjectName": "AIRLastEvalDate",
+                "Description": "The date on which the most recent Full Compliance Evaluation (FCE) of the facility by EPA or a state agency was completed."
+            },
+            {
+                "ColumnName": "AIR_LAST_EVAL_DATE_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "51",
+                "ObjectName": "AIRLastEvalDateEPA",
+                "Description": "The last Air Inspection Date performed by EPA."
+            },
+            {
+                "ColumnName": "AIR_LAST_EVAL_DATE_STATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "52",
+                "ObjectName": "AIRLastEvalDateState",
+                "Description": "The last Air Inspection Date performed by State or local authorities."
+            },
+            {
+                "ColumnName": "LAST_DATE_PCE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "53",
+                "ObjectName": "LastDatePce",
+                "Description": "The date on which the most recent Partial Compliance Evaluation (PCE) of the facility by EPA or a state agency was completed."
+            },
+            {
+                "ColumnName": "LAST_DATE_PCE_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "54",
+                "ObjectName": "LastDatePceEPA",
+                "Description": "The date on which the most recent Partial Compliance Evaluation (PCE) of the facility by EPA was completed."
+            },
+            {
+                "ColumnName": "LAST_DATE_PCE_STA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "55",
+                "ObjectName": "LastDatePceSta",
+                "Description": "The date on which the most recent Partial Compliance Evaluation (PCE) of the facility by a state agency was completed."
+            },
+            {
+                "ColumnName": "AIR_LAST_STCK_TEST_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "56",
+                "ObjectName": "AIRLastStckTestDate",
+                "Description": "The date on which the most recent stack test occurred."
+            },
+            {
+                "ColumnName": "AIR_LAST_STCK_TEST_RESULTS",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "57",
+                "ObjectName": "AIRLastStckTestResults",
+                "Description": "The result of the most recent stack test (Pass, Fail, Pending, or Blank)."
+            },
+            {
+                "ColumnName": "AIR_STACK_TEST_5_YR_ALL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "58",
+                "ObjectName": "AIRStackTest5YrAll",
+                "Description": null
+            },
+            {
+                "ColumnName": "AIR_STACK_TEST_5_YR_FAIL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "59",
+                "ObjectName": "AIRStackTest5YrFail",
+                "Description": null
+            },
+            {
+                "ColumnName": "FAC_NAA_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "60",
+                "ObjectName": "FacNaaFlag",
+                "Description": "Indicates whether the facility is located in a nonattainment area of the country, where air pollution levels persistently exceed the national ambient air quality standards. This flag does not indicate whether or not the facility has violated national ambient area quality standards."
+            },
+            {
+                "ColumnName": "FAC_TRI_REPORTER",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "61",
+                "ObjectName": "FacTRIReporter",
+                "Description": "Indicates whether facility reported to the Toxics Release Inventory (TRI) for the most recent reporting year."
+            },
+            {
+                "ColumnName": "FAC_TRI_AIR_RELEASES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "62",
+                "ObjectName": "FacTRIAIRReleases",
+                "Description": "The total chemical releases to air, in pounds, as reported to TRI by the facility for the most recent reporting year."
+            },
+            {
+                "ColumnName": "FAC_TRI_CARC_AIR_RELEASES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "63",
+                "ObjectName": "FacTRICarcAIRReleases",
+                "Description": "The pounds of chemicals considered to be carcinogens released to air, as reported to TRI for the most recent reporting year. Chemicals are classified as carcinogens under the requirements of the Occupational Safety and Health Administration (OSHA)."
+            },
+            {
+                "ColumnName": "FAC_TRI_HAPS_RELEASES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "64",
+                "ObjectName": "FacTRIHapsReleases",
+                "Description": "The pounds of chemicals classified as hazardous air pollutants (HAPS) released to air in pounds per year, as reported to TRI for the most recent reporting year."
+            },
+            {
+                "ColumnName": "FAC_EIS_AIR_RELEASES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "65",
+                "ObjectName": "FacEisAIRReleases",
+                "Description": "The amount of hazardous air pollutants released to air in tons per year, as reported in the most recent National Emissions Inventory (NEI)."
+            },
+            {
+                "ColumnName": "FAC_GHG_CO2_RELEASES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "66",
+                "ObjectName": "FacGHGCO2Releases",
+                "Description": "The annual sum of total release amounts and  associated quantities  of all linked Greenhouse Gas IDs from the Office of Air and Radiation  Summary 2010 Greenhouse Gas Data.  Units are reported as metric tons of CO2 equivalents per year (MTCO2e/year)."
+            },
+            {
+                "ColumnName": "AIR_IEA_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "67",
+                "ObjectName": "AIRIeaCnt",
+                "Description": "The total number of informal enforcement actions taken against the facility within the last five years."
+            },
+            {
+                "ColumnName": "AIR_FEA_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "68",
+                "ObjectName": "AIRFeaCnt",
+                "Description": "The total number of formal enforcement actions taken against the facility within the last five years."
+            },
+            {
+                "ColumnName": "AIR_LAST_IEA_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "69",
+                "ObjectName": "AIRLastIeaDate",
+                "Description": "The effective date of the most recent listed informal enforcement action taken against the facility."
+            },
+            {
+                "ColumnName": "AIR_LAST_IEA_DATE_STATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "70",
+                "ObjectName": "AIRLastIeaDateState",
+                "Description": "The effective date of the most recent listed informal enforcement action taken against the facility by a state agency."
+            },
+            {
+                "ColumnName": "AIR_LAST_IEA_DATE_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "71",
+                "ObjectName": "AIRLastIeaDateEPA",
+                "Description": "The effective date of the most recent listed informal enforcement action taken against the facility by EPA."
+            },
+            {
+                "ColumnName": "AIR_LAST_FEA_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "72",
+                "ObjectName": "AIRLastFeaDate",
+                "Description": "The effective date of the most recent listed formal enforcement action taken against the facility."
+            },
+            {
+                "ColumnName": "AIR_LAST_FEA_DATE_STATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "73",
+                "ObjectName": "AIRLastFeaDateState",
+                "Description": "The last Air Formal Enforcement Action Date take by State or Local authorities."
+            },
+            {
+                "ColumnName": "AIR_LAST_FEA_DATE_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "74",
+                "ObjectName": "AIRLastFeaDateEPA",
+                "Description": "The last Air Formal Enforcement Action Date take by EPA."
+            },
+            {
+                "ColumnName": "AIR_PENALTIES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "75",
+                "ObjectName": "AIRPenalties",
+                "Description": "The total dollar amount of assessed (or final) penalties taken against the facility within the last five years under the Clean Air Act. This value only includes penalties that have been entered in the national program database, ICIS-Air."
+            },
+            {
+                "ColumnName": "AIR_LAST_PENALTY_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "76",
+                "ObjectName": "AIRLastPenaltyDate",
+                "Description": "Indicates the date on which the most recent assessed (or final) penalty was taken against the facility for AIR."
+            },
+            {
+                "ColumnName": "OVER80_COUNT_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "77",
+                "ObjectName": "Over80CountUs",
+                "Description": "The number of primary EJSCREEN environmental justice (EJ) indexes exceeding the 80th or higher national percentile for the Census block group that the facility is located in."
+            },
+            {
+                "ColumnName": "PCTILE_PCTPRE1960_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "78",
+                "ObjectName": "PctilePctpre1960Us",
+                "Description": "The national percentile of the census block group for the EJSCREEN Lead paint indicator."
+            },
+            {
+                "ColumnName": "PCTILE_DPM_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "79",
+                "ObjectName": "PctileDpmUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN diesel particulate matter indicator."
+            },
+            {
+                "ColumnName": "PCTILE_CANCER_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "80",
+                "ObjectName": "PctileCancerUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN NATA air toxics cancer risk indicator."
+            },
+            {
+                "ColumnName": "PCTILE_RESP_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "81",
+                "ObjectName": "PctileRespUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN NATA respiratory hazard index indicator."
+            },
+            {
+                "ColumnName": "PCTILE_TRAFFIC_SCORE_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "82",
+                "ObjectName": "PctileTrafficScoreUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN Traffic proximity and volume indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_NPDES_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "83",
+                "ObjectName": "PctileProximityNPDESUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to major direct water dischargers indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_NPL_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "84",
+                "ObjectName": "PctileProximityNplUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to National Priorities List (NPL) sites indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_RMP_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "85",
+                "ObjectName": "PctileProximityRmpUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to Risk Management Plan (RMP) sites indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_TSDF_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "86",
+                "ObjectName": "PctileProximityTsdfUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to Treatment Storage and Disposal Facilities (TSDFs) indicator."
+            },
+            {
+                "ColumnName": "PCTILE_O3_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "87",
+                "ObjectName": "PctileO3Us",
+                "Description": "The national percentile of the census block group for the EJSCREEN ozone indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PM_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "88",
+                "ObjectName": "PctilePmUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN particulate matter indicator."
+            },
+            {
+                "ColumnName": "FAC_POPULATION_DENSITY",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "89",
+                "ObjectName": "FacPopulationDensity",
+                "Description": "The number of persons per square mile in the profiled area."
+            },
+            {
+                "ColumnName": "FAC_PERCENT_MINORITY",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "90",
+                "ObjectName": "FacPercentMinority",
+                "Description": "Percent Minority is the percentage of the population of the given area that is considered minority. Statistics are shown for the area within a 3-mile radius of each facility."
+            },
+            {
+                "ColumnName": "EPA_SYSTEM",
+                "DataType": "VARCHAR2",
+                "DataLength": "10",
+                "ColumnID": "91",
+                "ObjectName": "EPASystem",
+                "Description": "The EPA data system in which permit and facility records are kept. EPA's Facility Registry System (FRS) links all program database records (such as permit IDs and IDs facilities use in reporting to EPA) together. The following list describes the individual data systems that are linked to from the detailed facility report: - AFS: Air Facility System for Clean Air Act stationary source programs.- ICP: Integrated Compliance Information System for Clean Water Act programs monitoring National Pollutant Discharge Elimination System (NPDES) permits.- RCR: Resource Conservation and Recovery Act Information System (RCRAInfo) for tracking the Resource Conservation and Recovery Act (RCRA) programs.- NCDB: National Compliance Database System for monitoring national performance of the Toxic Substance Control Act (TSCA); the Emergency Planning and Right-to-Know Act, Section 313 (EPCRA); the Asbestos Hazard Emergency Response (AHERA); and the Federal Insecticide, Fungicide, and Rodenticide Act (FIFRA).- TRI: Toxics Release Inventory for Emergency Planning and Community Right-to-Know Act, Section 313 submissions.- NEI: National Emissions Inventory database contains information on stationary and mobile sources that emit criteria air pollutants and their precursors, as well as hazardous air pollutants (HAPs). The database includes estimates of annual emissions, by source, of air pollutants in each area of the country, on an annual basis.- TSCA: Toxic Substances Control Act addressing the production, importation, use, and disposal of specific chemicals."
+            },
+            {
+                "ColumnName": "STATUTE",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "92",
+                "ObjectName": "Statute",
+                "Description": "The name of the statute associated with each of the permits and identifiers linked to the facility: - CAA = the Clean Air Act- CWA = the Clean Water Act- RCRA = the Resource Conservation and Recovery Act- EP313 = the Emergency Planning and Community Right-to-Know Act, Section 313 (also known as the Toxics Release Inventory Program)- TSCA = the Toxic Substances Control Act- SDWA = the Safe Drinking Water Act"
+            },
+            {
+                "ColumnName": "LOCAL_CONTROL_REGION_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "70",
+                "ColumnID": "93",
+                "ObjectName": "LocalControlRegionName",
+                "Description": "Regions within a state. Search criteria for DFR in OTIS."
+            },
+            {
+                "ColumnName": "AIR_FIPS_CODE",
+                "DataType": "NVARCHAR2",
+                "DataLength": "64",
+                "ColumnID": "94",
+                "ObjectName": "AIRFIPSCode",
+                "Description": "A 5 digit combination of the 2 digit Federal Information Processing Standards (FIPS) code for the state and the 3 digit FIPS code of the county that a facility is located in."
+            },
+            {
+                "ColumnName": "AIR_TRIBAL_EPAIDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "95",
+                "ObjectName": "AIRTRIbalEPAids",
+                "Description": "The EPA Tribal or Native Alaskan Village Identifier for facilities, that based on their Best Pick FRS spatial coordinate, are within a Tribal or Alaskan Village area."
+            },
+            {
+                "ColumnName": "AIR_TRIBAL_NAMES",
+                "DataType": "VARCHAR2",
+                "DataLength": "200",
+                "ColumnID": "96",
+                "ObjectName": "AIRTRIbalNames",
+                "Description": "The EPA Tribal or Native Alaskan Village Name for facilities, that based on their Best Pick FRS spatial coordinate, are within a Tribal or Alaskan Village area."
+            },
+            {
+                "ColumnName": "AIR_CASE_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "97",
+                "ObjectName": "AIRCaseIDs",
+                "Description": "Space-delimited list of AIR cases associated with the facility."
+            },
+            {
+                "ColumnName": "AIR_LAST_STCK_DATE_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "98",
+                "ObjectName": "AIRLastStckDateEPA",
+                "Description": "The date on which the most recent stack test by EPA occurred."
+            },
+            {
+                "ColumnName": "AIR_LAST_STCK_DATE_STATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "99",
+                "ObjectName": "AIRLastStckDateState",
+                "Description": "The date on which the most recent stack test by a state agency occurred."
+            },
+            {
+                "ColumnName": "FAC_MAP_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "100",
+                "ObjectName": "FacMapFlg",
+                "Description": "Graphical indicator denoting whether geographical data required to map a facility are available."
+            },
+            {
+                "ColumnName": "FAC_MAP_ICON",
+                "DataType": "VARCHAR2",
+                "DataLength": "20",
+                "ColumnID": "101",
+                "ObjectName": "FacMapIcon",
+                "Description": "The default map icon image file calculated for the facility by the ECHO program."
+            },
+            {
+                "ColumnName": "FAC_GHG_REPORTER",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "102",
+                "ObjectName": "FacGHGReporter",
+                "Description": "Indicates whether the facility reports to the Greenhouse Gas Reporting Program (GHGRP)"
+            },
+            {
+                "ColumnName": "FAC_EIS_REPORTER",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "103",
+                "ObjectName": "FacEisReporter",
+                "Description": "Indicates whether the facility reports to the Emissions Inventory System (EIS)."
+            },
+            {
+                "ColumnName": "FAC_CAMD_REPORTER",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "104",
+                "ObjectName": "FacCamdReporter",
+                "Description": "Indicates whether the facility reports to the Clean Air Markets Division (CAMD)."
+            },
+            {
+                "ColumnName": "AIR_FACILITY_TYPE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "105",
+                "ObjectName": "AIRFacilityTypeCode",
+                "Description": "A three-character code indicating if plant is government facility.COR - CorporationCNG - County GovernmentDIS - DistrictFDF - Federal Facility (U.S. Government)GOC - GOCO (Gov Owned/Contractor Operated)IND - IndividualMXO - Mixed Ownership (e.g., Public/Private)MWD - Municipal or Water DistrictCTG- MunicipalityNON - Non-GovernmentPOF - Privately Owned FacilitySDT - School DistrictSTF - State GovernmentTRB - Tribal GovernmentUNK - Unknown"
+            },
+            {
+                "ColumnName": "AIR_MAJOR_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "106",
+                "ObjectName": "AIRMajorFlag",
+                "Description": "Indicated whether the facility is designated as a major facilitiy."
+            },
+            {
+                "ColumnName": "AIR_3YR_COMPL_QTRS_HISTORY",
+                "DataType": "VARCHAR2",
+                "DataLength": "12",
+                "ColumnID": "107",
+                "ObjectName": "AIR3yrComplQtrsHistory",
+                "Description": "The facility's 3-year compliance status history by quarter (3-month period). Each character represents a quarter of compliance, going from oldest to most recent. Character values correspond to the following compliance statuses:_ -No Violation IdentifiedV -Violation IdentifiedS -High Priority ViolationU - Undetermined"
+            },
+            {
+                "ColumnName": "HAS_POLL_RPT",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "108",
+                "ObjectName": "HasPollRpt",
+                "Description": "???"
+            },
+            {
+                "ColumnName": "CENSUS_BLOCK_GROUP",
+                "DataType": "VARCHAR2",
+                "DataLength": "12",
+                "ColumnID": "109",
+                "ObjectName": "CensusBlockGroup",
+                "Description": "A geographic unit used by the United States Census Bureau, generally defined to contain between 600 and 3,000 people."
+            },
+            {
+                "ColumnName": "MAX_PCTILE_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "110",
+                "ObjectName": "MaxPctileUs",
+                "Description": "The maximum percentile from all individual EJSCREEN indicators."
+            },
+            {
+                "ColumnName": "EJSCREEN_FLAG_US",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "111",
+                "ObjectName": "EjscreenFlagUs",
+                "Description": "A Y/N indicator identifying whether or not the facility is within an Environmental Justice area."
+            },
+            {
+                "ColumnName": "EJSCREEN_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "112",
+                "ObjectName": "EjscreenFlag",
+                "Description": "A Y/N indicator identifying whether or not the facility is within an Environmental Justice area."
+            },
+            {
+                "ColumnName": "TRIBAL_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "113",
+                "ObjectName": "TRIbalFlag",
+                "Description": "A flag indicating that the facility is within a tribal area."
+            },
+            {
+                "ColumnName": "CURR_SV_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "114",
+                "ObjectName": "CurrSvFlag",
+                "Description": "Indicates if the facility has a current significant violation. 1 = Yes"
+            },
+            {
+                "ColumnName": "VIOL_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "115",
+                "ObjectName": "ViolFlag",
+                "Description": "Indicates if the facility had a violation within the last 3 years. 1 = Yes"
+            },
+            {
+                "ColumnName": "CURR_VIO_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "116",
+                "ObjectName": "CurrVioFlag",
+                "Description": "Indicates if the facility has a current violation. 1 = Yes"
+            },
+            {
+                "ColumnName": "INSP_5YR_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "117",
+                "ObjectName": "Insp5yrFlag",
+                "Description": "Indicates if the facility has an inspection within the last 5 years. 1 = Yes"
+            },
+            {
+                "ColumnName": "EA_5YR_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "118",
+                "ObjectName": "Ea5yrFlag",
+                "Description": "Indicates if the facility has a formal enforcement action within the last 5 years. 1 = Yes"
+            },
+            {
+                "ColumnName": "INFEA_5YR_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "119",
+                "ObjectName": "Infea5yrFlag",
+                "Description": "Indicates if the facility has an informal enforcement action within the last 5 years. 1 = Yes."
+            },
+            {
+                "ColumnName": "LOWER_48",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "120",
+                "ObjectName": "Lower48",
+                "Description": "Flag showing Y/N whether location is within the contiguous (lower 48) United States."
+            },
+            {
+                "ColumnName": "ACTIVE_LOWER_48",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "121",
+                "ObjectName": "ActiveLower48",
+                "Description": "A Y/N indicator indicating that the facility is active and located within the lower 48 contiguous US States."
+            },
+            {
+                "ColumnName": "COLLECTION_METHOD",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "122",
+                "ObjectName": "CollectionMethod",
+                "Description": "??"
+            },
+            {
+                "ColumnName": "REFERENCE_POINT",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "123",
+                "ObjectName": "ReferencePoint",
+                "Description": "??"
+            },
+            {
+                "ColumnName": "CALCULATED_ACCURACY_METERS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "124",
+                "ObjectName": "CalculatedAccuracyMeters",
+                "Description": "The estimated accuracy in Meters for the facility's geospatial coordinate."
+            },
+            {
+                "ColumnName": "MAP",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "125",
+                "ObjectName": "Map",
+                "Description": "No Longer Used."
+            },
+            {
+                "ColumnName": "WEB_DOCS",
+                "DataType": "VARCHAR2",
+                "DataLength": "20",
+                "ColumnID": "126",
+                "ObjectName": "WebDocs",
+                "Description": "Contains flags that identify what web accessible documents are available for the facility."
+            },
+            {
+                "ColumnName": "NAA_CATEGORIES",
+                "DataType": "CHAR",
+                "DataLength": "240",
+                "ColumnID": "127",
+                "ObjectName": "NaaCategories",
+                "Description": "The nonattainment area categories that the facility is in, derived spatially based on the facility's geographic coordinates in FRS."
+            },
+            {
+                "ColumnName": "NAA_POLLUTANTS",
+                "DataType": "CHAR",
+                "DataLength": "120",
+                "ColumnID": "128",
+                "ObjectName": "NaaPollutants",
+                "Description": "All criteria pollutants that the facility is in nonattainment for."
+            },
+            {
+                "ColumnName": "FAC_COUNTY_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "129",
+                "ObjectName": "FacCountyName",
+                "Description": "The facility county name from EPA's Facility Registry System"
+            },
+            {
+                "ColumnName": "FAC_STD_COUNTY_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "300",
+                "ColumnID": "130",
+                "ObjectName": "FacStdCountyName",
+                "Description": "The standardized  facility county name from EPA's Facility Registry System"
+            },
+            {
+                "ColumnName": "AIR_NSPS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "131",
+                "ObjectName": "AIRNsps",
+                "Description": "The New Source Performance Standards (NSPS) Subpart associated with the facility."
+            },
+            {
+                "ColumnName": "AIR_NSPSM",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "132",
+                "ObjectName": "AIRNspsm",
+                "Description": "The Non-Major New Source Performance Standards (NSPS) Subpart associated with the facility."
+            },
+            {
+                "ColumnName": "SCORE",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "133",
+                "ObjectName": "Score",
+                "Description": null
+            }
+        ]
+    }
+}

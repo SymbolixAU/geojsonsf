@@ -1,0 +1,575 @@
+{
+    "Results": {
+        "Message": "Success",
+        "ResultColumns": [
+            {
+                "ColumnName": "PWS_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "1",
+                "ObjectName": "PWSName",
+                "Description": null
+            },
+            {
+                "ColumnName": "PWSID",
+                "DataType": "VARCHAR2",
+                "DataLength": "9",
+                "ColumnID": "2",
+                "ObjectName": "PWSId",
+                "Description": null
+            },
+            {
+                "ColumnName": "CITIES_SERVED",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "3",
+                "ObjectName": "CitiesServed",
+                "Description": null
+            },
+            {
+                "ColumnName": "STATE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "2",
+                "ColumnID": "4",
+                "ObjectName": "StateCode",
+                "Description": null
+            },
+            {
+                "ColumnName": "ZIP_CODES_SERVED",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "5",
+                "ObjectName": "ZipCodesServed",
+                "Description": null
+            },
+            {
+                "ColumnName": "COUNTIES_SERVED",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "6",
+                "ObjectName": "CountiesServed",
+                "Description": null
+            },
+            {
+                "ColumnName": "EPA_REGION",
+                "DataType": "VARCHAR2",
+                "DataLength": "2",
+                "ColumnID": "7",
+                "ObjectName": "EPARegion",
+                "Description": null
+            },
+            {
+                "ColumnName": "INDIAN_COUNTRY",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "8",
+                "ObjectName": "IndianCountry",
+                "Description": null
+            },
+            {
+                "ColumnName": "PWS_TYPE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "6",
+                "ColumnID": "9",
+                "ObjectName": "PWSTypeCode",
+                "Description": null
+            },
+            {
+                "ColumnName": "PWS_TYPE_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "10",
+                "ObjectName": "PWSTypeDesc",
+                "Description": null
+            },
+            {
+                "ColumnName": "PRIMARY_SOURCE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "4",
+                "ColumnID": "11",
+                "ObjectName": "PrimarySourceCode",
+                "Description": null
+            },
+            {
+                "ColumnName": "PRIMARY_SOURCE_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "12",
+                "ObjectName": "PrimarySourceDesc",
+                "Description": null
+            },
+            {
+                "ColumnName": "POPULATION_SERVED_COUNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "13",
+                "ObjectName": "PopulationServedCount",
+                "Description": null
+            },
+            {
+                "ColumnName": "PWS_ACTIVITY_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "1",
+                "ColumnID": "14",
+                "ObjectName": "PWSActivityCode",
+                "Description": null
+            },
+            {
+                "ColumnName": "PWS_ACTIVITY_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "15",
+                "ObjectName": "PWSActivityDesc",
+                "Description": null
+            },
+            {
+                "ColumnName": "OWNER_TYPE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "1",
+                "ColumnID": "16",
+                "ObjectName": "OwnerTypeCode",
+                "Description": null
+            },
+            {
+                "ColumnName": "OWNER_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "17",
+                "ObjectName": "OwnerDesc",
+                "Description": null
+            },
+            {
+                "ColumnName": "QTRS_WITH_VIO",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "18",
+                "ObjectName": "QtrsWithVio",
+                "Description": null
+            },
+            {
+                "ColumnName": "QTRS_WITH_SNC",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "19",
+                "ObjectName": "QtrsWithSNC",
+                "Description": null
+            },
+            {
+                "ColumnName": "SERIOUS_VIOLATOR",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "20",
+                "ObjectName": "SeriousViolator",
+                "Description": null
+            },
+            {
+                "ColumnName": "HEALTH_FLAG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "21",
+                "ObjectName": "HealthFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "MR_FLAG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "22",
+                "ObjectName": "MrFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "PN_FLAG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "23",
+                "ObjectName": "PnFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "OTHER_FLAG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "24",
+                "ObjectName": "OtherFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "NEW_VIO_FLG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "25",
+                "ObjectName": "NewVioFlg",
+                "Description": null
+            },
+            {
+                "ColumnName": "RULES_VIO_3YR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "26",
+                "ObjectName": "RulesVio3yr",
+                "Description": null
+            },
+            {
+                "ColumnName": "RULES_VIO",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "27",
+                "ObjectName": "RulesVio",
+                "Description": null
+            },
+            {
+                "ColumnName": "VIOPACCR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "28",
+                "ObjectName": "Viopaccr",
+                "Description": null
+            },
+            {
+                "ColumnName": "VIOREMAIN",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "29",
+                "ObjectName": "Vioremain",
+                "Description": null
+            },
+            {
+                "ColumnName": "VIOFEANOT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "30",
+                "ObjectName": "Viofeanot",
+                "Description": null
+            },
+            {
+                "ColumnName": "VIORTCFEA",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "31",
+                "ObjectName": "Viortcfea",
+                "Description": null
+            },
+            {
+                "ColumnName": "VIORTCNOFEA",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "32",
+                "ObjectName": "Viortcnofea",
+                "Description": null
+            },
+            {
+                "ColumnName": "IFEA",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "33",
+                "ObjectName": "Ifea",
+                "Description": null
+            },
+            {
+                "ColumnName": "FEAS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "34",
+                "ObjectName": "Feas",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_IEA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "35",
+                "ObjectName": "SDWDateLastIea",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_IEA_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "36",
+                "ObjectName": "SDWDateLastIeaEPA",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_IEA_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "37",
+                "ObjectName": "SDWDateLastIeaSt",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_FEA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "38",
+                "ObjectName": "SDWDateLastFea",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_FEA_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "39",
+                "ObjectName": "SDWDateLastFeaEPA",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_FEA_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "40",
+                "ObjectName": "SDWDateLastFeaSt",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDWA_CONTAMINANTS_IN_VIOL_3YR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "41",
+                "ObjectName": "SDWAContaminantsInViol3yr",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDWA_CONTAMINANTS_IN_CUR_VIOL",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "42",
+                "ObjectName": "SDWAContaminantsInCurViol",
+                "Description": null
+            },
+            {
+                "ColumnName": "PB_ALE",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "43",
+                "ObjectName": "PbAle",
+                "Description": null
+            },
+            {
+                "ColumnName": "CU_ALE",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "44",
+                "ObjectName": "CuAle",
+                "Description": null
+            },
+            {
+                "ColumnName": "RC_350_VIOL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "45",
+                "ObjectName": "Rc350Viol",
+                "Description": null
+            },
+            {
+                "ColumnName": "DFR_URL",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "46",
+                "ObjectName": "DfrUrl",
+                "Description": null
+            },
+            {
+                "ColumnName": "FIPS_CODES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "47",
+                "ObjectName": "FIPSCodes",
+                "Description": null
+            },
+            {
+                "ColumnName": "SNC",
+                "DataType": "VARCHAR2",
+                "DataLength": "30",
+                "ColumnID": "48",
+                "ObjectName": "SNC",
+                "Description": null
+            },
+            {
+                "ColumnName": "GW_SW_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "2",
+                "ColumnID": "49",
+                "ObjectName": "GwSwCode",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDWA_3YR_COMPL_QTRS_HISTORY",
+                "DataType": "VARCHAR2",
+                "DataLength": "13",
+                "ColumnID": "50",
+                "ObjectName": "SDWA3yrComplQtrsHistory",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDWA_CONTAMINANTS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "51",
+                "ObjectName": "SDWAContaminants",
+                "Description": null
+            },
+            {
+                "ColumnName": "PB_VIOL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "52",
+                "ObjectName": "PbViol",
+                "Description": null
+            },
+            {
+                "ColumnName": "CU_VIOL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "53",
+                "ObjectName": "CuViol",
+                "Description": null
+            },
+            {
+                "ColumnName": "LEAD_AND_COPPER_VIOL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "54",
+                "ObjectName": "LeadAndCopperViol",
+                "Description": null
+            },
+            {
+                "ColumnName": "TRIBAL_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "55",
+                "ObjectName": "TRIbalFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "FEA_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "56",
+                "ObjectName": "FeaFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "IEA_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "57",
+                "ObjectName": "IeaFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "SNC_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "58",
+                "ObjectName": "SNCFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "CURR_VIO_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "59",
+                "ObjectName": "CurrVioFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "VIO_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "60",
+                "ObjectName": "VioFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "INSP_5YR_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "61",
+                "ObjectName": "Insp5yrFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "SANSURVEY5YR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "62",
+                "ObjectName": "Sansurvey5yr",
+                "Description": null
+            },
+            {
+                "ColumnName": "SIGNIFICANT_DEFICIENCY_COUNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "63",
+                "ObjectName": "SignificantDeficiencyCount",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_VISIT",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "64",
+                "ObjectName": "SDWDateLastVisit",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_VISIT_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "65",
+                "ObjectName": "SDWDateLastVisitEPA",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_VISIT_STATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "66",
+                "ObjectName": "SDWDateLastVisitState",
+                "Description": null
+            },
+            {
+                "ColumnName": "SDW_DATE_LAST_VISIT_LOCAL",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "67",
+                "ObjectName": "SDWDateLastVisitLocal",
+                "Description": null
+            },
+            {
+                "ColumnName": "SITE_VISITS_5YR_ALL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "68",
+                "ObjectName": "SiteVisits5yrAll",
+                "Description": null
+            },
+            {
+                "ColumnName": "SITE_VISITS_5YR_INSPECTIONS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "69",
+                "ObjectName": "SiteVisits5yrInspections",
+                "Description": null
+            },
+            {
+                "ColumnName": "SITE_VISITS_5YR_OTHER",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "70",
+                "ObjectName": "SiteVisits5yrOther",
+                "Description": null
+            },
+            {
+                "ColumnName": "REGISTRY_ID",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "71",
+                "ObjectName": "RegistryID",
+                "Description": null
+            }
+        ]
+    }
+}

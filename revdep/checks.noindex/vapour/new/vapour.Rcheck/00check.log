@@ -1,0 +1,21 @@
+* using log directory ‘/Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/vapour/new/vapour.Rcheck’
+* using R version 3.6.1 (2019-07-05)
+* using platform: x86_64-apple-darwin15.6.0 (64-bit)
+* using session charset: UTF-8
+* using options ‘--no-manual --no-build-vignettes’
+* checking for file ‘vapour/DESCRIPTION’ ... OK
+* this is package ‘vapour’ version ‘0.5.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘vapour’ can be installed ... ERROR
+Installation failed.
+See ‘/Users/dave/Documents/github/geojsonsf/revdep/checks.noindex/vapour/new/vapour.Rcheck/00install.out’ for details.
+* DONE
+Status: 1 ERROR

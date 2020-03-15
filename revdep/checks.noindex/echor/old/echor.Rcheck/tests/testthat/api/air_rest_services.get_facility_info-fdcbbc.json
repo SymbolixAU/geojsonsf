@@ -1,0 +1,52 @@
+{
+    "Results": {
+        "Message": "Success",
+        "QueryID": "622",
+        "QueryRows": "1",
+        "IndianCountryRows": "0",
+        "SVRows": "0",
+        "CVRows": "0",
+        "V3Rows": "0",
+        "FEARows": "0",
+        "InfFEARows": "0",
+        "INSPRows": "1",
+        "TotalPenalties": "$0",
+        "BadSystemIDs": null,
+        "IconBaseURL": "https://echo.epa.gov/app/map/icons/",
+        "PopUpBaseURL": "api/air_rest_services.pop_up?p_id=",
+        "ServiceBaseURL": "api/air_rest_services.get_facility_info",
+        "QueryParameters": [
+            {
+                "QP": "output",
+                "QV": "JSON"
+            },
+            {
+                "QP": "p_pid",
+                "QV": "NC0000003706500036"
+            },
+            {
+                "QP": "p_limit_addr",
+                "QV": "Y"
+            },
+            {
+                "QP": "qcolumns",
+                "QV": "1,2,3,4,5"
+            }
+        ],
+        "Facilities": [
+            {
+                "ObjectId": "1",
+                "AIRName": "DUKE ENERGY PROGRESS, LLC - L.V. SUTTON ELECTRIC PLANT",
+                "SourceID": "NC0000003706500036",
+                "AIRStreet": "801 SUTTON STEAM PLANT ROAD",
+                "AIRCity": "WILMINGTON",
+                "AIRState": "NC",
+                "RegistryID": "110000350174",
+                "FacLat": "34.283317",
+                "FacLong": "-77.985226",
+                "AIRLastStckDateState": "07/01/2017",
+                "ReferencePoint": "CENTER OF A FACILITY OR STATION"
+            }
+        ]
+    }
+}

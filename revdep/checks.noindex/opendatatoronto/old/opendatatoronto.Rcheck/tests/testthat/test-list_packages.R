@@ -1,0 +1,17 @@
+context("test-list_packages")
+
+test_that("list_packages returns the right output formats.", {
+  skip_on_cran()
+  output <- list_packages(1)
+  expect_is(output, "tbl_df")
+  expect_equal(names(output), package_cols)
+  expect_is(output$title, "character")
+  expect_is(output$id, "character")
+  expect_is(output$topics, "character")
+  expect_is(output$civic_issues, "character")
+  expect_is(output$excerpt, "character")
+  expect_is(output$dataset_category, "character")
+  expect_is(output$formats, "character")
+  expect_is(output$refresh_rate, "character")
+  expect_is(output$last_refreshed, "Date")
+})

@@ -1,0 +1,507 @@
+
+R version 3.6.1 (2019-07-05) -- "Action of the Toes"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "stats19"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('stats19')
+Data provided under OGL v3.0. Cite the source and link to:
+www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("accidents_sample")
+> ### * accidents_sample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: accidents_sample
+> ### Title: Sample of stats19 data (2017 accidents)
+> ### Aliases: accidents_sample accidents_sample_raw
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("casualties_sample")
+> ### * casualties_sample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: casualties_sample
+> ### Title: Sample of stats19 data (2017 casualties)
+> ### Aliases: casualties_sample casualties_sample_raw
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("check_year")
+> ### * check_year
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: check_year
+> ### Title: check and convert year argument
+> ### Aliases: check_year
+> 
+> ### ** Examples
+> 
+> # check_year("2018") # fails
+> # check_year(2017)
+> # check_year(2006)
+> # check_year(1985)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dl_stats19")
+> ### * dl_stats19
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dl_stats19
+> ### Title: Download STATS19 data for a year or range of two years.
+> ### Aliases: dl_stats19
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("file_names")
+> ### * file_names
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: file_names
+> ### Title: stats19 file names for easy access
+> ### Aliases: file_names file_names_old
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D  length(file_names)
+> ##D  file_names$dftRoadSafetyData_Vehicles_2017.zip
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("find_file_name")
+> ### * find_file_name
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: find_file_name
+> ### Title: Find file names within stats19::file_names.
+> ### Aliases: find_file_name
+> 
+> ### ** Examples
+> 
+> find_file_name(2016)
+[1] "dftRoadSafety_Accidents_2016.zip"     
+[2] "dftRoadSafetyData_Vehicles_2016.zip"  
+[3] "dftRoadSafetyData_Casualties_2016.zip"
+> find_file_name(2016, type = "Accidents")
+[1] "dftRoadSafety_Accidents_2016.zip"
+> find_file_name(1985, type = "Accidents")
+Year not in range, changing to match 1979:2004 data
+No files of that type found for that year.
+[31mThis will download 240 MB+ (1.8 GB unzipped).[39m
+Coordinates and other variables may be unreliable in these datasets.
+See https://github.com/ropensci/stats19/issues/101 and https://github.com/ropensci/stats19/issues/102
+[1] "Stats19-Data1979-2004.zip"
+> find_file_name(type = "cas")
+ [1] "accident-and-casualty-adjusted.zip"   
+ [2] "dftRoadSafetyData_Casualties_2017.zip"
+ [3] "dftRoadSafetyData_Casualties_2016.zip"
+ [4] "DfTCasualtyDashboard.zip"             
+ [5] "RoadSafetyData_Casualties_2015.zip"   
+ [6] "DfTRoadSafety_Casualties_2009.zip"    
+ [7] "DfTRoadSafety_Casualties_2011.zip"    
+ [8] "DfTRoadSafety_Casualties_2010.zip"    
+ [9] "DfTRoadSafety_Casualties_2012.zip"    
+[10] "DfTRoadSafety_Casualties_2013.zip"    
+[11] "DfTRoadSafety_Casualties_2014.zip"    
+[12] "dftRoadSafetyData_Casualties_2018.csv"
+> find_file_name(type = "accid")
+ [1] "accident-and-casualty-adjusted.zip"  
+ [2] "dftRoadSafetyData_Accidents_2017.zip"
+ [3] "dftRoadSafety_Accidents_2016.zip"    
+ [4] "RoadSafetyData_Accidents_2015.zip"   
+ [5] "DfTRoadSafety_Accidents_2009.zip"    
+ [6] "DfTRoadSafety_Accidents_2010.zip"    
+ [7] "DfTRoadSafety_Accidents_2011.zip"    
+ [8] "DfTRoadSafety_Accidents_2012.zip"    
+ [9] "DfTRoadSafety_Accidents_2013.zip"    
+[10] "DfTRoadSafety_Accidents_2014.zip"    
+[11] "dftRoadSafetyData_Accidents_2018.csv"
+> find_file_name(2006)
+Year not in range, changing to match 2005:2014 data
+[1] "Stats19_Data_2005-2014.zip"
+> find_file_name(2016:2017)
+[1] "dftRoadSafetyData_Accidents_2017.zip" 
+[2] "dftRoadSafetyData_Casualties_2017.zip"
+[3] "dftRoadSafetyData_Vehicles_2017.zip"  
+[4] "dftRoadSafety_Accidents_2016.zip"     
+[5] "dftRoadSafetyData_Vehicles_2016.zip"  
+[6] "dftRoadSafetyData_Casualties_2016.zip"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_accidents")
+> ### * format_accidents
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_accidents
+> ### Title: Format STATS19 'accidents' data
+> ### Aliases: format_accidents
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_casualties")
+> ### * format_casualties
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_casualties
+> ### Title: Format STATS19 casualties
+> ### Aliases: format_casualties
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_column_names")
+> ### * format_column_names
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_column_names
+> ### Title: Format column names of raw STATS19 data
+> ### Aliases: format_column_names
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_ppp")
+> ### * format_ppp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_ppp
+> ### Title: Convert STATS19 data into ppp (spatstat) format.
+> ### Aliases: format_ppp
+> 
+> ### ** Examples
+> 
+> if (requireNamespace("spatstat", quietly = TRUE)) {
++   x_ppp = format_ppp(accidents_sample)
++   spatstat::plot.ppp(spatstat::unmark(x_ppp))
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_sf")
+> ### * format_sf
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_sf
+> ### Title: Format convert STATS19 data into spatial (sf) object
+> ### Aliases: format_sf
+> 
+> ### ** Examples
+> 
+> x_sf = format_sf(accidents_sample)
+0 rows removed with no coordinates
+> sf:::plot.sf(x_sf)
+Warning: plotting the first 9 out of 30 attributes; use max.plot = 30 to plot all
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_vehicles")
+> ### * format_vehicles
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_vehicles
+> ### Title: Format STATS19 vehicles data
+> ### Aliases: format_vehicles
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_MOT")
+> ### * get_MOT
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_MOT
+> ### Title: Download vehicle data from the DVSA MOT API using VRM.
+> ### Aliases: get_MOT
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_data_directory")
+> ### * get_data_directory
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_data_directory
+> ### Title: Get data download dir
+> ### Aliases: get_data_directory
+> 
+> ### ** Examples
+> 
+> # get_data_directory()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_stats19")
+> ### * get_stats19
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_stats19
+> ### Title: Download, read and format STATS19 data in one function.
+> ### Aliases: get_stats19
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_url")
+> ### * get_url
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_url
+> ### Title: Convert file names to urls
+> ### Aliases: get_url
+> 
+> ### ** Examples
+> 
+> # get_url(find_file_name(1985))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("locate_one_file")
+> ### * locate_one_file
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: locate_one_file
+> ### Title: Pin down a file on disk from four parameters.
+> ### Aliases: locate_one_file
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("phrase")
+> ### * phrase
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: phrase
+> ### Title: Generate a phrase for data download purposes
+> ### Aliases: phrase
+> 
+> ### ** Examples
+> 
+> stats19:::phrase()
+[1] "Good to go (y = enter, n = N/other)? "
+> 
+> 
+> 
+> cleanEx()
+> nameEx("police_boundaries")
+> ### * police_boundaries
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: police_boundaries
+> ### Title: Police force boundaries in England (2016)
+> ### Aliases: police_boundaries
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> nrow(police_boundaries)
+[1] 43
+> police_boundaries[police_boundaries$pfa16nm == "West Yorkshire", ]
+Simple feature collection with 1 feature and 2 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: 388662.6 ymin: 402593.5 xmax: 452991.6 ymax: 451901.4
+epsg (SRID):    27700
+proj4string:    +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs
+     pfa16cd        pfa16nm                       geometry
+11 E23000010 West Yorkshire MULTIPOLYGON (((408054.7 45...
+> sf:::plot.sf(police_boundaries)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("read_accidents")
+> ### * read_accidents
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: read_accidents
+> ### Title: Read in STATS19 road safety data from .csv files downloaded.
+> ### Aliases: read_accidents
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("read_casualties")
+> ### * read_casualties
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: read_casualties
+> ### Title: Read in STATS19 road safety data from .csv files downloaded.
+> ### Aliases: read_casualties
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("read_vehicles")
+> ### * read_vehicles
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: read_vehicles
+> ### Title: Read in stats19 road safety data from .csv files downloaded.
+> ### Aliases: read_vehicles
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("select_file")
+> ### * select_file
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: select_file
+> ### Title: Interactively select from options
+> ### Aliases: select_file
+> 
+> ### ** Examples
+> 
+> # fnames = c("f1", "f2")
+> # stats19:::select_file(fnames)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("set_data_directory")
+> ### * set_data_directory
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: set_data_directory
+> ### Title: Set data download dir
+> ### Aliases: set_data_directory
+> 
+> ### ** Examples
+> 
+> # set_data_directory("MY_PATH")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vehicles_sample")
+> ### * vehicles_sample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vehicles_sample
+> ### Title: Sample of stats19 data (2017 vehicles)
+> ### Aliases: vehicles_sample vehicles_sample_raw
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  2.417 0.233 3.973 0.002 0.003 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

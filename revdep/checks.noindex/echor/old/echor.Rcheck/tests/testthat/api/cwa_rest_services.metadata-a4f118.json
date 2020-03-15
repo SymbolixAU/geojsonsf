@@ -1,0 +1,2423 @@
+{
+    "Results": {
+        "Message": "Success",
+        "ResultColumns": [
+            {
+                "ColumnName": "CWP_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "200",
+                "ColumnID": "1",
+                "ObjectName": "CWPName",
+                "Description": "Facility or permit holder name, as maintained in ICIS-NPDES."
+            },
+            {
+                "ColumnName": "SOURCE_ID",
+                "DataType": "VARCHAR2",
+                "DataLength": "30",
+                "ColumnID": "2",
+                "ObjectName": "SourceID",
+                "Description": "Unique Identifier assigned by EPA."
+            },
+            {
+                "ColumnName": "CWP_STREET",
+                "DataType": "VARCHAR2",
+                "DataLength": "200",
+                "ColumnID": "3",
+                "ObjectName": "CWPStreet",
+                "Description": "Facility street address"
+            },
+            {
+                "ColumnName": "CWP_CITY",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "4",
+                "ObjectName": "CWPCity",
+                "Description": "City in which the facility is located."
+            },
+            {
+                "ColumnName": "CWP_STATE",
+                "DataType": "CHAR",
+                "DataLength": "2",
+                "ColumnID": "5",
+                "ObjectName": "CWPState",
+                "Description": "Facility location - two-digit state abbreviation."
+            },
+            {
+                "ColumnName": "CWP_STATE_DISTRICT",
+                "DataType": "VARCHAR2",
+                "DataLength": "5",
+                "ColumnID": "6",
+                "ObjectName": "CWPStateDistrict",
+                "Description": "The State Congressional District the facility is located within."
+            },
+            {
+                "ColumnName": "CWP_ZIP",
+                "DataType": "VARCHAR2",
+                "DataLength": "10",
+                "ColumnID": "7",
+                "ObjectName": "CWPZip",
+                "Description": "Facility ZIP code"
+            },
+            {
+                "ColumnName": "MASTER_EXTERNAL_PERMIT_NMBR",
+                "DataType": "VARCHAR2",
+                "DataLength": "9",
+                "ColumnID": "8",
+                "ObjectName": "MasterExternalPermitNmbr",
+                "Description": "This is the unique identifier for the Master General Permit for a General Permit Covered Facility."
+            },
+            {
+                "ColumnName": "REGISTRY_ID",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "9",
+                "ObjectName": "RegistryID",
+                "Description": "An internal 12-digit Facility Registry Service (FRS) tracking number used to tie all facility data together in EPA regulatory program databases."
+            },
+            {
+                "ColumnName": "CWP_COUNTY",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "10",
+                "ObjectName": "CWPCounty",
+                "Description": "County in which the facility is located."
+            },
+            {
+                "ColumnName": "CWP_EPA_REGION",
+                "DataType": "CHAR",
+                "DataLength": "2",
+                "ColumnID": "11",
+                "ObjectName": "CWPEPARegion",
+                "Description": "The EPA region where the facility is located. EPA has 10 regional offices that execute programs within several states and territories."
+            },
+            {
+                "ColumnName": "FAC_FEDERAL_AGENCY_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "15",
+                "ColumnID": "12",
+                "ObjectName": "FacFederalAgencyCode",
+                "Description": "Indicates the federal agency, as classified in FRS. Federal agencies are installations that are owned and operated by the U.S. government. The five-character code consists of a letter followed by four numbers. There are four possible letters that can occupy the first character position: C = Civilian Federal Agency; D = Department of Defense; E = Department of Energy; X = Unknown. The second and third characters represent the agency code, while the fourth and fifth characters represent the bureau code."
+            },
+            {
+                "ColumnName": "FAC_FEDERAL_AGENCY_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "150",
+                "ColumnID": "13",
+                "ObjectName": "FacFederalAgencyName",
+                "Description": "Indicates the name of the federal agency, as classified in FRS. Federal agencies are installations that are owned and operated by the U.S. government."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_HUC",
+                "DataType": "VARCHAR2",
+                "DataLength": "8",
+                "ColumnID": "14",
+                "ObjectName": "FacDerivedHuc",
+                "Description": "The 8-digit Hydrologic Unit Code (HUC) of the watershed in which the facility resides. A HUC number is assigned to every watershed in the nation and uniquely identifies the watershed."
+            },
+            {
+                "ColumnName": "FAC_FIPS_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "15",
+                "ColumnID": "15",
+                "ObjectName": "FacFIPSCode",
+                "Description": "The 2-digit Federal Information Processing Standards (FIPS) code to identify the county that a facility is located in."
+            },
+            {
+                "ColumnName": "FAC_INDIAN_CNTRY_FLG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "16",
+                "ObjectName": "FacIndianCntryFlg",
+                "Description": "Flag showing Y/N whether the facility is located in Indian Country."
+            },
+            {
+                "ColumnName": "CWP_INDIAN_CNTRY_FLG",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "17",
+                "ObjectName": "CWPIndianCntryFlg",
+                "Description": "Displays  Y  if a facility is located in Indian country."
+            },
+            {
+                "ColumnName": "FAC_INDIAN_SPATIAL_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "18",
+                "ObjectName": "FacIndianSpatialFlg",
+                "Description": "Returns &#8220;Y&#8221; if a facility is located within a tribal spatial boundary as defined by the U.S. Census Bureau 2010 tribal boundary layer data for tribes in the lower 48 states and Bureau of Land Management Alaska State Office data for native villages in Alaska. Returns &#8220;N&#8221; if a facility is not located within a tribal or native Alaskan village area."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_TRIBES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "19",
+                "ObjectName": "FacDerivedTRIbes",
+                "Description": "The tribes or tribal territories located within 25 miles of the facility's location."
+            },
+            {
+                "ColumnName": "FAC_US_MEX_BORDER_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "20",
+                "ObjectName": "FacUsMexBorderFlg",
+                "Description": "A Y/N flag indicating that the facility is within 100KM of the US-Mexico Border."
+            },
+            {
+                "ColumnName": "CWP_SIC_CODES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "21",
+                "ObjectName": "CWPSICCodes",
+                "Description": "Indicates the facility's or permit's primary Standard Industrial Classification (SIC) Code."
+            },
+            {
+                "ColumnName": "CWP_NAICS_CODES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "22",
+                "ObjectName": "CWPNAICSCodes",
+                "Description": "Indicates the facility's or permit's primary North American Industry Classification System (NAICS) Code."
+            },
+            {
+                "ColumnName": "FAC_LAT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "23",
+                "ObjectName": "FacLat",
+                "Description": "The latitude of the facility in decimal degrees expressed using the NAD83 horizontal datum. The coordinate comes from the FRS EPA Locational Reference Tables (LRT) file which represents the most accurate value for the facility based on the available spatial metadata."
+            },
+            {
+                "ColumnName": "FAC_LONG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "24",
+                "ObjectName": "FacLong",
+                "Description": "The longitude of the facility in decimal degrees expressed using the NAD83 horizontal datum. The coordinate comes from the FRS EPA Locational Reference Tables (LRT) file which represents the most accurate value for the facility based on the available spatial metadata."
+            },
+            {
+                "ColumnName": "CWP_TOTAL_DESIGN_FLOW_NMBR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "25",
+                "ObjectName": "CWPTotalDesignFlowNmbr",
+                "Description": "The amount of wastewater flow in million gallons per day (MGD) that the facility is designed for."
+            },
+            {
+                "ColumnName": "CWP_ACTUAL_AVERAGE_FLOW_NMBR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "26",
+                "ObjectName": "CWPActualAverageFlowNmbr",
+                "Description": "The actual amount of the facility's wastewater flow measured in million gallons per day (MGD)."
+            },
+            {
+                "ColumnName": "CWP_FACILITY_TYPE_INDICATOR",
+                "DataType": "VARCHAR2",
+                "DataLength": "10",
+                "ColumnID": "27",
+                "ObjectName": "CWPFacilityTypeIndicator",
+                "Description": "Each National Pollutant Discharge Elimination System (NPDES) permit is defined by the program office as a Major or non-major discharger. This field also indicates the permit type."
+            },
+            {
+                "ColumnName": "CWP_FACILITY_TYPE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "28",
+                "ObjectName": "CWPFacilityTypeCode",
+                "Description": null
+            },
+            {
+                "ColumnName": "BIO_REPORTING_OBLIGATIONS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "29",
+                "ObjectName": "BioReportingObligations",
+                "Description": "Indicates the reporting obligation reason."
+            },
+            {
+                "ColumnName": "DSCH_TO_MS4",
+                "DataType": "VARCHAR2",
+                "DataLength": "1",
+                "ColumnID": "30",
+                "ObjectName": "DschToMs4",
+                "Description": "Indicatesif a facility discharges into a Municipal Separate Storm Sewer System (MS4)."
+            },
+            {
+                "ColumnName": "RECEIVING_MS4_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "31",
+                "ObjectName": "ReceivingMs4Name",
+                "Description": "This is the name of the receiving MS4(s)."
+            },
+            {
+                "ColumnName": "STORM_WATER_AREA",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "32",
+                "ObjectName": "StormWaterArea",
+                "Description": "The estimated area of industrial activity at the site exposed to stormwater in acres."
+            },
+            {
+                "ColumnName": "HISTORIC_CRITERION_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "33",
+                "ObjectName": "HistoricCriterionCode",
+                "Description": "Indicates the eligibility criteria for historic properties preservation."
+            },
+            {
+                "ColumnName": "SPECIES_CRITICAL_HABITAL_FLAG",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "34",
+                "ObjectName": "SpeciesCriticalHabitalFlag",
+                "Description": "This identifies if Endangered Species Act (ESA) provisions are met."
+            },
+            {
+                "ColumnName": "SWPPP_URL",
+                "DataType": "VARCHAR2",
+                "DataLength": "1000",
+                "ColumnID": "35",
+                "ObjectName": "SwpppUrl",
+                "Description": "Web address URL of Internet page where current copy of Stormwater Pollution Prevention Plan (SWPPP) is maintained."
+            },
+            {
+                "ColumnName": "EXPOSED_ACTIVITY",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "36",
+                "ObjectName": "ExposedActivity",
+                "Description": "Description of onsite industrial activities exposed to stormwater and potential spill and leak areas."
+            },
+            {
+                "ColumnName": "ASSOCIATED_POLLUTANT",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "37",
+                "ObjectName": "AssociatedPollutant",
+                "Description": "Description of pollutant(s) or pollutant constituent(s) associated with each industrial activity exposed to stormwater."
+            },
+            {
+                "ColumnName": "CONTROL_MEASURE",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "38",
+                "ObjectName": "ControlMeasure",
+                "Description": "Description of control measures employed to comply with the non-numeric technology-based effluent limits required in Part 2.1.2 and Part 8."
+            },
+            {
+                "ColumnName": "CONTROL_MEASURE_SCHEDULE",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "39",
+                "ObjectName": "ControlMeasureSchedule",
+                "Description": "Description of schedule for control measures associated with good housekeeping and maintenance."
+            },
+            {
+                "ColumnName": "TYPE_OF_MONITORING",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "40",
+                "ObjectName": "TypeOfMonitoring",
+                "Description": "The type of monitoring specified in the SWPPP."
+            },
+            {
+                "ColumnName": "TYPE_OF_WATER",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "41",
+                "ObjectName": "TypeOfWater",
+                "Description": "The type of water body receiving discharges stormwater discharges specified in the SWPPP."
+            },
+            {
+                "ColumnName": "EJSCREEN_FLAG_US",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "42",
+                "ObjectName": "EjscreenFlagUs",
+                "Description": "A Y/N indicator identifying whether or not the facility is within an Environmental Justice area."
+            },
+            {
+                "ColumnName": "OVER80_COUNT_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "43",
+                "ObjectName": "Over80CountUs",
+                "Description": "The number of primary EJSCREEN environmental justice (EJ) indexes exceeding the 80th or higher national percentile for the Census block group that the facility is located in."
+            },
+            {
+                "ColumnName": "PCTILE_PCTPRE1960_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "44",
+                "ObjectName": "PctilePctpre1960Us",
+                "Description": "The national percentile of the census block group for the EJSCREEN Lead paint indicator."
+            },
+            {
+                "ColumnName": "PCTILE_DPM_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "45",
+                "ObjectName": "PctileDpmUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN diesel particulate matter indicator."
+            },
+            {
+                "ColumnName": "PCTILE_CANCER_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "46",
+                "ObjectName": "PctileCancerUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN NATA air toxics cancer risk indicator."
+            },
+            {
+                "ColumnName": "PCTILE_RESP_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "47",
+                "ObjectName": "PctileRespUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN NATA respiratory hazard index indicator."
+            },
+            {
+                "ColumnName": "PCTILE_TRAFFIC_SCORE_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "48",
+                "ObjectName": "PctileTrafficScoreUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN Traffic proximity and volume indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_NPDES_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "49",
+                "ObjectName": "PctileProximityNPDESUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to major direct water dischargers indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_NPL_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "50",
+                "ObjectName": "PctileProximityNplUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to National Priorities List (NPL) sites indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_RMP_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "51",
+                "ObjectName": "PctileProximityRmpUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to Risk Management Plan (RMP) sites indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PROXIMITY_TSDF_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "52",
+                "ObjectName": "PctileProximityTsdfUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN proximity to Treatment Storage and Disposal Facilities (TSDFs) indicator."
+            },
+            {
+                "ColumnName": "PCTILE_O3_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "53",
+                "ObjectName": "PctileO3Us",
+                "Description": "The national percentile of the census block group for the EJSCREEN ozone indicator."
+            },
+            {
+                "ColumnName": "PCTILE_PM_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "54",
+                "ObjectName": "PctilePmUs",
+                "Description": "The national percentile of the census block group for the EJSCREEN particulate matter indicator."
+            },
+            {
+                "ColumnName": "FAC_POP_DEN",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "55",
+                "ObjectName": "FacPopDen",
+                "Description": "The number of persons per square mile in the area being profiled. This field is the ratio of total persons (displayed in the Total Persons field) to total land area (displayed in the Land Area field)."
+            },
+            {
+                "ColumnName": "FAC_PERCENT_MINORITY",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "56",
+                "ObjectName": "FacPercentMinority",
+                "Description": "Percent Minority is the percentage of the population of the given area that is considered minority. Statistics are shown for the area within a 3-mile radius of each facility."
+            },
+            {
+                "ColumnName": "SECTOR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "57",
+                "ObjectName": "Sector",
+                "Description": "The sector code and description for the industrial stormwater facility."
+            },
+            {
+                "ColumnName": "SUBSECTOR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "58",
+                "ObjectName": "Subsector",
+                "Description": "The industrial subsector associated with the facility."
+            },
+            {
+                "ColumnName": "MSGP_PERMIT_TYPE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "59",
+                "ObjectName": "MsgpPermitType",
+                "Description": "The Industrial stormwater permit type."
+            },
+            {
+                "ColumnName": "CWP_VERSION_NMBR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "60",
+                "ObjectName": "CWPVersionNmbr",
+                "Description": "The version number of the facility's NPDES permit."
+            },
+            {
+                "ColumnName": "CWP_PERMIT_STATUS_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "20",
+                "ColumnID": "61",
+                "ObjectName": "CWPPermitStatusDesc",
+                "Description": "The current stage/status in the NPDES permit life cycle."
+            },
+            {
+                "ColumnName": "ISSUING_AGENCY",
+                "DataType": "VARCHAR2",
+                "DataLength": "5",
+                "ColumnID": "62",
+                "ObjectName": "IssuingAgency",
+                "Description": "This is the name of the organization issuing or granting a permit."
+            },
+            {
+                "ColumnName": "SUBMITTED_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "63",
+                "ObjectName": "SubmittedDate",
+                "Description": "Date that the permit was submitted to the issuing agency."
+            },
+            {
+                "ColumnName": "CWP_PERMIT_TYPE_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "120",
+                "ColumnID": "64",
+                "ObjectName": "CWPPermitTypeDesc",
+                "Description": "NPDES facility permit classification:- NPDES Individual Permit- General Permit Covered Facility- NPDES Master General Permit- Associated Permit Record- Individual Industrial User Permit- Individual State Issued Permit- State Issued Master General Permit- Unpermitted Facility"
+            },
+            {
+                "ColumnName": "CWP_ISSUE_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "65",
+                "ObjectName": "CWPIssueDate",
+                "Description": "Date (MM/DD/YYYY) that the permit was issued."
+            },
+            {
+                "ColumnName": "CWP_EFFECTIVE_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "66",
+                "ObjectName": "CWPEffectiveDate",
+                "Description": "Date (MM/DD/YYYY) that the permit became effective."
+            },
+            {
+                "ColumnName": "CWP_TERMINATION_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "67",
+                "ObjectName": "CWPTerminationDate",
+                "Description": "Date (MM/DD/YYYY) that the permit was terminated."
+            },
+            {
+                "ColumnName": "CWP_EXPIRATION_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "68",
+                "ObjectName": "CWPExpirationDate",
+                "Description": "Date that the permit expires."
+            },
+            {
+                "ColumnName": "CWP_MAJOR_MINOR_STATUS_FLAG",
+                "DataType": "VARCHAR2",
+                "DataLength": "1",
+                "ColumnID": "69",
+                "ObjectName": "CWPMajorMinorStatusFlag",
+                "Description": "Facilities marked  M  for major refers to CWA major permittees.- M = Major- N = Minor"
+            },
+            {
+                "ColumnName": "PERMIT_COMPONENTS",
+                "DataType": "VARCHAR2",
+                "DataLength": "1000",
+                "ColumnID": "70",
+                "ObjectName": "PermitComponents",
+                "Description": "Indicates the permit component(s) associated with the NPDES Permit Program Area."
+            },
+            {
+                "ColumnName": "NPDES_DATA_GROUPS_DESCS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "71",
+                "ObjectName": "NPDESDataGroupsDescs",
+                "Description": "Description for each NPDES Data Group eReporting rule code related to the current NPDES permit."
+            },
+            {
+                "ColumnName": "MSGP_LAST_REPORT_YEAR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4",
+                "ColumnID": "72",
+                "ObjectName": "MsgpLastReportYear",
+                "Description": "The calendar year of the latest MSGP annual report submitted by the permitted facility."
+            },
+            {
+                "ColumnName": "MSGP_FACILITY_INSPCTN_SMMRY",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "73",
+                "ObjectName": "MsgpFacilityInspctnSmmry",
+                "Description": "Summary of the quarterly facility inspection documentation (part 3.1 of the permit) during the MSGP annual report year."
+            },
+            {
+                "ColumnName": "MSGP_VISUAL_ASSESSMENT_SMMRY",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "74",
+                "ObjectName": "MsgpVisualAssessmentSmmry",
+                "Description": "Summary of the quarterly visual assessment documentation (part 3.3 of the permit) during the MSGP annual report year."
+            },
+            {
+                "ColumnName": "MSGP_NO_FURTHER_RDCTN_RTNLE",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "75",
+                "ObjectName": "MsgpNoFurtherRdctnRtnle",
+                "Description": "Description of rationale for why no further reductions are achievable (part 6.2.1.2 of the permit) during the MSGP annual report year."
+            },
+            {
+                "ColumnName": "MSGP_CORRECTIVE_ACTION_SMMRY",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "76",
+                "ObjectName": "MsgpCorrectiveActionSmmry",
+                "Description": "Summary of the corrective action documentation (part 4.3 of the permit) during the MSGP annual report year."
+            },
+            {
+                "ColumnName": "AIR_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "77",
+                "ObjectName": "AIRIDs",
+                "Description": "Air Facility System (AFS) ID."
+            },
+            {
+                "ColumnName": "NPDES_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "78",
+                "ObjectName": "NPDESIDs",
+                "Description": "Clean Water Act ID from the ICIS-NPDES (Integrated Compliance Information System - National Pollutant Discharge Elimination System)"
+            },
+            {
+                "ColumnName": "RCRA_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "79",
+                "ObjectName": "RCRAIDs",
+                "Description": "A unique 12-character ID assigned for each record/permit/site/facility within the RCRAInfo database."
+            },
+            {
+                "ColumnName": "SDWA_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "80",
+                "ObjectName": "SDWAIDs",
+                "Description": "A unique 9-character ID assigned for each public water system within the Safe Drinking Water Information System (SDWIS)."
+            },
+            {
+                "ColumnName": "TRI_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "81",
+                "ObjectName": "TRIIDs",
+                "Description": "A unique 15-character ID assigned for each facility within the Toxics Release Inventory (TRI) program. The format is ZZZZZNNNNNSSSSS, where ZZZZZ = ZIP code, NNNNN = the first 5 consonants of the name, and SSSSS = the first 5 non-blank non-special characters in the street address."
+            },
+            {
+                "ColumnName": "RMP_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "82",
+                "ObjectName": "RmpIDs",
+                "Description": "A unique ID assigned to each facility submitting a Risk Management Plan to EPA under the Risk Management Plan Rule."
+            },
+            {
+                "ColumnName": "BIO_VIO_LAST_YEAR_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "83",
+                "ObjectName": "BioVioLastYearFlag",
+                "Description": "Y if the facility has a biosolids single event violation under the Clean Water Act in the last year. Note: Violations reported on the 2016 and 2017 Biosolids Annual Report are not updated with the weekly data refresh and may not be representative of a facility's recently submitted or updated report."
+            },
+            {
+                "ColumnName": "BIO_QTRS_WITH_VIO",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "84",
+                "ObjectName": "BioQtrsWithVio",
+                "Description": "Count of the number of quarters, out of the last twelve quarters, in which the permit or site is considered with violations for biosolids."
+            },
+            {
+                "ColumnName": "CWP_STATUS",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "85",
+                "ObjectName": "CWPStatus",
+                "Description": "An indication of the facility's current compliance status under the Clean Water Act:- Significant Violation- Noncompliance- No Violation- Unknown"
+            },
+            {
+                "ColumnName": "CWP_SNC_STATUS",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "86",
+                "ObjectName": "CWPSNCStatus",
+                "Description": "Indicates when a major source is in significant noncompliance (SNC) or a non-major source has a Category I violation."
+            },
+            {
+                "ColumnName": "CWP_SNC_STATUS_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "87",
+                "ObjectName": "CWPSNCStatusDate",
+                "Description": "The status date of the facility's Significant Noncompliance designation."
+            },
+            {
+                "ColumnName": "CWP_QTRS_WITH_NC",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "88",
+                "ObjectName": "CWPQtrsWithNC",
+                "Description": "Count of the number of quarters, out of the last twelve quarters, in which the permit or site is considered either with violations, in noncompliance (NC) status, or in Significant Noncompliance (SNC), as described above under Compliance Status."
+            },
+            {
+                "ColumnName": "CWP_VIOL_STATUS",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "89",
+                "ObjectName": "CWPViolStatus",
+                "Description": "Indicates if the facility is currently in any violation under the Clean Water Act, either in Noncompliance or Significant Noncompliance."
+            },
+            {
+                "ColumnName": "CWP_QTRS_WITH_SNC",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "90",
+                "ObjectName": "CWPQtrsWithSNC",
+                "Description": "Count of the number of quarters, out of the last twelve quarters, in which the permit is considered in Significant Noncompliance (SNC), as described above under Compliance Status."
+            },
+            {
+                "ColumnName": "MISS_DMR_QTRS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "91",
+                "ObjectName": "MissDMRQtrs",
+                "Description": "Count of the number of quarters, out of the last twelve quarters, in which EPA's data system was not able to determine the facility-level compliance status."
+            },
+            {
+                "ColumnName": "CWP_E90_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "92",
+                "ObjectName": "CWPE90Cnt",
+                "Description": "Displays the number of instances where effluent limits have been exceeded in the past 3 years (E90 compliance code), based on monthly Discharge Monitoring Reports (DMRs) submitted by facilities."
+            },
+            {
+                "ColumnName": "CWP_COMPLIANCE_TRACKING",
+                "DataType": "VARCHAR2",
+                "DataLength": "8",
+                "ColumnID": "93",
+                "ObjectName": "CWPComplianceTracking",
+                "Description": "Extent to which data is being entered and effluent exceedances are being identified (Off, On, Partial)."
+            },
+            {
+                "ColumnName": "ALR_EXCEEDENCES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "94",
+                "ObjectName": "AlrExceedences",
+                "Description": null
+            },
+            {
+                "ColumnName": "BIO_REPORT_YEAR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4",
+                "ColumnID": "95",
+                "ObjectName": "BioReportYear",
+                "Description": "The calendar year corresponding to the Annual Biosolids Report."
+            },
+            {
+                "ColumnName": "CWP_INSPECTION_COUNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "96",
+                "ObjectName": "CWPInspectionCount",
+                "Description": "The number of inspections/compliance evaluations, under the corresponding statute, occurring at the facility within the last five years."
+            },
+            {
+                "ColumnName": "CWP_DAYS_LAST_INSPECTION",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "97",
+                "ObjectName": "CWPDaysLastInspection",
+                "Description": "Indicates the number of days since the most recent inspection of the facility."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_INSPECTION",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "98",
+                "ObjectName": "CWPDateLastInspection",
+                "Description": "The date on which the most recent inspection of the facility took place. For the CAA, the date on which a Full Compliance Evaluation (FCE) was completed."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_INSP_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "99",
+                "ObjectName": "CWPDateLastInspEPA",
+                "Description": "Indicates the effective date of the most recent inspection taken against the facility."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_INSP_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "100",
+                "ObjectName": "CWPDateLastInspSt",
+                "Description": "Indicates the effective date of the most recent inspection taken against the facility by a state environmental agency."
+            },
+            {
+                "ColumnName": "CWP_BIO_INSP_COUNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "101",
+                "ObjectName": "CWPBioInspCount",
+                "Description": "The count of Biosolids related Inspections that have occured for the facility."
+            },
+            {
+                "ColumnName": "CWP_DAYS_LAST_BIO_INSP",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "102",
+                "ObjectName": "CWPDaysLastBioInsp",
+                "Description": "Indicates the number of days since the most recent Biosolids related inspection of the facility."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_INSP",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "103",
+                "ObjectName": "CWPDateLastBioInsp",
+                "Description": "The date on which the most recent biosolids program inspection of the facility took place."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_INSP_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "104",
+                "ObjectName": "CWPDateLastBioInspEPA",
+                "Description": "Indicate the last inspection date by EPA"
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_INSP_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "105",
+                "ObjectName": "CWPDateLastBioInspSt",
+                "Description": "Indicate the last inspection date by state environmental agency"
+            },
+            {
+                "ColumnName": "CWP_INFORMAL_ENF_ACT_COUNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "106",
+                "ObjectName": "CWPInformalEnfActCount",
+                "Description": "Indicates the total number of informal enforcement actions/notices of violations (NOVs) taken against the facility within the last five years."
+            },
+            {
+                "ColumnName": "CWP_FORMAL_EA_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "107",
+                "ObjectName": "CWPFormalEaCnt",
+                "Description": "Indicates the total number of enforcement actions taken against the facility within the last five years.  NA  indicates that this measure is not applicable for facilities with no associated CAA, CWA, or RCRA permits."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_INFORMAL_EA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "108",
+                "ObjectName": "CWPDateLastInformalEa",
+                "Description": "Indicates the effective date of the most recent listed informal enforcement action taken against the facility."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_IEA_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "109",
+                "ObjectName": "CWPDateLastIeaEPA",
+                "Description": "Indicates the effective date of the most recent listed informal enforcement action taken against the facility by EPA."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_IEA_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "110",
+                "ObjectName": "CWPDateLastIeaSt",
+                "Description": "Indicates the effective date of the most recent listed informal enforcement action taken against the facility by a state environmental agency."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_FEA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "111",
+                "ObjectName": "CWPDateLastFea",
+                "Description": "Indicates the effective date of the most recent listed formal enforcement action taken against the facility."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_FEA_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "112",
+                "ObjectName": "CWPDateLastFeaEPA",
+                "Description": "Indicates the effective date of the most recent listed formal enforcement action taken against the facility by EPA."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_FEA_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "113",
+                "ObjectName": "CWPDateLastFeaSt",
+                "Description": "Indicates the effective date of the most recent listed formal enforcement action taken against the facility by a state environmental agency."
+            },
+            {
+                "ColumnName": "CWP_BIO_IEA_COUNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "114",
+                "ObjectName": "CWPBioIeaCount",
+                "Description": "The count of Biosolids related Informal Enforcement Actions that have been taken against the Facility."
+            },
+            {
+                "ColumnName": "CWP_BIO_FEA_COUNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "115",
+                "ObjectName": "CWPBioFeaCount",
+                "Description": "The count of Biosolids related Formal Enforcement Actions that have been taken against the Facility."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_IEA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "116",
+                "ObjectName": "CWPDateLastBioIea",
+                "Description": "Indicates the effective date of the most recent listed biosolids informal enforcement action taken against the facility within the last five years."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_IEA_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "117",
+                "ObjectName": "CWPDateLastBioIeaEPA",
+                "Description": "Indicates the effective date of the most recent listed biosolids informal enforcement action taken against the facility by EPA within the last five years."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_IEA_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "118",
+                "ObjectName": "CWPDateLastBioIeaSt",
+                "Description": "Indicates the effective date of the most recent listed biosolids informal enforcement action taken against the facility by a state environmental agency within the last five years."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_FEA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "119",
+                "ObjectName": "CWPDateLastBioFea",
+                "Description": "Indicates the effective date of the most recent listed biosolids formal enforcement action taken against the facility within the last five years."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_FEA_EPA",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "120",
+                "ObjectName": "CWPDateLastBioFeaEPA",
+                "Description": "Indicates the effective date of the most recent listed formal enforcement action taken against the facility by EPA within the last five years."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_FEA_ST",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "121",
+                "ObjectName": "CWPDateLastBioFeaSt",
+                "Description": "Indicates the effective date of the most recent listed formal enforcement action taken against the facility by a state environmental agency within the last five years."
+            },
+            {
+                "ColumnName": "CWP_BIO_PENALTIES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "122",
+                "ObjectName": "CWPBioPenalties",
+                "Description": "The total amount of Biosolids related penalties that have been assessed against the facility."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_BIO_PENALTY",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "123",
+                "ObjectName": "CWPDateLastBioPenalty",
+                "Description": "Indicates the date on which the most recent assessed (or final) biosolids penalty was taken against the facility within the last five years. This measure only includes penalties that have been entered in the program database ICIS-NPDES."
+            },
+            {
+                "ColumnName": "BIO_REPORT_YEARS",
+                "DataType": "VARCHAR2",
+                "DataLength": "40",
+                "ColumnID": "124",
+                "ObjectName": "BioReportYears",
+                "Description": "Reporting years are determined by the year of the reporting period end date. Data reflect the last two reporting years."
+            },
+            {
+                "ColumnName": "BIO_REPORTING_OBLIGATIONS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "125",
+                "ObjectName": "BioReportingObligations2016",
+                "Description": "Indicates the reporting obligation reason."
+            },
+            {
+                "ColumnName": "BIO_TOTAL_VOLUME_AMT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "126",
+                "ObjectName": "BioTotalVolumeAmt",
+                "Description": "The amount (in dry metric tons) of biosolids or sewage sludge generated at the facility."
+            },
+            {
+                "ColumnName": "BIO_TOTAL_VOLUME_AMT_2016",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "127",
+                "ObjectName": "BioTotalVolumeAmt2016",
+                "Description": "The amount (in dry metric tons) of biosolids or sewage sludge generated at the facility."
+            },
+            {
+                "ColumnName": "BIO_LAND_APPLICATION_SUM",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "128",
+                "ObjectName": "BioLandApplicationSum",
+                "Description": "The amount (dry metric tons) of biosolids land applied."
+            },
+            {
+                "ColumnName": "BIO_LAND_APPLICATION_SUM_2016",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "129",
+                "ObjectName": "BioLandApplicationSum2016",
+                "Description": "The amount (dry metric tons) of biosolids land applied."
+            },
+            {
+                "ColumnName": "BIO_SURFACE_DISP_SUM",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "130",
+                "ObjectName": "BioSurfaceDispSum",
+                "Description": "The amount of surface disposal in dry metric tons (DMT)."
+            },
+            {
+                "ColumnName": "BIO_SURFACE_DISP_SUM_2016",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "131",
+                "ObjectName": "BioSurfaceDispSum2016",
+                "Description": "The amount of surface disposal in dry metric tons (DMT)."
+            },
+            {
+                "ColumnName": "BIO_INCINERATION_SUM",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "132",
+                "ObjectName": "BioIncinerationSum",
+                "Description": "The amount (dry metric tons) of biosolids incinerated."
+            },
+            {
+                "ColumnName": "BIO_INCINERATION_SUM_2016",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "133",
+                "ObjectName": "BioIncinerationSum2016",
+                "Description": "The amount (dry metric tons) of biosolids incinerated."
+            },
+            {
+                "ColumnName": "BIO_OTHER_MANAGEMENT_SUM",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "134",
+                "ObjectName": "BioOtherManagementSum",
+                "Description": "The amount (dry metric tons) of biosolids managed using methods not previously described."
+            },
+            {
+                "ColumnName": "BIO_OTHER_MANAGEMENT_SUM_2016",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "135",
+                "ObjectName": "BioOtherManagementSum2016",
+                "Description": "The amount (dry metric tons) of biosolids managed using methods not previously described."
+            },
+            {
+                "ColumnName": "BIO_TRTMNT_PROCESSES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "136",
+                "ObjectName": "BioTrtmntProcesses",
+                "Description": "Identifies the biosolids or sewage sludge treatment process or processes at the facility."
+            },
+            {
+                "ColumnName": "BIO_TRTMNT_PROCESSES_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "137",
+                "ObjectName": "BioTrtmntProcesses2016",
+                "Description": "Identifies the biosolids or sewage sludge treatment process or processes at the facility."
+            },
+            {
+                "ColumnName": "BIO_TRTMNT_PRCSS_CMMNT_TXTS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "138",
+                "ObjectName": "BioTrtmntPrcssCmmntTxts",
+                "Description": "Free text additional description of  other  biotreatment processes."
+            },
+            {
+                "ColumnName": "BIO_TRMNT_PRCSS_CMNT_TXTS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "139",
+                "ObjectName": "BioTrmntPrcssCmntTxts2016",
+                "Description": "Free text additional description of  other  biotreatment processes."
+            },
+            {
+                "ColumnName": "BIO_ANALY_METHOD_CATGRYS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "140",
+                "ObjectName": "BioAnalyMethodCatgrys",
+                "Description": "Displays the categories of the analytic methods used by the facility to analyze regulated parameters at the facility."
+            },
+            {
+                "ColumnName": "BIO_ANALY_METHOD_CATGRYS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "141",
+                "ObjectName": "BioAnalyMethodCatgrys2016",
+                "Description": "Displays the categories of the analytic methods used by the facility to analyze regulated parameters at the facility."
+            },
+            {
+                "ColumnName": "BIO_ANALY_METHODS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "142",
+                "ObjectName": "BioAnalyMethods",
+                "Description": "Displays the analytic methods used by the facility to analyze enteric viruses, fecal coliforms, helminth ova, Salmonella sp., and other regulated parameters as reported on the Biosolids Program Report."
+            },
+            {
+                "ColumnName": "BIO_ANALY_METHODS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "143",
+                "ObjectName": "BioAnalyMethods2016",
+                "Description": "Displays the analytic methods used by the facility to analyze enteric viruses, fecal coliforms, helminth ova, Salmonella sp., and other regulated parameters as reported on the Biosolids Program Report."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PRCTCE_TYPES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "144",
+                "ObjectName": "BioMgmtPrctceTypes",
+                "Description": "The type of biosolids or sewage sludge management practice (e.g., land application, surface disposal, incineration) used by the facility."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PRCTCE_TYPES_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "145",
+                "ObjectName": "BioMgmtPrctceTypes2016",
+                "Description": "The type of biosolids or sewage sludge management practice (e.g., land application, surface disposal, incineration) used by the facility."
+            },
+            {
+                "ColumnName": "BIO_OTHER_MGMT_PRCTC_TXTS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "146",
+                "ObjectName": "BioOtherMgmtPrctcTxts",
+                "Description": "Free text additional description of  other  Biosolids Management Practices."
+            },
+            {
+                "ColumnName": "BIO_OTHER_MGMT_PRCTC_TXTS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "147",
+                "ObjectName": "BioOtherMgmtPrctcTxts2016",
+                "Description": "Free text additional description of  other  Biosolids Management Practices."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PRCTCE_STYPES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "148",
+                "ObjectName": "BioMgmtPrctceStypes",
+                "Description": "Additional detail about the type of Management Practice used for an amount of Biosolids or Sewage Sludge."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PRCTCE_STYPES_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "149",
+                "ObjectName": "BioMgmtPrctceStypes2016",
+                "Description": "Additional detail about the type of Management Practice used for an amount of Biosolids or Sewage Sludge."
+            },
+            {
+                "ColumnName": "BIO_MGMT_HANDLERS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "150",
+                "ObjectName": "BioMgmtHandlers",
+                "Description": "Indicates the type of Biosolids or Sewage Sludge handlers/preparers, either owner/operator or off-site third-party handler/preparer."
+            },
+            {
+                "ColumnName": "BIO_MGMT_HANDLERS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "151",
+                "ObjectName": "BioMgmtHandlers2016",
+                "Description": "Indicates the type of Biosolids or Sewage Sludge handlers/preparers, either owner/operator or off-site third-party handler/preparer."
+            },
+            {
+                "ColumnName": "BIO_MGMT_CONTAINERS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "152",
+                "ObjectName": "BioMgmtContainers",
+                "Description": "Identifies the nature of each biosolids and sewage sludge material generated by the facility in terms of whether the material is a biosolid or sewage sludge and whether the material is ultimately conveyed off-site in bulk or in bags."
+            },
+            {
+                "ColumnName": "BIO_MGMT_CONTAINERS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "153",
+                "ObjectName": "BioMgmtContainers2016",
+                "Description": "Identifies the nature of each biosolids and sewage sludge material generated by the facility in terms of whether the material is a biosolid or sewage sludge and whether the material is ultimately conveyed off-site in bulk or in bags."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PATHOGENS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "154",
+                "ObjectName": "BioMgmtPathogens",
+                "Description": "Identifies the pathogen class for biosolids or sewage sludge generated by the facility."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PATHOGENS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "155",
+                "ObjectName": "BioMgmtPathogens2016",
+                "Description": "Identifies the pathogen class for biosolids or sewage sludge generated by the facility."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PATHREDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "156",
+                "ObjectName": "BioMgmtPathreds",
+                "Description": "Identifies the options used by the facility to control pathogens for a Biosolids Management Practice."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PATHREDS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "157",
+                "ObjectName": "BioMgmtPathreds2016",
+                "Description": "Identifies the options used by the facility to control pathogens for a Biosolids Management Practice."
+            },
+            {
+                "ColumnName": "BIO_MGMT_VECTORS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "158",
+                "ObjectName": "BioMgmtVectors",
+                "Description": "Identifies the option used by the facility for vector attraction reduction."
+            },
+            {
+                "ColumnName": "BIO_MGMT_VECTORS_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "159",
+                "ObjectName": "BioMgmtVectors2016",
+                "Description": "Identifies the option used by the facility for vector attraction reduction."
+            },
+            {
+                "ColumnName": "BIO_COMMENT_TEXT",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "160",
+                "ObjectName": "BioCommentText",
+                "Description": "Free text allowing the user to provide comments on the annual program report."
+            },
+            {
+                "ColumnName": "BIO_COMMENT_TEXT_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "161",
+                "ObjectName": "BioCommentText2016",
+                "Description": "Free text allowing the user to provide comments on the annual program report."
+            },
+            {
+                "ColumnName": "BIO_REPORT_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "162",
+                "ObjectName": "BioReportDate",
+                "Description": "The date the report was received by EPA."
+            },
+            {
+                "ColumnName": "BIO_REPORT_DATE_2016",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "163",
+                "ObjectName": "BioReportDate2016",
+                "Description": "The date the report was received by EPA."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEF_CURRENT_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "164",
+                "ObjectName": "BioMgmtDefCurrentCnt",
+                "Description": "The number of times noncompliance reported by the facility in the last 3 years."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEF_CURRENT_CNT_2016",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "165",
+                "ObjectName": "BioMgmtDefCurrentCnt2016",
+                "Description": "The number of times noncompliance reported by the facility in the last 3 years."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEF_CATEGORIES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "166",
+                "ObjectName": "BioMgmtDefCategories",
+                "Description": "Indicates the program deficiency category to assist in reporting and displaying program deficiencies on web screens."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEF_CATEGORIES_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "167",
+                "ObjectName": "BioMgmtDefCategories2016",
+                "Description": "Indicates the program deficiency category to assist in reporting and displaying program deficiencies on web screens."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEFICIENCIES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "168",
+                "ObjectName": "BioMgmtDeficiencies",
+                "Description": "Indicates the type of NPDES special regulatory program deficiency."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEFICIENCIES_2016",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "169",
+                "ObjectName": "BioMgmtDeficiencies2016",
+                "Description": "Indicates the type of NPDES special regulatory program deficiency."
+            },
+            {
+                "ColumnName": "BIO_VIO_STATUS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "170",
+                "ObjectName": "BioVioStatus",
+                "Description": "A value of 1 indicates if the Biosolids facility currently has an unresolved biosolids related Single Event Violation."
+            },
+            {
+                "ColumnName": "BIO_VIOL_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "171",
+                "ObjectName": "BioViolFlag",
+                "Description": "Displays  Yes  if the facility is in violation for biosolids under the Clean Water Act, in the last three years."
+            },
+            {
+                "ColumnName": "BIO_VIO_LAST_YEAR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "172",
+                "ObjectName": "BioVioLastYear",
+                "Description": "A flag (values of 1 for Yes, 0 for No) that a Bisolids Violation occurred in the last 4 quarters."
+            },
+            {
+                "ColumnName": "BIO_REPORTING_OBLIGATIONS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "173",
+                "ObjectName": "BioReportingObligations2017",
+                "Description": "Indicates the reporting obligation reason."
+            },
+            {
+                "ColumnName": "BIO_TOTAL_VOLUME_AMT_2017",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "174",
+                "ObjectName": "BioTotalVolumeAmt2017",
+                "Description": "The amount (in dry metric tons) of biosolids or sewage sludge generated at the facility."
+            },
+            {
+                "ColumnName": "BIO_LAND_APPLICATION_SUM_2017",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "175",
+                "ObjectName": "BioLandApplicationSum2017",
+                "Description": "The amount (dry metric tons) of biosolids land applied."
+            },
+            {
+                "ColumnName": "BIO_SURFACE_DISP_SUM_2017",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "176",
+                "ObjectName": "BioSurfaceDispSum2017",
+                "Description": "The amount of surface disposal in dry metric tons (DMT)."
+            },
+            {
+                "ColumnName": "BIO_INCINERATION_SUM_2017",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "177",
+                "ObjectName": "BioIncinerationSum2017",
+                "Description": "The amount (dry metric tons) of biosolids incinerated."
+            },
+            {
+                "ColumnName": "BIO_OTHER_MANAGEMENT_SUM_2017",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "178",
+                "ObjectName": "BioOtherManagementSum2017",
+                "Description": "The amount (dry metric tons) of biosolids managed using methods not previously described."
+            },
+            {
+                "ColumnName": "BIO_TRTMNT_PROCESSES_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "179",
+                "ObjectName": "BioTrtmntProcesses2017",
+                "Description": "Identifies the biosolids or sewage sludge treatment process or processes at the facility."
+            },
+            {
+                "ColumnName": "BIO_TRMNT_PRCSS_CMNT_TXTS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "180",
+                "ObjectName": "BioTrmntPrcssCmntTxts2017",
+                "Description": "Free text additional description of  other  biotreatment processes."
+            },
+            {
+                "ColumnName": "BIO_ANALY_METHOD_CATGRYS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "181",
+                "ObjectName": "BioAnalyMethodCatgrys2017",
+                "Description": "Displays the categories of the analytic methods used by the facility to analyze regulated parameters at the facility."
+            },
+            {
+                "ColumnName": "BIO_ANALY_METHODS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "182",
+                "ObjectName": "BioAnalyMethods2017",
+                "Description": "Displays the analytic methods used by the facility to analyze enteric viruses, fecal coliforms, helminth ova, Salmonella sp., and other regulated parameters as reported on the Biosolids Program Report."
+            },
+            {
+                "ColumnName": "BIO_OTHER_MGMT_PRCTC_TXTS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "183",
+                "ObjectName": "BioOtherMgmtPrctcTxts2017",
+                "Description": "Free text additional description of  other  Biosolids Management Practices."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PRCTCE_TYPES_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "184",
+                "ObjectName": "BioMgmtPrctceTypes2017",
+                "Description": "The type of biosolids or sewage sludge management practice (e.g., land application, surface disposal, incineration) used by the facility."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PRCTCE_STYPES_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "185",
+                "ObjectName": "BioMgmtPrctceStypes2017",
+                "Description": "Additional detail about the type of Management Practice used for an amount of Biosolids or Sewage Sludge."
+            },
+            {
+                "ColumnName": "BIO_MGMT_HANDLERS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "186",
+                "ObjectName": "BioMgmtHandlers2017",
+                "Description": "Indicates the type of Biosolids or Sewage Sludge handlers/preparers, either owner/operator or off-site third-party handler/preparer."
+            },
+            {
+                "ColumnName": "BIO_MGMT_CONTAINERS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "187",
+                "ObjectName": "BioMgmtContainers2017",
+                "Description": "Identifies the nature of each biosolids and sewage sludge material generated by the facility in terms of whether the material is a biosolid or sewage sludge and whether the material is ultimately conveyed off-site in bulk or in bags."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PATHOGENS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "188",
+                "ObjectName": "BioMgmtPathogens2017",
+                "Description": "Identifies the pathogen class for biosolids or sewage sludge generated by the facility."
+            },
+            {
+                "ColumnName": "BIO_MGMT_PATHREDS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "189",
+                "ObjectName": "BioMgmtPathreds2017",
+                "Description": "Identifies the options used by the facility to control pathogens for a Biosolids Management Practice."
+            },
+            {
+                "ColumnName": "BIO_MGMT_VECTORS_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "190",
+                "ObjectName": "BioMgmtVectors2017",
+                "Description": "Identifies the option used by the facility for vector attraction reduction."
+            },
+            {
+                "ColumnName": "BIO_COMMENT_TEXT_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "191",
+                "ObjectName": "BioCommentText2017",
+                "Description": "Free text allowing the user to provide comments on the annual program report."
+            },
+            {
+                "ColumnName": "BIO_REPORT_DATE_2017",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "192",
+                "ObjectName": "BioReportDate2017",
+                "Description": "The date the report was received by EPA."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEF_CURRENT_CNT_2017",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "193",
+                "ObjectName": "BioMgmtDefCurrentCnt2017",
+                "Description": "The number of times noncompliance reported by the facility in the last 3 years."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEF_CATEGORIES_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "194",
+                "ObjectName": "BioMgmtDefCategories2017",
+                "Description": "Indicates the program deficiency category to assist in reporting and displaying program deficiencies on web screens."
+            },
+            {
+                "ColumnName": "BIO_MGMT_DEFICIENCIES_2017",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "195",
+                "ObjectName": "BioMgmtDeficiencies2017",
+                "Description": "Indicates the type of NPDES special regulatory program deficiency."
+            },
+            {
+                "ColumnName": "POLL_WITH_VIOLATION",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "196",
+                "ObjectName": "PollWithViolation",
+                "Description": "The names of pollutants with effluent exceedances (i.e., violation code E90) in the past three years in ICIS-NPDES."
+            },
+            {
+                "ColumnName": "LIM_POLLUTANT",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "197",
+                "ObjectName": "LimPollutant",
+                "Description": "The list of pollutants with enforceable (i.e., numeric limits or monitoring only) and/or benchmark limits in the current version of a NPDES permit."
+            },
+            {
+                "ColumnName": "DMR_POUNDS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "198",
+                "ObjectName": "DMRPounds",
+                "Description": "Total pounds of pollutants discharged by the NPDES ID for the most recent complete calendar year."
+            },
+            {
+                "ColumnName": "DMR_TWPE",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "199",
+                "ObjectName": "DMRTwpe",
+                "Description": "Total toxic-weighted pounds equivalent (TWPE) discharged by the NPDES ID for the most recent complete calendar year. TWPE is the mass of a pollutant or chemical discharged that accounts for its relative toxicity."
+            },
+            {
+                "ColumnName": "PAST_CAL_YR_CONV_POLLUTANTS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "200",
+                "ObjectName": "PastCalYrConvPollutants",
+                "Description": "Total pounds of conventional pollutants discharged by the NPDES ID for the most recent complete calendar year."
+            },
+            {
+                "ColumnName": "PAST_CAL_YR_CONV_POL_OVR_LMT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "201",
+                "ObjectName": "PastCalYrConvPolOvrLmt",
+                "Description": "Total load over limit of conventional pollutant pounds equivalent discharged by the NPDES ID for the most recent complete calendar year."
+            },
+            {
+                "ColumnName": "PAST_CAL_YR_TOXIC_POL_OVR_LMT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "202",
+                "ObjectName": "PastCalYrToxicPolOvrLmt",
+                "Description": "Total load over limit of toxic-weighted pounds equivalent (TWPE) discharged by the NPDES ID for the most recent complete calendar year."
+            },
+            {
+                "ColumnName": "FAC_TRI_SW_REL",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "203",
+                "ObjectName": "FacTRISwRel",
+                "Description": "Chemical surface water release information from the Toxics Release Inventory (TRI) represents the total chemical releases discharged to surface water, in pounds, for the most recent reporting year."
+            },
+            {
+                "ColumnName": "FAC_TRI_POTW_TRANS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "204",
+                "ObjectName": "FacTRIPotwTrans",
+                "Description": "POTW transfer information from the Toxics Release Inventory (TRI) represents the amount of toxic chemicals transferred to a Publicly Operated Treatment Works (POTW), in pounds, for the most recent reporting year."
+            },
+            {
+                "ColumnName": "CWP_CSO_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "205",
+                "ObjectName": "CWPCsoFlag",
+                "Description": "The discharge from a Combined Sewer System at a point prior to the treatment plant. CSOs are point sources subject to NPDES permit requirements including both technology-based and water quality-based requirements of the Clean Water Act."
+            },
+            {
+                "ColumnName": "CWP_CSO_OUTFALLS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "206",
+                "ObjectName": "CWPCsoOutfalls",
+                "Description": "The number of discharge outfalls at points prior to the treatment plant."
+            },
+            {
+                "ColumnName": "CWP_STATE_WATER_BODY_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "240",
+                "ColumnID": "207",
+                "ObjectName": "CWPStateWaterBodyCode",
+                "Description": "Code from the Assessment TMDL Tracking & Implementation System (ATTAINS) database, assigned by the US Geological Survey, used to classify watersheds in the United States and the Caribbean. The code consists of twelve digits which correspond to six levels of classification:- Region (first-level, 2-digit HUC)- Subregion (second-level, 4-digit HUC)- Accounting unit (third-level, 6-digit HUC)- Cataloguing unit (fourth-level, 8-digit HUC)- Watershed (fifth-level, 10-digit HUC)- Subwatershed (sixth-level, 12-digit HUC)"
+            },
+            {
+                "ColumnName": "CWP_STATE_WATER_BODY_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "208",
+                "ObjectName": "CWPStateWaterBodyName",
+                "Description": "The name of the watershed from the ATTAINS database in which the facility resides."
+            },
+            {
+                "ColumnName": "ATTAINS_CYCLE_YEAR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4",
+                "ColumnID": "209",
+                "ObjectName": "AttainsCycleYear",
+                "Description": "The year in which the most recent state assessment occurred for the waterbody. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "RAD_GNIS_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "60",
+                "ColumnID": "210",
+                "ObjectName": "RadGnisName",
+                "Description": "The name of the waterbody from the Geographic Names Information System (GNIS) database in which the facility is permitted to discharge directly."
+            },
+            {
+                "ColumnName": "RAD_REACHCODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "14",
+                "ColumnID": "211",
+                "ObjectName": "RadReachcode",
+                "Description": "A nationally unique and permanent identifier for the waterbody, assigned by the US Geological Survey."
+            },
+            {
+                "ColumnName": "RAD_WBD_HU8",
+                "DataType": "VARCHAR2",
+                "DataLength": "8",
+                "ColumnID": "212",
+                "ObjectName": "RadWBDHu8",
+                "Description": "Hydrologic Unit Code (HUC) from the Reach Address Database (RAD), which is derived from the USGS Watershed Boundary Dataset."
+            },
+            {
+                "ColumnName": "RAD_WBD_HU8_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "213",
+                "ObjectName": "RadWBDHu8Name",
+                "Description": "The name of the hydrologic unit in which the facility may discharge, from the Reach Address Database (RAD) and derived from the USGS Watershed Boundary Dataset."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_WBD_HU8",
+                "DataType": "VARCHAR2",
+                "DataLength": "8",
+                "ColumnID": "214",
+                "ObjectName": "FacDerivedWBDHu8",
+                "Description": "Spatially derived HUC based on the facility's geographic coordinates in FRS."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_WBD_HU8_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "215",
+                "ObjectName": "FacDerivedWBDHu8Name",
+                "Description": "The name of the hydrologic unit in which the facility is located within, derived spatially based on the facility's geographic coordinates in FRS."
+            },
+            {
+                "ColumnName": "RAD_WBD_HUC12",
+                "DataType": "VARCHAR2",
+                "DataLength": "12",
+                "ColumnID": "216",
+                "ObjectName": "RadWBDHuc12",
+                "Description": "Code from the Reach Address Database (RAD), assigned by the US Geological Survey, used to classify watersheds in the United States and the Caribbean. The code consists of twelve digits which correspond to six levels of classification:- Region (first-level, 2-digit HUC)- Subregion (second-level, 4-digit HUC)- Accounting unit (third-level, 6-digit HUC)- Cataloguing unit (fourth-level, 8-digit HUC)- Watershed (fifth-level, 10-digit HUC)- Subwatershed (sixth-level, 12-digit HUC)"
+            },
+            {
+                "ColumnName": "RAD_HU_12_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "80",
+                "ColumnID": "217",
+                "ObjectName": "RadHu12Name",
+                "Description": "The name of the waterbody in which the facility is permitted to discharge directly (from the Reach Address Database, RAD)."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_WBD",
+                "DataType": "VARCHAR2",
+                "DataLength": "12",
+                "ColumnID": "218",
+                "ObjectName": "FacDerivedWBD",
+                "Description": "The Hydrologic Unit Code (HUC-12) of the waterbody in which the facility resides, derived based on location data in FRS."
+            },
+            {
+                "ColumnName": "FAC_DERIVED_WBD_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "219",
+                "ObjectName": "FacDerivedWBDName",
+                "Description": "The 12 digit Watershed Boundary Dataset Name derived from the FRS Best Pick Coordinate"
+            },
+            {
+                "ColumnName": "ATTAINS_SOURCE",
+                "DataType": "CHAR",
+                "DataLength": "6",
+                "ColumnID": "220",
+                "ObjectName": "AttainsSource",
+                "Description": "The CWA Report in which the waterbody data can be found. The data are from the Assessment TMDL Tracking & Implementation System (ATTAINS) database."
+            },
+            {
+                "ColumnName": "CWP_IMP_WATER_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "221",
+                "ObjectName": "CWPImpWaterFlg",
+                "Description": "Displays  Y  if the permitted facility discharges directly into category 4 or 5 impaired waters, as designated under section 303(d) of the Clean Water Act."
+            },
+            {
+                "ColumnName": "ATTAINS_IMP_WATER_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "222",
+                "ObjectName": "AttainsImpWaterFlg",
+                "Description": "Displays  Y  if the waterbody in which the facility resides is listed for impairment. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "ATTAINS_AU_CATEGORY",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "223",
+                "ObjectName": "AttainsAuCategory",
+                "Description": "The impairment class or category of the waterbody in which the facility is permitted to discharge directly. The data are from the ATTAINS database:- 5  = Impaired: TMDL needed. Available information indicates that at least one designated use is not being supported and a TMDL is needed (also known as the 303(d) listed waters).- 4  = Impaired: TMDL not needed. Available information indicates that at least one designated use is not being supported, but a TMDL is not needed (see subcategories).- 4a = TMDL completed. A TMDL has been completed, but impairment still exists.- 4b = TMDL alternative. Impairment is being addressed by a method other than a TMDL (e.g., stream bank improvements).- 4c = Non-pollutant causes. Cause of impairment is not a pollutant (e.g., habitat destruction)."
+            },
+            {
+                "ColumnName": "ATTAINS_STATE_CAUSES",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "224",
+                "ObjectName": "AttainsStateCauses",
+                "Description": "Lists all pollutants or stressors that are causing impairment in the assessed waterbody. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "ATTAINS_CAUSE_GROUPS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "225",
+                "ObjectName": "AttainsCauseGroups",
+                "Description": "Lists all groups of pollutants or stressors that are causing impairment in the assessed waterbody. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "ATTAINS_POSSIBLE_NPDES_PARAMS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "226",
+                "ObjectName": "AttainsPossibleNPDESParams",
+                "Description": "Lists all pollutants discharged by the facility that are potentially contributing to the impairment of local waterbodies."
+            },
+            {
+                "ColumnName": "ATTAINS_AQUATIC_LIFE_USE_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "227",
+                "ObjectName": "AttainsAquaticLifeUseFlg",
+                "Description": "Displays  Y  if the waterbody in which the facility resides is designated for aquatic life use. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "ATTAINS_EXCEPTNL_USE_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "228",
+                "ObjectName": "AttainsExceptnlUseFlg",
+                "Description": "Displays  Y  if the waterbody in which the facility resides is designated for exceptional use. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "ATTAINS_RECREATION_USE_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "229",
+                "ObjectName": "AttainsRecreationUseFlg",
+                "Description": "Displays  Y  if the waterbody in which the facility resides is designated for recreational use. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "ATTAINS_SHELLFISH_USE_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "230",
+                "ObjectName": "AttainsShellfishUseFlg",
+                "Description": "Displays  Y  if the waterbody in which the facility resides is designated for shellfish use. The data are from the ATTAINS database."
+            },
+            {
+                "ColumnName": "BEACH_CLOSE_LAST_YEAR_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "231",
+                "ObjectName": "BeachCloseLastYearFlg",
+                "Description": "Displays  Y  if the facility is located on or near a waterbody with a beach closure within the last year."
+            },
+            {
+                "ColumnName": "BEACH_CLOSE_LAST_2YRS_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "232",
+                "ObjectName": "BeachCloseLast2yrsFlg",
+                "Description": "Displays  Y  if the facility is located on or near a waterbody with a beach closure within the last two years."
+            },
+            {
+                "ColumnName": "CHESAPEAKE_BAY_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "233",
+                "ObjectName": "ChesapeakeBayFlag",
+                "Description": "Displays  Y  if the facility is located within the Chesapeake Bay watershed."
+            },
+            {
+                "ColumnName": "EPA_SYSTEM",
+                "DataType": "VARCHAR2",
+                "DataLength": "10",
+                "ColumnID": "234",
+                "ObjectName": "EPASystem",
+                "Description": "The EPA data system in which permit and facility records are kept. EPA's Facility Registry System (FRS) links all program database records (such as permit IDs and IDs facilities use in reporting to EPA) together. The following list describes the individual data systems that are linked to from the detailed facility report: - AFS: Air Facility System for Clean Air Act stationary source programs.- ICP: Integrated Compliance Information System for Clean Water Act programs monitoring National Pollutant Discharge Elimination System (NPDES) permits.- RCR: Resource Conservation and Recovery Act Information System (RCRAInfo) for tracking the Resource Conservation and Recovery Act (RCRA) programs.- NCDB: National Compliance Database System for monitoring national performance of the Toxic Substance Control Act (TSCA); the Emergency Planning and Right-to-Know Act, Section 313 (EPCRA); the Asbestos Hazard Emergency Response (AHERA); and the Federal Insecticide, Fungicide, and Rodenticide Act (FIFRA).- TRI: Toxics Release Inventory for Emergency Planning and Community Right-to-Know Act, Section 313 submissions.- NEI: National Emissions Inventory database contains information on stationary and mobile sources that emit criteria air pollutants and their precursors, as well as hazardous air pollutants (HAPs). The database includes estimates of annual emissions, by source, of air pollutants in each area of the country, on an annual basis.- TSCA: Toxic Substances Control Act addressing the production, importation, use, and disposal of specific chemicals."
+            },
+            {
+                "ColumnName": "STATUTE",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "235",
+                "ObjectName": "Statute",
+                "Description": "The name of the statute associated with each of the permits and identifiers linked to the facility: - CAA = the Clean Air Act- CWA = the Clean Water Act- RCRA = the Resource Conservation and Recovery Act- EP313 = the Emergency Planning and Community Right-to-Know Act, Section 313 (also known as the Toxics Release Inventory Program)- TSCA = the Toxic Substances Control Act- SDWA = the Safe Drinking Water Act"
+            },
+            {
+                "ColumnName": "CWP_TRIBAL_LAND_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "80",
+                "ColumnID": "236",
+                "ObjectName": "CWPTRIbalLandCode",
+                "Description": "From ICIS, the unique identifier for every unit of land within Indian Country."
+            },
+            {
+                "ColumnName": "CWP_PERMIT_STATUS_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "237",
+                "ObjectName": "CWPPermitStatusCode",
+                "Description": "The code associated with the facility's NPDES permit status."
+            },
+            {
+                "ColumnName": "CWP_PERMIT_TYPE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "238",
+                "ObjectName": "CWPPermitTypeCode",
+                "Description": "The code associated with the facility's NPDES permit classification."
+            },
+            {
+                "ColumnName": "CWP_SNC_EVENT_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "200",
+                "ColumnID": "239",
+                "ObjectName": "CWPSNCEventDesc",
+                "Description": "Describes the event that resulted in the facility's status of Significant Noncompliance."
+            },
+            {
+                "ColumnName": "FAC_MAP_FLG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "240",
+                "ObjectName": "FacMapFlg",
+                "Description": "Graphical indicator denoting whether geographical data required to map a facility are available."
+            },
+            {
+                "ColumnName": "FAC_MAP_ICON",
+                "DataType": "VARCHAR2",
+                "DataLength": "20",
+                "ColumnID": "241",
+                "ObjectName": "FacMapIcon",
+                "Description": "The default map icon image file calculated for the facility by the ECHO program."
+            },
+            {
+                "ColumnName": "CWP_DATE_LAST_PENALTY",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "242",
+                "ObjectName": "CWPDateLastPenalty",
+                "Description": "Indicates date of most recent penalty against the facility."
+            },
+            {
+                "ColumnName": "FAC_TRI_REPORTER",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "243",
+                "ObjectName": "FacTRIReporter",
+                "Description": "Indicates whether facility reported to the Toxics Release Inventory (TRI) for the most recent reporting year."
+            },
+            {
+                "ColumnName": "CWP_13QTRS_COMPL_HISTORY",
+                "DataType": "VARCHAR2",
+                "DataLength": "15",
+                "ColumnID": "244",
+                "ObjectName": "CWP13qtrsComplHistory",
+                "Description": "The facility's 3-year or 13-quarter compliance status history by quarter (3-month period). Each character represents a quarter of compliance, going from oldest to most recent. Character values correspond to the following compliance statuses:_ -No Violation IdentifiedV -Violation IdentifiedS -High Priority ViolationU - Undetermined"
+            },
+            {
+                "ColumnName": "CWP_CASE_IDS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "245",
+                "ObjectName": "CWPCaseIDs",
+                "Description": "Indicates the ICIS Case Number, a unique number identifying the civil enforcement action."
+            },
+            {
+                "ColumnName": "CWP_FIPS_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "5",
+                "ColumnID": "246",
+                "ObjectName": "CWPFIPSCode",
+                "Description": "A 5 digit combination of the 2 digit Federal Information Processing Standards (FIPS) code for the state and the 3 digit FIPS code of the county that a facility is located in."
+            },
+            {
+                "ColumnName": "DMR_IMPAIRED_POLL",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "247",
+                "ObjectName": "DMRImpairedPoll",
+                "Description": "The pollutants with limits or monitoring requirements in a facility's NPDES permit with the potential to contribute to impairment of local waterbodies"
+            },
+            {
+                "ColumnName": "CURR_SV_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "248",
+                "ObjectName": "CurrSvFlag",
+                "Description": "Indicates if the facility has a current significant violation. 1 = Yes"
+            },
+            {
+                "ColumnName": "VIOL_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "249",
+                "ObjectName": "ViolFlag",
+                "Description": "Indicates if the facility had a violation within the last 3 years. 1 = Yes"
+            },
+            {
+                "ColumnName": "CURR_VIO_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "250",
+                "ObjectName": "CurrVioFlag",
+                "Description": "Indicates if the facility has a current violation. 1 = Yes"
+            },
+            {
+                "ColumnName": "INSP_5YR_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "251",
+                "ObjectName": "Insp5yrFlag",
+                "Description": "Indicates if the facility has an inspection within the last 5 years. 1 = Yes"
+            },
+            {
+                "ColumnName": "EA_5YR_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "252",
+                "ObjectName": "Ea5yrFlag",
+                "Description": "Indicates if the facility has a formal enforcement action within the last 5 years. 1 = Yes"
+            },
+            {
+                "ColumnName": "INFEA_5YR_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "253",
+                "ObjectName": "Infea5yrFlag",
+                "Description": "Indicates if the facility has an informal enforcement action within the last 5 years. 1 = Yes."
+            },
+            {
+                "ColumnName": "CWP_TOTAL_PENALTIES",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "254",
+                "ObjectName": "CWPTotalPenalties",
+                "Description": "The total penalty value incurred over 5 years."
+            },
+            {
+                "ColumnName": "TRIBAL_FLAG",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "255",
+                "ObjectName": "TRIbalFlag",
+                "Description": "A flag indicating that the facility is within a tribal area."
+            },
+            {
+                "ColumnName": "CENSUS_BLOCK_GROUP",
+                "DataType": "VARCHAR2",
+                "DataLength": "48",
+                "ColumnID": "256",
+                "ObjectName": "CensusBlockGroup",
+                "Description": "A geographic unit used by the United States Census Bureau, generally defined to contain between 600 and 3,000 people."
+            },
+            {
+                "ColumnName": "MAX_PCTILE_US",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "257",
+                "ObjectName": "MaxPctileUs",
+                "Description": "The maximum percentile from all individual EJSCREEN indicators."
+            },
+            {
+                "ColumnName": "EJSCREEN_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "258",
+                "ObjectName": "EjscreenFlag",
+                "Description": "A Y/N indicator identifying whether or not the facility is within an Environmental Justice area."
+            },
+            {
+                "ColumnName": "LAST_DMR_VALUE_RCVD_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "259",
+                "ObjectName": "LastDMRValueRcvdDate",
+                "Description": "The latest date that a Discharge Monitoring Report was received by the State or EPA."
+            },
+            {
+                "ColumnName": "LOWER_48",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "260",
+                "ObjectName": "Lower48",
+                "Description": "Flag showing Y/N whether location is within the contiguous (lower 48) United States."
+            },
+            {
+                "ColumnName": "ACTIVE_LOWER_48",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "261",
+                "ObjectName": "ActiveLower48",
+                "Description": "A Y/N indicator indicating that the facility is active and located within the lower 48 contiguous US States."
+            },
+            {
+                "ColumnName": "EFF_EXCEEDS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "262",
+                "ObjectName": "EffExceeds",
+                "Description": "The number of E90 Effluent Violations in the last 3 years."
+            },
+            {
+                "ColumnName": "PAST_CAL_YR_AVERAGE_FLOW",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "263",
+                "ObjectName": "PastCalYrAverageFlow",
+                "Description": "The past calendar year average flow in Million Gallons a Day (MGD)."
+            },
+            {
+                "ColumnName": "PAST_CAL_YR_TOXIC_POLLUTANTS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "264",
+                "ObjectName": "PastCalYrToxicPollutants",
+                "Description": "The toxic pollutants discharged by the NPDES facility for the most recent complete calendar year."
+            },
+            {
+                "ColumnName": "CWP_VIO_STATUS",
+                "DataType": "VARCHAR2",
+                "DataLength": "50",
+                "ColumnID": "265",
+                "ObjectName": "CWPVioStatus",
+                "Description": "The current Reportable Non Compliance value for the facility."
+            },
+            {
+                "ColumnName": "INDSW_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "266",
+                "ObjectName": "IndswFlag",
+                "Description": "A value of Y indicates an Industrial Stormwater Permit."
+            },
+            {
+                "ColumnName": "CERTIFIED_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "267",
+                "ObjectName": "CertifiedDate",
+                "Description": "The issue date or effective date of the permit."
+            },
+            {
+                "ColumnName": "COLLECTION_METHOD",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "268",
+                "ObjectName": "CollectionMethod",
+                "Description": "??"
+            },
+            {
+                "ColumnName": "REFERENCE_POINT",
+                "DataType": "VARCHAR2",
+                "DataLength": "750",
+                "ColumnID": "269",
+                "ObjectName": "ReferencePoint",
+                "Description": "??"
+            },
+            {
+                "ColumnName": "CALCULATED_ACCURACY_METERS",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "270",
+                "ObjectName": "CalculatedAccuracyMeters",
+                "Description": "The estimated accuracy in Meters for the facility's geospatial coordinate."
+            },
+            {
+                "ColumnName": "MAP",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "271",
+                "ObjectName": "Map",
+                "Description": "No Longer Used."
+            },
+            {
+                "ColumnName": "BIOSOLIDS_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "272",
+                "ObjectName": "BiosolidsFlag",
+                "Description": "A Yes/No field to indicate permits with biosolids management and compliance information."
+            },
+            {
+                "ColumnName": "VIO_LAST_YEAR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "273",
+                "ObjectName": "VioLastYear",
+                "Description": "A flag (values of 1 for Yes, 0 for No) that a Water Program Violation occurred in the last 4 quarters."
+            },
+            {
+                "ColumnName": "STATE_AUTH_NPDES",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "274",
+                "ObjectName": "StateAuthNPDES",
+                "Description": "Indicates whether the state/tribe/territory code (first 2 digits of the NPDES_ID/SOURCE_ID) is authorized for NPDES Facilities."
+            },
+            {
+                "ColumnName": "STATE_AUTH_FEDFAC",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "275",
+                "ObjectName": "StateAuthFedfac",
+                "Description": "Indicates whether the state/tribe/territory code (first 2 digits of the NPDES_ID/SOURCE_ID) is authorized to regulate Federally owned facilities."
+            },
+            {
+                "ColumnName": "STATE_AUTH_PRETREAT",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "276",
+                "ObjectName": "StateAuthPretreat",
+                "Description": "Indicates whether the state/tribe/territory code (first 2 digits of the NPDES_ID/SOURCE_ID) is authorized for Pretreatment Facilities."
+            },
+            {
+                "ColumnName": "STATE_AUTH_GEN",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "277",
+                "ObjectName": "StateAuthGen",
+                "Description": "Indicates whether the state/tribe/territory code (first 2 digits of the NPDES_ID/SOURCE_ID) is authorized for General NPDES Facilities."
+            },
+            {
+                "ColumnName": "STATE_AUTH_BIOSOLIDS",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "278",
+                "ObjectName": "StateAuthBiosolids",
+                "Description": "Indicates whether the state/tribe/territory code (first 2 digits of the NPDES_ID/SOURCE_ID) is authorized for Biosolids."
+            },
+            {
+                "ColumnName": "NPDES_DATA_GROUPS",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "279",
+                "ObjectName": "NPDESDataGroups",
+                "Description": "This is the code indicating the NPDES eReporting Rule Data Group that applies to the data."
+            },
+            {
+                "ColumnName": "PERMITTING_AGENCY",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "280",
+                "ObjectName": "PermittingAgency",
+                "Description": "This is the type of organization issuing or granting a permit."
+            },
+            {
+                "ColumnName": "ELECTR_RPT_WAIVER_TYPE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "281",
+                "ObjectName": "ElectrRptWaiverTypeCode",
+                "Description": "The unique code that identifies whether the authorized NPDES program has granted the permittee a waiver from electronic reporting in compliance with this part (e.g,  temporary waiver, permanent waiver). This data element should be left blank if the permittee does not have a waiver from electronic reporting in compliance with this part."
+            },
+            {
+                "ColumnName": "ELECTR_RPT_WAIVER_TYPE_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "282",
+                "ObjectName": "ElectrRptWaiverTypeDesc",
+                "Description": "Description of the unique code that identifies whether the authorized NPDES program has granted the permittee a waiver from electronic reporting in compliance with this part (e.g,  temporary waiver, permanent waiver). This data element should be left blank if the permittee does not have a waiver from electronic reporting in compliance with this part."
+            },
+            {
+                "ColumnName": "ELECTR_RPT_WAIVER_EFF_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "283",
+                "ObjectName": "ElectrRptWaiverEffDate",
+                "Description": "This is the effective date for a  waiver from electronic reporting in compliance with this part. This data element should always be populated for a waiver."
+            },
+            {
+                "ColumnName": "ELECTR_RPT_WAIVER_EXP_DATE",
+                "DataType": "DATE",
+                "DataLength": "7",
+                "ColumnID": "284",
+                "ObjectName": "ElectrRptWaiverExpDate",
+                "Description": "This is the expiration date for a temporary waiver from electronic reporting in compliance with this part. This data element should be left blank if the permittee has a permanent waiver from electronic reporting or if the permittee does not have a waiver from electronic reporting in compliance with this part."
+            },
+            {
+                "ColumnName": "ELECTR_SUBMISSION_TYPE_CODE",
+                "DataType": "VARCHAR2",
+                "DataLength": "3",
+                "ColumnID": "285",
+                "ObjectName": "ElectrSubmissionTypeCode",
+                "Description": "This is the code indicating the means by which the data were submitted electronically."
+            },
+            {
+                "ColumnName": "ELECTR_SUBMISSION_TYPE_DESC",
+                "DataType": "VARCHAR2",
+                "DataLength": "250",
+                "ColumnID": "286",
+                "ObjectName": "ElectrSubmissionTypeDesc",
+                "Description": "This is the description of the code indicating the means by which the data were submitted electronically."
+            },
+            {
+                "ColumnName": "WEB_DOCS",
+                "DataType": "VARCHAR2",
+                "DataLength": "20",
+                "ColumnID": "287",
+                "ObjectName": "WebDocs",
+                "Description": "Contains flags that identify what web accessible documents are available for the facility."
+            },
+            {
+                "ColumnName": "E90_EXCEEDS_5YR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "288",
+                "ObjectName": "E90Exceeds5yr",
+                "Description": "The number of E90 Exceedences in the last 5 years."
+            },
+            {
+                "ColumnName": "E90_EXCEEDS_4YR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "289",
+                "ObjectName": "E90Exceeds4yr",
+                "Description": "The number of E90 Exceedences in the last 4 years."
+            },
+            {
+                "ColumnName": "E90_EXCEEDS_3YR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "290",
+                "ObjectName": "E90Exceeds3yr",
+                "Description": "The number of E90 Exceedences in the last 3 years."
+            },
+            {
+                "ColumnName": "E90_EXCEEDS_2YR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "291",
+                "ObjectName": "E90Exceeds2yr",
+                "Description": "The number of E90 Exceedences in the last 2 years."
+            },
+            {
+                "ColumnName": "E90_EXCEEDS_1YR",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "292",
+                "ObjectName": "E90Exceeds1yr",
+                "Description": "The number of E90 Exceedences in the last year."
+            },
+            {
+                "ColumnName": "E90_POLLUTANTS_5YR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "293",
+                "ObjectName": "E90Pollutants5yr",
+                "Description": "The pollutants for the E90 Exceedences in the last 5 years."
+            },
+            {
+                "ColumnName": "E90_POLLUTANTS_4YR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "294",
+                "ObjectName": "E90Pollutants4yr",
+                "Description": "The pollutants for the E90 Exceedences in the last 4 years."
+            },
+            {
+                "ColumnName": "E90_POLLUTANTS_3YR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "295",
+                "ObjectName": "E90Pollutants3yr",
+                "Description": "The pollutants for the E90 Exceedences in the last 3 years."
+            },
+            {
+                "ColumnName": "E90_POLLUTANTS_2YR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "296",
+                "ObjectName": "E90Pollutants2yr",
+                "Description": "The pollutants for the E90 Exceedences in the last 2 years."
+            },
+            {
+                "ColumnName": "E90_POLLUTANTS_1YR",
+                "DataType": "VARCHAR2",
+                "DataLength": "4000",
+                "ColumnID": "297",
+                "ObjectName": "E90Pollutants1yr",
+                "Description": "The pollutants for the E90 Exceedences in the last year."
+            },
+            {
+                "ColumnName": "FAC_COUNTY_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "100",
+                "ColumnID": "298",
+                "ObjectName": "FacCountyName",
+                "Description": "The facility county name from EPA's Facility Registry System"
+            },
+            {
+                "ColumnName": "FAC_STD_COUNTY_NAME",
+                "DataType": "VARCHAR2",
+                "DataLength": "300",
+                "ColumnID": "299",
+                "ObjectName": "FacStdCountyName",
+                "Description": "The standardized  facility county name from EPA's Facility Registry System"
+            },
+            {
+                "ColumnName": "EFF_CHARTS_FLAG",
+                "DataType": "CHAR",
+                "DataLength": "1",
+                "ColumnID": "300",
+                "ObjectName": "EffChartsFlag",
+                "Description": null
+            },
+            {
+                "ColumnName": "INSP_DEF_5YR_CNT",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "301",
+                "ObjectName": "InspDef5yrCnt",
+                "Description": null
+            },
+            {
+                "ColumnName": "SCORE",
+                "DataType": "NUMBER",
+                "DataLength": "22",
+                "ColumnID": "302",
+                "ObjectName": "Score",
+                "Description": null
+            }
+        ]
+    }
+}

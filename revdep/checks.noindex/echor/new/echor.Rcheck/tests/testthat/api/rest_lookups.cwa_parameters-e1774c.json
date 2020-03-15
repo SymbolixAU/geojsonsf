@@ -1,0 +1,27 @@
+{
+    "Results": {
+        "Message": "Success",
+        "LuValues": [
+            {
+                "ValueCode": "00300",
+                "ValueDescription": "Oxygen, dissolved [DO]"
+            },
+            {
+                "ValueCode": "51646",
+                "ValueDescription": "Oxygen, dissolved [DO] maximum"
+            },
+            {
+                "ValueCode": "51645",
+                "ValueDescription": "Oxygen, dissolved [DO] minimum"
+            },
+            {
+                "ValueCode": "00301",
+                "ValueDescription": "Oxygen, dissolved percent saturation"
+            },
+            {
+                "ValueCode": "00399",
+                "ValueDescription": "Oxygen, dissolved, % of time violated"
+            }
+        ]
+    }
+}
