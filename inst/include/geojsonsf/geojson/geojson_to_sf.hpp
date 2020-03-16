@@ -41,7 +41,7 @@ namespace sf {
   	Rcpp::List sf(1);
   	Rcpp::List sfc(1);
   	Rcpp::List properties(1);
-  	unsigned int doc_ele;
+  	R_xlen_t doc_ele;
 
   	if (d.IsObject()) {
   		Rcpp::List sfg(1);
@@ -185,7 +185,10 @@ namespace sf {
   	//return Rcpp::List::create();
   }
 
-  inline Rcpp::List generic_geojson_to_sf(Rcpp::StringVector geojson, bool& expand_geometries) {
+  inline Rcpp::List generic_geojson_to_sf(
+  		Rcpp::StringVector geojson,
+  		bool& expand_geometries
+  ) {
 		// iterate over the geojson
 		int n = geojson.size();
   	R_xlen_t sfg_objects = 0;  // keep track of number of objects

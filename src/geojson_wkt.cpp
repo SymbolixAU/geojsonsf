@@ -64,19 +64,19 @@ void object_separator(std::ostringstream& os) {
 	os << ",";
 }
 
-void coord_separator(std::ostringstream& os, int i, int n) {
+void coord_separator(std::ostringstream& os, R_xlen_t i, R_xlen_t n) {
   if (i < (n - 1) ) {
     os << ",";
   }
 }
 
-void line_separator_wkt(std::ostringstream& os, int i, int n) {
+void line_separator_wkt(std::ostringstream& os, R_xlen_t i, R_xlen_t n) {
   if (i < (n - 1) ) {
     os << "),(";
   }
 }
 
-void polygon_separate_wkt(std::ostringstream& os, int i, int n) {
+void polygon_separate_wkt(std::ostringstream& os, R_xlen_t i, R_xlen_t n) {
 	if (i < (n - 1) ) {
     os << ")),((";
 	}
@@ -111,7 +111,7 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& co
 		Rcpp::stop("geojsonsf - different coordinate dimensions found");
 	}
 	R_xlen_t i;
-	for( i = 0; i < n; i++ ) {
+	for( i = 0; i < n; ++i ) {
 		if( i > 0 ) {
 			os << " ";
 		}
@@ -121,9 +121,9 @@ void point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& co
 
 
 void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim ) {
-  size_t n = coord_array.Size();
-	unsigned int i;
-  for (i = 0; i < n; i++) {
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
+  for (i = 0; i < n; ++i) {
     geojsonsf::validate::validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i], coord_dim );
     coord_separator(os, i, n);
@@ -131,9 +131,9 @@ void multi_point_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen
 }
 
 void line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
-  for (i = 0; i < n; i++) {
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
+  for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     point_to_wkt(os, coord_array[i], coord_dim );
     coord_separator(os, i, n);
@@ -141,9 +141,9 @@ void line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen
 }
 
 void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
-  for (i = 0; i < n; i++) {
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
+  for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i], coord_dim );
     line_separator_wkt(os, i, n);
@@ -151,9 +151,9 @@ void multi_line_string_to_wkt(std::ostringstream& os, const Value& coord_array, 
 }
 
 void polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
-  for (i = 0; i < n; i++) {
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
+  for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     line_string_to_wkt(os, coord_array[i], coord_dim );
     line_separator_wkt(os, i, n);
@@ -161,9 +161,9 @@ void polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& 
 }
 
 void multi_polygon_to_wkt(std::ostringstream& os, const Value& coord_array, R_xlen_t& coord_dim) {
-  size_t n = coord_array.Size();
-	unsigned int i;
-  for (i = 0; i < n; i++) {
+  R_xlen_t n = coord_array.Size();
+	R_xlen_t i;
+  for (i = 0; i < n; ++i) {
   	geojsonsf::validate::validate_array(coord_array[i]);
     polygon_to_wkt(os, coord_array[i], coord_dim);
     polygon_separate_wkt(os, i, n);

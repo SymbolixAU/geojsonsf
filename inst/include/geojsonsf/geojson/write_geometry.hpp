@@ -25,7 +25,12 @@ namespace write_geometry {
    * no requriement to keep track of sfg indeces
    */
 	template< typename Writer >
-	inline void write_geometry(Writer& writer, SEXP sfg, Rcpp::CharacterVector& cls, int digits ) {
+	inline void write_geometry(
+			Writer& writer,
+			SEXP sfg,
+			Rcpp::CharacterVector& cls,
+			int digits
+		) {
 
 		std::string geom_type;
 		geom_type = cls[1];
@@ -54,7 +59,12 @@ namespace write_geometry {
 	 * the standard function for writing GeoJSON geometries
 	 */
 	template< typename Writer >
-	inline void write_geometry(Writer& writer, Rcpp::List& sfc, int sfg_index, int digits) {
+	inline void write_geometry(
+			Writer& writer,
+			Rcpp::List& sfc,
+			R_xlen_t sfg_index,
+			int digits
+		) {
 
 		SEXP sfg = sfc[ sfg_index ];
 
@@ -90,8 +100,15 @@ namespace write_geometry {
 	 * down-casting MULTI* geometries to their simpler form
 	 */
 	template< typename Writer >
-	inline void write_geometry(Writer& writer, Rcpp::List& sfc, int sfg_index, int geometry_index,
-                            std::string& geom_type, Rcpp::CharacterVector& cls, int digits ) {
+	inline void write_geometry(
+			Writer& writer,
+			Rcpp::List& sfc,
+			R_xlen_t sfg_index,
+			R_xlen_t geometry_index,
+			std::string& geom_type,
+			Rcpp::CharacterVector& cls,
+			int digits
+		) {
 
 		SEXP sfg = sfc[ sfg_index ];
 		std::string downcast_geometry;

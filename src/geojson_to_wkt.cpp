@@ -90,7 +90,7 @@ Rcpp::List parse_geometry_collection_object_wkt(
   Rcpp::List geom_collection(n);
   Rcpp::List geom_collection_wkt(1);
 
-  for (i = 0; i < n; i++) {
+  for (i = 0; i < n; ++i) {
     const Value& gcval = geometries[i];
   	geojsonsf::validate::validate_type(gcval, wkt_objects);
     geom_type = gcval["type"].GetString();
@@ -100,7 +100,7 @@ Rcpp::List parse_geometry_collection_object_wkt(
   // collapse into a single WKT string
   std::ostringstream os;
   os << "GEOMETRYCOLLECTION (";
-  for (i = 0; i < n; i++) {
+  for (i = 0; i < n; ++i) {
     std::string g = geom_collection[i];
     os << g;
     coord_separator(os, i, n);
@@ -197,7 +197,7 @@ Rcpp::List parse_feature_collection_object_wkt(
   R_xlen_t i;
   Rcpp::List feature_collection(n);
 
-  for (i = 0; i < n; i++) {
+  for (i = 0; i < n; ++i) {
     const Value& feature = features[i];
     feature_collection[i] = parse_feature_object_wkt(
     	feature, geometry_types, wkt_objects, property_keys, doc_properties,

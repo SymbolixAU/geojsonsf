@@ -54,7 +54,7 @@ namespace sfg {
 			Rcpp::IntegerVector iv
       ) {
 		R_xlen_t i;
-		for ( i = 0; i < n; i++ ) {
+		for ( i = 0; i < n; ++i ) {
 			iv[i] = point_array[i].GetDouble();
 		}
 	}
@@ -68,7 +68,7 @@ namespace sfg {
 	    Rcpp::NumericVector& m_range
   ) {
 		R_xlen_t i;
-		for ( i = 0; i < n; i++ ) {
+		for ( i = 0; i < n; ++i ) {
 			geojsonsf::validate::validate_point(point_array[i]);
 			nv[i] = point_array[i].GetDouble();
 		}
@@ -221,7 +221,7 @@ namespace sfg {
 		Rcpp::List ml( n );
 		R_xlen_t j;
 		R_xlen_t max_dimension = 2;
-		for ( j = 0; j < n; j++ ) {
+		for ( j = 0; j < n; ++j ) {
 			R_xlen_t max_cols = 2;
 			geojsonsf::validate::validate_array( multi_line_array[j] );
 			get_line_string( multi_line_array[j], bbox, z_range, m_range, ml, j, false, attribute, max_cols );
@@ -251,7 +251,7 @@ namespace sfg {
 		Rcpp::List pl( n );
 		R_xlen_t j;
 		R_xlen_t max_dimension = 2;
-		for ( j = 0; j < n; j++ ) {
+		for ( j = 0; j < n; ++j ) {
 			R_xlen_t max_cols = 2;
 			geojsonsf::validate::validate_array( polygon_array[j] );
 			get_line_string( polygon_array[j], bbox, z_range, m_range, pl, j, false, "", max_cols );
@@ -284,7 +284,7 @@ namespace sfg {
 		R_xlen_t j, k;
 		R_xlen_t max_dimension = 2;
 
-		for ( j = 0; j < n; j++ ) {
+		for ( j = 0; j < n; ++j ) {
 			const Value& polygon_array = multi_polygon_array[j];
 			geojsonsf::validate::validate_array( polygon_array );
 			R_xlen_t np = polygon_array.Size();

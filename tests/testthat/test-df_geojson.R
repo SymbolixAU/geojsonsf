@@ -44,7 +44,7 @@ test_that("z and m handled", {
 
 test_that("Factors are handled", {
 
-	df <- data.frame(id = letters[1:2], lat = c(0,1), lon = c(1,0))
+	df <- data.frame(id = letters[1:2], lat = c(0,1), lon = c(1,0), stringsAsFactors = TRUE )
 	geo <- df_geojson(df, lat = "lat", lon = "lon")
 	expect_equal(as.character(geo), '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"a"},"geometry":{"type":"Point","coordinates":[1.0,0.0]}},{"type":"Feature","properties":{"id":"b"},"geometry":{"type":"Point","coordinates":[0.0,1.0]}}]}')
 

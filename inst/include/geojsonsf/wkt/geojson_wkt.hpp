@@ -5,7 +5,7 @@
 #include "rapidjson/document.h"
 using namespace rapidjson;
 
-void coord_separator(std::ostringstream& os, int i, int n);
+void coord_separator(std::ostringstream& os, R_xlen_t i, R_xlen_t n);
 
 void begin_wkt(std::ostringstream& os, std::string& geom_type, R_xlen_t& coord_dim );
 

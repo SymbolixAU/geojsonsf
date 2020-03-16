@@ -10,15 +10,18 @@
 namespace geojsonsf {
 namespace api {
 
-  inline Rcpp::StringVector sfc_to_geojson( Rcpp::List& sfc, int& digits ) {
+  inline Rcpp::StringVector sfc_to_geojson(
+        Rcpp::List& sfc,
+        int& digits
+  ) {
   	// atomise - each row is a separate GeoJSON string
 
-  	int n_rows = sfc.size();
-  	int i;
+  	R_xlen_t n_rows = sfc.size();
+   R_xlen_t i;
 
   	Rcpp::StringVector geojson( n_rows );
 
-  	for( i = 0; i < n_rows; i++ ) {
+  	for( i = 0; i < n_rows; ++i ) {
 
   		rapidjson::StringBuffer sb;
   		rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
@@ -35,21 +38,25 @@ namespace api {
    *
    * Converts sf object to GeoJSON
    */
-  inline Rcpp::StringVector sf_to_geojson( Rcpp::DataFrame& sf, int& digits, bool& factors_as_string ) {
+  inline Rcpp::StringVector sf_to_geojson(
+        Rcpp::DataFrame& sf,
+        int& digits,
+        bool& factors_as_string
+  ) {
   	rapidjson::StringBuffer sb;
   	rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
 
   	std::string geom_column = sf.attr("sf_column");
 
-  	int n_cols = sf.ncol();
-  	int n_properties = n_cols - 1;
-  	int n_rows = sf.nrows();
-  	int i, j;
+  	R_xlen_t n_cols = sf.ncol();
+  	R_xlen_t n_properties = n_cols - 1;
+  	R_xlen_t n_rows = sf.nrows();
+  	R_xlen_t i, j;
   	Rcpp::StringVector column_names = sf.names();
   	Rcpp::StringVector property_names(sf.size() - 1);
 
-  	int property_counter = 0;
-  	for ( i = 0; i < sf.length(); i++) {
+  	R_xlen_t property_counter = 0;
+  	for ( i = 0; i < sf.length(); ++i) {
   		if (column_names[i] != geom_column) {
   			property_names[property_counter] = column_names[i];
   			property_counter++;
@@ -61,14 +68,14 @@ namespace api {
 
   	writer.StartArray();
 
-  	for( i = 0; i < n_rows; i++ ) {
+  	for( i = 0; i < n_rows; ++i ) {
   		writer.StartObject();
   		geojsonsf::writers::start_features( writer );
   		geojsonsf::writers::start_properties( writer );
   		writer.StartObject();
 
   		// properties first, then sfc
-  		for( j = 0; j < n_properties; j++ ) {
+  		for( j = 0; j < n_properties; ++j ) {
   			const char *h = property_names[ j ];
 
   			SEXP this_vec = sf[ h ];
@@ -100,29 +107,33 @@ namespace api {
    * Takes an sf object, converts to atomised GeoJSON
    * Where every geometry is turned into an individual array
    */
-  inline Rcpp::StringVector sf_to_geojson_atomise( Rcpp::DataFrame& sf, int& digits, bool& factors_as_string ) {
+  inline Rcpp::StringVector sf_to_geojson_atomise(
+        Rcpp::DataFrame& sf,
+        int& digits,
+        bool& factors_as_string
+  ) {
   	// atomise - each row is a separate GeoJSON string
 
-  	std::string geom_column = sf.attr("sf_column");
+   std::string geom_column = sf.attr("sf_column");
 
-  	int n_cols = sf.ncol();
-  	int n_properties = n_cols - 1;
-  	int n_rows = sf.nrows();
-  	int i, j;
+   R_xlen_t n_cols = sf.ncol();
+   R_xlen_t n_properties = n_cols - 1;
+   R_xlen_t n_rows = sf.nrows();
+R_xlen_t i, j;
   	Rcpp::StringVector column_names = sf.names();
   	Rcpp::StringVector property_names(sf.size() - 1);
 
   	Rcpp::StringVector geojson( n_rows );
 
-  	int property_counter = 0;
-  	for (int i = 0; i < sf.length(); i++) {
+  	R_xlen_t property_counter = 0;
+  	for (i = 0; i < sf.length(); ++i) {
   		if (column_names[i] != geom_column) {
   			property_names[property_counter] = column_names[i];
   			property_counter++;
   		}
   	}
 
-  	for( i = 0; i < n_rows; i++ ) {
+  	for( i = 0; i < n_rows; ++i ) {
 
   		rapidjson::StringBuffer sb;
   		rapidjson::Writer < rapidjson::StringBuffer > writer( sb );
@@ -135,7 +146,7 @@ namespace api {
   			writer.StartObject();
 
   			// properties first, then sfc
-  			for( j = 0; j < n_properties; j++ ) {
+  			for( j = 0; j < n_properties; ++j ) {
   				const char *h = property_names[ j ];
 
   				SEXP this_vec = sf[ h ];

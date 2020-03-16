@@ -67,11 +67,11 @@ namespace parse {
 		std::string geom_type;
 		geojsonsf::validate::validate_geometries(val, sfg_objects);
 		auto geometries = val["geometries"].GetArray();
-		unsigned int n = geometries.Size();
-		unsigned int i;
+		R_xlen_t n = geometries.Size();
+		R_xlen_t i;
 		Rcpp::List geom_collection(n);
 
-		for (i = 0; i < n; i++) {
+		for (i = 0; i < n; ++i) {
 			const Value& gcval = geometries[i];
 			geojsonsf::validate::validate_type(gcval, sfg_objects);
 			geom_type = gcval["type"].GetString();
@@ -137,8 +137,8 @@ namespace parse {
 		geojsonsf::geojson_properties::get_property_keys(p, property_keys);
 		geojsonsf::geojson_properties::get_property_types(p, property_types);
 
-		unsigned int geomsize = 1;
-		unsigned int i;
+		R_xlen_t geomsize = 1;
+		R_xlen_t i;
 
 		if (expand_geometries && type == "GeometryCollection") {
 			geojsonsf::validate::validate_geometries( geometry, sfg_objects );
@@ -147,7 +147,7 @@ namespace parse {
 		}
 
 		std::string s;
-		for ( i = 0; i < geomsize; i++ ) {
+		for ( i = 0; i < geomsize; ++i ) {
 			//https://stackoverflow.com/a/33473321/5977215
 			if ( expand_geometries ) {
 				s = std::to_string( sfg_objects - i );
@@ -185,12 +185,12 @@ namespace parse {
 
 		auto features = fc["features"].GetArray();
 
-		unsigned int n = features.Size(); // number of features
-		unsigned int i;
+		R_xlen_t n = features.Size(); // number of features
+		R_xlen_t i;
 
 		Rcpp::List feature_collection(n);
 
-		for ( i = 0; i < n; i++ ) {
+		for ( i = 0; i < n; ++i ) {
 			const Value& feature = features[i];
 			feature_collection[i] = parse_feature_object(
 				feature, bbox, z_range, m_range, geometry_types, sfg_objects, property_keys, doc_properties,
@@ -204,7 +204,7 @@ namespace parse {
 			const Value& v,
 	    Rcpp::List& sfc,
 	    Rcpp::List& properties,
-	    int i,
+	    R_xlen_t i,
 	    Rcpp::NumericVector& bbox,
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,
@@ -279,7 +279,7 @@ namespace parse {
 			Document& d,
 	    Rcpp::List& sfc,
 	    Rcpp::List& properties,
-	    int i,
+	    R_xlen_t i,
 	    Rcpp::NumericVector& bbox,
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range,

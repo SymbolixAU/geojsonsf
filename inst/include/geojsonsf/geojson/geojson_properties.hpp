@@ -19,7 +19,10 @@ namespace geojson_properties {
 	/*
 	 * Updates a list element to string
 	 */
-	inline void vector_to_string(Rcpp::List& lst, std::string& key) {
+	inline void vector_to_string(
+			Rcpp::List& lst,
+			std::string& key
+		) {
 		Rcpp::StringVector sv = Rcpp::as<Rcpp::StringVector>(lst[key]);
 		lst[key] = sv;
 	}
@@ -71,16 +74,19 @@ namespace geojson_properties {
 		std::vector< std::string > n = properties.names();
 		std::reverse( n.begin(), n.end() );
 		std::vector< std::string > sv( n.size() );
-		unsigned int i;
+		R_xlen_t i;
 
-		for( i = 0; i < n.size(); i++ ) {
+		for( i = 0; i < n.size(); ++i ) {
 			sv[i] = n[i];
 		}
 		properties.names() = sv;
 
 	}
 
-	inline void get_property_keys(const Value& v, std::unordered_set< std::string >& property_keys) {
+	inline void get_property_keys(
+			const Value& v,
+			std::unordered_set< std::string >& property_keys
+		) {
 
 		for ( Value::ConstMemberIterator iter = v.MemberBegin(); iter != v.MemberEnd(); ++iter ) {
 
@@ -127,17 +133,23 @@ namespace geojson_properties {
 		sf[key] = nv;
 	}
 
-	inline Rcpp::NumericVector na_numeric_vector(const size_t& n_elements) {
+	inline Rcpp::NumericVector na_numeric_vector(
+			const R_xlen_t& n_elements
+		) {
 		Rcpp::NumericVector nv(n_elements, NA_REAL);
 		return nv;
 	}
 
-	inline Rcpp::StringVector na_string_vector(const size_t& n_elements) {
+	inline Rcpp::StringVector na_string_vector(
+			const R_xlen_t& n_elements
+		) {
 		Rcpp::StringVector sv(n_elements, Rcpp::StringVector::get_na());
 		return sv;
 	}
 
-	inline Rcpp::LogicalVector na_logical_vector(const size_t& n_elements) {
+	inline Rcpp::LogicalVector na_logical_vector(
+			const R_xlen_t& n_elements
+		) {
 		Rcpp::LogicalVector lv(n_elements, NA_LOGICAL);
 		return lv;
 	}
