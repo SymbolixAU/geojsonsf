@@ -8,6 +8,7 @@
 namespace geojsonsf {
 namespace geometrycollection {
 
+
 	inline void gc_type(
 			Rcpp::List& sfg,
 			std::string& gc_geom_type,
