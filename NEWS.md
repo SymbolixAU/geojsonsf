@@ -1,4 +1,8 @@
 
+## v1.3.4
+
+* NULLs coerced to correct type [issue 79](https://github.com/SymbolixAU/geojsonsf/issues/79)
+
 ## v1.3.3
 
 * removed Boost links
