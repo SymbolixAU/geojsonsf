@@ -234,7 +234,7 @@ namespace geojson_properties {
 
 					double this_value = p.value.GetDouble();
 
-					if (type != "Number" && type != "Null") {
+					if (type != "Number") {
 						std::string value = any_to_string(this_value);
 						update_string_vector(properties, key, value, row_index-1);
 					} else {
