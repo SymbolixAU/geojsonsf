@@ -7,8 +7,8 @@ geojsonsf
 downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/geojsonsf.svg?style=social&label=Github)](https://github.com/SymbolixAU/geojsonsf)
-[![Build
-Status](https://travis-ci.org/SymbolixAU/geojsonsf.svg?branch=master)](https://travis-ci.org/SymbolixAU/geojsonsf)
+[![R build
+status](https://github.com/symbolixau/geojsonsf/workflows/R-CMD-check/badge.svg)](https://github.com/symbolixau/geojsonsf/actions)
 [![Coverage
 Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
@@ -99,8 +99,9 @@ sf
 #  geometry type:  GEOMETRY
 #  dimension:      XY
 #  bbox:           xmin: -1 ymin: -1 xmax: 100 ymax: 1
-#  epsg (SRID):    4326
-#  proj4string:    +proj=longlat +datum=WGS84 +no_defs
+#  z_range:        zmin: 0 zmax: 0
+#  m_range:        mmin: 0 mmax: 0
+#  CRS:            EPSG:4326
 #    id                geometry
 #  1 NA             POINT (0 0)
 #  2 NA LINESTRING (-1 -1, 1 1)
@@ -167,7 +168,8 @@ sf_geojson(sf, simplify = F)
 ### How fast is it?
 
 This benchmark shows a comparison with `library(sf)` for converting a
-string of GeoJSON of 3,221 counties in the US in to an `sf` object
+string of GeoJSON of 3,221 counties in the US in to an `sf`
+object
 
 ``` r
 myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"

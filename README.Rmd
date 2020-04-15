@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geojsonsf)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
 [![Github Stars](https://img.shields.io/github/stars/SymbolixAU/geojsonsf.svg?style=social&label=Github)](https://github.com/SymbolixAU/geojsonsf)
-[![Build Status](https://travis-ci.org/SymbolixAU/geojsonsf.svg?branch=master)](https://travis-ci.org/SymbolixAU/geojsonsf)
+[![R build status](https://github.com/symbolixau/geojsonsf/workflows/R-CMD-check/badge.svg)](https://github.com/symbolixau/geojsonsf/actions)
 [![Coverage Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
 --
