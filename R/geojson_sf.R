@@ -4,8 +4,10 @@
 #'
 #' @param geojson string or vector of GeoJSON, or a URL or file pointing to a geojson file
 #' @param expand_geometries logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details
-#' @param crs coordiante reference system. See Details
-#' @param proj4string proj4string. See Details
+#' @param input
+#' @param wkt
+#' @param crs deprecated. coordiante reference system. See Details
+#' @param proj4string deprecated. proj4string. See Details
 #' @param buffer_size size of buffer used when reading a file from disk. Defaults 1024
 #'
 #' @details
@@ -23,7 +25,7 @@
 #' URN urn:ogc:def:crs:OGC::CRS84
 #'
 #' \code{geojson_sfc} and \code{geojson_sf} automatically set the CRS to WGS 84.
-#' The fields \code{crs} and \code{proj4string} let you to overwrite the defaults.
+#' The fields \code{input} and \code{wkt} let you to overwrite the defaults.
 #'
 #' @examples
 #'
@@ -50,15 +52,17 @@
 geojson_sfc <- function(
 	geojson,
 	expand_geometries = FALSE,
+	input = NULL,
+	wkt = NULL,
 	crs = NULL,
 	proj4string = NULL,
 	buffer_size = 1024
 	) {
 
 	sfc <- geojson_to_sfc( geojson, expand_geometries, buffer_size )
-	if( !is.null( crs ) | !is.null( proj4string ) ) {
-		sfc <- set_crs( sfc, crs, proj4string )
-	}
+	print( attr( sfc, "crs") )
+	sfc <- set_crs( sfc, input, wkt, crs, proj4string )
+	print( attr( sfc, "crs") )
 	return( sfc )
 }
 
@@ -144,14 +148,14 @@ geojson_to_sfc.default <- function(
 geojson_sf <- function(
 	geojson,
 	expand_geometries = FALSE,
+	input = NULL,
+	wkt = NULL,
 	crs = NULL,
 	proj4string = NULL,
 	buffer_size = 1024
 	) {
 	sf <- geojson_to_sf( geojson, expand_geometries, buffer_size )
-	if( !is.null( crs ) | !is.null( proj4string ) ) {
-		sf[["geometry"]] <- set_crs( sf[["geometry"]], crs, proj4string )
-	}
+	sf[["geometry"]] <- set_crs( sf[["geometry"]], input, wkt, crs, proj4string )
 	return( sf )
 }
 
@@ -208,13 +212,31 @@ date_columns <- function( sf ) {
 	names(which(vapply(sf , function(x) { inherits(x, "Date") | inherits(x, "POSIXct") }, T)))
 }
 
-set_crs <- function(sfc, crs, proj4string ) {
-	crs <- list(
-		epsg = ifelse(is.null(crs),NA_integer_,crs)
-		, proj4string = ifelse(is.null(proj4string),"",proj4string)
+# # library(sf)
+# nc <- sf::st_read(system.file("/shape/nc.shp", package = "sf"))
+#
+# geo <- geojsonsf::sf_geojson(nc)
+# sf <- geojsonsf::geojson_sf( geo, crs = 4326 )
+#
+# attributes( sf$geometry )
+
+set_crs <- function(sfc, input, wkt, crs, proj4string ) {
+
+	attr_crs <- list(
+		input = ifelse(is.null(input), NA_character_, input)
+		, wkt = ifelse(is.null(wkt), NA_character_, wkt )
 	)
-	attr( crs, "class" ) <- "crs"
-	attr( sfc, "crs" ) <- crs
+
+
+	if( !is.null( crs ) | !is.null( proj4string ) ) {
+		warning("crs and proj4string are deprecated. Please now use input and wkt")
+		attr_crs[[ "epsg" ]] = ifelse(is.null(crs), NA_integer_,crs)
+		attr_crs[[ "proj4string" ]] = ifelse( is.null(proj4string),"",proj4string)
+	}
+
+	attr( attr_crs, "class" ) <- "crs"
+	print( attr_crs )
+	attr( sfc, "crs" ) <- attr_crs
 	return( sfc )
 }
 
