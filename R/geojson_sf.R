@@ -86,7 +86,7 @@ geojson_to_sfc.character <- function(
 	}
 	if (is_url(geojson)) {
 
-		return(geojson_to_sfc(curl::curl(geojson), expand_geometries))
+		return(geojson_to_sfc(url(geojson), expand_geometries))
 
 	} else if (file.exists(geojson) ) {
 		return(
@@ -172,7 +172,7 @@ geojson_to_sf.character <- function(geojson, expand_geometries = FALSE, buffer_s
 	}
 	if (is_url(geojson)) {
 
-		return(geojson_to_sf(curl::curl(geojson), expand_geometries))
+		return(geojson_to_sf(url(geojson), expand_geometries))
 
 	} else if (file.exists(geojson) ) {
 		return(
@@ -235,7 +235,7 @@ read_url <- function(con) {
 		stop("There was an error downloading the geojson")
 	},
 	finally = {
-		close(con)
+		  close(con)
 	})
 }
 

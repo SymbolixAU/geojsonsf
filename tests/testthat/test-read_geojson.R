@@ -8,7 +8,7 @@ test_that("can read from various sources", {
 	url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_outline_500k.json"
 
 	## direct from url
-	con <- curl::curl(url)
+	con <- url(url)
 	lines <- geojsonsf:::read_url(con)
 	#close(con)
 	expect_true(nchar(lines) == 1078089)
@@ -29,9 +29,9 @@ test_that("can read from various sources", {
 	expect_true(length(sfc) == 615)
 
 	## connection
-	con <- curl::curl(url)
+	con <- url(url)
 	sf <- geojson_sf(con)
-	con <- curl::curl(url)
+	con <- url(url)
 	sfc <- geojson_sfc(con)
 
 	expect_true(all(class(sf) == c("sf", "data.frame")))
@@ -65,12 +65,12 @@ test_that("read_rul works", {
 	skip_on_travis()
 
 	url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_outline_500k.json"
-	con <- curl::curl(url)
+	con <- url(url)
 	geo <- geojsonsf:::read_url(con)
 	expect_true(nchar(geo) == 1078089)
 
 	url <- "http://notaurl"
-	con <- curl::curl(url)
+	con <- url(url)
 	expect_error(geojsonsf:::read_url(con), "There was an error downloading the geojson")
 })
 
