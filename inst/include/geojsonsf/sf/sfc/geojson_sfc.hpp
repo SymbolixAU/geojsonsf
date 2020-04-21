@@ -25,7 +25,6 @@ namespace sfc {
 		R_xlen_t sfg_counter = 0;
 
 		int epsg = geojsonsf::EPSG;
-		//std::string proj = geojsonsf::PROJ4STRING;
 		Rcpp::String proj = geojsonsf::PROJ4STRING;
 
 		geojsonsf::sfc::utils::fetch_geometries( sf, sfc_output, sfg_counter );

@@ -60,11 +60,17 @@ geojson_sfc <- function(
 	) {
 
 	sfc <- geojson_to_sfc( geojson, expand_geometries, buffer_size )
-	print( attr( sfc, "crs") )
 	sfc <- set_crs( sfc, input, wkt, crs, proj4string )
-	print( attr( sfc, "crs") )
 	return( sfc )
 }
+
+# library(sf)
+#
+# nc <- sf::st_read(system.file("./shape/nc.shp", package = "sf"))
+# geo <- geojsonsf::sf_geojson( nc )
+# sf <- geojsonsf::geojson_sf( geo )
+#
+# attributes( sf$geometry )
 
 geojson_to_sfc <- function( geojson, expand_geometries, buffer_size ) UseMethod("geojson_to_sfc")
 
@@ -230,12 +236,11 @@ set_crs <- function(sfc, input, wkt, crs, proj4string ) {
 
 	if( !is.null( crs ) | !is.null( proj4string ) ) {
 		warning("crs and proj4string are deprecated. Please now use input and wkt")
-		attr_crs[[ "epsg" ]] = ifelse(is.null(crs), NA_integer_,crs)
-		attr_crs[[ "proj4string" ]] = ifelse( is.null(proj4string),"",proj4string)
+		# attr_crs[[ "epsg" ]] = ifelse(is.null(crs), NA_integer_,crs)
+		# attr_crs[[ "proj4string" ]] = ifelse( is.null(proj4string),"",proj4string)
 	}
 
 	attr( attr_crs, "class" ) <- "crs"
-	print( attr_crs )
 	attr( sfc, "crs" ) <- attr_crs
 	return( sfc )
 }
@@ -250,6 +255,7 @@ handle_dates <- function( x ) {
 is_url <- function(geojson) grepl("^https?://", geojson, useBytes=TRUE)
 
 read_url <- function(con) {
+
 	out <- tryCatch({
 		paste0(readLines(con), collapse = "")
 	},

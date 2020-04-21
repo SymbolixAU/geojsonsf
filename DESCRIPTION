@@ -28,4 +28,5 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
+Remotes: github::dcooley/sfheaders
 VignetteBuilder: knitr

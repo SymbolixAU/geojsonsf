@@ -19,27 +19,27 @@ test_that("input and wkt are set",{
 	geo <- '[]'
 
 	res <- geojson_sfc( geo, input = 123 )
-	expect_true( attr(res, "input")[[1]] == 123 )
-	expect_true( attr(res, "input")[[2]] == "" )
+	expect_true( attr(res, "crs")[[1]] == 123 )
+	expect_true( is.na( attr(res, "crs")[[2]] ) )
 
 	res <- geojson_sf( geo, input = 123)
-	expect_true( attr(res$geometry, "input")[[1]] == 123 )
-	expect_true( attr(res$geometry, "input")[[2]] == "" )
+	expect_true( attr(res$geometry, "crs")[[1]] == 123 )
+	expect_true( is.na( attr(res$geometry, "crs")[[2]] ) )
 
 	res <- geojson_sfc( geo, wkt = "abc" )
-	expect_true( is.na( attr(res, "input")[[1]] ) )
-	expect_true( attr(res, "input")[[2]] == "abc" )
+	expect_true( is.na( attr(res, "crs")[[1]] ) )
+	expect_true( attr(res, "crs")[[2]] == "abc" )
 
 	res <- geojson_sf( geo, wkt = "abc" )
-	expect_true( is.na( attr(res$geometry, "input")[[1]] ) )
-	expect_true( attr(res$geometry, "input")[[2]] == "abc" )
+	expect_true( is.na( attr(res$geometry, "crs")[[1]] ) )
+	expect_true( attr(res$geometry, "crs")[[2]] == "abc" )
 
 	res <- geojson_sfc( geo, input = 123, wkt = "abc" )
-	expect_true( attr(res, "input")[[1]] == 123 )
-	expect_true( attr(res, "input")[[2]] == "abc" )
+	expect_true( attr(res, "crs")[[1]] == 123 )
+	expect_true( attr(res, "crs")[[2]] == "abc" )
 
 	res <- geojson_sf( geo, input = 123, wkt = "abc" )
-	expect_true( attr(res$geometry, "input")[[1]] == 123 )
+	expect_true( attr(res$geometry, "crs")[[1]] == 123 )
 	expect_true( attr(res$geometry, "crs")[[2]] == "abc" )
 
 })
