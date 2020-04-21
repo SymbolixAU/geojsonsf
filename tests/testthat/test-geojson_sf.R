@@ -65,3 +65,17 @@ test_that("the geoms I test in mapdeck work", {
 
 })
 
+## issue 79
+test_that("NULLs coerced to correct type",{
+
+	gj <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"a":1.0,"b":true,"c":"hello"},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+  {"type":"Feature","properties":{"a":null,"b":null,"c":null},"geometry":{"type":"Point","coordinates":[1.0,1.0]}}
+]}'
+
+	sf <- geojson_sf(gj)
+	expect_true( is.numeric( sf$a ) )
+	expect_true( is.logical( sf$b ) )
+	expect_true( is.character( sf$c ) )
+})
+

@@ -40,6 +40,7 @@ namespace api {
   		geometry_vectors[i] = df[ this_geometry ];
   	}
 
+
   	std::string dim = sfheaders::sfg::sfg_dimension( n_geometry_columns );
   	Rcpp::CharacterVector cls = Rcpp::CharacterVector::create( dim , "POINT", "sfg");
 

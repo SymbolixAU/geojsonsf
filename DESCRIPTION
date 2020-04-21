@@ -18,7 +18,7 @@ LinkingTo:
     jsonify (>= 1.1.1),
     rapidjsonr (>= 1.2.0),
     Rcpp,
-    sfheaders (>= 0.1.0)
+    sfheaders (>= 0.2.1004)
 Imports: 
     curl,
     jsonify (>= 1.1.1),

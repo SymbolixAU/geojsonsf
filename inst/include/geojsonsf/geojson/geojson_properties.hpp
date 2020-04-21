@@ -49,7 +49,8 @@ namespace geojson_properties {
 				if (existing_type == "String") {
 					// if it's already a 'String' (JSON type), exit
 
-				} else if (existing_type != type) {
+				} else if (existing_type != type && type != "Null") {
+					// allow NULL through so the type is correct when back in R
 					// if it's different, update to be a 'String'
 					property_types[property] = "String";
 

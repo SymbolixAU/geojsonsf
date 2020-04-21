@@ -73,11 +73,8 @@ namespace sfg {
 			nv[i] = point_array[i].GetDouble();
 		}
 		sfheaders::bbox::calculate_bbox( bbox, nv );
-		R_xlen_t n_col = nv.length();
-		sfheaders::zm::calculate_zm_ranges(n_col, z_range, m_range, nv );
-		//sfheaders::zm::calculate_z_range( z_range, nv );
-		//sfheaders::zm::calculate_m_range( m_range, nv );
-		//geojsonsf::sfc::utils::calculate_bbox(bbox, nv);
+		std::string xyzm;
+		sfheaders::zm::calculate_zm_ranges( z_range, m_range, nv, xyzm );
 	}
 
 
