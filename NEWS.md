@@ -1,6 +1,7 @@
 
 ## v1.3.4
 
+* removed `curl` dependency [issue 81](https://github.com/SymbolixAU/geojsonsf/issues/81)
 * NULLs coerced to correct type [issue 79](https://github.com/SymbolixAU/geojsonsf/issues/79)
 
 ## v1.3.3
