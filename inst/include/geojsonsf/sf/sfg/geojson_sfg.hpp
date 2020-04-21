@@ -114,7 +114,6 @@ namespace sfg {
 		get_numeric_points( point_array, n, nv, bbox, z_range, m_range );
 
 		if ( requires_attribute ) {
-			//std::string dim = geojsonsf::utils::make_dimension( n );
 			std::string dim = sfheaders::sfg::sfg_dimension( n );
 			nv.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
 		}
