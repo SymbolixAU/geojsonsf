@@ -1,6 +1,4 @@
-context("geometrycollection")
-
-test_that("expand_geometriesing preserves properties, ", {
+## "expand_geometriesing preserves properties, ", {
 
 	js <- '{
 	"type": "GeometryCollection",
@@ -52,4 +50,3 @@ test_that("expand_geometriesing preserves properties, ", {
 	expect_true(nrow(geojson_sf(js, expand_geometries = F)) == 6)
 	expect_true(nrow(geojson_sf(js, expand_geometries = T)) == 8)
 
-})

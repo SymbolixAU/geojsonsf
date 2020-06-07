@@ -1,6 +1,4 @@
-context("sf geojson")
-
-test_that("sfc objects converted to GeoJSON", {
+## "sfc objects converted to GeoJSON", {
 
 	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sfc(js)
@@ -50,9 +48,7 @@ test_that("sfc objects converted to GeoJSON", {
 	expect_true( j == js )
 	expect_true( jsonify::validate_json( j ) )
 
-})
-
-test_that("sf objects converted to GeoJSON", {
+## "sf objects converted to GeoJSON", {
 
 	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sf(js)
@@ -101,18 +97,13 @@ test_that("sf objects converted to GeoJSON", {
 	j <- sf_geojson(sf)
 	expect_true( j == js )
 	expect_true( jsonify::validate_json( j ) )
-})
 
-
-## SF features
-test_that("features with null geometries handled correctly", {
+## "features with null geometries handled correctly", {
 	js <- '{"type":"Feature","properties":{},"geometry":null}'
 	sf <- geojson_sf( js )
 	expect_equal( attr( sf$geometry[[1]], "class")[1], "XY" )
-})
 
-## GEOMETRYCOLLECTIONS
-test_that("GeometryCollections correctly closed", {
+## "GeometryCollections correctly closed", {
 	js <- '{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100.0,0.0]},{"type":"LineString","coordinates":[[101.0,0.0],[102.0,1.0]]},{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.0,1.0],[2.0,2.0]]}]}'
 	sf <- geojson_sfc(js)
 	j <- sfc_geojson(sf)
@@ -146,9 +137,9 @@ test_that("GeometryCollections correctly closed", {
 	expect_true( jsonify::validate_json(j))
 	sf2 <- geojson_sf(j)
 	expect_equal(sf, sf2)
-})
 
-test_that("sf without properties not converted to FeatureCollections", {
+
+## "sf without properties not converted to FeatureCollections", {
 	js <- '[{"type":"Polygon","coordinates":[[[0,0],[1,1]]]},{"type":"MultiLineString","coordinates":[[[0,0],[1,1]],[[3,3],[4,4]]]}]'
 	sf <- geojson_sf(js)
 	j1 <- sf_geojson(sf, atomise = F)
@@ -165,9 +156,8 @@ test_that("sf without properties not converted to FeatureCollections", {
 	expect_true(all( j1 == j2 ))
 	expect_true( all( jsonify::validate_json( j1 ) ) )
 	expect_true( all( jsonify::validate_json( j1 ) ) )
-})
 
-test_that("sf with properties converted to FeatureCollection", {
+## "sf with properties converted to FeatureCollection", {
 
 	js <- '{"type":"Feature","properties":{"prop0":"value0"},"geometry":{"type":"LineString","coordinates":[[100.0,0.0],[101.0,1.0]]}}'
 	sf <- geojson_sf(js)
@@ -197,15 +187,13 @@ test_that("sf with properties converted to FeatureCollection", {
   expect_true(length(sf_geojson(sf, atomise = T)) == 2)
   expect_true( jsonify::validate_json( sf_geojson(sf, atomise = T)[1]))
   expect_true( jsonify::validate_json( sf_geojson(sf, atomise = T)[2]))
-})
 
-test_that("sf object with properties converted to sfc", {
+##"sf object with properties converted to sfc", {
 	fgc <- '{"type":"Feature","geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100,0]},{"type":"LineString","coordinates":[[101,0],[102,1]]}]},"properties": {"prop0": "value0","prop1": "value1"}}'
 	sf <- geojson_sf(fgc)
 	expect_false(grepl("properties", sfc_geojson( sf$geometry )))
-})
 
-test_that("errors are handled", {
+## "errors are handled", {
 	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sf(js)
 	expect_error(sfc_geojson(sf),"Expected an sfc object")
@@ -213,9 +201,9 @@ test_that("errors are handled", {
 	js <- '{"type":"Point","coordinates":[0,0]}'
 	sf <- geojson_sfc(js)
 	expect_error(sf_geojson(sf),"Expected an sf object")
-})
 
-test_that("factors are numeric", {
+
+## "factors are numeric", {
 
 	fgc <- '{"type":"Feature","geometry":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[100.0,0.0]},{"type":"LineString","coordinates":[[101.0,0.0],[102.0,1.0]]}]},"properties":{"prop0":"value0","prop1":"value1"}}'
 	sf <- geojson_sf(fgc)
@@ -225,10 +213,9 @@ test_that("factors are numeric", {
 
 	geo <- sf_geojson(sf, factors_as_string = TRUE )
 	expect_true(grepl("value0", geo))
-})
 
 
-test_that("factor levels handled", {
+## "factor levels handled", {
 
 	geo <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":"1"},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},{"type":"Feature","properties":{"id":"1"},"geometry":{"type":"Point","coordinates":[1.0,1.0]}}]}'
 	sf <- geojson_sf( geo )
@@ -236,5 +223,3 @@ test_that("factor levels handled", {
 
 	expect_true( sf_geojson( sf ) == geo )
 
-
-})

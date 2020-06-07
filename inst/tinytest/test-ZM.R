@@ -1,7 +1,4 @@
-context("conversion")
-
-
-test_that("sfc objects with ZM converted to GeoJSON", {
+## "sfc objects with ZM converted to GeoJSON", {
 
 	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sfc(js)
@@ -146,11 +143,9 @@ test_that("sfc objects with ZM converted to GeoJSON", {
 	expect_equal( attr( sf[[1]], "class" )[1], "XYZM")
 	j <- sfc_geojson( sf )
 	expect_true( jsonify::validate_json( j ) )
-})
 
 
-## SF ZM
-test_that("sf objects with ZM converted to GeoJSON", {
+## "sf objects with ZM converted to GeoJSON", {
 
 	js <- '{"type":"Point","coordinates":[0.0,0.0]}'
 	sf <- geojson_sf(js)
@@ -295,11 +290,9 @@ test_that("sf objects with ZM converted to GeoJSON", {
 	expect_equal( attr( sf$geometry[[1]], "class" )[1], "XYZM")
 	j <- sf_geojson( sf )
 	expect_true( jsonify::validate_json( j ) )
-})
-## SF ZM
 
 
-test_that("geometry collections with geometries with XYZM dimensions", {
+## "geometry collections with geometries with XYZM dimensions", {
 
 	js <- '{"type":"GeometryCollection","geometries":[{"type":"MultiPolygon","coordinates":[[[[0,0],[0,1],[1,1],[1,0],[0,0,0]]]]}]}'
 	sf <- geojson_sfc( js )
@@ -317,10 +310,7 @@ test_that("geometry collections with geometries with XYZM dimensions", {
 	expect_equal( attr(sf[[1]][[1]],  "class")[1], "XYZM") ## MULTIPOLYGON has XYZM
 	expect_equal( attr(sf[[1]][[2]],  "class")[1], "XY") ## MULTIPOLYGON has XY
 
-})
-
-
-test_that("ZM attributes", {
+## "ZM attributes", {
 
 	pt <- '{"type":"Point","coordinates":[0.1,0.1]}'
 	expect_true( length( as.numeric( geojson_sfc( pt )[[1]] ) ) == 2 )
@@ -395,9 +385,7 @@ test_that("ZM attributes", {
 	expect_equal( geojson_sfc( mply )[[1]][[1]][[1]]  , matrix(c(0,0,0,0,0,1,0,0,1,1,2,2,1,0,0,0,0,0,0,0), ncol = 4, byrow = T) )
 	expect_equal( geojson_sfc( mply )[[1]][[1]][[2]]  , matrix(c(2,2,0,2,3,9,3,3,0,3,2,0,2,2,0), ncol = 3, byrow = T) )
 
-})
-
-test_that("NA values handled", {
+##"NA values handled", {
 
 
 	sf <- structure(list(geometry = structure(list(structure(c(0, 1, 0,
@@ -412,7 +400,6 @@ test_that("NA values handled", {
 	expect_true( jsonify::validate_json( geo ) )
 	expect_equal( as.character( geo ), '{"type":"LineString","coordinates":[[0.0,0.0,0.0,0.0],[1.0,null,null,1.0]]}' )
 
-})
 
 
 

@@ -1,6 +1,4 @@
-context("properties")
-
-test_that("properties captured correctly", {
+##"properties captured correctly", {
 
 	f <- '{"type":"Feature","properties":{"id":1,"name":"foo"},"geometry":{"type":"LineString","coordinates":[[101,0],[102,1]]}}'
 	sf <- geojson_sf(f)
@@ -47,17 +45,16 @@ test_that("properties captured correctly", {
 	expect_true(sum(wkt$id, na.rm = T) == 3)
 	expect_true(sf$value[!is.na(sf$value)] == "foo")
 	expect_true(wkt$value[!is.na(wkt$value)] == "foo")
-})
 
-test_that("sf and sfc created equally", {
+##"sf and sfc created equally", {
 
 	f <- '{"type":"Feature","properties":{"id":1,"name":"foo"},"geometry":{"type":"LineString","coordinates":[[101,0],[102,1]]}}'
 	sf <- geojson_sf(f)
 	sfc <- geojson_sfc(f)
 	expect_true(all(class(sf$geometry) == class(sfc)))
-})
 
-test_that("null geometries are valid for features", {
+
+## "null geometries are valid for features", {
 
 	js <- '{"type":"Point","coordinates":[null,null]}'
 	expect_error( geojson_sf(js), "Invalid lon/lat object")
@@ -109,10 +106,8 @@ test_that("null geometries are valid for features", {
 	## null geometries that aren't part of features should still error
 	js <- '{"type":"Point","coordinates":null}'
   expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")
-})
 
-
-test_that("round trip succeeds", {
+## "round trip succeeds", {
 
 	js <- '{"type":"FeatureCollection","features":[
 	{"type":"Feature","properties":{"id":3.0},"geometry":{"type":"MultiPoint","coordinates":[[0.0,0.0],[1.1,1.1]]}},
@@ -141,7 +136,6 @@ test_that("round trip succeeds", {
 	expect_true( all(s$strokeColor == s2$strokeColor) )
 	expect_true( all(s$strokeWeight == s2$strokeWeight) )
 
-})
 
 
 

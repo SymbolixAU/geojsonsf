@@ -24,13 +24,14 @@ namespace sfc {
 
 		R_xlen_t sfg_counter = 0;
 
-		int epsg = geojsonsf::EPSG;
-		Rcpp::String proj = geojsonsf::PROJ4STRING;
+		Rcpp::List crs = Rcpp::List::create(
+			Rcpp::_["input"] = geojsonsf::INPUT,
+			Rcpp::_["wkt"] = geojsonsf::WKT
+		);
 
 		geojsonsf::sfc::utils::fetch_geometries( sf, sfc_output, sfg_counter );
 		sfheaders::sfc::attach_sfc_attributes(
-			sfc_output, geom_attr, geometry_types, bbox, z_range, m_range,
-			epsg, proj, nempty
+			sfc_output, geom_attr, geometry_types, bbox, z_range, m_range, crs, nempty
 			);
 
 		return sfc_output;

@@ -6,7 +6,7 @@
 #' @param expand_geometries logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details
 #' @param input
 #' @param wkt
-#' @param crs deprecated. coordiante reference system. See Details
+#' @param crs deprecated. coordinate reference system. See Details
 #' @param proj4string deprecated. proj4string. See Details
 #' @param buffer_size size of buffer used when reading a file from disk. Defaults 1024
 #'
@@ -218,30 +218,32 @@ date_columns <- function( sf ) {
 	names(which(vapply(sf , function(x) { inherits(x, "Date") | inherits(x, "POSIXct") }, T)))
 }
 
-# # library(sf)
-# nc <- sf::st_read(system.file("/shape/nc.shp", package = "sf"))
-#
-# geo <- geojsonsf::sf_geojson(nc)
-# sf <- geojsonsf::geojson_sf( geo, crs = 4326 )
-#
-# attributes( sf$geometry )
-
 set_crs <- function(sfc, input, wkt, crs, proj4string ) {
-
-	attr_crs <- list(
-		input = ifelse(is.null(input), NA_character_, input)
-		, wkt = ifelse(is.null(wkt), NA_character_, wkt )
-	)
-
 
 	if( !is.null( crs ) | !is.null( proj4string ) ) {
 		warning("crs and proj4string are deprecated. Please now use input and wkt")
-		# attr_crs[[ "epsg" ]] = ifelse(is.null(crs), NA_integer_,crs)
-		# attr_crs[[ "proj4string" ]] = ifelse( is.null(proj4string),"",proj4string)
 	}
 
-	attr( attr_crs, "class" ) <- "crs"
-	attr( sfc, "crs" ) <- attr_crs
+	if( !is.null( input ) & is.null( wkt ) ) {
+		stop("If supplying a custom input you must also supply wkt")
+	}
+
+	if( is.null( input ) & !is.null( wkt ) ) {
+		stop("If supplying a custom wkt you must also supply input")
+	}
+
+	if( !is.null( input ) ) {
+		crs <- attr( sfc, "crs" )
+		crs["input"] <- input
+		attr( sfc, "crs" ) <- crs
+	}
+
+	if( !is.null( wkt ) ) {
+		crs <- attr( sfc, "crs" )
+		crs["wkt"] <- wkt
+		attr( sfc, "crs" ) <- crs
+	}
+
 	return( sfc )
 }
 

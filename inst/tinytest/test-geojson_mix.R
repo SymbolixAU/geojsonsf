@@ -1,7 +1,4 @@
-context("geojson_mix")
-
-
-test_that("mixture of GeoJSON objects in R", {
+##"mixture of GeoJSON objects in R", {
 
 	geo_vec <- c("{\"type\":\"Point\",\"coordinates\":[-118.68152563269095,36.43764870908927]}",
 					 "{\"type\":\"Point\",\"coordinates\":[-118.67408758213843,36.43366018922779]}",
@@ -76,4 +73,4 @@ test_that("mixture of GeoJSON objects in R", {
 	sf <- geojson_sf(fcarr)
 	expect_true(nrow(sf) == 6)
 	expect_true(all(sapply(sf$geometry, class)[2, ] == c("POINT", "LINESTRING", "LINESTRING", "POINT", "LINESTRING", "LINESTRING")))
-})
+

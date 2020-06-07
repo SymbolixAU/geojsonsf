@@ -1,9 +1,7 @@
-context("read geojson")
+## "can read from various sources", {
 
-test_that("can read from various sources", {
 
-	skip_on_cran()
-	skip_on_travis()
+	tinytest::exit_file(msg = "Skipping for cran")
 
 	url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_outline_500k.json"
 
@@ -52,17 +50,14 @@ test_that("can read from various sources", {
 
 	expect_true(nrow(sf) == length(sfc))
 	expect_true(nrow(sf) == 41)
-})
 
-test_that("read utils work", {
+	## ("read utils work", {
 	expect_true(geojsonsf:::is_url("http://www"))
 	expect_true(geojsonsf:::is_url("https://www"))
 	expect_false(geojsonsf:::is_url("me.com"))
-})
 
-test_that("read_rul works", {
-	skip_on_cran()
-	skip_on_travis()
+
+## "read_rul works", {
 
 	url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_outline_500k.json"
 	con <- url(url)
@@ -75,5 +70,5 @@ test_that("read_rul works", {
 	# 	geojsonsf:::read_url(con)
 	# 	#, "There was an error downloading the geojson"
 	# 	)
-})
+
 

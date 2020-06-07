@@ -1,7 +1,4 @@
-context("digits")
-
-
-test_that("digits are rounded", {
+##"digits are rounded", {
 
 	## SF
 	js <- '{"type":"Point","coordinates":[0.123456789,9.87654321]}'
@@ -46,6 +43,6 @@ test_that("digits are rounded", {
   res <- geojsonsf::df_geojson( df, lon = "lon", lat = "lat", digits = 0)
   expected <- '{"type":"Point","coordinates":[1.0,10.0]}'
   expect_equal( as.character( res ), expected )
-})
+
 
 

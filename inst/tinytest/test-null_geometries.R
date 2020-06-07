@@ -1,6 +1,4 @@
-context("null geometries")
-
-test_that("GeoJSON with null geometries parsed correctly", {
+## "GeoJSON with null geometries parsed correctly", {
 
 	js <- '{"type":"Feature","properties":{"id":1.0},"geometry":null}'
 	sf <- geojson_sf(js)
@@ -102,10 +100,8 @@ test_that("GeoJSON with null geometries parsed correctly", {
 	js <- '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1.0},"geometry":{"type":"GeometryCollection","geometries": [{"type": null},{"type": "LineString","coordinates": [[101.0,0.0],[102.0,1.0]]}]}}]}'
 	expect_error(geojson_sf(js), "No 'type' member at object index 0 - invalid GeoJSON")
 	expect_error(geojson_wkt(js), "No 'type' member at object index 0 - invalid GeoJSON")
-})
 
-
-test_that("null sf objects converted to GeoJSON", {
+## "null sf objects converted to GeoJSON", {
 
 	## GEOMETRYCOLLECTION with null entries - nul entries are dropped
 	sf <- structure(list(geometry = structure(list(structure(list(structure(c(0, 0),
@@ -122,9 +118,8 @@ test_that("null sf objects converted to GeoJSON", {
 	js <- sf_geojson(sf)
 	expect_true(jsonify::validate_json(js))
 	expect_false(grepl("null", js))
-})
 
-test_that("null objects", {
+##  "null objects", {
 
 	js <- '{"type":"Feature","properties":{},"geometry":null}'
 	sf <- geojson_sf( js )
@@ -160,6 +155,4 @@ test_that("null objects", {
 	js <- sf_geojson( sf , simplify = FALSE )
 	expect_true( jsonify::validate_json( js ) )
 	expect_true(grepl("null",js))
-
-})
 

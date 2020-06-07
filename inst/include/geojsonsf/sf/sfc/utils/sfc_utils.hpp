@@ -22,13 +22,17 @@ namespace utils {
 		int n_empty = 0;
 		std::unordered_set< std::string > geometry_types{"GEOMETRY"};
 
-		int epsg = geojsonsf::EPSG;
+		// int epsg = geojsonsf::EPSG;
 		//std::string proj = geojsonsf::PROJ4STRING;
-		Rcpp::String proj = geojsonsf::PROJ4STRING;
+		// Rcpp::String proj = geojsonsf::PROJ4STRING;
+
+		Rcpp::List crs = Rcpp::List::create(
+			Rcpp::_["input"] = geojsonsf::INPUT,
+			Rcpp::_["wkt"] = geojsonsf::WKT
+		);
 
 		sfheaders::sfc::attach_sfc_attributes(
-			empty_sfc, type, geometry_types, bbox, z_range, m_range,
-			epsg, proj, n_empty
+			empty_sfc, type, geometry_types, bbox, z_range, m_range, crs, n_empty
 			);
 		return empty_sfc;
 	}

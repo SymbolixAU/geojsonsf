@@ -1,6 +1,4 @@
-context("wkt")
-
-test_that("wkt created correctly", {
+## "wkt created correctly", {
 	p <- '{"type":"Point", "coordinates":[0,0]}'
 	mp <- '{"type":"MultiPoint", "coordinates":[[0,0],[2.324,2]]}'
 	ls <- '{"type":"LineString", "coordinates":[[0,0],[1,1]]}'
@@ -32,9 +30,8 @@ test_that("wkt created correctly", {
 	expect_true(class(f) == "data.frame")
 	expect_true(class(fc) == "data.frame")
 	expect_true(class(fcgc) == "data.frame")
-})
 
-test_that("WKT with NULL objects", {
+##"WKT with NULL objects", {
 
 	js <- '{"type":"Feature","properties":{"id":1.0},"geometry":null}'
 	expect_true( geojson_wkt( js )$geometry[[1]] == "POINT EMPTY" )
@@ -49,9 +46,7 @@ test_that("WKT with NULL objects", {
 	expect_true( attr( df$geometry[[1]], "class" )[[1]] == "wkt" )
 	expect_true( attr( df$geometry[[2]], "class" )[[1]] == "wkt" )
 
-})
-
-test_that("WKT with Z and M dimensions handled",{
+## "WKT with Z and M dimensions handled",{
 
 	p <- '{"type":"Point", "coordinates":[0,0,0]}'
 	mp <- '{"type":"MultiPoint", "coordinates":[[0,0,0,0],[2.324,2,1,1]]}'
@@ -118,9 +113,7 @@ test_that("WKT with Z and M dimensions handled",{
 	# sf::st_as_sf( make_df( fcgc ), wkt = "geom" )
 
 
-})
-
-test_that("mixed dimensions not allowed",{
+## "mixed dimensions not allowed",{
 
 	mp <- '{"type":"MultiPoint", "coordinates":[[0,0,0],[2.324,2,1,1]]}'
 	ls <- '{"type":"LineString", "coordinates":[[0,0,0,0],[1,1,1]]}'
@@ -136,4 +129,3 @@ test_that("mixed dimensions not allowed",{
 	expect_error( geojson_wkt(mpoly), "geojsonsf - different coordinate dimensions found" )
 	expect_error( geojson_wkt(fcgc), "geojsonsf - different coordinate dimensions found" )
 
-})

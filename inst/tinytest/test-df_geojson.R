@@ -1,6 +1,6 @@
-context("df_geojson")
 
-test_that("data.frame converted to GeoJSON", {
+
+#"data.frame converted to GeoJSON", {
 
 	n <- 1
 	df <- data.frame(lon = c(1:n, NA), lat = c(1:n, NA) )
@@ -17,9 +17,8 @@ test_that("data.frame converted to GeoJSON", {
 	geo <- df_geojson( df, lon = "lon", lat = "lat", atomise = T)
 	expect_true(all(sapply(geo, jsonify::validate_json)))
 
-})
 
-test_that("z and m handled", {
+##"z and m handled", {
 
 	n <- 1
 	df <- data.frame(lon = c(1:n, NA), lat = c(1:n, NA), z = c(1:n, NA) )
@@ -40,9 +39,8 @@ test_that("z and m handled", {
 		df_geojson( df, lon = "lon", lat = "lat", m = "m")
 		, "z must be supplied when using m"
 	)
-})
 
-test_that("Factors are handled", {
+##"Factors are handled", {
 
 	df <- data.frame(id = letters[1:2], lat = c(0,1), lon = c(1,0), stringsAsFactors = TRUE )
 	geo <- df_geojson(df, lat = "lat", lon = "lon")
@@ -50,5 +48,3 @@ test_that("Factors are handled", {
 
 	geo <- df_geojson(df, lat = "lat", lon = "lon", factors_as_string = FALSE)
 	expect_equal(as.character(geo), '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"id":1},"geometry":{"type":"Point","coordinates":[1.0,0.0]}},{"type":"Feature","properties":{"id":2},"geometry":{"type":"Point","coordinates":[0.0,1.0]}}]}')
-
-})

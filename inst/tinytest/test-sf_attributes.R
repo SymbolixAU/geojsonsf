@@ -1,7 +1,4 @@
-context("objects")
-
-
-test_that("sf attributes correctly assigned", {
+## "sf attributes correctly assigned", {
 
 	g <- '{"type": "Point", "coordinates": [100.0, 0.0]}'
 	f <- '{"type": "Feature","properties": null,
@@ -102,4 +99,3 @@ test_that("sf attributes correctly assigned", {
 # 	expect_true(all.equal(attr(sf_fc$geometry, "class"), c("sfc_GEOMETRY", "sfc")))
 # 	expect_true(all.equal(attr(sf_fgc$geometry, "class"), c("sfc_GEOMETRY", "sfc")))
 
-})

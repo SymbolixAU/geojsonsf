@@ -1,6 +1,4 @@
-context("crs")
-
-test_that("CRS and proj4string are deprecated",{
+ ## CRS and proj4string are deprecated
 
 	geo <- '[]'
 	warn <- "crs and proj4string are deprecated. Please now use input and wkt"
@@ -12,27 +10,25 @@ test_that("CRS and proj4string are deprecated",{
 	expect_warning( geojson_sfc( geo, crs = 123, proj4string = "abc" ), warn )
 	expect_warning( geojson_sf( geo, crs = 123, proj4string = "abc" ), warn )
 
-})
-
-test_that("input and wkt are set",{
+##"input and wkt are set",{
 
 	geo <- '[]'
 
-	res <- geojson_sfc( geo, input = 123 )
-	expect_true( attr(res, "crs")[[1]] == 123 )
-	expect_true( is.na( attr(res, "crs")[[2]] ) )
+	expect_error( geojson_sfc( geo, input = 123 ), "If supplying a custom input you must also supply wkt")
+	# expect_true( attr(res, "crs")[[1]] == "123" )
+	# expect_true( is.na( attr(res, "crs")[[2]] ) )
 
-	res <- geojson_sf( geo, input = 123)
-	expect_true( attr(res$geometry, "crs")[[1]] == 123 )
-	expect_true( is.na( attr(res$geometry, "crs")[[2]] ) )
+	# res <- geojson_sf( geo, input = 123)
+	# expect_true( attr(res$geometry, "crs")[[1]] == 123 )
+	# expect_true( is.na( attr(res$geometry, "crs")[[2]] ) )
 
-	res <- geojson_sfc( geo, wkt = "abc" )
-	expect_true( is.na( attr(res, "crs")[[1]] ) )
-	expect_true( attr(res, "crs")[[2]] == "abc" )
+	expect_error( geojson_sfc( geo, wkt = "abc" ), "If supplying a custom wkt you must also supply input")
+	# expect_true( is.na( attr(res, "crs")[[1]] ) )
+	# expect_true( attr(res, "crs")[[2]] == "abc" )
 
-	res <- geojson_sf( geo, wkt = "abc" )
-	expect_true( is.na( attr(res$geometry, "crs")[[1]] ) )
-	expect_true( attr(res$geometry, "crs")[[2]] == "abc" )
+	# res <- geojson_sf( geo, wkt = "abc" )
+	# expect_true( is.na( attr(res$geometry, "crs")[[1]] ) )
+	# expect_true( attr(res$geometry, "crs")[[2]] == "abc" )
 
 	res <- geojson_sfc( geo, input = 123, wkt = "abc" )
 	expect_true( attr(res, "crs")[[1]] == 123 )
@@ -41,5 +37,3 @@ test_that("input and wkt are set",{
 	res <- geojson_sf( geo, input = 123, wkt = "abc" )
 	expect_true( attr(res$geometry, "crs")[[1]] == 123 )
 	expect_true( attr(res$geometry, "crs")[[2]] == "abc" )
-
-})

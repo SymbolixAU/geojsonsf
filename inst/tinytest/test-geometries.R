@@ -1,7 +1,4 @@
-context("geometries")
-
-
-test_that("geometries are parsed correctly", {
+## "geometries are parsed correctly", {
 
 	js <- '{"type": "Point", "coordinates": [101.0, 1.0] }'
 	sf <- geojson_sf(js)
@@ -52,5 +49,5 @@ test_that("geometries are parsed correctly", {
 
 	expect_error(geojson_sf(js),"No 'geometries' member at object index 0 - invalid GeoJSON")
 	expect_error(geojson_wkt(js),"No 'geometries' member at object index 0 - invalid GeoJSON")
-})
+
 

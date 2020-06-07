@@ -1,7 +1,5 @@
 
-context("validate")
-
-test_that("Geometry object has correct members", {
+## "Geometry object has correct members", {
 
 	## no 'coordinates' array
 	js <- '{"type":"Point","coordinate":[0,0]}'
@@ -19,9 +17,8 @@ test_that("Geometry object has correct members", {
 
 	js <- '{"type":"Point","coordinates":[]}'
 	expect_error(geojson_sf(js), "Invalid lon/lat object")
-})
 
-test_that("Feature Object has correct members", {
+## "Feature Object has correct members", {
 
 	## type : Feature
 	## MUST HAVE
@@ -48,10 +45,7 @@ test_that("Feature Object has correct members", {
 	expect_true("id" %in% names( geojson_sf( js ) ) )
   expect_true(sum(geojson_sf(js)$id, na.rm = T) == 5)
 
-})
-
-
-test_that("Featurecollection has correct members", {
+## "Featurecollection has correct members", {
 
   ## Feature Colection
 	## MUST HAVE
@@ -63,7 +57,7 @@ test_that("Featurecollection has correct members", {
   {"type": "Feature","properties": null,"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}},
   {"type": "Feature","properties": null,"geometry": {"type": "LineString", "coordinates": [[101.0, 0.0], [102.0, 1.0]]}}]}'
 	expect_error(geojsonsf:::rcpp_geojson_to_sf(js, F),"No 'features' member at object index 0 - invalid GeoJSON")
-})
+
 
 
 

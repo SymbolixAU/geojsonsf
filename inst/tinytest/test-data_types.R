@@ -1,6 +1,5 @@
-context("datatypes")
 
-test_that("r types are converted correctly", {
+##"r types are converted correctly", {
 
 	# character, integer, numeric, logical, posixct, posixlt, date
 	js <- '{"type":"Point","coordinates":[0,0]}'
@@ -64,4 +63,4 @@ test_that("r types are converted correctly", {
 	)
 	sf2 <- geojson_sf( j )
 	expect_true(sf2$test == 1.0)
-})
+
