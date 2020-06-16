@@ -9,7 +9,6 @@
 #include "rapidjson/writer.h"
 
 #include "geojsonsf/geojsonsf.h"
-#include "geojsonsf/geojson/geojson_to_sf.hpp"
 #include "geojsonsf/sf/sf/construct.hpp"
 #include "geojsonsf/sf/sfc/geojson_sfc.hpp"
 #include "geojsonsf/sf/sfg/geojson_sfg.hpp"

@@ -1,6 +1,6 @@
 ## Release Summary
 
-* Updates v1.3.2 to v1.3.3
-* Updated tests ready for R v4.0.0
+* Updates v1.3.3 to v2.0.0
+* aligns structures with sf >= v0.9
   
 

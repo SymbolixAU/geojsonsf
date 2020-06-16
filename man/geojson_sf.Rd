@@ -7,6 +7,8 @@
 geojson_sf(
   geojson,
   expand_geometries = FALSE,
+  input = NULL,
+  wkt = NULL,
   crs = NULL,
   proj4string = NULL,
   buffer_size = 1024
@@ -17,9 +19,13 @@ geojson_sf(
 
 \item{expand_geometries}{logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details}
 
-\item{crs}{coordiante reference system. See Details}
+\item{input}{user input for coordinate reference system object}
 
-\item{proj4string}{proj4string. See Details}
+\item{wkt}{well-known text for coordinate reference system object}
+
+\item{crs}{deprecated. coordinate reference system. See Details}
+
+\item{proj4string}{deprecated. proj4string. See Details}
 
 \item{buffer_size}{size of buffer used when reading a file from disk. Defaults 1024}
 }
@@ -41,7 +47,7 @@ the coordinate reference system identified by the Open Geospatial Consortium (OG
 URN urn:ogc:def:crs:OGC::CRS84
 
 \code{geojson_sfc} and \code{geojson_sf} automatically set the CRS to WGS 84.
-The fields \code{crs} and \code{proj4string} let you to overwrite the defaults.
+The fields \code{input} and \code{wkt} let you to overwrite the defaults.
 }
 \examples{
 

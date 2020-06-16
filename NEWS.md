@@ -2,7 +2,7 @@
 ## v2.0.0
 
 * updated licence to MIT
-* corrected incorrect CRS object [issue 83](https://github.com/SymbolixAU/geojsonsf/issues/83)
+* corrected incorrect CRS object to align with sf >= v0.9 [issue 83](https://github.com/SymbolixAU/geojsonsf/issues/83)
 * moved to `tinytest` for test coverage
 * removed `curl` dependency [issue 81](https://github.com/SymbolixAU/geojsonsf/issues/81)
 * NULLs coerced to correct type [issue 79](https://github.com/SymbolixAU/geojsonsf/issues/79)

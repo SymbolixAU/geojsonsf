@@ -4,7 +4,9 @@
 \name{geo_melbourne}
 \alias{geo_melbourne}
 \title{geo_melbourne}
-\format{An object of class \code{geojson} (inherits from \code{json}) of length 1.}
+\format{
+An object of class \code{geojson} (inherits from \code{json}) of length 1.
+}
 \usage{
 geo_melbourne
 }

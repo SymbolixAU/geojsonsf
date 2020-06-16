@@ -4,8 +4,8 @@
 #'
 #' @param geojson string or vector of GeoJSON, or a URL or file pointing to a geojson file
 #' @param expand_geometries logical indicating whether to unnest GEOMETRYCOLLECTION rows. see details
-#' @param input
-#' @param wkt
+#' @param input user input for coordinate reference system object
+#' @param wkt well-known text for coordinate reference system object
 #' @param crs deprecated. coordinate reference system. See Details
 #' @param proj4string deprecated. proj4string. See Details
 #' @param buffer_size size of buffer used when reading a file from disk. Defaults 1024
@@ -63,14 +63,6 @@ geojson_sfc <- function(
 	sfc <- set_crs( sfc, input, wkt, crs, proj4string )
 	return( sfc )
 }
-
-# library(sf)
-#
-# nc <- sf::st_read(system.file("./shape/nc.shp", package = "sf"))
-# geo <- geojsonsf::sf_geojson( nc )
-# sf <- geojsonsf::geojson_sf( geo )
-#
-# attributes( sf$geometry )
 
 geojson_to_sfc <- function( geojson, expand_geometries, buffer_size ) UseMethod("geojson_to_sfc")
 

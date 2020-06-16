@@ -27,27 +27,6 @@ namespace sfg {
 		return coord_array[1].GetDouble();
 	}
 
-	// inline std::string make_dimension( int n ) {
-	// 	switch( n ) {
-	// 	case 2: {
-	// 	return "XY";
-	// 	break;
-	// }
-	// 	case 3: {
-	// 		return "XYZ";
-	// 		break;
-	// 	}
-	// 	case 4: {
-	// 		return "XYZM";
-	// 		break;
-	// 	}
-	// 	default: {
-	// 		Rcpp::stop("unknown dimension attribute");
-	// 	}
-	// 	}
-	// 	return "XY"; // never reached
-	// }
-
 	inline void get_integer_points(
 			const Value& point_array,
 			R_xlen_t& n,
@@ -77,8 +56,6 @@ namespace sfg {
 		sfheaders::zm::calculate_zm_ranges( z_range, m_range, nv, xyzm );
 	}
 
-
-
 	inline void get_points(
 			const Value& point_array,
 			Rcpp::NumericVector& bbox,
@@ -92,21 +69,6 @@ namespace sfg {
 		R_xlen_t n = point_array.Size();
 		geojsonsf::validate::validate_points(point_array);
 
-		//int r_type;
-
-		// r_type = make_type( point_array );
-		//
-		// switch ( r_type ) {
-		// case INTSXP: {
-		// 	Rcpp::IntegerVector iv( n );
-		// 	get_integer_points( point_array, n, iv );
-		// 	if ( requires_attribute ) {
-		// 		iv.attr("class") = sfg_attributes( attribute );
-		// 	}
-		// 	sfc[i] = iv;
-		// 	break;
-		// }
-		// case REALSXP: {
 		Rcpp::NumericVector nv( n );
 		get_numeric_points( point_array, n, nv, bbox, z_range, m_range );
 
@@ -115,12 +77,7 @@ namespace sfg {
 			nv.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
 		}
 		sfc[i] = nv;
-		// 	break;
-		// }
-		// default: {
-		// 	Rcpp::stop("unknown coordinate type");
-		// }
-		// }
+
 	}
 
 	inline void get_line_string(
@@ -136,35 +93,7 @@ namespace sfg {
   ) {
 
 		R_xlen_t n = line_array.Size();
-		//int max_cols = 2;
 		R_xlen_t row;
-
-		//int r_type;
-		// // TODO( does this take up too much time )?
-		// r_type = make_type( line_array );
-		//
-		// switch ( r_type ) {
-		// case INTSXP: {
-		// 	Rcpp::IntegerMatrix im( n, 4 );
-		// 	for( row = 0; row < n; row++ ) {
-		// 		const Value& coord_array = line_array[ row ];
-		// 		int n_points = coord_array.Size();
-		// 		if( n_points > max_cols ) {
-		// 			max_cols = n_points;
-		// 		}
-		// 		Rcpp::IntegerVector iv( n_points );
-		// 		get_integer_points( coord_array, n_points, iv );
-		// 		im( row, Rcpp::_ ) = iv;
-		// 	}
-		// 	im = im( Rcpp::_, Rcpp::Range(0, ( max_cols - 1 ) ) );
-		//
-		// 	if ( requires_attribute ) {
-		// 		im.attr("class") = sfg_attributes( attribute );
-		// 	}
-		// 	sfc[i] = im;
-		// 	break;
-		// }
-		// case REALSXP: {
 
 		Rcpp::NumericMatrix nm( n, 4 );
 
@@ -180,7 +109,7 @@ namespace sfg {
 				max_cols = n_points;
 			}
 
-			Rcpp::NumericVector nv( 4 );  // initialise with ZM , we remove later
+			Rcpp::NumericVector nv( 4, Rcpp::NumericVector::get_na() );  // initialise with ZM , we remove later
 			get_numeric_points( coord_array, n_points, nv, bbox, z_range, m_range );
 			nm( row, Rcpp::_ ) = nv;
 		}
@@ -192,14 +121,6 @@ namespace sfg {
 			nm.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
 		}
 		sfc[i] = nm;
-		//
-		// 		break;
-		// 	}
-		// 	default: {
-		// 		Rcpp::stop("unknown coordinate type");
-		// 	}
-		// 	}
-
 	}
 
 	inline void get_multi_line_string(
