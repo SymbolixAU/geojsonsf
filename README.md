@@ -99,9 +99,9 @@ sf
 #  geometry type:  GEOMETRY
 #  dimension:      XY
 #  bbox:           xmin: -1 ymin: -1 xmax: 100 ymax: 1
-#  z_range:        zmin: 0 zmax: 0
-#  m_range:        mmin: 0 mmax: 0
-#  CRS:            EPSG:4326
+#  z_range:        zmin: NA zmax: NA
+#  m_range:        mmin: NA mmax: NA
+#  CRS:            4326
 #    id                geometry
 #  1 NA             POINT (0 0)
 #  2 NA LINESTRING (-1 -1, 1 1)
@@ -168,8 +168,7 @@ sf_geojson(sf, simplify = F)
 ### How fast is it?
 
 This benchmark shows a comparison with `library(sf)` for converting a
-string of GeoJSON of 3,221 counties in the US in to an `sf`
-object
+string of GeoJSON of 3,221 counties in the US in to an `sf` object
 
 ``` r
 myurl <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
@@ -193,27 +192,3 @@ microbenchmark(
 # geojsonsf  709.2268  709.2268  722.0626  722.0626  734.8984  734.8984      2
 #        sf 1867.6840 1867.6840 1958.7968 1958.7968 2049.9097 2049.9097      2
 ```
-
-### Does it work?
-
-I’ve written a [lot of
-tests](https://github.com/SymbolixAU/geojsonsf/tree/master/tests/testthat)
-to try and capture all eventualities. But if you find a mistake please
-let me know.
-
-Here’s a quick visual check to see the output of the above benchmark
-data
-
-``` r
-library(googleway)
-set_key("GOOGLE_MAP_KEY")
-
-gsf <- geojson_sf(geo)
-
-google_map() %>%
-    add_polygons(gsf[!gsf$STATE %in% c("02","15","72"), ], 
-            fill_colour = "CENSUSAREA", 
-            stroke_weight = 0)
-```
-
-<img src="./man/figures/GeoJSONSF.png" width="100%" />

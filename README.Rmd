@@ -177,30 +177,6 @@ microbenchmark(
 #        sf 1867.6840 1867.6840 1958.7968 1958.7968 2049.9097 2049.9097      2
 ```
 
-### Does it work?
-
-I've written a [lot of tests](https://github.com/SymbolixAU/geojsonsf/tree/master/tests/testthat) to try and capture all eventualities. But if you find a mistake please let me know.
-
-Here's a quick visual check to see the output of the above benchmark data
-
-```{r, eval = F}
-library(googleway)
-set_key("GOOGLE_MAP_KEY")
-
-gsf <- geojson_sf(geo)
-
-google_map() %>%
-	add_polygons(gsf[!gsf$STATE %in% c("02","15","72"), ], 
-			fill_colour = "CENSUSAREA", 
-			stroke_weight = 0)
-```
-
-```{r, echo = FALSE}
-knitr::include_graphics("./man/figures/GeoJSONSF.png")
-```
-
-
-
 
 
 
