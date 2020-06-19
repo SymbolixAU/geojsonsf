@@ -187,10 +187,10 @@ head(sf)
 
 ## Reading from URL
 
-```{r}
+```r
 url <- "http://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_050_00_500k.json"
 sf <- geojson_sf(url)
-head(sf)
+#head(sf)
 ```
 
 ## Reading from file
