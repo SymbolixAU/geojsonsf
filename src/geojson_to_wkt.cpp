@@ -9,7 +9,7 @@
 #include "geojsonsf/geojson/geojson_properties.hpp"
 #include "geojsonsf/wkt/geojson_wkt.hpp"
 
-#include "sfheaders/sfg/sfg_attributes.hpp"
+//#include "sfheaders/sfg/sfg_attributes.hpp"
 
 using namespace rapidjson;
 
@@ -66,7 +66,6 @@ void parse_geometry_object_wkt(
   transform(geom_type.begin(), geom_type.end(), geom_type.begin(), ::toupper);
 
   std::string dim = sfheaders::sfg::sfg_dimension( coord_dim );
-  //wkt.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
   wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, geom_type);
 
   sfc[i] = wkt;
@@ -113,9 +112,6 @@ Rcpp::List parse_geometry_collection_object_wkt(
 
   std::string dim = sfheaders::sfg::sfg_dimension( coord_dim );
   std::string attribute = "GEOMETRYCOLLECTION";
-  // //geom_collection_wkt.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
-  //geom_collection_wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, attribute );
-
   wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, attribute);
 
   geom_collection_wkt[0] = wkt;
@@ -156,7 +152,7 @@ Rcpp::List parse_feature_object_wkt(
   	coord_dim = 2; // so it pasess sfheaders::sfg::sfg_dimension() checks
   	std::string dim = sfheaders::sfg::sfg_dimension( coord_dim );
   	std::string attribute = "POINT";
-  	//wkt.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+
   	wkt.attr("class") = Rcpp::CharacterVector::create("wkt", dim, attribute );
   	sfc[0] = wkt;
   }

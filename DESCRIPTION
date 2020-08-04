@@ -1,8 +1,8 @@
 Package: geojsonsf
 Type: Package
 Title: GeoJSON to Simple Feature Converter
-Version: 2.0.0
-Date: 2020-06-16
+Version: 2.0.1
+Date: 2020-08-04
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -12,13 +12,14 @@ URL: https://github.com/SymbolixAU/geojsonsf
 BugReports: https://github.com/SymbolixAU/geojsonsf/issues
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.5.0)
+Depends: R (>= 3.3.0)
 SystemRequirements: C++11
 LinkingTo: 
+    geometries,
     jsonify (>= 1.1.1),
     rapidjsonr (>= 1.2.0),
     Rcpp,
-    sfheaders (>= 0.2.2)
+    sfheaders (>= 0.3.0)
 Imports: 
     jsonify (>= 1.1.1),
     Rcpp
@@ -29,3 +30,5 @@ Suggests:
     rmarkdown,
     tinytest
 VignetteBuilder: knitr
+Remotes:
+    dcooley/geometries

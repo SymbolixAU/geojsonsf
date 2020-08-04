@@ -3,22 +3,33 @@
 
 #include "geojsonsf/geojsonsf.h"
 
-#include "sfheaders/sfheaders.hpp"
+#include "geometries/bbox/bbox.hpp"
+
 #include "sfheaders/sfc/sfc_attributes.hpp"
-#include "sfheaders/sfc/bbox.hpp"
-#include "sfheaders/sfc/zm_range.hpp"
 
 namespace geojsonsf {
 namespace sfc {
 namespace utils {
 
+	inline Rcpp::NumericVector start_bbox() {
+		Rcpp::NumericVector bbox(4);  // xmin, ymin, xmax, ymax
+		bbox(0) = bbox(1) = bbox(2) = bbox(3) = NA_REAL;
+		return bbox;
+	}
+
+	inline Rcpp::NumericVector start_zm_range() {
+		Rcpp::NumericVector range(2);
+		range(0) = range(1) = NA_REAL;
+		return range;
+	}
+
 	inline Rcpp::List create_null_sfc() {
 		Rcpp::List empty_sfc(0);
 
 		std::string type = "GEOMETRY";
-		Rcpp::NumericVector bbox = sfheaders::bbox::start_bbox();
-		Rcpp::NumericVector z_range = sfheaders::zm::start_z_range();
-		Rcpp::NumericVector m_range = sfheaders::zm::start_m_range();
+		Rcpp::NumericVector bbox = start_bbox();
+		Rcpp::NumericVector z_range = start_zm_range();
+		Rcpp::NumericVector m_range = start_zm_range();
 		int n_empty = 0;
 		std::unordered_set< std::string > geometry_types{"GEOMETRY"};
 

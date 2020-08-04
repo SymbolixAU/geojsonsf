@@ -8,7 +8,9 @@
 #include "geojsonsf/geojson/write_geometry.hpp"
 
 #include "sfheaders/sfg/sfg_dimension.hpp"
-#include "sfheaders/utils/vectors/vectors.hpp"
+//#include "sfheaders/utils/vectors/vectors.hpp"
+
+#include "geometries/utils/vectors/vectors.hpp"
 
 namespace geojsonsf {
 namespace api {
@@ -49,7 +51,7 @@ namespace api {
   	for ( i = 0; i < df.length(); ++i ) {
 
   		Rcpp::String this_column = column_names[i];
-  	  R_xlen_t idx = sfheaders::utils::where_is( this_column, geometry_columns );
+  	  R_xlen_t idx = geometries::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
   			property_names[property_counter] = column_names[i];
@@ -134,7 +136,7 @@ namespace api {
   	for ( i = 0; i < df.length(); ++i) {
 
   		Rcpp::String this_column = column_names[i];
-  	  R_xlen_t idx = sfheaders::utils::where_is( this_column, geometry_columns );
+  	  R_xlen_t idx = geometries::utils::where_is( this_column, geometry_columns );
 
   		if ( idx == -1 ) {  // i.e. it's not in the vector
 

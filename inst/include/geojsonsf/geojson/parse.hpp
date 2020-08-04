@@ -2,8 +2,13 @@
 #define GEOJSONSF_GEOJSON_PARSE_H
 
 #include <Rcpp.h>
+
+#include "geometries/utils/attributes/attributes.hpp"
+
 #include "geojsonsf/sf/sfg/geojson_sfg.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
+
+
 
 namespace geojsonsf {
 namespace geojson {
@@ -82,9 +87,11 @@ namespace parse {
 
 		if ( !expand_geometries ) {
 			// TODO: check this dim; should it be set as XY?
-			std::string dim = "XY";
-			std::string attribute = "GEOMETRYCOLLECTION";
-			geom_collection.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+			Rcpp::StringVector class_attribute = { "XY", "GEOMETRYCOLLECTION","sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( geom_collection, atts );
 		} else {
 			sfg_objects+=n;
 		}

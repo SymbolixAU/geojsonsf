@@ -1,4 +1,8 @@
 
+## v2.0.1
+
+* links to geometries library
+
 ## v2.0.0
 
 * updated licence to MIT

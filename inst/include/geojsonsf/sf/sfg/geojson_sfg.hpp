@@ -7,10 +7,13 @@
 #include "geojsonsf/sf/sfc/geojson_sfc.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
 
-#include "sfheaders/sfc/bbox.hpp"
+#include "geometries/bbox/bbox.hpp"
+#include "geometries/utils/attributes/attributes.hpp"
+//#include "sfheaders/sfc/bbox.hpp"
+
 #include "sfheaders/sfc/zm_range.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
-#include "sfheaders/sfg/sfg_attributes.hpp"
+//#include "sfheaders/sfg/sfg_attributes.hpp"
 
 using namespace rapidjson;
 
@@ -51,7 +54,8 @@ namespace sfg {
 			geojsonsf::validate::validate_point(point_array[i]);
 			nv[i] = point_array[i].GetDouble();
 		}
-		sfheaders::bbox::calculate_bbox( bbox, nv );
+
+		geometries::bbox::calculate_bbox( bbox, nv );
 		std::string xyzm;
 		sfheaders::zm::calculate_zm_ranges( z_range, m_range, nv, xyzm );
 	}
@@ -74,7 +78,13 @@ namespace sfg {
 
 		if ( requires_attribute ) {
 			std::string dim = sfheaders::sfg::sfg_dimension( n );
-			nv.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+
+			Rcpp::StringVector class_attribute = { dim.c_str(), attribute.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( nv, atts );
+
 		}
 		sfc[i] = nv;
 
@@ -118,7 +128,13 @@ namespace sfg {
 
 		if ( requires_attribute ) {
 			std::string dim = sfheaders::sfg::sfg_dimension( max_cols );
-			nm.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+
+			Rcpp::StringVector class_attribute = { dim.c_str(), attribute.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( nm, atts );
+
 		}
 		sfc[i] = nm;
 	}
@@ -148,7 +164,13 @@ namespace sfg {
 		}
 		if( requires_attribute ) {
 			std::string dim = sfheaders::sfg::sfg_dimension( max_dimension );
-			ml.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+
+			Rcpp::StringVector class_attribute = { dim.c_str(), attribute.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( ml, atts );
+
 		}
 		sfc[i] = ml;
 	}
@@ -180,7 +202,13 @@ namespace sfg {
 
 		if( requires_attribute ) {
 			std::string dim = sfheaders::sfg::sfg_dimension( max_dimension );
-			pl.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+
+			Rcpp::StringVector class_attribute = { dim.c_str(), attribute.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( pl, atts );
+
 		}
 		sfc[i] = pl;
 	}
@@ -220,7 +248,13 @@ namespace sfg {
 
 		if( requires_attribute ) {
 			std::string dim = sfheaders::sfg::sfg_dimension( max_dimension );
-			mp.attr("class") = sfheaders::sfg::sfg_attributes( dim, attribute );
+
+			Rcpp::StringVector class_attribute = { dim.c_str(), attribute.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( mp, atts );
+
 		}
 		sfc[i] = mp;
 	}
@@ -248,19 +282,35 @@ namespace sfg {
 		if (geom_type == "POINT" ) {
 
 			Rcpp::NumericVector nullObj(2, NA_REAL);
-			nullObj.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
+
+			Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( nullObj, atts );
+
 			sfc[0] = nullObj;
 
 		} else if (geom_type == "MULTIPOINT" || geom_type == "LINESTRING") {
 
 			Rcpp::NumericMatrix nullObj;
-			nullObj.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
+			Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( nullObj, atts );
+
 			sfc[0] = nullObj;
 
 		} else {
 
 			Rcpp::List nullObj;
-			nullObj.attr("class") = sfheaders::sfg::sfg_attributes(dim, geom_type);
+			Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
+			Rcpp::List atts = Rcpp::List::create(
+				Rcpp::_["class"] = class_attribute
+			);
+			geometries::utils::attach_attributes( nullObj, atts );
+
 			sfc[0] = nullObj;
 		}
 		nempty++;

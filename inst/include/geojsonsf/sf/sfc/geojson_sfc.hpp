@@ -4,6 +4,7 @@
 #include <Rcpp.h>
 
 #include "geojsonsf/sf/sfc/utils/sfc_utils.hpp"
+
 #include "sfheaders/sfc/sfc_attributes.hpp"
 
 namespace geojsonsf {
