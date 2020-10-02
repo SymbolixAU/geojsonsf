@@ -8,8 +8,6 @@
 #include "geojsonsf/sf/sfg/geojson_sfg.hpp"
 #include "geojsonsf/geojson/geojson_validate.hpp"
 
-
-
 namespace geojsonsf {
 namespace geojson {
 namespace parse {

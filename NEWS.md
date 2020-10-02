@@ -2,6 +2,7 @@
 ## v2.0.1
 
 * links to geometries library
+* reduced R dependency
 
 ## v2.0.0
 

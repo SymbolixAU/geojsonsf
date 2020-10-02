@@ -2,11 +2,57 @@
 #define GEOJSONSF_GEOJSON_WRITERS_WRITE_GEOJSON_H
 
 #include <Rcpp.h>
+#include "sfheaders/utils/utils.hpp"
 #include "geojsonsf/geojson/writers/writers.hpp"
-#include "geojsonsf/geometrycollection/geometrycollection.hpp"
+//#include "geojsonsf/geometrycollection/geometrycollection.hpp"
+
 
 namespace geojsonsf {
 namespace write_geojson {
+
+	inline void gc_type(
+			Rcpp::List& sfg,
+			std::string& gc_geom_type,
+			bool& isnull,
+			Rcpp::CharacterVector& cls
+	) {
+
+		for (Rcpp::List::iterator it = sfg.begin(); it != sfg.end(); it++) {
+
+			switch( TYPEOF( *it ) ) {
+			case VECSXP: {
+				Rcpp::List tmp = Rcpp::as< Rcpp::List >(*it);
+				if (!Rf_isNull(tmp.attr("class"))) {
+
+					cls = tmp.attr("class");
+					// TODO: error handle (there should aways be 3 elements as we're workgin wtih sfg objects)
+					gc_geom_type = cls[1];
+
+					SEXP tst = *it;
+					isnull = sfheaders::utils::is_null_geometry( tst, gc_geom_type );
+				} else {
+					gc_type(tmp, gc_geom_type, isnull, cls);
+				}
+				break;
+			}
+			case REALSXP: {
+				Rcpp::NumericVector tmp = Rcpp::as< Rcpp::NumericVector >( *it );
+				if (!Rf_isNull(tmp.attr("class"))) {
+
+					cls = tmp.attr("class");
+					gc_geom_type = cls[1];
+
+					SEXP tst = *it;
+					isnull = sfheaders::utils::is_null_geometry( tst, gc_geom_type );
+				}
+				break;
+			}
+			default: {
+				Rcpp::stop("Coordinates could not be found");
+			}
+			}
+		}
+	}
 
 	template< typename Writer >
 	inline void write_geojson(
@@ -46,7 +92,8 @@ namespace write_geojson {
 				sfgi[0] = gc[i];
 				std::string gc_geom_type;
 				bool isnull = false;
-				geojsonsf::geometrycollection::gc_type( sfgi, gc_geom_type, isnull, cls );
+				gc_type( sfgi, gc_geom_type, isnull, cls );
+
 				if( !isnull ) {
 					SEXP sfg_gc = gc[i];
 					geojsonsf::writers::begin_geojson_geometry(writer, gc_geom_type);
@@ -106,7 +153,8 @@ namespace write_geojson {
 
 				std::string gc_geom_type;
 				bool isnull = false;
-				geojsonsf::geometrycollection::gc_type( sfgi, gc_geom_type, isnull, cls );
+				gc_type( sfgi, gc_geom_type, isnull, cls );
+
 				if( !isnull ) {
 					SEXP sfg_gc = gc[i];
 					geojsonsf::writers::begin_geojson_geometry(writer, gc_geom_type);
