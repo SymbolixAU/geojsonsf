@@ -1,6 +1,6 @@
 ## Release Summary
 
-* Updates v1.3.3 to v2.0.0
-* aligns structures with sf >= v0.9
+* Updates v2.0.0 to v2.0.1
+* reduced R dependency
   
 
