@@ -2,7 +2,7 @@ Package: geojsonsf
 Type: Package
 Title: GeoJSON to Simple Feature Converter
 Version: 2.0.1
-Date: 2020-08-04
+Date: 2020-10-02
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -19,7 +19,7 @@ LinkingTo:
     jsonify (>= 1.1.1),
     rapidjsonr (>= 1.2.0),
     Rcpp,
-    sfheaders (>= 0.3.0)
+    sfheaders (>= 0.2.2)
 Imports: 
     jsonify (>= 1.1.1),
     Rcpp
@@ -30,6 +30,3 @@ Suggests:
     rmarkdown,
     tinytest
 VignetteBuilder: knitr
-Remotes:
-    dcooley/geometries,
-    dcooley/sfheaders
