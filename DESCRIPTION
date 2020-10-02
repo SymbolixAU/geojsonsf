@@ -31,5 +31,5 @@ Suggests:
     tinytest
 VignetteBuilder: knitr
 Remotes:
-    dcooley/geometries
+    dcooley/geometries,
     dcooley/sfheaders
