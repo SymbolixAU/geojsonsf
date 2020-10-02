@@ -21,7 +21,6 @@ LinkingTo:
     Rcpp,
     sfheaders (>= 0.2.2)
 Imports: 
-    jsonify (>= 1.1.1),
     Rcpp
 RoxygenNote: 7.1.0
 Suggests: 
