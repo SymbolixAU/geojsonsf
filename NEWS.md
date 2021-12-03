@@ -1,4 +1,8 @@
 
+## v2.1.0
+
+* empty arrays now allowed [issue 91](https://github.com/SymbolixAU/geojsonsf/issues/91)
+
 ## v2.0.1
 
 * links to geometries library

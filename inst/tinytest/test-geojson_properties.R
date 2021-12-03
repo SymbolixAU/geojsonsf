@@ -62,8 +62,9 @@
 	js <- '{"type":"Point","coordinates":[,]}'
 	expect_error(geojson_sf(js), "Invalid JSON")
 
-	js <- '{"type":"Point","coordinates":[]}'
-	expect_error(geojson_sf(js), "Invalid lon/lat object")
+	## Issue 91 - allowing []
+	#js <- '{"type":"Point","coordinates":[]}'
+	#expect_error(geojson_sf(js), "Invalid lon/lat object")
 
 	js <- '{"type":"Point","coordinates":{}}'
 	expect_error(geojson_sf(js), "No 'array' member at object index 0 - invalid GeoJSON")

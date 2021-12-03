@@ -9,8 +9,6 @@
 #include "geojsonsf/geojson/geojson_properties.hpp"
 #include "geojsonsf/wkt/geojson_wkt.hpp"
 
-//#include "sfheaders/sfg/sfg_attributes.hpp"
-
 using namespace rapidjson;
 
 void parse_geometry_object_wkt(
