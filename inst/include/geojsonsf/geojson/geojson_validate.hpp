@@ -141,9 +141,8 @@ namespace validate {
 			const Value& v
   ) {
 		// TODO(move to header):
-		static const char* ARRAY_TYPES[] =
-			{ "Null", "false", "True", "Object", "Array", "String", "Number" };
-		if( strncmp(ARRAY_TYPES[v.GetType()], "Num", 3) != 0) {
+		static const char* ARRAY_TYPES[] = {"Null", "false", "True", "Object", "Array", "String", "Number" };
+		if( strncmp(ARRAY_TYPES[ v.GetType() ], "Num", 3) != 0) {
 			geojson_object_error("lon/lat");
 		}
 	}

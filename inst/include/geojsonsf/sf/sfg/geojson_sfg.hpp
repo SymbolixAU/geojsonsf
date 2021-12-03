@@ -9,55 +9,51 @@
 
 #include "geometries/bbox/bbox.hpp"
 #include "geometries/utils/attributes/attributes.hpp"
-//#include "sfheaders/sfc/bbox.hpp"
 
 #include "sfheaders/sfc/zm_range.hpp"
 #include "sfheaders/sfg/sfg_dimension.hpp"
-//#include "sfheaders/sfg/sfg_attributes.hpp"
 
 using namespace rapidjson;
 
 namespace geojsonsf {
 namespace sfg {
 
-	inline double get_lon(const Value& coord_array) {
-		geojsonsf::validate::validate_point(coord_array[0]);
-		return coord_array[0].GetDouble();
+	inline Rcpp::NumericVector empty_point() {
+		Rcpp::NumericVector empty(2, Rcpp::NumericVector::get_na());
+		return empty;
 	}
 
-	inline double get_lat(const Value& coord_array) {
-		geojsonsf::validate::validate_point(coord_array[1]);
-		return coord_array[1].GetDouble();
-	}
-
-	inline void get_integer_points(
+	inline void get_points(
 			const Value& point_array,
 			R_xlen_t& n,
-			Rcpp::IntegerVector iv
-      ) {
-		R_xlen_t i;
-		for ( i = 0; i < n; ++i ) {
-			iv[i] = point_array[i].GetDouble();
-		}
-	}
-
-	inline void get_numeric_points(
-			const Value& point_array,
-			R_xlen_t& n,
-			Rcpp::NumericVector nv,
+			Rcpp::NumericVector& nv,
 	    Rcpp::NumericVector& bbox,
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range
   ) {
 		R_xlen_t i;
-		for ( i = 0; i < n; ++i ) {
-			geojsonsf::validate::validate_point(point_array[i]);
-			nv[i] = point_array[i].GetDouble();
-		}
 
-		geometries::bbox::calculate_bbox( bbox, nv );
-		std::string xyzm;
-		sfheaders::zm::calculate_zm_ranges( z_range, m_range, nv, xyzm );
+		// if( n == 0 ) {
+		// 	nv = empty_point();
+		// 	Rcpp::Rcout << "empty point " << nv << std::endl;
+		// } else {
+
+		bool isEmpty = point_array.Size() == 0;
+
+		if( isEmpty ) {
+			nv.fill( Rcpp::NumericVector::get_na() );
+		} else {
+
+			for ( i = 0; i < n; ++i ) {
+				geojsonsf::validate::validate_point( point_array[i] );
+				nv[i] = point_array[i].GetDouble();
+			}
+
+			geometries::bbox::calculate_bbox( bbox, nv );
+			std::string xyzm;
+			sfheaders::zm::calculate_zm_ranges( z_range, m_range, nv, xyzm );
+
+		}
 	}
 
 	inline void get_points(
@@ -70,11 +66,30 @@ namespace sfg {
 			bool requires_attribute,
 			std::string attribute
   ) {
-		R_xlen_t n = point_array.Size();
-		geojsonsf::validate::validate_points(point_array);
+
+		// if( point_array[i].Empty() ) {
+		// 	nv[i] = Rcpp::NumericVector::get_na();
+		// } else {
+
+		// if( point_array.Empty() ) {
+		// 	Rcpp::NumericVector empty(2, Rcpp::NumericVector::get_na());
+		// 	sfc[i] = empty;
+		// 	//return;
+		// }
+
+		//Rcpp::min(point_array.Size(), 2);
+
+		R_xlen_t n = point_array.Size() == 0 ? 2 : point_array.Size();
+		// TODO: if n == 0, make it 2 and fill with NA
+		// This will mean it will pass the sfheaders dimension check
+
+		Rcpp::Rcout << "n: " << n << std::endl;
 
 		Rcpp::NumericVector nv( n );
-		get_numeric_points( point_array, n, nv, bbox, z_range, m_range );
+
+		get_points( point_array, n, nv, bbox, z_range, m_range );
+
+		//Rcpp::stop("stop");
 
 		if ( requires_attribute ) {
 			std::string dim = sfheaders::sfg::sfg_dimension( n );
@@ -86,8 +101,9 @@ namespace sfg {
 			geometries::utils::attach_attributes( nv, atts );
 
 		}
-		sfc[i] = nv;
 
+		Rcpp::Rcout << "nv " << nv << std::endl;
+		sfc[i] = nv;
 	}
 
 	inline void get_line_string(
@@ -120,7 +136,7 @@ namespace sfg {
 			}
 
 			Rcpp::NumericVector nv( 4, Rcpp::NumericVector::get_na() );  // initialise with ZM , we remove later
-			get_numeric_points( coord_array, n_points, nv, bbox, z_range, m_range );
+			get_points( coord_array, n_points, nv, bbox, z_range, m_range );
 			nm( row, Rcpp::_ ) = nv;
 		}
 

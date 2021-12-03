@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // rcpp_df_to_geojson_atomise
 Rcpp::StringVector rcpp_df_to_geojson_atomise(Rcpp::DataFrame& df, Rcpp::StringVector& geometry_columns, int& digits, bool& factors_as_string);
 RcppExport SEXP _geojsonsf_rcpp_df_to_geojson_atomise(SEXP dfSEXP, SEXP geometry_columnsSEXP, SEXP digitsSEXP, SEXP factors_as_stringSEXP) {
