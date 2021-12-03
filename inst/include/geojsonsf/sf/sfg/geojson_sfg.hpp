@@ -31,6 +31,7 @@ namespace sfg {
 	    Rcpp::NumericVector& z_range,
 	    Rcpp::NumericVector& m_range
   ) {
+		// Rcpp::Rcout << "get points 1" << std::endl;
 		R_xlen_t i;
 
 		// if( n == 0 ) {
@@ -67,6 +68,8 @@ namespace sfg {
 			std::string attribute
   ) {
 
+		// Rcpp::Rcout << "get points 2" << std::endl;
+
 		// if( point_array[i].Empty() ) {
 		// 	nv[i] = Rcpp::NumericVector::get_na();
 		// } else {
@@ -83,7 +86,7 @@ namespace sfg {
 		// TODO: if n == 0, make it 2 and fill with NA
 		// This will mean it will pass the sfheaders dimension check
 
-		Rcpp::Rcout << "n: " << n << std::endl;
+		// Rcpp::Rcout << "n: " << n << std::endl;
 
 		Rcpp::NumericVector nv( n );
 
@@ -102,7 +105,7 @@ namespace sfg {
 
 		}
 
-		Rcpp::Rcout << "nv " << nv << std::endl;
+		// Rcpp::Rcout << "nv " << nv << std::endl;
 		sfc[i] = nv;
 	}
 
@@ -123,6 +126,8 @@ namespace sfg {
 
 		Rcpp::NumericMatrix nm( n, 4 );
 
+		// Rcpp::Rcout << "linestring n : " << n << std::endl;
+
 		for( row = 0; row < n; row++ ) {
 			const Value& coord_array = line_array[ row ];
 			R_xlen_t n_points = coord_array.Size();
@@ -140,7 +145,12 @@ namespace sfg {
 			nm( row, Rcpp::_ ) = nv;
 		}
 
-		nm = nm( Rcpp::_, Rcpp::Range(0, ( max_cols - 1 ) ) );
+		// Rcpp::Rcout << "max_cols : " << max_cols << std::endl;
+		// Rcpp::Rcout << "ncol: " << nm.ncol() << std::endl;
+		if( nm.nrow() > 0 ) {
+			nm = nm( Rcpp::_, Rcpp::Range(0, ( max_cols - 1 ) ) );
+		}
+		// Rcpp::Rcout << "nm : " << nm << std::endl;
 
 		if ( requires_attribute ) {
 			std::string dim = sfheaders::sfg::sfg_dimension( max_cols );
