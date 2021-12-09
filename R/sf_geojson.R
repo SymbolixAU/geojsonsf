@@ -105,8 +105,10 @@ sfc_geojson.default <- function( sfc, digits = NULL ) stop("Expected an sfc obje
 #' Converts data.frame objects to GeoJSON. Each row is considerd a POINT
 #'
 #' @param df data.frame
-#' @param lon column of \code{df} containing the longitude data
-#' @param lat column of \code{df} containing the latitude data
+#' @param lon character column name of \code{df} containing the longitude data,
+#' defaults to `lon`
+#' @param lat character column name column of \code{df} containing the
+#' latitude data, defaults to `lat`.
 #' @param z column of \code{df} containing the Z attribute of the GeoJSON
 #' @param m column of \code{df} containing the M attribute of the GeoJSON.
 #' If supplied, you must also supply \code{z}
