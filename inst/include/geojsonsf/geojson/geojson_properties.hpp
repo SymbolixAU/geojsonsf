@@ -108,7 +108,7 @@ namespace geojson_properties {
 			const R_xlen_t& row_index
 		) {
 		Rcpp::StringVector sv = sf[key];
-		sv[row_index] = value;
+		sv[row_index] = Rcpp::String( value );
 		sf[key] = sv;
 	}
 
