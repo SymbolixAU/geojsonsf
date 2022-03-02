@@ -78,7 +78,8 @@ namespace geojson_properties {
 		R_xlen_t i;
 
 		for( i = 0; i < n.size(); ++i ) {
-			sv[i] = n[i];
+			Rcpp::String s = n[i];
+			sv[i] = s;
 		}
 		properties.names() = sv;
 
