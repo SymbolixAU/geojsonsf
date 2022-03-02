@@ -78,11 +78,10 @@ namespace geojson_properties {
 		R_xlen_t i;
 
 		for( i = 0; i < n.size(); ++i ) {
-			Rcpp::String s = n[i];
-			sv[i] = s;
+			std::string s = n[i];
+			sv[i] = Rcpp::String( s );
 		}
 		properties.names() = sv;
-
 	}
 
 	inline void get_property_keys(
