@@ -23,11 +23,15 @@ namespace parse {
 	    R_xlen_t& sfg_objects
   ) {
 
+		// Rcpp::Rcout << "parse_geometry_object " << std::endl;
+
 		geojsonsf::validate::validate_type(geometry, sfg_objects);
 		geojsonsf::validate::validate_coordinates(geometry, sfg_objects);
 		geojsonsf::validate::validate_array(geometry["coordinates"], sfg_objects);
 
 		std::string geom_type = geometry["type"].GetString();
+		// Rcpp::Rcout << "geom_type : " << geom_type << std::endl;
+
 		const Value& coord_array = geometry["coordinates"];
 		geometry_types.insert( geom_type );
 
@@ -110,6 +114,7 @@ namespace parse {
 	    R_xlen_t& nempty
   ) {
 
+		// Rcpp::Rcout << "parse_feature_object" << std::endl;
 		geojsonsf::validate::validate_geometry(feature, sfg_objects);
 
 		Rcpp::List sfc(1);

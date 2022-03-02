@@ -253,50 +253,60 @@ namespace sfg {
 		sfc[i] = mp;
 	}
 
+	/**
+	 * Create Null sfg
+	 *
+	 * Called when the geojson has a null geometry: {, ..., "geometry":null}
+	 * Creates an empty GeometryCollection because we have no idea what the geometry actually is
+	 *
+	 * This behaviour was changed for v2.1.0 as I needed a way to go back to empty coordinates
+	 * {"type":"Point","coordinates":[]}, but this wasn't possible pre-v2.1.0
+	 *
+	 */
 	inline void create_null_sfg(
 			Rcpp::List& sfc,
 			std::unordered_set< std::string >& geometry_types,
 			R_xlen_t& nempty
   ) {
-		std::string geom_type;
+		std::string geom_type = "GeometryCollection";
 		std::string dim = "XY";
-		if (geometry_types.size() == 0) {
-			geom_type = "Point";
-		} else {
-			geom_type = *geometry_types.begin();
-			// the 'set' stores the geometries alphabetically
-			// If there are more than one geometries, does it really matter which one is
-			// selected?
-			// if there is only one type, we want to use that one, so selecting the 'begin'
-			// is as good a method as any
-		}
+		// if (geometry_types.size() == 0) {
+		// 	geom_type = "GeometryCollection";
+		// } else {
+		// 	geom_type = *geometry_types.begin();
+		// 	// the 'set' stores the geometries alphabetically
+		// 	// If there are more than one geometries, does it really matter which one is
+		// 	// selected?
+		// 	// if there is only one type, we want to use that one, so selecting the 'begin'
+		// 	// is as good a method as any
+		// }
 		geometry_types.insert(geom_type);
 		transform(geom_type.begin(), geom_type.end(), geom_type.begin(), toupper);
 
-		if (geom_type == "POINT" ) {
-
-			Rcpp::NumericVector nullObj(2, NA_REAL);
-
-			Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
-			Rcpp::List atts = Rcpp::List::create(
-				Rcpp::_["class"] = class_attribute
-			);
-			geometries::utils::attach_attributes( nullObj, atts );
-
-			sfc[0] = nullObj;
-
-		} else if (geom_type == "MULTIPOINT" || geom_type == "LINESTRING") {
-
-			Rcpp::NumericMatrix nullObj;
-			Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
-			Rcpp::List atts = Rcpp::List::create(
-				Rcpp::_["class"] = class_attribute
-			);
-			geometries::utils::attach_attributes( nullObj, atts );
-
-			sfc[0] = nullObj;
-
-		} else {
+		// if (geom_type == "POINT" ) {
+		//
+		// 	Rcpp::NumericVector nullObj(2, NA_REAL);
+		//
+		// 	Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
+		// 	Rcpp::List atts = Rcpp::List::create(
+		// 		Rcpp::_["class"] = class_attribute
+		// 	);
+		// 	geometries::utils::attach_attributes( nullObj, atts );
+		//
+		// 	sfc[0] = nullObj;
+		//
+		// } else if (geom_type == "MULTIPOINT" || geom_type == "LINESTRING") {
+		//
+		// 	Rcpp::NumericMatrix nullObj;
+		// 	Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
+		// 	Rcpp::List atts = Rcpp::List::create(
+		// 		Rcpp::_["class"] = class_attribute
+		// 	);
+		// 	geometries::utils::attach_attributes( nullObj, atts );
+		//
+		// 	sfc[0] = nullObj;
+		//
+		// } else {
 
 			Rcpp::List nullObj;
 			Rcpp::StringVector class_attribute = { dim.c_str(), geom_type.c_str(), "sfg" };
@@ -306,7 +316,7 @@ namespace sfg {
 			geometries::utils::attach_attributes( nullObj, atts );
 
 			sfc[0] = nullObj;
-		}
+		// }
 		nempty++;
 	}
 
