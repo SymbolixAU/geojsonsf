@@ -74,7 +74,7 @@ namespace geojson_properties {
 		properties.names() = property_keys;
 		std::vector< std::string > n = properties.names();
 		std::reverse( n.begin(), n.end() );
-		std::vector< std::string > sv( n.size() );
+		Rcpp::StringVector sv( n.size() );
 		R_xlen_t i;
 
 		for( i = 0; i < n.size(); ++i ) {
