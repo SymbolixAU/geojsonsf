@@ -71,3 +71,9 @@
 	expect_true( is.logical( sf$b ) )
 	expect_true( is.character( sf$c ) )
 
+	## Issue 90
+	## UTF8-encoded strings
+	geojson <- enc2utf8('{"type":"Feature","geometry":{"type":"Point","coordinates":[7.624747,51.954044]},"properties":{"örtchen":"Münster"}}')
+	out <- geojson_sf( geojson )
+	expect_equal(out[1][[1]], "Münster")
+	expect_equal(names(out)[1], "örtchen")

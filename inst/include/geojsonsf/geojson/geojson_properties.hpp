@@ -74,14 +74,14 @@ namespace geojson_properties {
 		properties.names() = property_keys;
 		std::vector< std::string > n = properties.names();
 		std::reverse( n.begin(), n.end() );
-		std::vector< std::string > sv( n.size() );
+		Rcpp::StringVector sv( n.size() );
 		R_xlen_t i;
 
 		for( i = 0; i < n.size(); ++i ) {
-			sv[i] = n[i];
+			std::string s = n[i];
+			sv[i] = Rcpp::String( s );
 		}
 		properties.names() = sv;
-
 	}
 
 	inline void get_property_keys(
@@ -108,7 +108,7 @@ namespace geojson_properties {
 			const R_xlen_t& row_index
 		) {
 		Rcpp::StringVector sv = sf[key];
-		sv[row_index] = value;
+		sv[row_index] = Rcpp::String( value );
 		sf[key] = sv;
 	}
 
