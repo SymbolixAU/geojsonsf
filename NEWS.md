@@ -1,4 +1,12 @@
 
+## v2.0.3
+
+* Validated LineString array [issue95](https://github.com/SymbolixAU/geojsonsf/issues/95)
+
+## v2.0.2
+
+* Fixed UTF-8 encoded strings on Windows [issue 90](https://github.com/SymbolixAU/geojsonsf/issues/90)
+
 ## v2.0.1
 
 * links to geometries library
