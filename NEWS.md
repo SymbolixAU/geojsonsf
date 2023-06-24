@@ -1,3 +1,6 @@
+## v2.0.4
+
+* removed minimum C++ requirement
 
 ## v2.0.3
 
