@@ -1,6 +1,7 @@
 ## v2.0.4
 
 * removed minimum C++ requirement
+* `null` as the first element gets coerced to correct type [issue 79](https://github.com/SymbolixAU/geojsonsf/issues/79) (again)
 
 ## v2.0.3
 

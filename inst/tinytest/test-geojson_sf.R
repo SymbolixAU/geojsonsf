@@ -71,6 +71,29 @@
 	expect_true( is.logical( sf$b ) )
 	expect_true( is.character( sf$c ) )
 
+	## First entry is null
+	gj <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"a":null,"b":true,"c":"hello"},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+  {"type":"Feature","properties":{"a":1.0,"b":null,"c":null},"geometry":{"type":"Point","coordinates":[1.0,1.0]}}
+]}'
+
+	sf <- geojson_sf(gj)
+	expect_true( is.numeric( sf$a ) )
+	expect_true( is.logical( sf$b ) )
+	expect_true( is.character( sf$c ) )
+
+	## First few entries are null
+	gj <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"a":null,"b":true,"c":"hello"},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+  {"type":"Feature","properties":{"a":null,"b":null,"c":null},"geometry":{"type":"Point","coordinates":[1.0,1.0]}},
+	{"type":"Feature","properties":{"a":1.0,"b":null,"c":null},"geometry":{"type":"Point","coordinates":[1.0,1.0]}}
+]}'
+
+	sf <- geojson_sf(gj)
+	expect_true( is.numeric( sf$a ) )
+	expect_true( is.logical( sf$b ) )
+	expect_true( is.character( sf$c ) )
+
 	## Issue 90
 	## UTF8-encoded strings
 	geojson <- enc2utf8('{"type":"Feature","geometry":{"type":"Point","coordinates":[7.624747,51.954044]},"properties":{"örtchen":"Münster"}}')
