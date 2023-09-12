@@ -22,7 +22,7 @@ LinkingTo:
     sfheaders (>= 0.2.2)
 Imports: 
     Rcpp
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2
 Suggests: 
     covr,
     jsonify,

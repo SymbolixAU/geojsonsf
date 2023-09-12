@@ -105,8 +105,10 @@ sfc_geojson.default <- function( sfc, digits = NULL ) stop("Expected an sfc obje
 #' Converts data.frame objects to GeoJSON. Each row is considerd a POINT
 #'
 #' @param df data.frame
-#' @param lon column of \code{df} containing the longitude data
-#' @param lat column of \code{df} containing the latitude data
+#' @param lon character column name of \code{df} containing the longitude data,
+#' defaults to `lon`
+#' @param lat character column name column of \code{df} containing the
+#' latitude data, defaults to `lat`.
 #' @param z column of \code{df} containing the Z attribute of the GeoJSON
 #' @param m column of \code{df} containing the M attribute of the GeoJSON.
 #' If supplied, you must also supply \code{z}
@@ -125,29 +127,29 @@ sfc_geojson.default <- function( sfc, digits = NULL ) stop("Expected an sfc obje
 #' @examples
 #'
 #' df <- data.frame(lon = c(1:5, NA), lat = c(1:5, NA), id = 1:6, val = letters[1:6])
-#' df_geojson( df, lon = "lon", lat = "lat")
-#' df_geojson( df, lon = "lon", lat = "lat", atomise = TRUE)
+#' df_geojson( df )
+#' df_geojson( df, atomise = TRUE)
 #'
 #' df <- data.frame(lon = c(1:5, NA), lat = c(1:5, NA) )
-#' df_geojson( df, lon = "lon", lat = "lat")
-#' df_geojson( df, lon = "lon", lat = "lat", simplify = FALSE)
+#' df_geojson( df )
+#' df_geojson( df, simplify = FALSE)
 #'
 #' df <- data.frame(lon = c(1:5), lat = c(1:5), elevation = c(1:5) )
-#' df_geojson( df, lon = "lon", lat = "lat", z = "elevation")
-#' df_geojson( df, lon = "lon", lat = "lat", z = "elevation", simplify = FALSE)
+#' df_geojson( df, z = "elevation")
+#' df_geojson( df, z = "elevation", simplify = FALSE)
 #'
 #' df <- data.frame(lon = c(1:5), lat = c(1:5), elevation = c(1:5), id = 1:5 )
-#' df_geojson( df, lon = "lon", lat = "lat", z = "elevation")
-#' df_geojson( df, lon = "lon", lat = "lat", z = "elevation", atomise = TRUE)
+#' df_geojson( df, z = "elevation")
+#' df_geojson( df, z = "elevation", atomise = TRUE)
 #'
 #'
 #' ## to sf objects
-#' geo <- df_geojson( df, lon = "lon", lat = "lat", z = "elevation")
+#' geo <- df_geojson( df, z = "elevation")
 #' sf <- geojson_sf( geo )
 #'
 #' @export
 df_geojson <- function(
-	df, lon, lat, z = NULL, m = NULL,
+	df, lon = "lon", lat = "lat", z = NULL, m = NULL,
 	atomise = FALSE, simplify = TRUE, digits = NULL,
 	factors_as_string = TRUE
 	) {
