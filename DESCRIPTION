@@ -30,6 +30,6 @@ Suggests:
     tinytest
 VignetteBuilder: knitr
 remotes:
-	https://github.com/SymbolixAU/jsonify
+	https://github.com/SymbolixAU/jsonify,
 	https://github.com/SymbolixAU/rapidjsonr
 
