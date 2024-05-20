@@ -272,12 +272,12 @@ namespace geojson_properties {
 					// don't do anything...
 				} else if (value_type == "Object") {
 
-					Value v = p.value.GetObject();
+					Value& v = p.value.GetObject();
 					nested_json_to_string(v, type, properties, row_index, key);
 
 				} else if (value_type == "Array") {
 
-					Value v = p.value.GetArray();
+					Value& v = p.value.GetArray();
 					nested_json_to_string(v, type, properties, row_index, key);
 
 				} else {
