@@ -101,6 +101,8 @@ namespace sfg {
 
 		for( row = 0; row < n; row++ ) {
 			const Value& coord_array = line_array[ row ];
+			geojsonsf::validate::validate_array( coord_array );
+
 			R_xlen_t n_points = coord_array.Size();
 
 			if( n_points <= 1 ) {

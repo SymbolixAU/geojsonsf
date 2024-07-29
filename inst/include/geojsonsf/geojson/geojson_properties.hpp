@@ -49,11 +49,15 @@ namespace geojson_properties {
 				if (existing_type == "String") {
 					// if it's already a 'String' (JSON type), exit
 
-				} else if (existing_type != type && type != "Null") {
+				} else if (existing_type != "Null" && existing_type != type && type != "Null") {
+
 					// allow NULL through so the type is correct when back in R
 					// if it's different, update to be a 'String'
 					property_types[property] = "String";
 
+				} else if (existing_type == "Null") {
+					// If the first element is NULL, use the new type
+					property_types[property] = type;
 				}
 				// if it's not different, exit
 			} else {
@@ -74,14 +78,14 @@ namespace geojson_properties {
 		properties.names() = property_keys;
 		std::vector< std::string > n = properties.names();
 		std::reverse( n.begin(), n.end() );
-		std::vector< std::string > sv( n.size() );
+		Rcpp::StringVector sv( n.size() );
 		R_xlen_t i;
 
 		for( i = 0; i < n.size(); ++i ) {
-			sv[i] = n[i];
+			std::string s = n[i];
+			sv[i] = Rcpp::String( s );
 		}
 		properties.names() = sv;
-
 	}
 
 	inline void get_property_keys(
@@ -108,7 +112,7 @@ namespace geojson_properties {
 			const R_xlen_t& row_index
 		) {
 		Rcpp::StringVector sv = sf[key];
-		sv[row_index] = value;
+		sv[row_index] = Rcpp::String( value );
 		sf[key] = sv;
 	}
 
@@ -268,12 +272,12 @@ namespace geojson_properties {
 					// don't do anything...
 				} else if (value_type == "Object") {
 
-					Value v = p.value.GetObject();
+					Value& v = p.value.GetObject();
 					nested_json_to_string(v, type, properties, row_index, key);
 
 				} else if (value_type == "Array") {
 
-					Value v = p.value.GetArray();
+					Value& v = p.value.GetArray();
 					nested_json_to_string(v, type, properties, row_index, key);
 
 				} else {

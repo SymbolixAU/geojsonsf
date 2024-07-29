@@ -1,3 +1,19 @@
+## v2.0.5
+
+* updated `geojsonsf` dependency to fix missing Z/M values [issue 100](https://github.com/SymbolixAU/geojsonsf/issues/100)
+
+## v2.0.4
+
+* removed minimum C++ requirement
+* `null` as the first element gets coerced to correct type [issue 79](https://github.com/SymbolixAU/geojsonsf/issues/79) (again)
+
+## v2.0.3
+
+* Validated LineString array [issue95](https://github.com/SymbolixAU/geojsonsf/issues/95)
+
+## v2.0.2
+
+* Fixed UTF-8 encoded strings on Windows [issue 90](https://github.com/SymbolixAU/geojsonsf/issues/90)
 
 ## v2.1.0
 
