@@ -78,9 +78,14 @@ namespace write_geometry {
 		geom_type = cls[1];
 
 		// need to keep track of GEOMETRYCOLLECTIONs so we can correctly close them
-		bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION") ? true : false;
+		bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION");
 
 		int sfglength = geometries::utils::sexp_length( sfg );
+		bool isnull = sfheaders::utils::is_null_geometry( sfg, geom_type );
+
+		Rcpp::Rcout << "geom_type " << geom_type << std::endl;
+		Rcpp::Rcout << "sfglength " << sfglength << std::endl;
+		Rcpp::Rcout << "isnull " << isnull << std::endl;
 
 		// Rcpp::Rcout << "geom_type: " << geom_type << std::endl;
 		// Rcpp::Rcout << "sfglength: " << sfglength << std::endl;
@@ -137,7 +142,7 @@ namespace write_geometry {
 		}
 
 		// need to keep track of GEOMETRYCOLLECTIONs so we can correctly close them
-		bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION") ? true : false;
+		bool isGeometryCollection = (geom_type == "GEOMETRYCOLLECTION");
 
 		int sfglength = geometries::utils::sexp_length( sfg );
 
