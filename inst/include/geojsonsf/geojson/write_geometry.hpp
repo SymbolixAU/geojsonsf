@@ -83,9 +83,9 @@ namespace write_geometry {
 		int sfglength = geometries::utils::sexp_length( sfg );
 		bool isnull = sfheaders::utils::is_null_geometry( sfg, geom_type );
 
-		Rcpp::Rcout << "geom_type " << geom_type << std::endl;
-		Rcpp::Rcout << "sfglength " << sfglength << std::endl;
-		Rcpp::Rcout << "isnull " << isnull << std::endl;
+		//Rcpp::Rcout << "geom_type " << geom_type << std::endl;
+		//Rcpp::Rcout << "sfglength " << sfglength << std::endl;
+		//Rcpp::Rcout << "isnull " << isnull << std::endl;
 
 		// Rcpp::Rcout << "geom_type: " << geom_type << std::endl;
 		// Rcpp::Rcout << "sfglength: " << sfglength << std::endl;
