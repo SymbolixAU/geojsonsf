@@ -1,3 +1,7 @@
+## v2.0.5
+
+* updated `geojsonsf` dependency to fix missing Z/M values [issue 100](https://github.com/SymbolixAU/geojsonsf/issues/100)
+
 ## v2.0.4
 
 * removed minimum C++ requirement

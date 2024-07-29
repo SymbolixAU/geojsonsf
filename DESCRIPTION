@@ -1,8 +1,8 @@
 Package: geojsonsf
 Type: Package
 Title: GeoJSON to Simple Feature Converter
-Version: 2.0.4
-Date: 2024-05-21
+Version: 2.0.5
+Date: 2024-07-30
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
     )
@@ -18,7 +18,7 @@ LinkingTo:
     jsonify (>= 1.2.3),
     rapidjsonr (>= 1.2.1),
     Rcpp,
-    sfheaders (>= 0.2.2)
+    sfheaders (>= 0.4.5)
 Imports: 
     Rcpp
 RoxygenNote: 7.1.0
@@ -30,6 +30,7 @@ Suggests:
     tinytest
 VignetteBuilder: knitr
 remotes:
+	https://github.com/dcooley/sfheaders,
 	https://github.com/SymbolixAU/jsonify,
 	https://github.com/SymbolixAU/rapidjsonr
 
