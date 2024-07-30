@@ -94,12 +94,15 @@ namespace write_geojson {
 				bool isnull = false;
 				gc_type( sfgi, gc_geom_type, isnull, cls );
 
-				if( !isnull ) {
+				//Rcpp::Rcout << "gc_type isNull: " << isnull << std::endl;
+
+				// issue 91: allow the NULLs to pass through, so the empty coordinate arrays get written
+				// if( !isnull ) {
 					SEXP sfg_gc = gc[i];
 					geojsonsf::writers::begin_geojson_geometry(writer, gc_geom_type);
 					write_geojson( writer, sfg_gc, gc_geom_type, cls, digits );
 					geojsonsf::writers::end_geojson_geometry(writer, gc_geom_type);
-				}
+				// }
 			}
 		}
 	}

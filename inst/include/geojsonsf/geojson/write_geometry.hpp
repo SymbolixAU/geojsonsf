@@ -83,34 +83,41 @@ namespace write_geometry {
 		int sfglength = geometries::utils::sexp_length( sfg );
 		bool isnull = sfheaders::utils::is_null_geometry( sfg, geom_type );
 
-		//Rcpp::Rcout << "geom_type " << geom_type << std::endl;
-		//Rcpp::Rcout << "sfglength " << sfglength << std::endl;
-		//Rcpp::Rcout << "isnull " << isnull << std::endl;
+		Rcpp::Rcout << "geom_type " << geom_type << std::endl;
+		Rcpp::Rcout << "sfglength " << sfglength << std::endl;
+		// POINTs will have length > 2 because they're a vector
+		Rcpp::Rcout << "isnull " << isnull << std::endl;
 
-		// Rcpp::Rcout << "geom_type: " << geom_type << std::endl;
-		// Rcpp::Rcout << "sfglength: " << sfglength << std::endl;
-
-		geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
-
-		if (sfglength == 0) {
-			// Iff there is a geom_type; assume the coordiantes were empty, rather than null
-			// however, iff there is no geom_type,
-			// assume it is a null geometry ?
-			//writer.Null();
+		if( isnull ) {
+			geojsonsf::writers::begin_geojson_geometry(writer, geom_type, isnull);
 		} else {
 
-			bool isnull = sfheaders::utils::is_null_geometry( sfg, geom_type );
-			if ( isnull ) {
+
+		// issue91: NULL geometries should become empty array objects
+		// so the round-trip works.
+
+			if (sfglength == 0) {
+				// Iff there is a geom_type; assume the coordiantes were empty, rather than null
+				// however, iff there is no geom_type,
+				// assume it is a null geometry ?
 				writer.Null();
 			} else {
-				// geojsonsf::writers::begin_geojson_geometry(writer, geom_type);
-				geojsonsf::write_geojson::write_geojson(writer, sfg, geom_type, cls, digits );
 
-				geom_type = (isGeometryCollection) ? "GEOMETRYCOLLECTION" : geom_type;
-				// geojsonsf::writers::end_geojson_geometry( writer, geom_type );
+				//bool isnull = sfheaders::utils::is_null_geometry( sfg, geom_type );
+				// if ( isnull ) {
+				// 	writer.Null();
+				// } else {
+					geojsonsf::writers::begin_geojson_geometry(writer, geom_type, isnull);
+					geojsonsf::write_geojson::write_geojson(writer, sfg, geom_type, cls, digits );
+
+					geom_type = (isGeometryCollection) ? "GEOMETRYCOLLECTION" : geom_type;
+					geojsonsf::writers::end_geojson_geometry( writer, geom_type );
+				// }
 			}
 		}
-		geojsonsf::writers::end_geojson_geometry( writer, geom_type );
+		if( isnull ) {
+			geojsonsf::writers::end_geojson_geometry( writer, geom_type, isnull );
+		}
 	}
 
 	/*

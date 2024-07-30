@@ -30,70 +30,141 @@ namespace writers {
   }
 
   template< typename Writer >
-  inline void begin_geojson_geometry( Writer& writer, std::string& geom_type ) {
+  inline void begin_geojson_array( Writer& writer, std::string& geom_type, bool is_null) {
+  	if( is_null ) {
+  		writer.StartArray();
+  	}	else {
+  		if (geom_type == "POINT") {
+
+  		} else if (geom_type == "MULTIPOINT") {
+
+  			writer.StartArray();
+  		} else if (geom_type == "LINESTRING") {
+
+  			writer.StartArray();
+  		} else if (geom_type == "MULTILINESTRING") {
+
+  			writer.StartArray();
+  			writer.StartArray();
+  		} else if (geom_type == "POLYGON") {
+
+  			writer.StartArray();
+  			writer.StartArray();
+  		} else if (geom_type == "MULTIPOLYGON") {
+
+  			writer.StartArray();
+  			writer.StartArray();
+  			writer.StartArray();
+  		} else if (geom_type == "GEOMETRYCOLLECTION") {
+
+  			writer.StartArray();
+  		}
+  	}
+  }
+
+  template< typename Writer >
+  inline void end_geojson_array( Writer& writer, std::string& geom_type, bool is_null) {
+  	if( is_null ) {
+  		writer.EndArray();
+  	}	else {
+  		if (geom_type == "POINT") {
+
+  		} else if (geom_type == "MULTIPOINT") {
+
+  			writer.EndArray();
+  		} else if (geom_type == "LINESTRING") {
+
+  			writer.EndArray();
+  		} else if (geom_type == "MULTILINESTRING") {
+
+  			writer.EndArray();
+  			writer.EndArray();
+  		} else if (geom_type == "POLYGON") {
+
+  			writer.EndArray();
+  			writer.EndArray();
+  		} else if (geom_type == "MULTIPOLYGON") {
+
+  			writer.EndArray();
+  			writer.EndArray();
+  			writer.EndArray();
+  		} else if (geom_type == "GEOMETRYCOLLECTION") {
+
+  			writer.EndArray();
+  		}
+  	}
+  }
+
+  template< typename Writer >
+  inline void begin_geojson_geometry( Writer& writer, std::string& geom_type, bool is_null ) {
     writer.StartObject();
     writer.String("type");
     if (geom_type == "POINT") {
       writer.String("Point");
       write_coordinate_string( writer );
+      begin_geojson_array(writer, geom_type, is_null);
     } else if (geom_type == "MULTIPOINT") {
       writer.String("MultiPoint");
       write_coordinate_string( writer );
-      writer.StartArray();
+      begin_geojson_array(writer, geom_type, is_null);
     } else if (geom_type == "LINESTRING") {
       writer.String("LineString");
       write_coordinate_string( writer );
-      writer.StartArray();
+      begin_geojson_array(writer, geom_type, is_null);
     } else if (geom_type == "MULTILINESTRING") {
       writer.String("MultiLineString");
       write_coordinate_string( writer );
-      writer.StartArray();
-      writer.StartArray();
+      begin_geojson_array(writer, geom_type, is_null);
     } else if (geom_type == "POLYGON") {
       writer.String("Polygon");
       write_coordinate_string( writer );
-      writer.StartArray();
-      writer.StartArray();
+      begin_geojson_array(writer, geom_type, is_null);
     } else if (geom_type == "MULTIPOLYGON") {
       writer.String("MultiPolygon");
       write_coordinate_string( writer );
-      writer.StartArray();
-      writer.StartArray();
-      writer.StartArray();
+      begin_geojson_array(writer, geom_type, is_null);
     } else if (geom_type == "GEOMETRYCOLLECTION") {
       writer.String("GeometryCollection");
       writer.String("geometries");
-      writer.StartArray();
+      begin_geojson_array(writer, geom_type, is_null);
     }
   }
 
   template< typename Writer >
-  inline void end_geojson_geometry(Writer& writer, std::string& geom_type) {
+  inline void begin_geojson_geometry( Writer& writer, std::string& geom_type ) {
+		begin_geojson_geometry(writer, geom_type, false);
+  }
+
+  template< typename Writer >
+  inline void end_geojson_geometry(Writer& writer, std::string& geom_type, bool is_null) {
     if (geom_type == "POINT") {
-      writer.EndObject();
+    	end_geojson_array(writer, geom_type, is_null);
+
     } else if (geom_type == "MULTIPOINT") {
-      writer.EndArray();
-      writer.EndObject();
+    	end_geojson_array(writer, geom_type, is_null);
+
     } else if (geom_type == "LINESTRING") {
-      writer.EndArray();
-      writer.EndObject();
+    	end_geojson_array(writer, geom_type, is_null);
+
     } else if (geom_type == "MULTILINESTRING") {
-      writer.EndArray();
-      writer.EndArray();
-      writer.EndObject();
+    	end_geojson_array(writer, geom_type, is_null);
+
     } else if (geom_type == "POLYGON") {
-      writer.EndArray();
-      writer.EndArray();
-      writer.EndObject();
+    	end_geojson_array(writer, geom_type, is_null);
+
     } else if (geom_type == "MULTIPOLYGON") {
-      writer.EndArray();
-      writer.EndArray();
-      writer.EndArray();
-      writer.EndObject();
+    	end_geojson_array(writer, geom_type, is_null);
+
     } else if (geom_type == "GEOMETRYCOLLECTION") {
-      writer.EndArray();
-      writer.EndObject();
+    	end_geojson_array(writer, geom_type, is_null);
+
     }
+    writer.EndObject();
+  }
+
+  template< typename Writer >
+  inline void end_geojson_geometry(Writer& writer, std::string& geom_type) {
+		end_geojson_geometry(writer, geom_type, false);
   }
 
   template< typename Writer >
