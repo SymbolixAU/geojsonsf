@@ -52,8 +52,14 @@ namespace geojson_properties {
 				} else if (existing_type != "Null" && existing_type != type && type != "Null") {
 
 					// allow NULL through so the type is correct when back in R
-					// if it's different, update to be a 'String'
-					property_types[property] = "String";
+					// Treat "True" and "False" as the same type (logical)
+					bool both_logical = (existing_type == "True" || existing_type == "False") && 
+					                    (type == "True" || type == "False");
+					
+					if (!both_logical) {
+						// if it's different, update to be a 'String'
+						property_types[property] = "String";
+					}
 
 				} else if (existing_type == "Null") {
 					// If the first element is NULL, use the new type
@@ -249,7 +255,7 @@ namespace geojson_properties {
 				} else if (value_type == "False") {
 
 					bool this_value = p.value.GetBool();
-					if (type != "False") {
+					if (type != "False" && type != "True") {
 						std::string value = any_to_string(this_value);
 						update_string_vector(properties, key, value, row_index-1);
 					} else {
@@ -260,7 +266,7 @@ namespace geojson_properties {
 				} else if (value_type == "True") {
 
 					bool this_value = p.value.GetBool();
-					if (type != "True") {
+					if (type != "True" && type != "False") {
 						std::string value = any_to_string(this_value);
 						update_string_vector(properties, key, value, row_index-1);
 					} else {
@@ -292,5 +298,3 @@ namespace geojson_properties {
 } // namespace geojsonsf
 
 #endif
-
-
