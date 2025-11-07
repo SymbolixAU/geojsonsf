@@ -252,18 +252,7 @@ namespace geojson_properties {
 						update_numeric_vector(properties, key, value, row_index-1);
 					}
 
-				} else if (value_type == "False") {
-
-					bool this_value = p.value.GetBool();
-					if (type != "False" && type != "True") {
-						std::string value = any_to_string(this_value);
-						update_string_vector(properties, key, value, row_index-1);
-					} else {
-						bool value = p.value.GetBool();
-						update_logical_vector(properties, key, value, row_index-1);
-					}
-
-				} else if (value_type == "True") {
+				} else if (value_type == "False" || value_type == "True") {
 
 					bool this_value = p.value.GetBool();
 					if (type != "True" && type != "False") {
