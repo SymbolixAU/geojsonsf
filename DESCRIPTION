@@ -4,7 +4,8 @@ Title: GeoJSON to Simple Feature Converter
 Version: 2.0.5
 Date: 2024-07-30
 Authors@R: c(
-    person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
+    person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre")),
+    person("Andy", "Teucher", ,"andy.teucher@gmail.com", role = "ctb")
     )
 Description: Converts Between GeoJSON and simple feature objects. 
 License: MIT + file LICENSE
@@ -33,4 +34,3 @@ remotes:
 	https://github.com/dcooley/sfheaders,
 	https://github.com/SymbolixAU/jsonify,
 	https://github.com/SymbolixAU/rapidjsonr
-
