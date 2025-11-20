@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geojsonsf)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
 [![Github Stars](https://img.shields.io/github/stars/SymbolixAU/geojsonsf.svg?style=social&label=Github)](https://github.com/SymbolixAU/geojsonsf)
-[![R build status](https://github.com/symbolixau/geojsonsf/workflows/R-CMD-check/badge.svg)](https://github.com/symbolixau/geojsonsf/actions)
+[![R-CMD-check](https://github.com/SymbolixAU/geojsonsf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SymbolixAU/geojsonsf/actions/workflows/R-CMD-check.yaml)
 [![Coverage Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
 --
@@ -176,7 +176,3 @@ microbenchmark(
 # geojsonsf  709.2268  709.2268  722.0626  722.0626  734.8984  734.8984      2
 #        sf 1867.6840 1867.6840 1958.7968 1958.7968 2049.9097 2049.9097      2
 ```
-
-
-
-

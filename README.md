@@ -1,14 +1,13 @@
 geojsonsf
 ================
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/geojsonsf)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](https://CRAN.R-project.org/package=geojsonsf)
 [![Github
 Stars](https://img.shields.io/github/stars/SymbolixAU/geojsonsf.svg?style=social&label=Github)](https://github.com/SymbolixAU/geojsonsf)
-[![R build
-status](https://github.com/symbolixau/geojsonsf/workflows/R-CMD-check/badge.svg)](https://github.com/symbolixau/geojsonsf/actions)
+[![R-CMD-check](https://github.com/SymbolixAU/geojsonsf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SymbolixAU/geojsonsf/actions/workflows/R-CMD-check.yaml)
 [![Coverage
 Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
@@ -19,18 +18,18 @@ Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=maste
 A simple, low-dependency and **fast** converter between GeoJSON and
 Simple Feature objects in R.
 
------
+------------------------------------------------------------------------
 
 **v1.3.2**
 
 Converts
 
-  - GeoJSON –\> `sf`
-  - GeoJSON –\> `sfc`
-  - `sf` –\> GeoJSON
-  - `sfc` –\> GeoJSON
-  - GeoJSON –\> Well-known text
-  - data.frame –\> GeoJSON (POINT only)
+- GeoJSON –\> `sf`
+- GeoJSON –\> `sfc`
+- `sf` –\> GeoJSON
+- `sfc` –\> GeoJSON
+- GeoJSON –\> Well-known text
+- data.frame –\> GeoJSON (POINT only)
 
 As per GeoJSON ([RFC 7946
 specification)](https://tools.ietf.org/html/rfc7946#page-11), foreign
@@ -96,12 +95,10 @@ js <- c(
 sf <- geojson_sf( js )
 sf
 #  Simple feature collection with 3 features and 1 field
-#  geometry type:  GEOMETRY
-#  dimension:      XY
-#  bbox:           xmin: -1 ymin: -1 xmax: 100 ymax: 1
-#  z_range:        zmin: NA zmax: NA
-#  m_range:        mmin: NA mmax: NA
-#  CRS:            4326
+#  Geometry type: GEOMETRY
+#  Dimension:     XY
+#  Bounding box:  xmin: -1 ymin: -1 xmax: 100 ymax: 1
+#  Geodetic CRS:  WGS 84
 #    id                geometry
 #  1 NA             POINT (0 0)
 #  2 NA LINESTRING (-1 -1, 1 1)
