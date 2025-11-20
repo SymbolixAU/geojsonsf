@@ -22,15 +22,15 @@ LinkingTo:
     sfheaders (>= 0.4.5)
 Imports: 
     Rcpp
-RoxygenNote: 7.1.0
+RoxygenNote: 7.3.3
 Suggests: 
     covr,
-    jsonify,
+    jsonify (>= 1.2.3),
     knitr,
     rmarkdown,
     tinytest
 VignetteBuilder: knitr
-remotes:
-	https://github.com/dcooley/sfheaders,
-	https://github.com/SymbolixAU/jsonify,
-	https://github.com/SymbolixAU/rapidjsonr
+Remotes:
+	dcooley/sfheaders,
+	SymbolixAU/jsonify,
+	SymbolixAU/rapidjsonr
