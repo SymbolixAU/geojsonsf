@@ -100,3 +100,34 @@
 	out <- geojson_sf( geojson )
 	expect_equal(out[1][[1]], "Münster")
 	expect_equal(names(out)[1], "örtchen")
+
+## Issue 170
+## Logicals correctly converted
+gj <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"a":true},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+  {"type":"Feature","properties":{"a":false},"geometry":{"type":"Point","coordinates":[1.0,1.0]}},
+  {"type":"Feature","properties":{"a":false},"geometry":{"type":"Point","coordinates":[2.0,2.0]}},
+  {"type":"Feature","properties":{"a":true},"geometry":{"type":"Point","coordinates":[3.0,3.0]}}
+]}'
+
+sf <- geojson_sf(gj)
+expect_true(is.logical(sf$a))
+expect_equal(sf$a, c(TRUE, FALSE, FALSE, TRUE))
+
+## works with all false
+gj <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"a":false},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+  {"type":"Feature","properties":{"a":false},"geometry":{"type":"Point","coordinates":[1.0,1.0]}}
+]}'
+
+sf <- geojson_sf(gj)
+expect_true(is.logical(sf$a))
+
+## works with all true
+gj <- '{"type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"a":true},"geometry":{"type":"Point","coordinates":[0.0,0.0]}},
+  {"type":"Feature","properties":{"a":true},"geometry":{"type":"Point","coordinates":[1.0,1.0]}}
+]}'
+
+sf <- geojson_sf(gj)
+expect_true(is.logical(sf$a))

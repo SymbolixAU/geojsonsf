@@ -4,7 +4,8 @@ Title: GeoJSON to Simple Feature Converter
 Version: 2.0.5
 Date: 2024-07-30
 Authors@R: c(
-    person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre"))
+    person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre")),
+    person("Andy", "Teucher", ,"andy.teucher@gmail.com", role = "ctb")
     )
 Description: Converts Between GeoJSON and simple feature objects. 
 License: MIT + file LICENSE
@@ -21,16 +22,15 @@ LinkingTo:
     sfheaders (>= 0.4.5)
 Imports: 
     Rcpp
-RoxygenNote: 7.1.0
+RoxygenNote: 7.3.3
 Suggests: 
     covr,
-    jsonify,
+    jsonify (>= 1.2.3),
     knitr,
     rmarkdown,
     tinytest
 VignetteBuilder: knitr
-remotes:
-	https://github.com/dcooley/sfheaders,
-	https://github.com/SymbolixAU/jsonify,
-	https://github.com/SymbolixAU/rapidjsonr
-
+Remotes:
+	dcooley/sfheaders,
+	SymbolixAU/jsonify,
+	SymbolixAU/rapidjsonr
