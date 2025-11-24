@@ -53,9 +53,9 @@ namespace geojson_properties {
 
 					// allow NULL through so the type is correct when back in R
 					// Treat "True" and "False" as the same type (logical)
-					bool both_logical = (existing_type == "True" || existing_type == "False") && 
+					bool both_logical = (existing_type == "True" || existing_type == "False") &&
 					                    (type == "True" || type == "False");
-					
+
 					if (!both_logical) {
 						// if it's different, update to be a 'String'
 						property_types[property] = "String";
