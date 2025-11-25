@@ -2,7 +2,7 @@ Package: geojsonsf
 Type: Package
 Title: GeoJSON to Simple Feature Converter
 Version: 2.0.5
-Date: 2024-07-30
+Date: 2025-11-25
 Authors@R: c(
     person("David", "Cooley", ,"dcooley@symbolix.com.au", role = c("aut", "cre")),
     person("Andy", "Teucher", ,"andy.teucher@gmail.com", role = "ctb")
@@ -14,14 +14,14 @@ BugReports: https://github.com/SymbolixAU/geojsonsf/issues
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.0.0)
+Imports: 
+    Rcpp  (>= 1.1.0)
 LinkingTo: 
     geometries (>= 0.2.5),
     jsonify (>= 1.2.3),
     rapidjsonr (>= 1.2.1),
     Rcpp,
     sfheaders (>= 0.4.5)
-Imports: 
-    Rcpp
 RoxygenNote: 7.3.3
 Suggests: 
     covr,
@@ -29,7 +29,3 @@ Suggests:
     rmarkdown,
     tinytest
 VignetteBuilder: knitr
-Remotes:
-	dcooley/sfheaders,
-	SymbolixAU/jsonify,
-	SymbolixAU/rapidjsonr

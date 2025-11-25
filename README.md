@@ -32,8 +32,8 @@ Converts
 - data.frame –\> GeoJSON (POINT only)
 
 As per GeoJSON ([RFC 7946
-specification)](https://tools.ietf.org/html/rfc7946#page-11), foreign
-members are ignored, and nested objects and arrays inside the
+specification)](https://datatracker.ietf.org/doc/html/rfc7946#page-11),
+foreign members are ignored, and nested objects and arrays inside the
 `properties` object are converted to string/characters.
 
 Also, as per the specification, **CRS**
