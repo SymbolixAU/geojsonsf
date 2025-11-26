@@ -9,7 +9,7 @@ downloads](http://cranlogs.r-pkg.org/badges/geojsonsf)](https://CRAN.R-project.o
 Stars](https://img.shields.io/github/stars/SymbolixAU/geojsonsf.svg?style=social&label=Github)](https://github.com/SymbolixAU/geojsonsf)
 [![R-CMD-check](https://github.com/SymbolixAU/geojsonsf/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/SymbolixAU/geojsonsf/actions/workflows/R-CMD-check.yaml)
 [![Coverage
-Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://codecov.io/github/SymbolixAU/geojsonsf?branch=master)
+Status](https://codecov.io/github/SymbolixAU/geojsonsf/coverage.svg?branch=master)](https://app.codecov.io/github/SymbolixAU/geojsonsf?branch=master)
 
 –
 

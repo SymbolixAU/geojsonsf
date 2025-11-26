@@ -25,6 +25,7 @@ LinkingTo:
 RoxygenNote: 7.3.3
 Suggests: 
     covr,
+    jsonify,
     knitr,
     rmarkdown,
     tinytest
